@@ -1,9 +1,7 @@
 #pragma once
-#include "RTTI.h"
 #include <string>
 #include "HashMap.h"
 #include <gsl/gsl>
-#include <map>
 
 namespace FIEAGameEngine
 {
@@ -79,20 +77,20 @@ namespace FIEAGameEngine
 	/// <summary>
 	/// Concerete Factory macro. Can be placed in the header file of any class inorder to allow for the declaration of a factory of that class type.
 	/// </summary>
-	#define CONCRETE_FACTORY( ConcreteProductT, AbstractProductT )		\
+	#define CONCRETE_FACTORY( ConcreteProductT, AbstractProductT )							\
     class ConcreteProductT ## Factory final: FIEAGameEngine::Factory<AbstractProductT>		\
-    {																	\
-        public:															\
-			ConcreteProductT ## Factory()  { Add   ( *this ) ; }		\
-			~ConcreteProductT ## Factory()  { Remove( *this ) ; }		\
-            virtual std::string const GetClassName() const				\
-			{ return # ConcreteProductT ; }								\
-            virtual gsl::owner<AbstractProductT *>  Create() const		\
-            {															\
-                AbstractProductT * product = new ConcreteProductT() ;	\
-                assert( product != nullptr ) ;							\
-                return product ;										\
-            }															\
+    {																						\
+        public:																				\
+			ConcreteProductT ## Factory()  { Add   ( *this ) ; }							\
+			~ConcreteProductT ## Factory()  { Remove( *this ) ; }							\
+            virtual std::string const GetClassName() const									\
+			{ return # ConcreteProductT ; }													\
+            virtual gsl::owner<AbstractProductT *>  Create() const							\
+            {																				\
+                AbstractProductT * product = new ConcreteProductT() ;						\
+                assert( product != nullptr ) ;												\
+                return product ;															\
+            }																				\
 	};	
 
 }

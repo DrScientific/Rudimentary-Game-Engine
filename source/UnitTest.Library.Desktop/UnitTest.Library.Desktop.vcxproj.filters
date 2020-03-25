@@ -17,6 +17,8 @@
     <ClCompile Include="IDepthTestParseHelper.cpp" />
     <ClCompile Include="IIntegerJsonParseHelper.cpp" />
     <ClCompile Include="FooFactoryTest.cpp" />
+    <ClCompile Include="WorldSectorEntityTest.cpp" />
+    <ClCompile Include="TestModuleInitializecpp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

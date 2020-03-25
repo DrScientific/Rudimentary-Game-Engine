@@ -211,13 +211,16 @@ namespace FIEAGameEngine
 
 	bool JsonParseMaster::ParseMembers(Json::Value const & jsonValue)
 	{
-		std::vector<string> memberNames = jsonValue.getMemberNames();
-
-		for (auto & i : memberNames)
+		if (jsonValue.size() != 0)
 		{
-			if (!Parse(i, jsonValue[i], jsonValue[i].isArray(), 0))
+			std::vector<string> memberNames = jsonValue.getMemberNames();
+
+			for (auto & i : memberNames)
 			{
-				return false;
+				if (!Parse(i, jsonValue[i], false, 0))
+				{
+					return false;
+				}
 			}
 		}
 		return true;

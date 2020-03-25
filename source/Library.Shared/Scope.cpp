@@ -221,17 +221,21 @@ namespace FIEAGameEngine
 
 	bool FIEAGameEngine::Scope::operator==(Scope const & rhs) const
 	{
-		//Should do less comparisons than simply comparing hashmaps although that is a valid, easier to read option.
-		bool result = false;
-		if (mVector.Size() == rhs.mVector.Size())
+		bool result = true;
+		if(this != &rhs)
 		{
-			result = true;
-			for (size_t i = 0; i < mVector.Size(); i++)
+			//Should do less comparisons than simply comparing hashmaps although that is a valid, easier to read option.
+			result = false;
+			if (mVector.Size() == rhs.mVector.Size())
 			{
-				if (*mVector[i] != *rhs.mVector[i])
+				result = true;
+				for (size_t i = 0; i < mVector.Size(); i++)
 				{
-					result = false;
-					break;
+					if (*mVector[i] != *rhs.mVector[i])
+					{
+						result = false;
+						break;
+					}
 				}
 			}
 		}

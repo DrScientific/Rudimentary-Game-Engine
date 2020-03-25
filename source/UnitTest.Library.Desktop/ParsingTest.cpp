@@ -671,8 +671,8 @@ namespace UnitTestLibraryDesktop
 
 		TEST_METHOD(TestAttributedFooParse)
 		{
-			AttributedFoo foo;
-			shared_ptr sharedScope = make_shared<Scope>(foo);
+			shared_ptr<Scope> sharedScope = make_shared<AttributedFoo>();
+			AttributedFoo* foo = sharedScope.get()->As<AttributedFoo>();
 			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
 			JsonParseMaster master(sharedData);
 			ScopeJsonParseHelper scopeHelper;
@@ -688,51 +688,64 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(master.ParseFromFile("Content/AttributedFoo.json"));
 
 
-			Assert::IsTrue(foo.ExternalInteger == 500);
-			Assert::IsTrue(foo.ExternalFloat == 500.5);
-			Assert::IsTrue(foo.ExternalString == "500.5");
-			Assert::IsTrue(foo.ExternalVector == vec4(1.f,2.f,3.f,4.f));
-			Assert::IsTrue(foo.ExternalMatrix == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f));
-			Assert::IsTrue(foo.ExternalIntegerArray[0] == 500);
-			Assert::IsTrue(foo.ExternalIntegerArray[1] == 501);
-			Assert::IsTrue(foo.ExternalIntegerArray[2] == 502);
-			Assert::IsTrue(foo.ExternalIntegerArray[3] == 503);
-			Assert::IsTrue(foo.ExternalIntegerArray[4] == 504);
-			Assert::IsTrue(foo.ExternalFloatArray[0] == 500.5);
-			Assert::IsTrue(foo.ExternalFloatArray[1] == 501.5);
-			Assert::IsTrue(foo.ExternalFloatArray[2] == 502.5);
-			Assert::IsTrue(foo.ExternalFloatArray[3] == 503.5);
-			Assert::IsTrue(foo.ExternalFloatArray[4] == 504.5);
-			Assert::IsTrue(foo.ExternalStringArray[0] == "500.5");
-			Assert::IsTrue(foo.ExternalStringArray[1] == "501.5");
-			Assert::IsTrue(foo.ExternalStringArray[2] == "502.5");
-			Assert::IsTrue(foo.ExternalStringArray[3] == "503.5");
-			Assert::IsTrue(foo.ExternalStringArray[4] == "504.5");
-			Assert::IsTrue(foo.ExternalVectorArray[0] == vec4(1.f, 1.f, 1.f, 1.f));
-			Assert::IsTrue(foo.ExternalVectorArray[1] == vec4(2.f, 2.f, 2.f, 2.f));
-			Assert::IsTrue(foo.ExternalVectorArray[2] == vec4(3.f, 3.f, 3.f, 3.f));
-			Assert::IsTrue(foo.ExternalVectorArray[3] == vec4(4.f, 4.f, 4.f, 4.f));
-			Assert::IsTrue(foo.ExternalVectorArray[4] == vec4(5.f, 5.f, 5.f, 5.f));
-			Assert::IsTrue(foo.ExternalMatrixArray[0] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f));
-			Assert::IsTrue(foo.ExternalMatrixArray[1] == mat4x4(2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f));
-			Assert::IsTrue(foo.ExternalMatrixArray[2] == mat4x4(3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f));
-			Assert::IsTrue(foo.ExternalMatrixArray[3] == mat4x4(4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f));
-			Assert::IsTrue(foo.ExternalMatrixArray[4] == mat4x4(5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f));
-			//Datum & test1 = foo["ExternalInteger"];
-			//Datum & test = foo["NestedScope"];
-			/*Assert::IsTrue(foo["NestedScope"][0]["NestedInteger"].Front<int>() == 0);
-			Assert::IsTrue(foo["NestedScopeArray"][0]["NestedInteger1"] == 1);
-			Assert::IsTrue(foo["NestedScopeArray"][1]["NestedInteger2"] == 2);
-			Assert::IsTrue(foo["NestedScopeArray"][2]["NestedInteger3"] == 3);
-			Assert::IsTrue(foo["NestedScopeArray"][3]["NestedInteger4"] == 4);
-			Assert::IsTrue(foo["NestedScopeArray"][4]["NestedInteger5"] == 5);*/
+			Assert::IsTrue(foo->ExternalInteger == 500);
+			Assert::IsTrue(foo->ExternalFloat == 500.5);
+			Assert::IsTrue(foo->ExternalString == "500.5");
+			Assert::IsTrue(foo->ExternalVector == vec4(1.f,2.f,3.f,4.f));
+			Assert::IsTrue(foo->ExternalMatrix == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f));
+			Assert::IsTrue(foo->ExternalIntegerArray[0] == 500);
+			Assert::IsTrue(foo->ExternalIntegerArray[1] == 501);
+			Assert::IsTrue(foo->ExternalIntegerArray[2] == 502);
+			Assert::IsTrue(foo->ExternalIntegerArray[3] == 503);
+			Assert::IsTrue(foo->ExternalIntegerArray[4] == 504);
+			Assert::IsTrue(foo->ExternalFloatArray[0] == 500.5);
+			Assert::IsTrue(foo->ExternalFloatArray[1] == 501.5);
+			Assert::IsTrue(foo->ExternalFloatArray[2] == 502.5);
+			Assert::IsTrue(foo->ExternalFloatArray[3] == 503.5);
+			Assert::IsTrue(foo->ExternalFloatArray[4] == 504.5);
+			Assert::IsTrue(foo->ExternalStringArray[0] == "500.5");
+			Assert::IsTrue(foo->ExternalStringArray[1] == "501.5");
+			Assert::IsTrue(foo->ExternalStringArray[2] == "502.5");
+			Assert::IsTrue(foo->ExternalStringArray[3] == "503.5");
+			Assert::IsTrue(foo->ExternalStringArray[4] == "504.5");
+			Assert::IsTrue(foo->ExternalVectorArray[0] == vec4(1.f, 1.f, 1.f, 1.f));
+			Assert::IsTrue(foo->ExternalVectorArray[1] == vec4(2.f, 2.f, 2.f, 2.f));
+			Assert::IsTrue(foo->ExternalVectorArray[2] == vec4(3.f, 3.f, 3.f, 3.f));
+			Assert::IsTrue(foo->ExternalVectorArray[3] == vec4(4.f, 4.f, 4.f, 4.f));
+			Assert::IsTrue(foo->ExternalVectorArray[4] == vec4(5.f, 5.f, 5.f, 5.f));
+			Assert::IsTrue(foo->ExternalMatrixArray[0] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f));
+			Assert::IsTrue(foo->ExternalMatrixArray[1] == mat4x4(2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f));
+			Assert::IsTrue(foo->ExternalMatrixArray[2] == mat4x4(3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f));
+			Assert::IsTrue(foo->ExternalMatrixArray[3] == mat4x4(4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f));
+			Assert::IsTrue(foo->ExternalMatrixArray[4] == mat4x4(5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f));
+			Assert::IsTrue((*foo)["NestedScope"][0]["NestedInteger"] == 0);
+
+			Assert::IsTrue((*foo)["NestedScopeArray"][0].Size() == 1);
+			Assert::IsTrue((*foo)["NestedScopeArray"][0]["NestedInteger1"] == 1);
+			Assert::IsTrue((*foo)["NestedScopeArray"][0]["NestedInteger1"].Size() == 1);
+			
+			Assert::IsTrue((*foo)["NestedScopeArray"][1].Size() == 1);
+			Assert::IsTrue((*foo)["NestedScopeArray"][1]["NestedInteger2"] == 2);
+			Assert::IsTrue((*foo)["NestedScopeArray"][1]["NestedInteger2"].Size() == 1);
+			
+			Assert::IsTrue((*foo)["NestedScopeArray"][2].Size() == 1);
+			Assert::IsTrue((*foo)["NestedScopeArray"][2]["NestedInteger3"] == 3);
+			Assert::IsTrue((*foo)["NestedScopeArray"][2]["NestedInteger3"].Size() == 1);
+			
+			Assert::IsTrue((*foo)["NestedScopeArray"][3].Size() == 1);
+			Assert::IsTrue((*foo)["NestedScopeArray"][3]["NestedInteger4"] == 4);
+			Assert::IsTrue((*foo)["NestedScopeArray"][3]["NestedInteger4"].Size() == 1);
+			
+			Assert::IsTrue((*foo)["NestedScopeArray"][4].Size() == 1);
+			Assert::IsTrue((*foo)["NestedScopeArray"][4]["NestedInteger5"] == 5);
+			Assert::IsTrue((*foo)["NestedScopeArray"][4]["NestedInteger5"].Size() == 1);
 		}
 
 		
 		TEST_METHOD(TestAttributedCloneParse)
 		{
-			AttributedFoo foo;
-			shared_ptr sharedScope = make_shared<Scope>(foo);
+			shared_ptr<Scope> sharedScope = make_shared<AttributedFoo>();
+			AttributedFoo* foo = sharedScope.get()->As<AttributedFoo>();
 			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
 			JsonParseMaster master(sharedData);
 			ScopeJsonParseHelper scopeHelper;
@@ -747,42 +760,42 @@ namespace UnitTestLibraryDesktop
 
 			Assert::IsTrue(master.ParseFromFile("Content/AttributedFoo.json"));
 
-			Assert::IsTrue(foo.ExternalInteger == 500);
-			Assert::IsTrue(foo.ExternalFloat == 500.5);
-			Assert::IsTrue(foo.ExternalString == "500.5");
-			Assert::IsTrue(foo.ExternalVector == vec4(1.f, 2.f, 3.f, 4.f));
-			Assert::IsTrue(foo.ExternalMatrix == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f));
-			Assert::IsTrue(foo.ExternalIntegerArray[0] == 500);
-			Assert::IsTrue(foo.ExternalIntegerArray[1] == 501);
-			Assert::IsTrue(foo.ExternalIntegerArray[2] == 502);
-			Assert::IsTrue(foo.ExternalIntegerArray[3] == 503);
-			Assert::IsTrue(foo.ExternalIntegerArray[4] == 504);
-			Assert::IsTrue(foo.ExternalFloatArray[0] == 500.5);
-			Assert::IsTrue(foo.ExternalFloatArray[1] == 501.5);
-			Assert::IsTrue(foo.ExternalFloatArray[2] == 502.5);
-			Assert::IsTrue(foo.ExternalFloatArray[3] == 503.5);
-			Assert::IsTrue(foo.ExternalFloatArray[4] == 504.5);
-			Assert::IsTrue(foo.ExternalStringArray[0] == "500.5");
-			Assert::IsTrue(foo.ExternalStringArray[1] == "501.5");
-			Assert::IsTrue(foo.ExternalStringArray[2] == "502.5");
-			Assert::IsTrue(foo.ExternalStringArray[3] == "503.5");
-			Assert::IsTrue(foo.ExternalStringArray[4] == "504.5");
-			Assert::IsTrue(foo.ExternalVectorArray[0] == vec4(1.f, 1.f, 1.f, 1.f));
-			Assert::IsTrue(foo.ExternalVectorArray[1] == vec4(2.f, 2.f, 2.f, 2.f));
-			Assert::IsTrue(foo.ExternalVectorArray[2] == vec4(3.f, 3.f, 3.f, 3.f));
-			Assert::IsTrue(foo.ExternalVectorArray[3] == vec4(4.f, 4.f, 4.f, 4.f));
-			Assert::IsTrue(foo.ExternalVectorArray[4] == vec4(5.f, 5.f, 5.f, 5.f));
-			Assert::IsTrue(foo.ExternalMatrixArray[0] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f));
-			Assert::IsTrue(foo.ExternalMatrixArray[1] == mat4x4(2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f));
-			Assert::IsTrue(foo.ExternalMatrixArray[2] == mat4x4(3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f));
-			Assert::IsTrue(foo.ExternalMatrixArray[3] == mat4x4(4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f));
-			Assert::IsTrue(foo.ExternalMatrixArray[4] == mat4x4(5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f));
-			/*Assert::IsTrue(foo["NestedScope"][0]["NestedInteger"].Front<int>() == 0);
-			Assert::IsTrue(foo["NestedScopeArray"][0]["NestedInteger1"] == 1);
-			Assert::IsTrue(foo["NestedScopeArray"][1]["NestedInteger2"] == 2);
-			Assert::IsTrue(foo["NestedScopeArray"][2]["NestedInteger3"] == 3);
-			Assert::IsTrue(foo["NestedScopeArray"][3]["NestedInteger4"] == 4);
-			Assert::IsTrue(foo["NestedScopeArray"][4]["NestedInteger5"] == 5);*/
+			Assert::IsTrue(foo->ExternalInteger == 500);
+			Assert::IsTrue(foo->ExternalFloat == 500.5);
+			Assert::IsTrue(foo->ExternalString == "500.5");
+			Assert::IsTrue(foo->ExternalVector == vec4(1.f, 2.f, 3.f, 4.f));
+			Assert::IsTrue(foo->ExternalMatrix == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f));
+			Assert::IsTrue(foo->ExternalIntegerArray[0] == 500);
+			Assert::IsTrue(foo->ExternalIntegerArray[1] == 501);
+			Assert::IsTrue(foo->ExternalIntegerArray[2] == 502);
+			Assert::IsTrue(foo->ExternalIntegerArray[3] == 503);
+			Assert::IsTrue(foo->ExternalIntegerArray[4] == 504);
+			Assert::IsTrue(foo->ExternalFloatArray[0] == 500.5);
+			Assert::IsTrue(foo->ExternalFloatArray[1] == 501.5);
+			Assert::IsTrue(foo->ExternalFloatArray[2] == 502.5);
+			Assert::IsTrue(foo->ExternalFloatArray[3] == 503.5);
+			Assert::IsTrue(foo->ExternalFloatArray[4] == 504.5);
+			Assert::IsTrue(foo->ExternalStringArray[0] == "500.5");
+			Assert::IsTrue(foo->ExternalStringArray[1] == "501.5");
+			Assert::IsTrue(foo->ExternalStringArray[2] == "502.5");
+			Assert::IsTrue(foo->ExternalStringArray[3] == "503.5");
+			Assert::IsTrue(foo->ExternalStringArray[4] == "504.5");
+			Assert::IsTrue(foo->ExternalVectorArray[0] == vec4(1.f, 1.f, 1.f, 1.f));
+			Assert::IsTrue(foo->ExternalVectorArray[1] == vec4(2.f, 2.f, 2.f, 2.f));
+			Assert::IsTrue(foo->ExternalVectorArray[2] == vec4(3.f, 3.f, 3.f, 3.f));
+			Assert::IsTrue(foo->ExternalVectorArray[3] == vec4(4.f, 4.f, 4.f, 4.f));
+			Assert::IsTrue(foo->ExternalVectorArray[4] == vec4(5.f, 5.f, 5.f, 5.f));
+			Assert::IsTrue(foo->ExternalMatrixArray[0] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f));
+			Assert::IsTrue(foo->ExternalMatrixArray[1] == mat4x4(2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f));
+			Assert::IsTrue(foo->ExternalMatrixArray[2] == mat4x4(3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f));
+			Assert::IsTrue(foo->ExternalMatrixArray[3] == mat4x4(4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f));
+			Assert::IsTrue(foo->ExternalMatrixArray[4] == mat4x4(5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f));
+			Assert::IsTrue((*foo)["NestedScope"][0]["NestedInteger"] == 0);
+			Assert::IsTrue((*foo)["NestedScopeArray"][0]["NestedInteger1"] == 1);
+			Assert::IsTrue((*foo)["NestedScopeArray"][1]["NestedInteger2"] == 2);
+			Assert::IsTrue((*foo)["NestedScopeArray"][2]["NestedInteger3"] == 3);
+			Assert::IsTrue((*foo)["NestedScopeArray"][3]["NestedInteger4"] == 4);
+			Assert::IsTrue((*foo)["NestedScopeArray"][4]["NestedInteger5"] == 5);
 
 			JsonParseMaster* clonedMaster = master.Clone();
 
@@ -791,61 +804,49 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(clonedMaster->ParseFromFile("Content/AttributedFoo.json"));
 			
 			ScopeJsonParseHelper::ScopeSharedData * clonedSharedData = clonedMaster->GetSharedData()->As< ScopeJsonParseHelper::ScopeSharedData>();
-
-			Assert::IsTrue(clonedSharedData->Is(sharedData.TypeIdInstance()));
-
-			/*string sharedDataTypeName = sharedData.TypeName();
-
-			string clonedSharedDataTypeName = clonedSharedData->TypeName();
-
-			Assert::IsTrue(clonedSharedDataTypeName == sharedDataTypeName);*/
-
-
 			
-			/*Scope & clonedFoo = clonedSharedData->GetScope();
+			AttributedFoo * clonedFoo = clonedSharedData->GetScope().As<AttributedFoo>();
 
-			
-			Assert::IsTrue(clonedFoo["ExternalInteger"] == 500);
-			Assert::IsTrue(clonedFoo["ExternalFloat"] == 500.5);
-			Assert::IsTrue(clonedFoo["ExternalString"] == "500.5");
-			Assert::IsTrue(clonedFoo["ExternalVector"] == vec4(1.f, 2.f, 3.f, 4.f));
-			Assert::IsTrue(clonedFoo["ExternalMatrix"] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f));
-			Assert::IsTrue(clonedFoo["ExternalIntegerArray"][0] == 500);
-			Assert::IsTrue(clonedFoo["ExternalIntegerArray"][1] == 501);
-			Assert::IsTrue(clonedFoo["ExternalIntegerArray"][2] == 502);
-			Assert::IsTrue(clonedFoo["ExternalIntegerArray"][3] == 503);
-			Assert::IsTrue(clonedFoo["ExternalIntegerArray"][4] == 504);
-			Assert::IsTrue(clonedFoo["ExternalFloatArray"][0] == 500.5);
-			Assert::IsTrue(clonedFoo["ExternalFloatArray"][1] == 501.5);
-			Assert::IsTrue(clonedFoo["ExternalFloatArray"][2] == 502.5);
-			Assert::IsTrue(clonedFoo["ExternalFloatArray"][3] == 503.5);
-			Assert::IsTrue(clonedFoo["ExternalFloatArray"][4] == 504.5);
-			Assert::IsTrue(clonedFoo["ExternalStringArray"][0] == "500.5");
-			Assert::IsTrue(clonedFoo["ExternalStringArray"][1] == "501.5");
-			Assert::IsTrue(clonedFoo["ExternalStringArray"][2] == "502.5");
-			Assert::IsTrue(clonedFoo["ExternalStringArray"][3] == "503.5");
-			Assert::IsTrue(clonedFoo["ExternalStringArray"][4] == "504.5");
-			Assert::IsTrue(clonedFoo["ExternalVectorArray"][0] == vec4(1.f, 1.f, 1.f, 1.f));
-			Assert::IsTrue(clonedFoo["ExternalVectorArray"][1] == vec4(2.f, 2.f, 2.f, 2.f));
-			Assert::IsTrue(clonedFoo["ExternalVectorArray"][2] == vec4(3.f, 3.f, 3.f, 3.f));
-			Assert::IsTrue(clonedFoo["ExternalVectorArray"][3] == vec4(4.f, 4.f, 4.f, 4.f));
-			Assert::IsTrue(clonedFoo["ExternalVectorArray"][4] == vec4(5.f, 5.f, 5.f, 5.f));
-			Assert::IsTrue(clonedFoo["ExternalMatrixArray"][0] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f));
-			Assert::IsTrue(clonedFoo["ExternalMatrixArray"][1] == mat4x4(2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f));
-			Assert::IsTrue(clonedFoo["ExternalMatrixArray"][2] == mat4x4(3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f));
-			Assert::IsTrue(clonedFoo["ExternalMatrixArray"][3] == mat4x4(4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f));
-			Assert::IsTrue(clonedFoo["ExternalMatrixArray"][4] == mat4x4(5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f));
-			*/
-			
+			Assert::IsNotNull(clonedFoo);
+
+			Assert::IsTrue(clonedFoo->ExternalInteger == 500);
+			Assert::IsTrue(clonedFoo->ExternalFloat == 500.5);
+			Assert::IsTrue(clonedFoo->ExternalString == "500.5");
+			Assert::IsTrue(clonedFoo->ExternalVector == vec4(1.f, 2.f, 3.f, 4.f));
+			Assert::IsTrue(clonedFoo->ExternalMatrix == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f));
+			Assert::IsTrue(clonedFoo->ExternalIntegerArray[0] == 500);
+			Assert::IsTrue(clonedFoo->ExternalIntegerArray[1] == 501);
+			Assert::IsTrue(clonedFoo->ExternalIntegerArray[2] == 502);
+			Assert::IsTrue(clonedFoo->ExternalIntegerArray[3] == 503);
+			Assert::IsTrue(clonedFoo->ExternalIntegerArray[4] == 504);
+			Assert::IsTrue(clonedFoo->ExternalFloatArray[0] == 500.5);
+			Assert::IsTrue(clonedFoo->ExternalFloatArray[1] == 501.5);
+			Assert::IsTrue(clonedFoo->ExternalFloatArray[2] == 502.5);
+			Assert::IsTrue(clonedFoo->ExternalFloatArray[3] == 503.5);
+			Assert::IsTrue(clonedFoo->ExternalFloatArray[4] == 504.5);
+			Assert::IsTrue(clonedFoo->ExternalStringArray[0] == "500.5");
+			Assert::IsTrue(clonedFoo->ExternalStringArray[1] == "501.5");
+			Assert::IsTrue(clonedFoo->ExternalStringArray[2] == "502.5");
+			Assert::IsTrue(clonedFoo->ExternalStringArray[3] == "503.5");
+			Assert::IsTrue(clonedFoo->ExternalStringArray[4] == "504.5");
+			Assert::IsTrue(clonedFoo->ExternalVectorArray[0] == vec4(1.f, 1.f, 1.f, 1.f));
+			Assert::IsTrue(clonedFoo->ExternalVectorArray[1] == vec4(2.f, 2.f, 2.f, 2.f));
+			Assert::IsTrue(clonedFoo->ExternalVectorArray[2] == vec4(3.f, 3.f, 3.f, 3.f));
+			Assert::IsTrue(clonedFoo->ExternalVectorArray[3] == vec4(4.f, 4.f, 4.f, 4.f));
+			Assert::IsTrue(clonedFoo->ExternalVectorArray[4] == vec4(5.f, 5.f, 5.f, 5.f));
+			Assert::IsTrue(clonedFoo->ExternalMatrixArray[0] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f));
+			Assert::IsTrue(clonedFoo->ExternalMatrixArray[1] == mat4x4(2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f));
+			Assert::IsTrue(clonedFoo->ExternalMatrixArray[2] == mat4x4(3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f));
+			Assert::IsTrue(clonedFoo->ExternalMatrixArray[3] == mat4x4(4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f));
+			Assert::IsTrue(clonedFoo->ExternalMatrixArray[4] == mat4x4(5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f));
+			Assert::IsTrue((*clonedFoo)["NestedScope"][0]["NestedInteger"] == 0);
+			Assert::IsTrue((*clonedFoo)["NestedScopeArray"][0]["NestedInteger1"] == 1);
+			Assert::IsTrue((*clonedFoo)["NestedScopeArray"][1]["NestedInteger2"] == 2);
+			Assert::IsTrue((*clonedFoo)["NestedScopeArray"][2]["NestedInteger3"] == 3);
+			Assert::IsTrue((*clonedFoo)["NestedScopeArray"][3]["NestedInteger4"] == 4);
+			Assert::IsTrue((*clonedFoo)["NestedScopeArray"][4]["NestedInteger5"] == 5);
+
 			delete clonedMaster;
-		}
-
-		TEST_METHOD(SimplePolymorphismTest)
-		{
-			AttributedFoo foo;
-			Scope & scopeFoo = foo;
-			Scope & fooClone = *scopeFoo.Clone();
-			delete &fooClone;
 		}
 		
 

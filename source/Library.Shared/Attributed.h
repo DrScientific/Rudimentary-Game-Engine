@@ -42,10 +42,10 @@ namespace FIEAGameEngine
 		Attributed(IdType id);
 
 		/// <summary>
-		/// Attributed move constructor
+		/// Attributed copy constructor
 		/// </summary>
-		/// <param name="other"></param>
-		Attributed(Attributed && other);
+		/// <param name="other">Object we wish to construct a copy from.</param>
+		Attributed(Attributed const & other);
 
 		/// <summary>
 		/// Assignment operator
@@ -54,10 +54,10 @@ namespace FIEAGameEngine
 		Attributed & operator=(Attributed const & other);
 
 		/// <summary>
-		/// Attributed copy constructor
+		/// Attributed move constructor
 		/// </summary>
-		/// <param name="other">Object we wish to construct a copy from.</param>
-		Attributed(Attributed const & other);
+		/// <param name="other"></param>
+		Attributed(Attributed && other);
 
 		/// <summary>
 		/// Move assignment operator

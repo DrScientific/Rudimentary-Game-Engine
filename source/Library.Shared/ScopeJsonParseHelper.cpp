@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ScopeJsonParseHelper.h"
 #include "Scope.h"
+#include "Factory.h"
 #include "json/json.h"
 
 using namespace std;
@@ -25,6 +26,11 @@ namespace FIEAGameEngine
 
 	ScopeJsonParseHelper::StackFrame::StackFrame(string const key, Datum::DatumType type, Scope * contextFrame) :
 		Key(key), Type(type), ContextFrame(contextFrame)
+	{
+	}
+
+	ScopeJsonParseHelper::StackFrame::StackFrame(std::string const key, Datum::DatumType type, std::string scopeClass, Scope * contextFrame) :
+		Key(key), Type(type), Class(scopeClass), ContextFrame(contextFrame)
 	{
 	}
 
@@ -55,7 +61,6 @@ namespace FIEAGameEngine
 
 	bool ScopeJsonParseHelper::StartHandler(JsonParseMaster::SharedData  * const sharedData, string const & key, Json::Value const & jsonValue, bool const & isArrayElement, size_t const & index)
 	{
-		isArrayElement;
 		ScopeJsonParseHelper::ScopeSharedData * scopeSharedData = sharedData->As< ScopeJsonParseHelper::ScopeSharedData>();
 
 		if (scopeSharedData == nullptr || key.empty())
@@ -80,6 +85,11 @@ namespace FIEAGameEngine
 		}
 		else
 		{
+			if (key == "class")
+			{
+				stack.Top().Class = jsonValue.asString();
+				return true;
+			}
 			if (key == "type")
 			{
 				Datum::DatumType datumType = stringToTypeMap.At(jsonValue.asString());
@@ -91,15 +101,35 @@ namespace FIEAGameEngine
 			{
 				if ((*(stack.Top().ContextFrame))[stack.Top().Key].IsInternal())
 				{
-					if (jsonValue.isObject())
+					if (jsonValue.isObject() )
 					{
-						if (isArrayElement)
+						Scope * newScope = nullptr;
+						if (stack.Top().Class.length() != 0 && stack.Top().Type != Datum::DatumType::Scope)
 						{
-							stack.Push(StackFrame(key, Datum::DatumType::Scope, &stack.Top().ContextFrame->AppendScope(stack.Top().Key)));
+							throw exception(classMustBeTypeScopeText.c_str());
+						}
+						else if (stack.Top().Class.length() != 0)
+						{
+							newScope = Factory<Scope>::Create(stack.Top().Class);
 						}
 						else
 						{
-							stack.Top().ContextFrame = &stack.Top().ContextFrame->AppendScope(stack.Top().Key);
+							newScope = new Scope();
+						}
+
+						stack.Top().ContextFrame->Adopt(*newScope, stack.Top().Key);
+
+						if (isArrayElement)
+						{
+							//stack.Push(StackFrame(key, Datum::DatumType::Scope, &stack.Top().ContextFrame->AppendScope(stack.Top().Key)));
+							stack.Push(StackFrame(key, Datum::DatumType::Scope, stack.Top().Class, newScope));
+							
+						}
+						else
+						{
+							//stack.Top().ContextFrame = &stack.Top().ContextFrame->AppendScope(stack.Top().Key);
+							stack.Top().ContextFrame = newScope;
+							
 						}
 						return true;
 					}

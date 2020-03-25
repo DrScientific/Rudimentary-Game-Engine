@@ -109,11 +109,11 @@ namespace FIEAGameEngine
 		Scope & AppendScope(std::string const & key);
 
 		/// <summary>
-		/// Adopts an existiing scope placing it at the provided key. Removes the scope from it's previous parent.
+		/// Adopts an existing scope placing it at the provided key. Removes the scope from it's previous parent.
 		/// </summary>
 		/// <param name="child">Scope to adopt.</param>
 		/// <param name="newChildKey">Key to place the newly adopted scope at.</param>
-		void Adopt(Scope & child, std::string const & newChildKey);
+		virtual void Adopt(Scope & child, std::string const & newChildKey);
 
 		/// <summary>
 		/// Returns the parent of this scope.

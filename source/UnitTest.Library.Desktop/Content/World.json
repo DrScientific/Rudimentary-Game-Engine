@@ -1,0 +1,360 @@
+{
+  "Name": {
+    "type": "string",
+    "value": "Test World"
+  },
+  "IsAwake": {
+    "type": "integer",
+    "value": 1
+  },
+  "Sectors": {
+    "type": "scope",
+	"class": "Sector",
+    "value": [
+      {
+        "Sector A": {
+          "type": "scope",
+          "class": "Sector",
+          "value": {
+            "IsAwake": {
+              "type": "integer",
+              "value": 1
+            },
+            "Name": {
+              "type": "string",
+              "value": "Sector A"
+            },
+            "Entities": {
+              "type": "scope",
+			  "class": "Entity",
+              "value": [
+                {
+                  "Entity A1": {
+                    "type": "scope",
+                    "class": "Entity",
+                    "value": {
+                      "Name": {
+                        "type": "string",
+                        "value": "Entity A1"
+                      },
+                      "IsAwake": {
+                        "type": "integer",
+                        "value": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "Entity A2": {
+                    "type": "scope",
+                    "class": "Entity",
+                    "value": {
+                      "Name": {
+                        "type": "string",
+                        "value": "Entity A2"
+                      },
+                      "IsAwake": {
+                        "type": "integer",
+                        "value": 0
+                      }
+                    }
+                  }
+                },
+                {
+                  "Entity A3": {
+                    "type": "scope",
+                    "class": "Entity",
+                    "value": {
+                      "Name": {
+                        "type": "string",
+                        "value": "Entity A3"
+                      },
+                      "IsAwake": {
+                        "type": "integer",
+                        "value": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "Entity A4": {
+                    "type": "scope",
+                    "class": "Entity",
+                    "value": {
+                      "Name": {
+                        "type": "string",
+                        "value": "Entity A4"
+                      },
+                      "IsAwake": {
+                        "type": "integer",
+                        "value": 0
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "Sector B": {
+          "type": "scope",
+          "class": "Sector",
+          "value": {
+            "IsAwake": {
+              "type": "integer",
+              "value": 1
+            },
+            "Name": {
+              "type": "string",
+              "value": "Sector B"
+            },
+            "Entities": {
+              "type": "scope",
+			  "class": "Entity",
+              "value": [
+                {
+                  "Entity B1": {
+                    "type": "scope",
+                    "class": "Entity",
+                    "value": {
+                      "Name": {
+                        "type": "string",
+                        "value": "Entity B1"
+                      },
+                      "IsAwake": {
+                        "type": "integer",
+                        "value": 0
+                      }
+                    }
+                  }
+                },
+                {
+                  "Entity B2": {
+                    "type": "scope",
+                    "class": "Entity",
+                    "value": {
+                      "Name": {
+                        "type": "string",
+                        "value": "Entity B2"
+                      },
+                      "IsAwake": {
+                        "type": "integer",
+                        "value": 0
+                      }
+                    }
+                  }
+                },
+                {
+                  "Entity B3": {
+                    "type": "scope",
+                    "class": "Entity",
+                    "value": {
+                      "Name": {
+                        "type": "string",
+                        "value": "Entity B3"
+                      },
+                      "IsAwake": {
+                        "type": "integer",
+                        "value": 0
+                      }
+                    }
+                  }
+                },
+                {
+                  "Entity B4": {
+                    "type": "scope",
+                    "class": "Entity",
+                    "value": {
+                      "Name": {
+                        "type": "string",
+                        "value": "Entity B4"
+                      },
+                      "IsAwake": {
+                        "type": "integer",
+                        "value": 0
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "Sector C": {
+          "type": "scope",
+          "class": "Sector",
+          "value": {
+            "IsAwake": {
+              "type": "integer",
+              "value": 0
+            },
+            "Name": {
+              "type": "string",
+              "value": "Sector C"
+            },
+            "Entities": {
+              "type": "scope",
+			  "class": "Entity",
+              "value": [
+                {
+                  "Entity C1": {
+                    "type": "scope",
+                    "class": "Entity",
+                    "value": {
+                      "Name": {
+                        "type": "string",
+                        "value": "Entity C1"
+                      },
+                      "IsAwake": {
+                        "type": "integer",
+                        "value": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "Entity C2": {
+                    "type": "scope",
+                    "class": "Entity",
+                    "value": {
+                      "Name": {
+                        "type": "string",
+                        "value": "Entity C2"
+                      },
+                      "IsAwake": {
+                        "type": "integer",
+                        "value": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "Entity C3": {
+                    "type": "scope",
+                    "class": "Entity",
+                    "value": {
+                      "Name": {
+                        "type": "string",
+                        "value": "Entity C3"
+                      },
+                      "IsAwake": {
+                        "type": "integer",
+                        "value": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "Entity C4": {
+                    "type": "scope",
+                    "class": "Entity",
+                    "value": {
+                      "Name": {
+                        "type": "string",
+                        "value": "Entity C4"
+                      },
+                      "IsAwake": {
+                        "type": "integer",
+                        "value": 1
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "Sector D": {
+          "type": "scope",
+          "class": "Sector",
+          "value": {
+            "IsAwake": {
+              "type": "integer",
+              "value": 0
+            },
+            "Name": {
+              "type": "string",
+              "value": "Sector D"
+            },
+            "Entities": {
+              "type": "scope",
+			  "class": "Entity",
+              "value": [
+                {
+                  "Entity D1": {
+                    "type": "scope",
+                    "class": "Entity",
+                    "value": {
+                      "Name": {
+                        "type": "string",
+                        "value": "Entity D1"
+                      },
+                      "IsAwake": {
+                        "type": "integer",
+                        "value": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "Entity D2": {
+                    "type": "scope",
+                    "class": "Entity",
+                    "value": {
+                      "Name": {
+                        "type": "string",
+                        "value": "Entity D2"
+                      },
+                      "IsAwake": {
+                        "type": "integer",
+                        "value": 0
+                      }
+                    }
+                  }
+                },
+                {
+                  "Entity D3": {
+                    "type": "scope",
+                    "class": "Entity",
+                    "value": {
+                      "Name": {
+                        "type": "string",
+                        "value": "Entity D3"
+                      },
+                      "IsAwake": {
+                        "type": "integer",
+                        "value": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "Entity D4": {
+                    "type": "scope",
+                    "class": "Entity",
+                    "value": {
+                      "Name": {
+                        "type": "string",
+                        "value": "Entity D4"
+                      },
+                      "IsAwake": {
+                        "type": "integer",
+                        "value": 0
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

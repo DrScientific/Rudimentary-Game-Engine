@@ -33,6 +33,14 @@ namespace FIEAGameEngine
 			StackFrame(std::string const key, Datum::DatumType type, Scope* contextFrame);
 
 			/// <summary>
+			/// Constructs a new stack frame
+			/// </summary>
+			/// <param name="key">Key of the current datum</param>
+			/// <param name="type">Datum type of the datum that corresponds to the key</param>
+			/// <param name="contextFrame">Scope context we are currently in.</param>
+			StackFrame(std::string const key, Datum::DatumType type, std::string scopeClass, Scope* contextFrame);
+
+			/// <summary>
 			/// Key of the current datum
 			/// </summary>
 			string const Key;
@@ -42,6 +50,11 @@ namespace FIEAGameEngine
 			/// </summary>
 			Datum::DatumType Type;
 			
+			/// <summary>
+			/// 
+			/// </summary>
+			std::string Class;
+
 			/// <summary>
 			/// Scope context we are currently in.
 			/// </summary>
@@ -140,5 +153,10 @@ namespace FIEAGameEngine
 		/// Static constant hashmap used to convert strings to datum types.
 		/// </summary>
 		static HashMap<std::string const, Datum::DatumType> const stringToTypeMap;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		inline static const std::string classMustBeTypeScopeText = "An attribute with a class field must be of type scope.\n";
 	};
 }

@@ -13,16 +13,6 @@ using namespace UnitTests;
 namespace UnitTestLibraryDesktop
 {
 	
-	TEST_MODULE_INITIALIZE(AddAttributedFooToTypeManager)
-	{
-		TypeManager::GetTypeManager().RegisterType(AttributedFoo::TypeIdClass(), AttributedFoo::Signatures());
-	}
-
-	TEST_MODULE_CLEANUP(ClearTypeManager)
-	{
-		TypeManager::GetTypeManager().Clear();
-	}
-	
 	TEST_CLASS(AttributedFooTest)
 	{
 	public:

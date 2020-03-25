@@ -13,7 +13,7 @@ namespace FIEAGameEngine
 	inline Factory<AbstractProductT> const * Factory<AbstractProductT>::Find(std::string const & className)
 	{
 		Factory<AbstractProductT> const * foundPtr = nullptr;
-		HashMap<std::string const, Factory<AbstractProductT> const * >::Iterator foundIt = sFactoryTable.Find(className);
+		typename HashMap<std::string const, Factory<AbstractProductT> const * >::Iterator foundIt = sFactoryTable.Find(className);
 		if (foundIt != sFactoryTable.end())
 		{
 			foundPtr = (*foundIt).second;
