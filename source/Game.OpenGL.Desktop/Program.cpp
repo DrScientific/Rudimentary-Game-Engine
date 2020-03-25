@@ -1,6 +1,5 @@
 #include "pch.h"
-#include "Foo.h"
-#include "Monster.h"
+
 
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR commandLine, int showCommand)
 {
@@ -8,12 +7,6 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR command
 	UNREFERENCED_PARAMETER(previousInstance);
 	UNREFERENCED_PARAMETER(commandLine);
 	UNREFERENCED_PARAMETER(showCommand);
-
-	FIEAGameEngine::Foo bar;
-	bar;
-
-	Monster rathalos;
-	rathalos;
 
 	const glm::vec4 CornflowerBlue = glm::vec4(0.392f, 0.584f, 0.929f, 1.0f);
 

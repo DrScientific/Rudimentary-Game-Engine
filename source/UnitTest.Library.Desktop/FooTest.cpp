@@ -1,9 +1,14 @@
+#pragma once
+/// /// <summary>
+/// 
+/// </summary>
+
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "Foo.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-using namespace FIEAGameEngine;
+using namespace UnitTests;
 
 namespace UnitTestLibraryDesktop
 {
@@ -39,7 +44,45 @@ namespace UnitTestLibraryDesktop
 			const int data = 10;
 			Foo b(data);
 			Assert::AreEqual(data, b.Data());
+			
 		}
+		TEST_METHOD(TestAssignmentOperator)
+		{
+			Foo a;
+			Assert::AreEqual(0, a.Data());
+
+			const int data = 10;
+			Foo b(data);
+			Assert::AreEqual(data, b.Data());
+
+			Assert::AreNotEqual(a.Data(), b.Data());
+
+			a = b;
+			Assert::AreEqual(a.Data(), b.Data());
+		}
+
+		TEST_METHOD(TestEquivalenceOperators)
+		{
+			Foo a;
+			Assert::AreEqual(0, a.Data());
+
+			const int data = 10;
+			Foo b(data);
+			Assert::AreEqual(data, b.Data());
+
+			Assert::AreNotEqual(a.Data(), b.Data());
+			Assert::IsFalse(a == b);
+			Assert::IsTrue(a != b);
+
+			a = b;
+			Assert::AreEqual(a.Data(), b.Data());
+
+			Assert::IsTrue(a == b);
+			Assert::IsFalse(a != b);
+
+		}
+
+		
 
 	private:
 		static _CrtMemState sStartMemState;

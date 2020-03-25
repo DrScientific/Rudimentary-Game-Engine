@@ -13,10 +13,4 @@
   <ItemGroup>
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Monster.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Monster.cpp" />
-  </ItemGroup>
 </Project>

@@ -1,6 +1,4 @@
 #include "pch.h"
-#include "Foo.h"
-#include "Monster.h"
 
 using namespace std;
 using namespace DirectX;
@@ -33,12 +31,6 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR command
 
 	ThrowIfFailed(CoInitializeEx(nullptr, COINITBASE_MULTITHREADED), "Error initializing COM.");
 
-	FIEAGameEngine::Foo bar;
-	bar;
-	
-
-	Monster rathalos;
-	rathalos;
 
 #if defined(DEBUG) | defined(_DEBUG)
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
