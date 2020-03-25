@@ -256,11 +256,11 @@ namespace FIEAGameEngine
 	{
 		const_Iterator indexFound = cend();
 		SList<T>::const_Iterator it = cbegin();
-		for (; it < end(); i++)
+		for (; it < end(); it++)
 		{
-			if (*i == value)
+			if (*it == value)
 			{
-				indexFound = i;
+				indexFound = it;
 			}
 		}
 		return indexFound;

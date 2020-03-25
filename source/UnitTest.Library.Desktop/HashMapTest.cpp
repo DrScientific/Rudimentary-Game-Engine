@@ -64,6 +64,7 @@ namespace UnitTestLibraryDesktop
 			HashMapCharFoo::Iterator charFooBeginning = charFooHashMap.begin();
 			HashMapCharFoo::Iterator ending = charFooHashMap.end();
 			HashMapCharFoo::const_Iterator charFooCBeginning = charFooHashMap.cbegin();
+			HashMapCharFoo::const_Iterator charFooCBeginningAssignment = charFooBeginning;
 			HashMapCharFoo::const_Iterator charFooCEnding = charFooHashMap.cend();
 
 			Assert::IsTrue(charFooBeginning == ending);
@@ -71,7 +72,8 @@ namespace UnitTestLibraryDesktop
 
 			auto charFooDereferenceEndException = [&charFooHashMap] { *charFooHashMap.end(); };
 			auto charFooArrowOperatorEndException = [&charFooHashMap] { charFooHashMap.end()->first; };
-			auto charFooIncrementPastEndException = [&charFooHashMap] { ++charFooHashMap.end(); };
+			auto charFooPreIncrementPastEndException = [&charFooHashMap] { ++charFooHashMap.end(); };
+			auto charFooPostIncrementPastEndException = [&charFooHashMap] { charFooHashMap.end()++; };
 			auto charFooBeginEqualEndAndIncrementPastEndException = [&charFooHashMap] { ++charFooHashMap.begin(); };
 			auto charFooDereferenceCEndException = [&charFooHashMap] { *charFooHashMap.cend(); };
 			auto charFooIncrementPastCEndException = [&charFooHashMap] { ++charFooHashMap.cend(); };
@@ -79,7 +81,8 @@ namespace UnitTestLibraryDesktop
 
 			Assert::ExpectException<std::exception>(charFooDereferenceEndException);
 			Assert::ExpectException<std::exception>(charFooArrowOperatorEndException);
-			Assert::ExpectException<std::exception>(charFooIncrementPastEndException);
+			Assert::ExpectException<std::exception>(charFooPreIncrementPastEndException);
+			Assert::ExpectException<std::exception>(charFooPostIncrementPastEndException);
 			Assert::ExpectException<std::exception>(charFooBeginEqualEndAndIncrementPastEndException);
 			Assert::ExpectException<std::exception>(charFooDereferenceCEndException );
 			Assert::ExpectException<std::exception>(charFooIncrementPastCEndException);
@@ -378,9 +381,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(charFooHashMap.Size() == 0);
 			charFooHashMap["Up"];
 			Assert::IsTrue(charFooHashMap.Size() == 1);
-			Foo a = charFooHashMap.Find("Up")->second;
-			Foo b = charFooHashMap["Up"];
-			Assert::IsTrue(a == b);
+			Assert::IsTrue(charFooHashMap.Find("Up")->second == charFooHashMap["Up"]);
 			charFooHashMap["Down"];
 			Assert::IsTrue(charFooHashMap.Size() == 2);
 			Assert::IsTrue(charFooHashMap.Find("Down")->second == charFooHashMap["Down"]);
@@ -395,6 +396,8 @@ namespace UnitTestLibraryDesktop
 			charFooHashMap["Start"];
 			Assert::IsTrue(charFooHashMap.Find("Start")->second == charFooHashMap["Start"]);
 			Assert::IsTrue(charFooHashMap.Size() == 5);
+
+			
 
 			HashMapFooString fooStringHashMap;
 			Assert::IsTrue(fooStringHashMap.Size() == 0);
@@ -451,6 +454,8 @@ namespace UnitTestLibraryDesktop
 			Assert::ExpectException<std::exception>(fooStringAtException);
 			fooStringHashMap[Foo(1)];
 			fooStringHashMap.At(Foo(1));
+			HashMapFooString constFooStringHashMap = *const_cast<HashMapFooString*>(&fooStringHashMap);
+			constFooStringHashMap.At(Foo(1));
 			Assert::IsTrue(fooStringHashMap[Foo(1)] == fooStringHashMap.At(Foo(1)));
 
 			HashMapString2 string2HashMap;

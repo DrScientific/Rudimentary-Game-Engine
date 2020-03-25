@@ -224,7 +224,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
-		explicit HashMap(size_t const & numBuckets = 1000);
+		explicit HashMap(size_t const & numBuckets = 256);
 
 		/// <summary>
 		/// Initializer list constructor.
@@ -312,7 +312,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="keyDataPair">A key-data pair which will hash key to find an empty index and store the key-data pair at that location. </param>
 		/// <returns>An Iterator to the inserted key-data pair.</returns>
-		Iterator Insert(PairType const & keyDataPair);
+		pair <bool, Iterator> Insert(PairType const & keyDataPair);
 
 		/// <summary>
 		/// Inserts the pair at the index mapped to by the hashed key. If the pair already exists then an Iterator to the pair is returned.
@@ -320,7 +320,7 @@ namespace FIEAGameEngine
 		/// <param name="key">A key which will be hashed to find an empty index and store the key-data pair at that location.</param>
 		/// <param name="data">Data to store at the hashed key index.</param>
 		/// <returns>An Iterator to the inserted key-data pair.</returns>
-		Iterator Insert(TKey const & key, TData const & data);
+		pair <bool, Iterator>  Insert(TKey const & key, TData const & data);
 
 		/// <summary>
 		/// Returns the data stored in the key-data pair stored in the HashMap at the passed in key. If no key-data pair exists inserts a key-data pair into the HashMap where the key is th passed in key and the data is the default constructor of the data type.
@@ -348,14 +348,14 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs"></param>
 		/// <returns></returns>
-		bool operator==(HashMap const & rhs);
+		bool operator==(HashMap const & rhs) const;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="rhs"></param>
 		/// <returns></returns>
-		bool operator!=(HashMap const & rhs);
+		bool operator!=(HashMap const & rhs) const;
 
 		/// <summary>
 		/// Removes the key-data pair stored at the index mapped to by the hashed key. If the key-data pair is not in the HashMap do nothing.
@@ -396,6 +396,7 @@ namespace FIEAGameEngine
 
 		
 	private:
+
 		/// <summary>
 		/// Vector where each index stores an SList.
 		/// </summary>
@@ -411,6 +412,14 @@ namespace FIEAGameEngine
 		/// </summary>
 		HashFunctor const mHash;
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		size_t HashKey(TKey const & key) const;
+
 		/// <summary>
 		/// 
 		/// </summary>

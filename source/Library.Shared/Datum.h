@@ -8,10 +8,8 @@
 
 #pragma warning(push)
 #pragma warning(disable: 4201)
-#include "glm/glm.hpp"
-#include "glm/gtx/string_cast.hpp"
+#include "glm/fwd.hpp"
 #pragma warning(pop)
-#include "RTTI.h"
 
 #include <string>
 
@@ -21,6 +19,7 @@ using namespace glm;
 namespace FIEAGameEngine
 {
 	class Scope;
+	class RTTI;
 
 	/// <summary>
 	/// Datum is a runtime dynamicly sized array.
@@ -43,6 +42,7 @@ namespace FIEAGameEngine
 	class Datum final
 	{
 	public:
+		friend class Scope;
 
 #pragma region DiscriminatedUnion
 		/// <summary>
@@ -55,7 +55,7 @@ namespace FIEAGameEngine
 			Float,
 			Vector4,
 			Matrix4x4,
-			Table,
+			Scope,
 			String,
 			RTTIPtr,
 			END
@@ -121,13 +121,13 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">Mat4x4 we wish our datum to store</param>
 		Datum(mat4x4 const & other);
-
+	private:
 		/// <summary>
 		/// Datum to Scope copy constructor.
 		/// </summary>
 		/// <param name="other">Scope we wish our datum to store</param>
-		Datum(Scope* const & other);
-
+		Datum(Scope const & other);
+	public:
 		/// <summary>
 		/// Datum to string copy constructor.
 		/// </summary>
@@ -182,14 +182,15 @@ namespace FIEAGameEngine
 		/// <returns>Datum on the left hand side of the assignment operator.</returns>
 		Datum& operator= (mat4x4 const & rhs);
 
-		///// <summary>
-		///// Datum to Scope* assignment operator.
-		///// Sets datum size to 1 and clears all elements previously stored in datum.
-		///// </summary>
-		///// <param name="rhs"></param>
-		///// <returns>Datum on the left hand side of the assignment operator.</returns>
-		//Datum& operator= (Scope* const & rhs);
-
+	private:
+		/// <summary>
+		/// Datum to Scope* assignment operator.
+		/// Sets datum size to 1 and clears all elements previously stored in datum.
+		/// </summary>
+		/// <param name="rhs"></param>
+		/// <returns>Datum on the left hand side of the assignment operator.</returns>
+		Datum& operator= (Scope const & rhs);
+	public:
 		/// <summary>
 		/// Datum to string assignment operator.
 		/// Sets datum size to 1 and clears all elements previously stored in datum.
@@ -236,7 +237,7 @@ namespace FIEAGameEngine
 		/// Populates datum with all elements in the initializer list.
 		/// </summary>
 		/// <param name="iList">Scope* initializer list</param>
-		Datum(initializer_list<Scope*> const & iList);
+		Datum(initializer_list<Scope> const & iList);
 
 		/// <summary>
 		/// Populates datum with all elements in the initializer list.
@@ -289,7 +290,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">Datum to compare to.</param>
 		/// <returns>Whether the datum and datum are equal.</returns>
-		bool operator == (Datum const & rhs) const;
+		bool operator== (Datum const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to an integer.
@@ -297,7 +298,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">Integer to compare to.</param>
 		/// <returns>Whether the datum and int are equal.</returns>
-		bool operator == (int const & rhs) const;
+		bool operator== (int const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to a float.
@@ -305,7 +306,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">Float to compare to.</param>
 		/// <returns>Whether the datum and float are equal.</returns>
-		bool operator == (float const & rhs) const;
+		bool operator== (float const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to a vec4.
@@ -313,7 +314,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">Vec4 to compare to.</param>
 		/// <returns>Whether the datum and vec4 are equal.</returns>
-		bool operator == (vec4 const & rhs) const;
+		bool operator== (vec4 const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to a mat4x4.
@@ -321,7 +322,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">Mat4x4 to compare to.</param>
 		/// <returns>Whether the datum and mat4x4 are equal.</returns>
-		bool operator == (mat4x4 const & rhs) const;
+		bool operator== (mat4x4 const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to a string.
@@ -329,7 +330,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">String to compare to.</param>
 		/// <returns>Whether the datum and string are equal.</returns>
-		bool operator == (string const & rhs) const;
+		bool operator== (string const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to an RTTI*.
@@ -337,14 +338,14 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">RTTI* to compare to.</param>
 		/// <returns>Whether the datum and RTTI* are equal.</returns>
-		bool operator == (RTTI * const & rhs) const;
+		bool operator== (RTTI * const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to a datum.
 		/// </summary>
 		/// <param name="rhs">Datum to compare to.</param>
 		/// <returns>Whether the datum and datum are not equal.</returns>
-		bool operator != (Datum const & rhs) const;
+		bool operator!= (Datum const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to an integer.
@@ -352,7 +353,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">Integer to compare to.</param>
 		/// <returns>Whether the datum and int are not equal.</returns>
-		bool operator != (int const & rhs) const;
+		bool operator!= (int const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to a float.
@@ -360,7 +361,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">Float to compare to.</param>
 		/// <returns>Whether the datum and float are not equal.</returns>
-		bool operator != (float const & rhs) const;
+		bool operator!= (float const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to a vec4.
@@ -368,7 +369,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">Vec4 to compare to.</param>
 		/// <returns>Whether the datum and vec4 are not equal.</returns>
-		bool operator != (vec4 const & rhs) const;
+		bool operator!= (vec4 const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to a mat4x4.
@@ -376,7 +377,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">Mat4x4 to compare to.</param>
 		/// <returns>Whether the datum and mat4x4 are not equal.</returns>
-		bool operator != (mat4x4 const & rhs) const;
+		bool operator!= (mat4x4 const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to a string.
@@ -384,7 +385,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">String to compare to.</param>
 		/// <returns>Whether the datum and string are not equal.</returns>
-		bool operator != (string const & rhs) const;
+		bool operator!= (string const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to an RTTI*.
@@ -392,7 +393,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">RTTI* to compare to.</param>
 		/// <returns>Whether the datum and RTTI* are not equal.</returns>
-		bool operator != (RTTI * const & rhs) const;
+		bool operator!= (RTTI * const & rhs) const;
 #pragma endregion
 
 #pragma region operator[]
@@ -446,7 +447,7 @@ namespace FIEAGameEngine
 #pragma region SetStorage
 		/// <summary>
 		/// Sets the datum to external storage, overlaying an existing array.
-		/// Size, capacity, and type become immutable. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
+		/// Size, capacity, and type become immuScope. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
 		/// </summary>
 		/// <param name="data">Int pointer to overlay.</param>
 		/// <param name="size">Number of ints to overlay.</param>
@@ -454,7 +455,7 @@ namespace FIEAGameEngine
 
 		/// <summary>
 		/// Sets the datum to external storage, overlaying an existing array.
-		/// Size, capacity, and type become immutable. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
+		/// Size, capacity, and type become immuScope. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
 		/// </summary>
 		/// <param name="data">Float pointer to overlay.</param>
 		/// <param name="size">Number of floats to overlay.</param>
@@ -462,7 +463,7 @@ namespace FIEAGameEngine
 
 		/// <summary>
 		/// Sets the datum to external storage, overlaying an existing array.
-		/// Size, capacity, and type become immutable. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
+		/// Size, capacity, and type become immuScope. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
 		/// </summary>
 		/// <param name="data">Vec4 pointer to overlay.</param>
 		/// <param name="size">Number of vec4s to overlay.</param>
@@ -470,7 +471,7 @@ namespace FIEAGameEngine
 
 		/// <summary>
 		/// Sets the datum to external storage, overlaying an existing array.
-		/// Size, capacity, and type become immutable. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
+		/// Size, capacity, and type become immuScope. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
 		/// </summary>
 		/// <param name="data">Mat4x4 pointer to overlay.</param>
 		/// <param name="size">Number of mat4x4s to overlay.</param>
@@ -480,7 +481,7 @@ namespace FIEAGameEngine
 
 		/// <summary>
 		/// Sets the datum to external storage, overlaying an existing array.
-		/// Size, capacity, and type become immutable. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
+		/// Size, capacity, and type become immuScope. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
 		/// </summary>
 		/// <param name="data">String pointer to overlay.</param>
 		/// <param name="size">Number of strings to overlay.</param>
@@ -488,7 +489,7 @@ namespace FIEAGameEngine
 
 		/// <summary>
 		/// Sets the datum to external storage, overlaying an existing array.
-		/// Size, capacity, and type become immutable. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
+		/// Size, capacity, and type become immuScope. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
 		/// </summary>
 		/// <param name="data">RTTI* pointer to overlay.</param>
 		/// <param name="size">Number of RTTI*s to overlay.</param>
@@ -537,7 +538,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="value">Value to set data to.</param>
 		/// <param name="index">Index to set to value.</param>
-		void Set(Scope* const & value, size_t const & index = 0);
+		void Set(Scope const & value, size_t const & index = 0);
 
 		/// <summary>
 		/// Sets data at the given index to the given value.
@@ -644,43 +645,43 @@ namespace FIEAGameEngine
 		/// Increases the datum's size by one and places the given value at the back of the datum.
 		/// </summary>
 		/// <param name="value">Value to push back.</param>
-		void PushBack(int const & value);
+		int & PushBack(int const & value);
 
 		/// <summary>
 		/// Increases the datum's size by one and places the given value at the back of the datum.
 		/// </summary>
 		/// <param name="value">Value to push back.</param>
-		void PushBack(float const & value);
+		float & PushBack(float const & value);
 
 		/// <summary>
 		/// Increases the datum's size by one and places the given value at the back of the datum.
 		/// </summary>
 		/// <param name="value">Value to push back.</param>
-		void PushBack(vec4 const & value);
+		vec4 & PushBack(vec4 const & value);
 
 		/// <summary>
 		/// Increases the datum's size by one and places the given value at the back of the datum.
 		/// </summary>
 		/// <param name="value">Value to push back.</param>
-		void PushBack(mat4x4 const & value);
+		mat4x4 & PushBack(mat4x4 const & value);
+	private:
+		/// <summary>
+		/// Increases the datum's size by one and places the given value at the back of the datum.
+		/// </summary>
+		/// <param name="value">Value to push back.</param>
+		Scope* & PushBack(Scope const & value);
+	public:
+		/// <summary>
+		/// Increases the datum's size by one and places the given value at the back of the datum.
+		/// </summary>
+		/// <param name="value">Value to push back.</param>
+		string & PushBack(string const & value);
 
 		/// <summary>
 		/// Increases the datum's size by one and places the given value at the back of the datum.
 		/// </summary>
 		/// <param name="value">Value to push back.</param>
-		void PushBack(Scope* const & value);
-
-		/// <summary>
-		/// Increases the datum's size by one and places the given value at the back of the datum.
-		/// </summary>
-		/// <param name="value">Value to push back.</param>
-		void PushBack(string const & value);
-
-		/// <summary>
-		/// Increases the datum's size by one and places the given value at the back of the datum.
-		/// </summary>
-		/// <param name="value">Value to push back.</param>
-		void PushBack(RTTI * const & value);
+		RTTI* & PushBack(RTTI * const & value);
 #pragma endregion
 
 #pragma region PopBack
@@ -837,12 +838,6 @@ namespace FIEAGameEngine
 		/// Removes the passed in value from the datum if it exists.
 		/// </summary>
 		/// <param name="value">Value to remove.</param>
-		void Remove(Scope* const & value);
-
-		/// <summary>
-		/// Removes the passed in value from the datum if it exists.
-		/// </summary>
-		/// <param name="value">Value to remove.</param>
 		void Remove(string const & value);
 
 		/// <summary>
@@ -904,7 +899,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="searchedValue">Value to search the datum for.</param>
 		/// <returns>A pair with the first element relaying whether the value was found and the second element as a pointer to the found value.</returns>
-		pair<bool, Scope**> Find(Scope* const & searchedValue) const;
+		pair<bool, Scope**> Find(Scope const & searchedValue) const;
 
 		/// <summary>
 		/// Searches the datum for a given value.
@@ -933,7 +928,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="templatedPtr">A pointer of the type the datum is.</param>
 		/// <param name="newSize">New size of the datum</param>
-		template<typename T> void ResizeTemplated(T * & templatedPtr, size_t newSize);
+		template<typename T> void ResizeTemplated(T * const & templatedPtr, size_t const & newSize);
 #pragma endregion
 
 #pragma region ClearTemplated
@@ -942,7 +937,7 @@ namespace FIEAGameEngine
 		/// The appropriate pointer type is determined by the enum specifiying the datum's type.
 		/// </summary>
 		/// <param name="templatedPtr">A pointer of the type the datum is.</param>
-		template<typename T> void ClearTemplated(T * & templatedPtr);
+		template<typename T> void ClearTemplated(T * const & templatedPtr);
 #pragma endregion
 
 #pragma region SetFromStringTemplated
@@ -1073,7 +1068,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="templatedPtr">A pointer of the type the datum is.</param>
 		/// <param name="value">Value to push back.</param>
-		template<typename T> void PushBackTemplated(T * & templatedPtr, T const & value);
+		template<typename T> T & PushBackTemplated(T * const & templatedPtr, T const & value);
 #pragma endregion
 
 #pragma region PopBackTemplated
@@ -1082,7 +1077,7 @@ namespace FIEAGameEngine
 		/// The appropriate pointer type is determined by the enum specifiying the datum's type.
 		/// </summary>
 		/// <param name="templatedPtr">A pointer of the type the datum is.</param>
-		template<typename T> void PopBackTemplated(T * & templatedPtr);
+		template<typename T> void PopBackTemplated(T * const & templatedPtr);
 #pragma endregion
 
 #pragma region RemoveTemplated
@@ -1092,7 +1087,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="templatedPtr">A pointer of the type the datum is.</param>
 		/// <param name="value">Value to remove.</param>
-		template<typename T> void RemoveTemplated(T * & templatedPtr, T const & value);
+		template<typename T> void RemoveTemplated(T * const & templatedPtr, T const & value);
 #pragma endregion
 
 #pragma region RemoveAtTemplated
@@ -1102,7 +1097,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="templatedPtr">A pointer of the type the datum is.</param>
 		/// <param name="index">Index to remove value at.</param>
-		template<typename T> void RemoveAtTemplated(T * & templatedPtr, size_t const & index = 0);
+		template<typename T> void RemoveAtTemplated(T * const & templatedPtr, size_t const & index = 0);
 #pragma endregion
 
 #pragma region RemoveRangeTemplated
@@ -1113,7 +1108,7 @@ namespace FIEAGameEngine
 		/// <param name="templatedPtr">A pointer of the type the datum is.</param>
 		/// <param name="start">Starting index.</param>
 		/// <param name="finish">Ending index.</param>
-		template<typename T> void RemoveRangeTemplated(T * & templatedPtr, size_t const & start = 0, size_t const & finish = 0);
+		template<typename T> void RemoveRangeTemplated(T * const & templatedPtr, size_t const & start = 0, size_t const & finish = 0);
 #pragma endregion
 
 #pragma region MemberData
@@ -1143,7 +1138,7 @@ namespace FIEAGameEngine
 		bool mIsInternal = true;
 
 		/// <summary>
-		/// Table of type sizes. Specified at the top of cpp file.
+		/// Scope of type sizes. Specified at the top of cpp file.
 		/// </summary>
 		static size_t const mTypeSizes[static_cast<size_t>(DatumType::END)];
 
@@ -1199,7 +1194,19 @@ namespace FIEAGameEngine
 		/// Communicates the cause of a set stroage invalid parameters exception to the user.
 		/// </summary>
 		inline static const string bracketOperatorOnlyValidForScopesExceptionText = "Operator[] is only valid for scopes.\n";
+
+		/// <summary>
+		/// Communicates the cause of a set stroage invalid parameters exception to the user.
+		/// </summary>
+		inline static const string noExternalScopesExceptionText = "External datum cannot be assigned to scope.\n";
 #pragma endregion
+
+		//using CreateDefaultFunction = void(Datum::*)(size_t index);
+		//static const CreateDefaultFunction CreateDefaultFunctions[static_cast<int>(DatumType::END)];
+
+		//using DeleteFunction = void(Datum::*)();
+		
+		//using CopyFunction = void(Datum::*)();
 	};
 }
 

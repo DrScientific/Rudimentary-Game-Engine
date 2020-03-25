@@ -4,9 +4,6 @@
 
 namespace FIEAGameEngine
 {
-	/// <summary>
-	/// 
-	/// </summary>
 	template <typename T>
 	struct DefaultHashFunctor
 	{

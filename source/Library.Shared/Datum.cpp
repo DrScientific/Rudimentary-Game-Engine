@@ -4,13 +4,19 @@
 
 #include "pch.h"
 #include "Datum.h"
-#include "Scope.h"
+#include "RTTI.h"
+#pragma warning(push)
+#pragma warning(disable: 4201)
+#include "glm/glm.hpp"
+#include "glm/gtx/string_cast.hpp"
+#pragma warning(pop)
+
 
 using namespace glm;
 using namespace std;
 using namespace FIEAGameEngine;
 
-#pragma region TypeSizesTable
+#pragma region TypeSizesScope
 const size_t Datum::mTypeSizes[] =
 {
 	0, // Unknown
@@ -23,6 +29,8 @@ const size_t Datum::mTypeSizes[] =
 	sizeof(RTTI*)
 };
 #pragma endregion
+
+
 
 #pragma region Constructor
 Datum::Datum(Datum const & other)
@@ -50,7 +58,7 @@ Datum::Datum(mat4x4 const & other)
 	PushBack(other);
 }
 
-FIEAGameEngine::Datum::Datum(Scope * const & other)
+FIEAGameEngine::Datum::Datum(Scope const & other)
 {
 	PushBack(other);
 }
@@ -82,13 +90,16 @@ Datum & Datum::operator=(Datum const & rhs)
 		if (rhs.mIsInternal)
 		{
 			mIsInternal = true;
-			if (mType != DatumType::Unknown && mType != DatumType::String)
+			if (mType != DatumType::Unknown)
 			{
 				Reserve(rhs.mSize);
+			}
+			if(mType != DatumType::String)
+			{
 				memcpy(mArray.tVoid, rhs.mArray.tVoid, rhs.mSize * mTypeSizes[static_cast<size_t>(mType)]);
 				mSize = rhs.mSize;
 			}
-			else if (mType == DatumType::String)
+			else
 			{
 				for (size_t i = 0; i < rhs.mSize; i++)
 				{
@@ -96,7 +107,7 @@ Datum & Datum::operator=(Datum const & rhs)
 				}
 			}
 		}
-		else if (!rhs.mIsInternal)
+		else
 		{
 			mIsInternal = false;
 			mCapacity = rhs.mCapacity;
@@ -209,30 +220,28 @@ Datum & Datum::operator=(mat4x4 const & rhs)
 	return *this;
 }
 
-//Datum & FIEAGameEngine::Datum::operator=(Scope * const & rhs)
-//{
-//	if (mType == DatumType::Unknown || mType == DatumType::Table)
-//	{
-//		mType = DatumType::Table;
-//	}
-//	else
-//	{
-//		throw exception(operationTypeMismatchExceptionText.c_str());
-//	}
-//	if (mIsInternal)
-//	{
-//		Resize(1);
-//		ShrinkToFit();
-//		Set(rhs);
-//	}
-//	else
-//	{
-//		mSize = 1;
-//		mCapacity = 1;
-//		mArray.tScope = &(const_cast<Scope*&>(rhs));
-//	}
-//	return *this;
-//}
+Datum & FIEAGameEngine::Datum::operator=(Scope const & rhs)
+{
+	if (mType == DatumType::Unknown || mType == DatumType::Scope)
+	{
+		mType = DatumType::Scope;
+	}
+	else
+	{
+		throw exception(operationTypeMismatchExceptionText.c_str());
+	}
+	if (mIsInternal)
+	{
+		Resize(1);
+		ShrinkToFit();
+		Set(rhs);
+	}
+	else
+	{
+		throw exception(noExternalScopesExceptionText.c_str());
+	}
+	return *this;
+}
 
 Datum & Datum::operator=(string const & rhs)
 {
@@ -289,7 +298,7 @@ Datum & Datum::operator=(RTTI * const & rhs)
 Datum::Datum(initializer_list<int> const & iList)
 {
 	SetType(DatumType::Integer);
-	for (auto i : iList)
+	for (auto const& i : iList)
 	{
 		PushBack(i);
 	}
@@ -298,7 +307,7 @@ Datum::Datum(initializer_list<int> const & iList)
 Datum::Datum(initializer_list<float> const & iList)
 {
 	SetType(DatumType::Float);
-	for (auto i : iList)
+	for (auto const& i : iList)
 	{
 		PushBack(i);
 	}
@@ -307,7 +316,7 @@ Datum::Datum(initializer_list<float> const & iList)
 Datum::Datum(initializer_list<vec4> const & iList)
 {
 	SetType(DatumType::Vector4);
-	for (auto i : iList)
+	for (auto const& i : iList)
 	{
 		PushBack(i);
 	}
@@ -316,16 +325,7 @@ Datum::Datum(initializer_list<vec4> const & iList)
 Datum::Datum(initializer_list<mat4x4> const & iList)
 {
 	SetType(DatumType::Matrix4x4);
-	for (auto i : iList)
-	{
-		PushBack(i);
-	}
-}
-
-Datum::Datum(initializer_list<Scope*> const & iList)
-{
-	SetType(DatumType::Table);
-	for (auto i : iList)
+	for (auto const& i : iList)
 	{
 		PushBack(i);
 	}
@@ -334,7 +334,7 @@ Datum::Datum(initializer_list<Scope*> const & iList)
 Datum::Datum(initializer_list<string> const & iList)
 {
 	SetType(DatumType::String);
-	for (auto i : iList)
+	for (auto const& i : iList)
 	{
 		PushBack(i);
 	}
@@ -343,7 +343,7 @@ Datum::Datum(initializer_list<string> const & iList)
 Datum::Datum(initializer_list<RTTI*> const & iList)
 {
 	SetType(DatumType::RTTIPtr);
-	for (auto i : iList)
+	for (auto const& i : iList)
 	{
 		PushBack(i);
 	}
@@ -353,14 +353,11 @@ Datum::Datum(initializer_list<RTTI*> const & iList)
 #pragma region Destructor
 Datum::~Datum()
 {
-	if (mIsInternal)
+	if (mIsInternal && mSize > 0)
 	{
-		if (mType != DatumType::Unknown)
-		{
 			Clear();
-			ShrinkToFit();
-		}
 	}
+	ShrinkToFit();
 }
 #pragma endregion
 
@@ -389,11 +386,19 @@ bool Datum::operator==(Datum const & rhs) const
 	bool result = false;
 	if (mSize == rhs.mSize && mIsInternal == rhs.mIsInternal && mType == rhs.mType)
 	{
-		if (mType != DatumType::String)
+		if (mType == DatumType::Scope || mType == DatumType::RTTIPtr)
 		{
-			result = memcmp(mArray.tVoid, rhs.mArray.tVoid, mSize * mTypeSizes[static_cast<size_t>(mType)]) == 0;
+			result = true;
+			for (size_t i = 0; i < mSize; i++)
+			{
+				if (!(mArray.tRTTIPtr[i]->Equals(rhs.mArray.tRTTIPtr[i])))
+				{
+					result = false;
+					break;
+				}
+			}
 		}
-		else
+		else if (mType == DatumType::String)
 		{
 			result = true;
 			for (size_t i = 0; i < mSize; i++)
@@ -405,6 +410,12 @@ bool Datum::operator==(Datum const & rhs) const
 				}
 			}
 		}
+		else
+		{
+			result = memcmp(mArray.tVoid, rhs.mArray.tVoid, mSize * mTypeSizes[static_cast<size_t>(mType)]) == 0;
+		}
+		
+		
 	}
 	return result;
 }
@@ -413,7 +424,7 @@ bool Datum::operator==(int const & rhs) const
 {
 	if (DatumType::Integer != mType)
 	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
+		return false;
 	}
 	return mSize == 1 && mArray.tInt[0] == rhs;
 }
@@ -422,7 +433,7 @@ bool Datum::operator==(float const & rhs) const
 {
 	if (DatumType::Float != mType)
 	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
+		return false;
 	}
 	return mSize == 1 && mArray.tFloat[0] == rhs;
 }
@@ -431,7 +442,7 @@ bool Datum::operator==(vec4 const & rhs) const
 {
 	if (DatumType::Vector4 != mType)
 	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
+		return false;
 	}
 	return mSize == 1 && mArray.tVec4[0] == rhs;
 }
@@ -440,7 +451,7 @@ bool Datum::operator==(mat4x4 const & rhs) const
 {
 	if (DatumType::Matrix4x4 != mType)
 	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
+		return false;
 	}
 	return mSize == 1 && mArray.tMat4x4[0] == rhs;
 }
@@ -449,7 +460,7 @@ bool Datum::operator==(string const & rhs) const
 {
 	if (DatumType::String != mType)
 	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
+		return false;
 	}
 	return mSize == 1 && mArray.tString[0] == rhs;
 }
@@ -457,9 +468,9 @@ bool Datum::operator==(string const & rhs) const
 bool Datum::operator==(RTTI * const & rhs) const
 {
 	bool result = false;
-	if (DatumType::RTTIPtr != mType)
+	if (DatumType::RTTIPtr != mType && DatumType::Scope != mType)
 	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
+		return false;
 	}
 	if (mArray.tRTTIPtr[0] != nullptr)
 	{
@@ -513,7 +524,7 @@ bool Datum::operator!=(RTTI * const & rhs) const
 #pragma region operator[]
 Scope & FIEAGameEngine::Datum::operator[](size_t index)
 {
-	if (mType != DatumType::Table)
+	if (mType != DatumType::Scope)
 	{
 		throw exception(bracketOperatorOnlyValidForScopesExceptionText.c_str());
 	}
@@ -531,7 +542,7 @@ Datum::DatumType Datum::Type() const
 #pragma region SetType
 void Datum::SetType(DatumType type)
 {
-	if (mType == DatumType::Unknown)
+	if (mType == DatumType::Unknown || mType == type)
 	{
 		mType = type;
 	}
@@ -574,7 +585,7 @@ void Datum::Resize(size_t newSize)
 	case DatumType::Matrix4x4:
 		ResizeTemplated<mat4x4>(mArray.tMat4x4, newSize);
 		break;
-	case DatumType::Table:
+	case DatumType::Scope:
 		ResizeTemplated<Scope*>(mArray.tScope, newSize);
 		break;
 	case DatumType::String:
@@ -631,7 +642,7 @@ void Datum::Clear()
 	case DatumType::Matrix4x4:
 		ClearTemplated<mat4x4>(mArray.tMat4x4);
 		break;
-	case DatumType::Table:
+	case DatumType::Scope:
 		ClearTemplated<Scope*>(mArray.tScope);
 		break;
 	case DatumType::String:
@@ -836,13 +847,13 @@ void Datum::Set(mat4x4 const & value, size_t const & index)
 	mArray.tMat4x4[index] = value;
 }
 
-void FIEAGameEngine::Datum::Set(Scope * const & value, size_t const & index)
+void FIEAGameEngine::Datum::Set(Scope const & value, size_t const & index)
 {
-	if (DatumType::Table != mType)
+	if (DatumType::Scope != mType)
 	{
 		throw exception(operationTypeMismatchExceptionText.c_str());
 	}
-	mArray.tScope[index] = value;
+	mArray.tScope[index] = const_cast<Scope*>(&value);
 }
 
 void Datum::Set(string const & value, size_t const & index)
@@ -882,7 +893,7 @@ void Datum::SetFromString(string const & value, size_t const & index)
 	case DatumType::Matrix4x4:
 		SetFromStringTemplated<mat4x4>(value, index);
 		break;
-	case DatumType::Table:
+	case DatumType::Scope:
 		//TODO: Future implementation
 		break;
 	case DatumType::String:
@@ -916,8 +927,8 @@ string Datum::ToString(size_t const & index) const
 	case DatumType::Matrix4x4:
 		result = ToStringTemplated<mat4x4>(mArray.tMat4x4, index);
 		break;
-	case DatumType::Table:
-		result = ToStringTemplated<RTTI*>(mArray.tRTTIPtr, index);
+	case DatumType::Scope:
+		result = ToStringTemplated<Scope*>(mArray.tScope, index);
 		break;
 	case DatumType::String:
 		result = ToStringTemplated<string>(mArray.tString, index);
@@ -934,7 +945,7 @@ string Datum::ToString(size_t const & index) const
 #pragma endregion
 
 #pragma region PushBack
-void Datum::PushBack(int const & value)
+int & Datum::PushBack(int const & value)
 {
 	//External memory check done in templated function.
 	if (mType == DatumType::Unknown)
@@ -943,7 +954,7 @@ void Datum::PushBack(int const & value)
 	}
 	if (mType == DatumType::Integer)
 	{
-		PushBackTemplated<int>(mArray.tInt, value);
+		return PushBackTemplated<int>(mArray.tInt, value);
 	}
 	else
 	{
@@ -951,7 +962,7 @@ void Datum::PushBack(int const & value)
 	}
 }
 
-void Datum::PushBack(float const & value)
+float & Datum::PushBack(float const & value)
 {
 	//External memory check done in templated function.
 	if (mType == DatumType::Unknown)
@@ -960,7 +971,7 @@ void Datum::PushBack(float const & value)
 	}
 	if (mType == DatumType::Float)
 	{
-		PushBackTemplated<float>(mArray.tFloat, value);
+		return PushBackTemplated<float>(mArray.tFloat, value);
 	}
 	else
 	{
@@ -968,7 +979,7 @@ void Datum::PushBack(float const & value)
 	}
 }
 
-void Datum::PushBack(vec4 const & value)
+vec4 & Datum::PushBack(vec4 const & value)
 {
 	//External memory check done in templated function.
 	if (mType == DatumType::Unknown)
@@ -977,7 +988,7 @@ void Datum::PushBack(vec4 const & value)
 	}
 	if (mType == DatumType::Vector4)
 	{
-		PushBackTemplated<vec4>(mArray.tVec4, value);
+		return PushBackTemplated<vec4>(mArray.tVec4, value);
 	}
 	else
 	{
@@ -985,7 +996,7 @@ void Datum::PushBack(vec4 const & value)
 	}
 }
 
-void Datum::PushBack(mat4x4 const & value)
+mat4x4 & Datum::PushBack(mat4x4 const & value)
 {
 	//External memory check done in templated function.
 	if (mType == DatumType::Unknown)
@@ -994,7 +1005,7 @@ void Datum::PushBack(mat4x4 const & value)
 	}
 	if (mType == DatumType::Matrix4x4)
 	{
-		PushBackTemplated<mat4x4>(mArray.tMat4x4, value);
+		return PushBackTemplated<mat4x4>(mArray.tMat4x4, value);
 	}
 	else
 	{
@@ -1002,16 +1013,16 @@ void Datum::PushBack(mat4x4 const & value)
 	}
 }
 
-void FIEAGameEngine::Datum::PushBack(Scope * const & value)
+Scope * & FIEAGameEngine::Datum::PushBack(Scope const & value)
 {
 	//External memory check done in templated function.
 	if (mType == DatumType::Unknown)
 	{
-		SetType(DatumType::Table);
+		SetType(DatumType::Scope);
 	}
-	if (mType == DatumType::Table)
+	if (mType == DatumType::Scope)
 	{
-		PushBackTemplated<Scope*>(mArray.tScope, value);
+		return PushBackTemplated<Scope*>(mArray.tScope,const_cast<Scope*>(&value));
 	}
 	else
 	{
@@ -1019,7 +1030,7 @@ void FIEAGameEngine::Datum::PushBack(Scope * const & value)
 	}
 }
 
-void Datum::PushBack(string const & value)
+string & Datum::PushBack(string const & value)
 {
 	//External memory check done in templated function.
 	if (mType == DatumType::Unknown)
@@ -1028,7 +1039,7 @@ void Datum::PushBack(string const & value)
 	}
 	if (mType == DatumType::String)
 	{
-		PushBackTemplated<string>(mArray.tString, value);
+		return PushBackTemplated<string>(mArray.tString, value);
 	}
 	else
 	{
@@ -1037,7 +1048,7 @@ void Datum::PushBack(string const & value)
 }
 
 
-void Datum::PushBack(RTTI * const & value)
+RTTI * & Datum::PushBack(RTTI * const & value)
 {
 	//External memory check done in templated function.
 	if (mType == DatumType::Unknown)
@@ -1046,7 +1057,7 @@ void Datum::PushBack(RTTI * const & value)
 	}
 	if (mType == DatumType::RTTIPtr)
 	{
-		PushBackTemplated<RTTI*>(mArray.tRTTIPtr, value);
+		return PushBackTemplated<RTTI*>(mArray.tRTTIPtr, value);
 	}
 	else
 	{
@@ -1073,8 +1084,8 @@ void Datum::PopBack()
 	case DatumType::Matrix4x4:
 		PopBackTemplated<mat4x4>(mArray.tMat4x4);
 		break;
-	case DatumType::Table:
-		//TODO: Future implementation
+	case DatumType::Scope:
+		PopBackTemplated<Scope*>(mArray.tScope);
 		break;
 	case DatumType::String:
 		PopBackTemplated<string>(mArray.tString);
@@ -1115,12 +1126,6 @@ void Datum::Remove(mat4x4 const & value)
 	RemoveTemplated(mArray.tMat4x4, value);
 }
 
-void FIEAGameEngine::Datum::Remove(Scope* const & value)
-{
-	//External memory check done in templated function.
-	RemoveTemplated(mArray.tScope, value);
-}
-
 void Datum::Remove(string const & value)
 {
 	//External memory check done in templated function.
@@ -1152,8 +1157,8 @@ void Datum::RemoveAt(size_t const & index)
 	case DatumType::Matrix4x4:
 		RemoveAtTemplated<mat4x4>(mArray.tMat4x4, index);
 		break;
-	case DatumType::Table:
-		//TODO: Future implementation
+	case DatumType::Scope:
+		RemoveAtTemplated<Scope*>(mArray.tScope, index);
 		break;
 	case DatumType::String:
 		RemoveAtTemplated<string>(mArray.tString, index);
@@ -1186,8 +1191,8 @@ void Datum::RemoveRange(size_t const & start, size_t const & finish)
 	case DatumType::Matrix4x4:
 		RemoveRangeTemplated<mat4x4>(mArray.tMat4x4, start, finish);
 		break;
-	case DatumType::Table:
-		//TODO: Future implementation
+	case DatumType::Scope:
+		RemoveRangeTemplated<Scope*>(mArray.tScope, start, finish);
 		break;
 	case DatumType::String:
 		RemoveRangeTemplated<string>(mArray.tString, start, finish);
@@ -1267,15 +1272,15 @@ pair<bool, mat4x4*> Datum::Find(mat4x4 const & searchedValue) const
 	return pair<bool, mat4x4*>(false, nullptr);
 }
 
-pair<bool, Scope**> FIEAGameEngine::Datum::Find(Scope * const & searchedValue) const
+pair<bool, Scope**> FIEAGameEngine::Datum::Find(Scope const & searchedValue) const
 {
-	if (DatumType::Table != mType)
+	if (DatumType::Scope != mType)
 	{
 		throw exception(operationTypeMismatchExceptionText.c_str());
 	}
 	for (size_t i = 0; i < mSize; i++)
 	{
-		if (mArray.tScope[i] == searchedValue)
+		if (mArray.tScope[i] == &searchedValue)
 		{
 			return pair<bool, Scope**>(true, &(mArray.tScope[i]));
 		}
@@ -1313,5 +1318,289 @@ pair<bool, RTTI**> Datum::Find(RTTI * const & searchedValue) const
 		}
 	}
 	return pair<bool, RTTI**>(false, nullptr);
+}
+#pragma endregion
+
+#pragma region ResizeTemplated
+template<typename T>
+inline void Datum::ResizeTemplated(T * const & templatedPtr, size_t const & newSize)
+{
+	if (mIsInternal)
+	{
+		if (newSize > mCapacity)
+		{
+			Reserve(newSize);
+			while (newSize > mSize)
+			{
+				PushBackTemplated<T>(templatedPtr, T());
+			}
+		}
+		else if (newSize > mSize)
+		{
+			while (newSize > mSize)
+			{
+				PushBackTemplated<T>(templatedPtr, T());
+				/*
+				auto func = CreateDefaultFunctions[static_cast<int>(mType)];
+				assert(func != nullptr);
+				(this->*func)(i)
+				*/
+			}
+		}
+		else if (newSize < mSize)
+		{
+			RemoveRange(newSize, mSize);
+		}
+	}
+	else
+	{
+		throw exception(cannotMutateExternalStorageExceptionText.c_str());
+	}
+}
+#pragma endregion
+
+#pragma region Clear
+template<typename T>
+inline void Datum::ClearTemplated(T * const & templatedPtr)
+{
+	if (mIsInternal)
+	{
+		for (size_t i = 0; i < mSize; i++)
+		{
+			templatedPtr[i].~T();
+		}
+		mSize = 0;
+	}
+	else
+	{
+		throw exception(cannotMutateExternalStorageExceptionText.c_str());
+	}
+}
+#pragma endregion
+
+#pragma region SetFromStringTemplated
+template<typename T>
+void Datum::SetFromStringTemplated(string const & value, size_t const & index)
+{
+	throw exception(unsupportedDataTypeExceptionText.c_str());
+	value;
+	index;
+}
+
+template<>
+void Datum::SetFromStringTemplated<int>(string const & value, size_t const & index)
+{
+	Set(stoi(value), index);
+}
+
+template<>
+void Datum::SetFromStringTemplated<float>(string const & value, size_t const & index)
+{
+	Set(stof(value), index);
+}
+
+template<>
+void Datum::SetFromStringTemplated<vec4>(string const & value, size_t const & index)
+{
+	vec4 readInVec;
+	sscanf_s(value.c_str(), "vec4(%f, %f, %f, %f)", &readInVec[0], &readInVec[1], &readInVec[2], &readInVec[3]);
+	Set(readInVec, index);
+}
+
+template<>
+void Datum::SetFromStringTemplated<mat4x4>(string const & value, size_t const & index)
+{
+	mat4x4 readInMat;
+	sscanf_s(value.c_str(), "mat4x4((%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f))",
+		&readInMat[0][0], &readInMat[0][1], &readInMat[0][2], &readInMat[0][3],
+		&readInMat[1][0], &readInMat[1][1], &readInMat[1][2], &readInMat[1][3],
+		&readInMat[2][0], &readInMat[2][1], &readInMat[2][2], &readInMat[2][3],
+		&readInMat[3][0], &readInMat[3][1], &readInMat[3][2], &readInMat[3][3]);
+	Set(readInMat, index);
+}
+
+template<>
+void Datum::SetFromStringTemplated<string>(string const & value, size_t const & index)
+{
+	Set(value, index);
+}
+
+template<>
+void Datum::SetFromStringTemplated<RTTI*>(string const &, size_t const &)
+{
+	throw exception(unsupportedDataTypeExceptionText.c_str());
+}
+#pragma endregion
+
+#pragma region ToStringTemplated
+template<typename T>
+string Datum::ToStringTemplated(T * const &, size_t const &) const
+{
+	throw exception(unsupportedDataTypeExceptionText.c_str());
+}
+
+template<>
+string Datum::ToStringTemplated(int * const & templatedPtr, size_t const & index) const
+{
+	return std::to_string(templatedPtr[index]);
+}
+
+template<>
+string Datum::ToStringTemplated(float * const & templatedPtr, size_t const & index) const
+{
+	return std::to_string(templatedPtr[index]);
+}
+
+template<>
+string Datum::ToStringTemplated(vec4 * const & templatedPtr, size_t const & index) const
+{
+	return glm::to_string(templatedPtr[index]);
+}
+
+template<>
+string Datum::ToStringTemplated(mat4x4 * const & templatedPtr, size_t const & index) const
+{
+	return glm::to_string(templatedPtr[index]);
+}
+
+template<>
+string Datum::ToStringTemplated(string * const & templatedPtr, size_t const & index) const
+{
+	return templatedPtr[index];
+}
+
+template<>
+string Datum::ToStringTemplated(RTTI ** const & templatedPtr, size_t const & index) const
+{
+	return (templatedPtr[index] != nullptr ? templatedPtr[index]->ToString() : "nullptr");
+}
+#pragma endregion
+
+#pragma region PushBackTemplated
+template<typename T>
+inline T & Datum::PushBackTemplated(T * const & templatedPtr, T const & value)
+{
+	if (mIsInternal)
+	{
+		if (mSize == mCapacity)
+		{
+			if (mCapacity == 0)
+			{
+				mCapacity = 1;
+			}
+			Reserve(mCapacity * 2);
+		}
+
+		return *(new (templatedPtr + (mSize++)) T(value));
+	}
+	else
+	{
+		throw exception(cannotMutateExternalStorageExceptionText.c_str());
+	}
+}
+#pragma endregion
+
+#pragma region PopBack
+template<typename T>
+inline void Datum::PopBackTemplated(T * const & templatedPtr)
+{
+	if (mIsInternal)
+	{
+		if (mSize != 0)
+		{
+			templatedPtr[--mSize].~T();
+		}
+	}
+	else
+	{
+		throw exception(cannotMutateExternalStorageExceptionText.c_str());
+	}
+}
+#pragma endregion
+
+#pragma region RemoveTemplated
+template<typename T>
+void Datum::RemoveTemplated(T * const & templatedPtr, T const & value)
+{
+	if (mType != DatumType::Unknown)
+	{
+		if (mIsInternal)
+		{
+			for (size_t i = 0; i < mSize; i++)
+			{
+				if (templatedPtr[i] == value)
+				{
+					templatedPtr[i].~T();
+					memmove(&(templatedPtr[i]), &(templatedPtr[i + 1]), (mSize - 1 - i) * sizeof(T));
+					mSize--;
+					break;
+				}
+			}
+		}
+		else
+		{
+			throw exception(cannotMutateExternalStorageExceptionText.c_str());
+		}
+	}
+	else
+	{
+		throw exception(datumTypeNotInitializedExceptionText.c_str());
+	}
+}
+#pragma endregion
+
+#pragma region RemoveAtTemplated
+template<typename T>
+void Datum::RemoveAtTemplated(T * const & templatedPtr, size_t const & index)
+{
+	if (mIsInternal)
+	{
+		if (index < mSize)
+		{
+			templatedPtr[index].~T();
+			memmove(&(templatedPtr[index]), &(templatedPtr[index + 1]), (mSize - 1 - index) * sizeof(T));
+			mSize--;
+		}
+		else
+		{
+			throw exception(indexOutOfBoundsExceptionText.c_str());
+		}
+	}
+	else
+	{
+		throw exception(cannotMutateExternalStorageExceptionText.c_str());
+	}
+}
+#pragma endregion
+
+#pragma region RemoveRangeTemplated
+template<typename T>
+void Datum::RemoveRangeTemplated(T * const & templatedPtr, size_t const & start, size_t const & finish)
+{
+	if (mIsInternal)
+	{
+		if (start < mSize && finish <= mSize)
+		{
+			if (mSize > 0 && start < finish)
+			{
+
+				for (size_t i = start; i < finish; i++)
+				{
+					templatedPtr[i].~T();
+				}
+				memmove(&(templatedPtr[start]), &(templatedPtr[finish]), (mSize - finish) * sizeof(T));
+				mSize -= (finish - start);
+
+			}
+		}
+		else
+		{
+			throw exception(indexOutOfBoundsExceptionText.c_str());
+		}
+	}
+	else
+	{
+		throw exception(cannotMutateExternalStorageExceptionText.c_str());
+	}
 }
 #pragma endregion

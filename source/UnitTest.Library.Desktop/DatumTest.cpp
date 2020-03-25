@@ -794,7 +794,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(RTTIDatum == RTTIDatum2);
 			Assert::IsTrue(RTTIDatum != RTTIDatum3);
 
-			RTTIDatum = nullptr;
+			RTTIDatum = static_cast<RTTI*>(nullptr);
 			Assert::IsTrue(RTTIDatum == nullptr);
 			Assert::IsFalse(RTTIDatum != nullptr);
 
@@ -802,23 +802,12 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(RTTIDatum == testRTTIs[0]);
 			Assert::IsFalse(RTTIDatum != testRTTIs[0]);
 
-			auto intTypeMismatchException = [&intDatum] {intDatum == "Hello"; };
-			Assert::ExpectException<std::exception>(intTypeMismatchException);
-
-			auto floatTypeMismatchException = [&floatDatum] {floatDatum == 1; };
-			Assert::ExpectException<std::exception>(floatTypeMismatchException);
-
-			auto vec4TypeMismatchException = [&vec4Datum, &testRTTIs] {vec4Datum == testRTTIs[0]; };
-			Assert::ExpectException<std::exception>(vec4TypeMismatchException);
-
-			auto mat4x4TypeMismatchException = [&mat4x4Datum] {mat4x4Datum == vec4(1.0f, 2.0f, 3.0f, 4.0f); };
-			Assert::ExpectException<std::exception>(mat4x4TypeMismatchException);
-
-			auto stringTypeMismatchException = [&stringDatum] {stringDatum == 1.0f; };
-			Assert::ExpectException<std::exception>(stringTypeMismatchException);
-
-			auto RTTITypeMismatchException = [&RTTIDatum] {RTTIDatum == mat4x4(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f); };
-			Assert::ExpectException<std::exception>(RTTITypeMismatchException);
+			Assert::IsTrue(intDatum != "Hello");
+			Assert::IsTrue(floatDatum != 1);
+			Assert::IsTrue(vec4Datum != testRTTIs[0]);
+			Assert::IsTrue(mat4x4Datum != vec4(1.0f, 2.0f, 3.0f, 4.0f));
+			Assert::IsTrue(stringDatum != 1.0f);
+			Assert::IsTrue(RTTIDatum != mat4x4(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f));
 		}
 
 		TEST_METHOD(TestGet)
