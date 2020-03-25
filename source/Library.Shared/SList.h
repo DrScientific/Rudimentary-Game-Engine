@@ -5,7 +5,6 @@
 /// </summary>
 
 #include <string>
-#include <cstring>
 #include <exception>
 #include <initializer_list>
 
@@ -77,7 +76,7 @@ namespace FIEAGameEngine
 			Iterator(Iterator const &) = default;
 
 			/// <summary>
-			/// Default assignment operator for const_Iterator
+			/// Default assignment operator for Iterator
 			/// </summary>
 			Iterator& operator= (const Iterator&) = default;
 
@@ -117,6 +116,12 @@ namespace FIEAGameEngine
 			/// <returns>The data pointed to by the Iterator.</returns>
 			T& operator*();
 
+			/// <summary>
+			/// Dereferences the Iterator returning a const value.
+			/// </summary>
+			/// <returns>The const data pointed to by the Iterator.</returns>
+			T const & operator*() const;
+
 		private:
 			/// <summary>
 			/// Constructor for Iterator taking in a list owner and a node.
@@ -128,7 +133,7 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// The list that owns the Iterator.
 			/// </summary>
-			const SList* mOwner;
+			const SList* mOwner = nullptr;
 
 			/// <summary>
 			/// A pointer to the node the Iterator is currently pointing at.
@@ -215,7 +220,7 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// The list that owns the Iterator.
 			/// </summary>
-			const SList* mOwner;
+			const SList* mOwner = nullptr;
 
 			/// <summary>
 			/// Pointer to the next node in the list.
@@ -259,6 +264,7 @@ namespace FIEAGameEngine
 		/// <returns>An Iterator to the first element in the list.</returns>
 		Iterator begin() const;
 
+
 		/// <summary>
 		/// Gets const_Iterator pointing to first element in list.
 		/// </summary>
@@ -272,10 +278,16 @@ namespace FIEAGameEngine
 		Iterator end() const;
 
 		/// <summary>
+		/// Gets const_Iterator pointing to nullptr.
+		/// </summary>
+		/// <returns>A const_Iterator to the element past the last element</returns>
+		const_Iterator cend() const;
+
+		/// <summary>
 		/// Puts a new node containing the passed in value at the front of the list.
 		/// </summary>
 		/// <param name="value">The value we are pushing to the front of the list.</param>
-		Iterator PushFront(T const value);
+		Iterator PushFront(T const & value);
 
 		/// <summary>
 		/// Removes the element at the front of the list from the list.
@@ -288,7 +300,7 @@ namespace FIEAGameEngine
 		/// Puts a new node containing the passed in value at the back of the list.
 		/// </summary>
 		/// <param name="value">The value we are pushing to the back of the list.</param>
-		Iterator PushBack(T const value);
+		Iterator PushBack(T const & value);
 
 		/// <summary>
 		/// Removes the element at the back of the list from the list.
@@ -301,7 +313,7 @@ namespace FIEAGameEngine
 		/// Returns true if the list size is 0. Returns false otherwise.y.
 		/// </summary>
 		/// <returns>A bool as to whether the list is empty.</returns>
-		bool isEmpty() const;
+		bool IsEmpty() const;
 
 		/// <summary>
 		/// Accesses the data at the front of the list.
@@ -348,14 +360,21 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="it">The node to insert the passed in value after.</param>
 		/// <param name="value">The value to insert in the list.</param>
-		void InsertAfter(Iterator const & it, T const & value);
+		SList<T>::Iterator InsertAfter(Iterator const & it, T const & value);
 
 		/// <summary>
 		/// Finds an element with a given value in the list
 		/// </summary>
 		/// <param name="value">Value to search for</param>
 		/// <returns>Iterator to first node storing the searched for value.</returns>
-		SList<T>::Iterator Find(T const & value) const;
+		SList<T>::Iterator Find(T const & value);
+
+		/// <summary>
+		/// Finds an element with a given value in the list
+		/// </summary>
+		/// <param name="value">Value to search for</param>
+		/// <returns>Iterator to first node storing the searched for value.</returns>
+		SList<T>::const_Iterator Find(T const & value) const;
 
 		/// <summary>
 		/// Removes the first node with the passed in value.
@@ -367,7 +386,7 @@ namespace FIEAGameEngine
 		/// Removes the node at the passed in Iterator.
 		/// </summary>
 		/// <param name="it">The Iterator to be removed.</param>
-		void Remove(Iterator& it);
+		void Remove(Iterator const& it);
 
 		/// <summary>
 		/// Assignment Operator.
@@ -455,6 +474,11 @@ namespace FIEAGameEngine
 		/// Communicates the cause of an index out of bounds exception to the user. Not currently implemented, should be implemented once operator[] and iterators are in place.
 		/// </summary>
 		inline static const std::string indexOutOfBoundsExceptionText = "Attempted to access an out of bounds index.\n";
+
+		/// <summary>
+		///  Communicates the cause of an iterator from other list exception to the user.
+		/// </summary>
+		inline static const std::string iteratorFromOtherListExceptionText = "Iterator provided is from another list.\n";
 
 		friend class Iterator;
 		friend class const_Iterator;

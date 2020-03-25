@@ -1,66 +1,50 @@
-#pragma once
-
-/// <summary>
-/// The file containing all of the defintions of the Foo class.
-/// </summary>
-
 #include "pch.h"
 #include "Foo.h"
 
 namespace UnitTests
 {
-	/// <summary>
-	/// Default constructor.
-	/// 
-	/// </summary>
-	Foo::Foo() : mData(0)
+	Foo::Foo(int data) :
+		mData(new int(data))
 	{
 	}
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="data"></param>
-	Foo::Foo(int data) : mData(data)
-	{
 
+	Foo::Foo(const Foo& rhs) :
+		mData(new int(*rhs.mData))
+	{
 	}
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="rhs"></param>
-	/// <returns></returns>
+
 	Foo& Foo::operator=(const Foo& rhs)
 	{
-		mData = rhs.Data();
+		if (this != &rhs)
+		{
+			*mData = *rhs.mData;
+		}
+
 		return *this;
 	}
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="rhs"></param>
-	/// <returns></returns>
-	bool Foo::operator==(const Foo & rhs) const
+
+	Foo::~Foo()
 	{
-		return Data() == rhs.Data();
-	}
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="rhs"></param>
-	/// <returns></returns>
-	bool Foo::operator!=(const Foo & rhs) const
-	{
-		return !(*this == rhs);
+		delete mData;
 	}
 
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <returns></returns>
+	bool Foo::operator==(const Foo& rhs) const
+	{
+		return *mData == *rhs.mData;
+	}
+
+	bool Foo::operator!=(const Foo& rhs) const
+	{
+		return !operator==(rhs);
+	}
+
 	int Foo::Data() const
 	{
-		return mData;
+		return *mData;
 	}
 
+	void Foo::SetData(int data)
+	{
+		*mData = data;
+	}
 }
-

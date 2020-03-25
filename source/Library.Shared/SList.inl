@@ -54,7 +54,13 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-	inline SList<T>::Iterator SList<T>::PushFront(T const value)
+	inline SList<T>::const_Iterator SList<T>::cend() const
+	{
+		return SList<T>::const_Iterator(*this, nullptr);
+	}
+
+	template<typename T> typename
+	inline SList<T>::Iterator SList<T>::PushFront(T const & value)
 	{
 		Node * newFront = new Node(value);
 		newFront->mNext = mFront;
@@ -95,7 +101,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-	inline SList<T>::Iterator SList<T>::PushBack(T const value)
+	inline SList<T>::Iterator SList<T>::PushBack(T const & value)
 	{
 		Node* newBack = new Node(value);
 
@@ -149,7 +155,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline bool SList<T>::isEmpty() const
+	inline bool SList<T>::IsEmpty() const
 	{
 		return mSize <= 0;
 	}
@@ -209,35 +215,55 @@ namespace FIEAGameEngine
 		return mSize;
 	}
 
-	template<typename T>
-	inline void SList<T>::InsertAfter(Iterator const & it, T const & value)
+	template<typename T> typename
+	inline SList<T>::Iterator SList<T>::InsertAfter(Iterator const & it, T const & value)
 	{
+		if (it.mOwner != this)
+		{
+			throw std::exception(iteratorFromOtherListExceptionText.c_str());
+		}
 		if (it == end())
 		{
-			PushBack(value);
+			return PushBack(value);
 		}
 		else
 		{
-			Node *nodeBeforeInsert = it.mNode, *nodeToBeInserted = new Node(value), *nodeAfterInsert = it.mNode->mNext;
-			nodeBeforeInsert->mNext = nodeToBeInserted;
-			nodeToBeInserted->mNext = nodeAfterInsert;
+			Node* node = new Node(value, it.mNode->mNext);
+			it.mNode->mNext = node;
 			mSize++;
+			return it;
 		}
+		
 	}
 
 	template<typename T> typename
-	inline SList<T>::Iterator SList<T>::Find(T const & value) const
+	inline SList<T>::Iterator SList<T>::Find(T const & value)
 	{
+		Iterator indexFound = end();
 		SList<T>::Iterator it = begin();
-		for (auto& i : *this)
+		for (; it != end(); it++)
 		{
-			if (value == i)
+			if (*it == value)
 			{
-				return it;
+				indexFound = it;
 			}
-			it++;
 		}
-		return end();
+		return indexFound;
+	}
+
+	template<typename T> typename
+	inline SList<T>::const_Iterator SList<T>::Find(T const & value) const
+	{
+		const_Iterator indexFound = cend();
+		SList<T>::const_Iterator it = cbegin();
+		for (; it < end(); i++)
+		{
+			if (*i == value)
+			{
+				indexFound = i;
+			}
+		}
+		return indexFound;
 	}
 
 	template<typename T>
@@ -248,8 +274,12 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline void SList<T>::Remove(Iterator & it)
+	inline void SList<T>::Remove(Iterator const & it)
 	{
+		if (it.mOwner != this)
+		{
+			throw std::exception(iteratorFromOtherListExceptionText.c_str());
+		}
 		Node* nodeToRemove = it.mNode;
 		if (nodeToRemove != nullptr)
 		{
@@ -291,16 +321,15 @@ namespace FIEAGameEngine
 	{
 		if (mSize == rhs.mSize)
 		{
-			Node *lhsElement = mFront, *rhsElement = rhs.mFront;
-			while ((lhsElement != nullptr && rhsElement != nullptr) && (lhsElement->mData == rhsElement->mData))
+			const_Iterator left = cbegin(), right = rhs.cbegin();
+			for (; left != cend() && right != rhs.cend(); left++, right++)
 			{
-				lhsElement = lhsElement->mNext;
-				rhsElement = rhsElement->mNext;
+				if (*left != *right)
+				{
+					return false;
+				}
 			}
-			if (lhsElement == nullptr && rhsElement == nullptr)
-			{
-				return true;
-			}
+			return true;
 		}
 		return false;
 	}
@@ -331,10 +360,7 @@ namespace FIEAGameEngine
 	inline SList<T>::Iterator SList<T>::Iterator::operator++(int)
 	{
 		Iterator iteratorBeforeIncrement = *this;
-		if (this->mNode != nullptr)
-		{
-			mNode = mNode->mNext;
-		}
+		operator++();
 		return iteratorBeforeIncrement;
 	}
 
@@ -352,6 +378,12 @@ namespace FIEAGameEngine
 
 	template<typename T>
 	inline T& SList<T>::Iterator::operator*()
+	{
+		return mNode->mData;
+	}
+
+	template<typename T>
+	inline T const & SList<T>::Iterator::operator*() const
 	{
 		return mNode->mData;
 	}

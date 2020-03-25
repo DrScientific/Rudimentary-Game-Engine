@@ -48,7 +48,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(*(intList.PopFront()) == b);
 			Assert::IsTrue(*(intList.PopFront()) == c);
 			Assert::IsTrue(intList.PopFront() == intList.end());
-			Assert::IsTrue(intList.isEmpty());
+			Assert::IsTrue(intList.IsEmpty());
 			
 			SList <int*> intPtrList = { &a,&b,&c };
 
@@ -56,7 +56,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(*(intPtrList.PopFront()) == &b);
 			Assert::IsTrue(*(intPtrList.PopFront()) == &c);
 			Assert::IsTrue(intPtrList.PopFront() == intPtrList.end());
-			Assert::IsTrue(intPtrList.isEmpty());
+			Assert::IsTrue(intPtrList.IsEmpty());
 
 			Foo bar, car(1), dar(2);
 			SList <Foo> fooList = { bar, car, dar };
@@ -65,13 +65,13 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(*(fooList.PopFront()) == car);
 			Assert::IsTrue(*(fooList.PopFront()) == dar);
 			Assert::IsTrue(fooList.PopFront() == fooList.end());
-			Assert::IsTrue(fooList.isEmpty());
+			Assert::IsTrue(fooList.IsEmpty());
 		}
 		TEST_METHOD(TestFrontExceptionThrowsAndBackExceptionThrows)
 		{
 			SList <int> intList;
 			
-			Assert::IsTrue(intList.isEmpty());
+			Assert::IsTrue(intList.IsEmpty());
 
 			auto frontIntListException = [&intList] { intList.Front(); };
 			Assert::ExpectException<std::exception>(frontIntListException);
@@ -82,7 +82,7 @@ namespace UnitTestLibraryDesktop
 
 			SList <int*> intPtrList;
 
-			Assert::IsTrue(intPtrList.isEmpty());
+			Assert::IsTrue(intPtrList.IsEmpty());
 
 			auto frontIntPtrListException = [&intPtrList] { intPtrList.Front(); };
 			Assert::ExpectException<std::exception>(frontIntPtrListException);
@@ -92,7 +92,7 @@ namespace UnitTestLibraryDesktop
 
 			SList <Foo> fooList;
 
-			Assert::IsTrue(fooList.isEmpty());
+			Assert::IsTrue(fooList.IsEmpty());
 
 			auto frontFooListException = [&fooList] { fooList.Front(); };
 			Assert::ExpectException<std::exception>(frontFooListException);
@@ -219,7 +219,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(*(intList.PopFront()) == c);
 			Assert::IsTrue(intList.PopFront() == intList.end());
 
-			Assert::IsTrue(intList.isEmpty());
+			Assert::IsTrue(intList.IsEmpty());
 
 			auto popFrontIntListException = [&intList] { intList.PopFront(); };
 			Assert::ExpectException<std::exception>(popFrontIntListException);
@@ -233,7 +233,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(*(intPtrList.PopFront()) == &c);
 			Assert::IsTrue(intPtrList.PopFront() == intPtrList.end());
 
-			Assert::IsTrue(intPtrList.isEmpty());
+			Assert::IsTrue(intPtrList.IsEmpty());
 
 			auto popFrontIntPtrListException = [&intPtrList] { intPtrList.PopFront(); };
 			Assert::ExpectException<std::exception>(popFrontIntPtrListException);
@@ -248,7 +248,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue((*fooList.PopFront()).Data() == dar.Data());
 			Assert::IsTrue(fooList.PopFront() == fooList.end());
 
-			Assert::IsTrue(fooList.isEmpty());
+			Assert::IsTrue(fooList.IsEmpty());
 
 			auto popFrontFooListException = [&fooList] { fooList.PopFront(); };
 			Assert::ExpectException<std::exception>(popFrontFooListException);
@@ -267,7 +267,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(*intList.PopBack() == b);
 			Assert::IsTrue(intList.PopBack() == intList.end());
 
-			Assert::IsTrue(intList.isEmpty());
+			Assert::IsTrue(intList.IsEmpty());
 
 			auto popBackIntListException = [&intList] { intList.PopBack(); };
 			Assert::ExpectException<std::exception>(popBackIntListException);
@@ -281,7 +281,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(*intPtrList.PopBack() == &b);
 			Assert::IsTrue(intPtrList.PopBack() == intPtrList.end());
 
-			Assert::IsTrue(intPtrList.isEmpty());
+			Assert::IsTrue(intPtrList.IsEmpty());
 
 			auto popBackIntPtrListException = [&intPtrList] { intPtrList.PopBack(); };
 			Assert::ExpectException<std::exception>(popBackIntPtrListException);
@@ -296,7 +296,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue((*fooList.PopBack()).Data() == car.Data());
 			Assert::IsTrue(fooList.PopBack() == fooList.end());
 
-			Assert::IsTrue(fooList.isEmpty());
+			Assert::IsTrue(fooList.IsEmpty());
 
 			auto popBackFooListException = [&fooList] { fooList.PopBack(); };
 			Assert::ExpectException<std::exception>(popBackFooListException);
@@ -312,7 +312,7 @@ namespace UnitTestLibraryDesktop
 			
 			intList.Clear();
 
-			Assert::IsTrue(intList.isEmpty());
+			Assert::IsTrue(intList.IsEmpty());
 
 			SList <int*> intPtrList;
 			intPtrList.PushFront(&a);
@@ -321,7 +321,7 @@ namespace UnitTestLibraryDesktop
 
 			intPtrList.Clear();
 
-			Assert::IsTrue(intPtrList.isEmpty());
+			Assert::IsTrue(intPtrList.IsEmpty());
 
 			SList <Foo> fooList;
 			Foo bar, car(1), dar(2);
@@ -331,7 +331,7 @@ namespace UnitTestLibraryDesktop
 
 			fooList.Clear();
 
-			Assert::IsTrue(fooList.isEmpty());
+			Assert::IsTrue(fooList.IsEmpty());
 		}
 		TEST_METHOD(TestEquivalenceOperators)
 		{
