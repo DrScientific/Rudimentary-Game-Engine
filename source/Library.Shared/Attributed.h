@@ -136,7 +136,7 @@ namespace FIEAGameEngine
 		/// Overload of Scope's virtual constructor for Attibuted
 		/// </summary>
 		/// <returns>A scope pinter pointer to the newly created attributed object</returns>
-		virtual gsl::owner<Scope*> Clone();
+		virtual gsl::owner<Scope*> Clone() const override;
 
 		virtual std::string ToString() const override;
 

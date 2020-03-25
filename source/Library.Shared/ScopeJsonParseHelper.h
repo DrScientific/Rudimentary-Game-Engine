@@ -53,20 +53,25 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Scope shared data used for populating scopes from json files.
 		/// </summary>
-		class SharedData : public JsonParseMaster::SharedData
+		class ScopeSharedData : public JsonParseMaster::SharedData
 		{
 			friend class ScopeJsonParseHelper;
-			RTTI_DECLARATIONS(SharedData, FIEAGameEngine::JsonParseMaster::SharedData);
+			RTTI_DECLARATIONS(ScopeSharedData, JsonParseMaster::SharedData);
 		public:
 			/// <summary>
 			/// Shared Pointer constructor
 			/// </summary>
-			SharedData(shared_ptr<Scope> scope);
+			ScopeSharedData(shared_ptr<Scope> & scope);
+
+			/// <summary>
+			/// Shared Pointer move constructor
+			/// </summary>
+			ScopeSharedData(shared_ptr<Scope> && scope);
 
 			/// <summary>
 			/// Virtual destructor
 			/// </summary>
-			virtual ~SharedData() = default;
+			virtual ~ScopeSharedData() = default;
 
 			/// <summary>
 			/// Virtual constructor

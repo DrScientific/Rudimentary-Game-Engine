@@ -11,7 +11,7 @@ namespace FIEAGameEngine
 {
 
 	RTTI_DEFINITIONS(ScopeJsonParseHelper);
-	RTTI_DEFINITIONS(ScopeJsonParseHelper::SharedData);
+	RTTI_DEFINITIONS(ScopeJsonParseHelper::ScopeSharedData);
 
 	HashMap<string const, Datum::DatumType> const ScopeJsonParseHelper::stringToTypeMap = {
 		{"integer", Datum::DatumType::Integer}, {"Integer", Datum::DatumType::Integer},
@@ -28,30 +28,35 @@ namespace FIEAGameEngine
 	{
 	}
 
-	ScopeJsonParseHelper::SharedData::SharedData(shared_ptr<Scope> scope)
+	ScopeJsonParseHelper::ScopeSharedData::ScopeSharedData(shared_ptr<Scope> & scope)
 		:rootScope(scope)
 	{
 	}
 
-	gsl::owner<JsonParseMaster::SharedData*> ScopeJsonParseHelper::SharedData::Create() const
+	ScopeJsonParseHelper::ScopeSharedData::ScopeSharedData(shared_ptr<Scope> && scope)
+		: rootScope(std::move(scope))
 	{
-		return new ScopeJsonParseHelper::SharedData(make_shared<Scope>(GetScope().Clone()));
 	}
 
-	Scope & ScopeJsonParseHelper::SharedData::GetScope()
+	gsl::owner<JsonParseMaster::SharedData*> ScopeJsonParseHelper::ScopeSharedData::Create() const
 	{
-		return *rootScope;
+		return new ScopeJsonParseHelper::ScopeSharedData(shared_ptr<Scope>(GetScope().Clone()));
 	}
 
-	Scope const & ScopeJsonParseHelper::SharedData::GetScope() const
+	Scope & ScopeJsonParseHelper::ScopeSharedData::GetScope()
 	{
-		return *rootScope;
+		return *(rootScope.get());
+	}
+
+	Scope const & ScopeJsonParseHelper::ScopeSharedData::GetScope() const
+	{
+		return *(rootScope.get());
 	}
 
 	bool ScopeJsonParseHelper::StartHandler(JsonParseMaster::SharedData  * const sharedData, string const & key, Json::Value const & jsonValue, bool const & isArrayElement, size_t const & index)
 	{
 		isArrayElement;
-		ScopeJsonParseHelper::SharedData * scopeSharedData = sharedData->As< ScopeJsonParseHelper::SharedData>();
+		ScopeJsonParseHelper::ScopeSharedData * scopeSharedData = sharedData->As< ScopeJsonParseHelper::ScopeSharedData>();
 
 		if (scopeSharedData == nullptr || key.empty())
 		{
@@ -69,7 +74,7 @@ namespace FIEAGameEngine
 				}
 				StackFrame currentFrame(key, Datum::DatumType::Unknown, stack.Top().ContextFrame);
 				stack.Push(currentFrame);
-				stack.Top().ContextFrame->Append(stack.Top().Key);
+				stack.Top().ContextFrame->Append(key);
 				return true;
 			}
 		}
@@ -84,8 +89,6 @@ namespace FIEAGameEngine
 			}
 			else if (key == "value")
 			{
-				StackFrame test = stack.Top();
-				test;
 				if ((*(stack.Top().ContextFrame))[stack.Top().Key].IsInternal())
 				{
 					if (jsonValue.isObject())
@@ -142,7 +145,7 @@ namespace FIEAGameEngine
 
 	bool ScopeJsonParseHelper::EndHandler(JsonParseMaster::SharedData * const sharedData, std::string const & key)
 	{
-		if (sharedData->As< ScopeJsonParseHelper::SharedData>() == nullptr)
+		if (sharedData->As< ScopeJsonParseHelper::ScopeSharedData>() == nullptr)
 		{
 			return false;
 		}

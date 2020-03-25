@@ -141,7 +141,7 @@ namespace FIEAGameEngine
 		Populate(TypeIdInstance());
 	}
 
-	gsl::owner<Scope*> Attributed::Clone()
+	gsl::owner<Scope*> Attributed::Clone() const
 	{
 		return new Attributed(*this);
 	}

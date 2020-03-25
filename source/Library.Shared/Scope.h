@@ -11,7 +11,7 @@ namespace FIEAGameEngine
 	class Scope : public RTTI
 	{
 
-		RTTI_DECLARATIONS(Scope, FIEAGameEngine::RTTI);
+		RTTI_DECLARATIONS(Scope, RTTI);
 	public:
 		
 		friend class Scope;

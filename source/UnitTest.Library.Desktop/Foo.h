@@ -1,5 +1,6 @@
 #pragma once
 #include "RTTI.h"
+#include "Factory.h"
 
 namespace UnitTests
 {
@@ -25,4 +26,7 @@ namespace UnitTests
 	private:
 		int* mData;
 	};
+
+	CONCRETE_FACTORY(Foo, FIEAGameEngine::RTTI);
+	
 }

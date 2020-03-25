@@ -331,7 +331,7 @@ namespace FIEAGameEngine
 		return result;
 	}
 
-	gsl::owner<Scope*> FIEAGameEngine::Scope::Clone() const
+	gsl::owner<Scope*> Scope::Clone() const
 	{
 		return new Scope(*this);
 	}

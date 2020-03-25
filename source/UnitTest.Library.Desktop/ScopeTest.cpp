@@ -11,7 +11,6 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace FIEAGameEngine;
 using namespace std;
-using namespace UnitTests;
 
 namespace UnitTestLibraryDesktop
 {

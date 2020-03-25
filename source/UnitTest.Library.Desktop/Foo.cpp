@@ -8,7 +8,8 @@ using namespace FIEAGameEngine;
 
 namespace UnitTests
 {
-	RTTI_DEFINITIONS(Foo)
+	RTTI_DEFINITIONS(Foo);
+
 
 	Foo::Foo(int data) :
 		mData(new int(data))

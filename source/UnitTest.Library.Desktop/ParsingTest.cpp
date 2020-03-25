@@ -44,6 +44,20 @@ namespace UnitTestLibraryDesktop
 #endif
 		}
 
+		TEST_METHOD(RTTITest)
+		{
+			shared_ptr sharedScope = make_shared<Scope>();
+			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
+			JsonParseMaster master(sharedData);
+			ScopeJsonParseHelper scopeHelper;
+
+			Assert::IsTrue(scopeHelper.TypeName() == "ScopeJsonParseHelper");
+			Assert::IsTrue(scopeHelper.Is(IJsonParseHelper::TypeIdClass()));
+			Assert::IsTrue(sharedData.TypeName() == "ScopeSharedData");
+			Assert::IsTrue(sharedData.Is(JsonParseMaster::SharedData::TypeIdClass()));
+			Assert::IsTrue(master.TypeName() == "JsonParseMaster");
+		}
+
 		TEST_METHOD(TestSimpleDeserialization)
 		{
 			stringstream inputStream;
@@ -285,7 +299,7 @@ namespace UnitTestLibraryDesktop
 		TEST_METHOD(TestScopeParser)
 		{
 			shared_ptr sharedScope = make_shared<Scope>();
-			ScopeJsonParseHelper::SharedData sharedData(sharedScope);
+			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
 			JsonParseMaster master(sharedData);
 			ScopeJsonParseHelper scopeHelper;
 
@@ -316,7 +330,7 @@ namespace UnitTestLibraryDesktop
 		TEST_METHOD(TestNestedScopeParser)
 		{
 			shared_ptr sharedScope = make_shared<Scope>();
-			ScopeJsonParseHelper::SharedData sharedData(sharedScope);
+			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
 			JsonParseMaster master(sharedData);
 			ScopeJsonParseHelper scopeHelper;
 
@@ -394,10 +408,100 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(rathianScope["Rotation"] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f));
 		}
 
+		TEST_METHOD(TestNestedScopeCloneParser)
+		{
+			shared_ptr sharedScope = make_shared<Scope>();
+			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
+			JsonParseMaster master(sharedData);
+			ScopeJsonParseHelper scopeHelper;
+
+			master.Initialize();
+
+			Assert::IsFalse(master.ParseFromFile("Content/monsters.json"));
+
+			master.AddHelper(scopeHelper);
+
+			master.Initialize();
+
+			JsonParseMaster* clonedMaster = master.Clone();
+
+			clonedMaster->Initialize();
+
+			Assert::IsTrue(clonedMaster->ParseFromFile("Content/monsters.json"));
+
+			JsonParseMaster::SharedData * clonedsharedData = clonedMaster->GetSharedData();
+
+			Assert::IsTrue(clonedsharedData->Is(sharedData.TypeIdInstance()));
+
+			Scope & clonedourScope = clonedsharedData->As<ScopeJsonParseHelper::ScopeSharedData>()->GetScope();
+
+			Scope & clonedrathalosScope = clonedourScope["Rathalos"][0];
+			
+			Scope & clonedrathalosAttacksScope = clonedrathalosScope["Attacks"][0];
+			
+			Scope & clonedrathalosFireballScope = clonedrathalosAttacksScope["Fireball"][0];
+			
+			Scope & clonedrathalosTailSpinScope = clonedrathalosAttacksScope["TailSpin"][0];
+			
+			Scope & clonedrathalosClawAttackScope = clonedrathalosAttacksScope["ClawAttack"][0];
+			
+			Scope & clonedrathianScope = clonedourScope["Rathian"][0];
+			
+			Scope & clonedrathianAttacksScope = clonedrathianScope["Attacks"][0];
+
+			Scope & clonedrathianFireballScope = clonedrathianAttacksScope["Fireball"][0];
+
+			Scope & clonedrathianTailSpinScope = clonedrathianAttacksScope["TailSpin"][0];
+
+			Scope & clonedrathianClawAttackScope = clonedrathianAttacksScope["ClawAttack"][0];
+
+			string rathalosDrops[4] = { "Rathalos Plate", "Rathalos Webbing", "Wing Talon", "Rathalos Tail" };
+
+			string rathianDrops[4] = { "Rathian Plate", "Rathian Webbing", "Wing Talon", "Rathian Tail" };
+
+			Assert::IsTrue(clonedrathalosFireballScope["Damage"].Get<int>(0) == 111);
+			Assert::IsTrue(clonedrathalosFireballScope["KnockBack"].Get<float>(0) == 111.f);
+			Assert::IsTrue(clonedrathalosFireballScope["StatusEffect"].Get<string>(0) == "burning");
+			Assert::IsTrue(clonedrathalosTailSpinScope["Damage"].Get<int>(0) == 222);
+			Assert::IsTrue(clonedrathalosTailSpinScope["KnockBack"].Get<float>(0) == 222.f);
+			Assert::IsTrue(clonedrathalosTailSpinScope["StatusEffect"].Get<string>(0) == "none");
+			Assert::IsTrue(clonedrathalosClawAttackScope["Damage"].Get<int>(0) == 333);
+			Assert::IsTrue(clonedrathalosClawAttackScope["KnockBack"].Get<float>(0) == 333.f);
+			Assert::IsTrue(clonedrathalosClawAttackScope["StatusEffect"].Get<string>(0) == "poison");
+			Assert::IsTrue(clonedrathalosScope["Drops"].Get<string>(0) == rathalosDrops[0]);
+			Assert::IsTrue(clonedrathalosScope["Drops"].Get<string>(1) == rathalosDrops[1]);
+			Assert::IsTrue(clonedrathalosScope["Drops"].Get<string>(2) == rathalosDrops[2]);
+			Assert::IsTrue(clonedrathalosScope["Drops"].Get<string>(3) == rathalosDrops[3]);
+			Assert::IsTrue(clonedrathalosScope["Health"] == 8000);
+			Assert::IsTrue(clonedrathalosScope["Size"] == 7777.7777f);
+			Assert::IsTrue(clonedrathalosScope["Position"] == vec4(1.0f, 2.0f, 3.0f, 4.0f));
+			Assert::IsTrue(clonedrathalosScope["Rotation"] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f));
+
+			Assert::IsTrue(clonedrathianFireballScope["Damage"].Get<int>(0) == 444);
+			Assert::IsTrue(clonedrathianFireballScope["KnockBack"].Get<float>(0) == 444.f);
+			Assert::IsTrue(clonedrathianFireballScope["StatusEffect"].Get<string>(0) == "burning");
+			Assert::IsTrue(clonedrathianTailSpinScope["Damage"].Get<int>(0) == 555);
+			Assert::IsTrue(clonedrathianTailSpinScope["KnockBack"].Get<float>(0) == 555.f);
+			Assert::IsTrue(clonedrathianTailSpinScope["StatusEffect"].Get<string>(0) == "poison");
+			Assert::IsTrue(clonedrathianClawAttackScope["Damage"].Get<int>(0) == 666);
+			Assert::IsTrue(clonedrathianClawAttackScope["KnockBack"].Get<float>(0) == 666.f);
+			Assert::IsTrue(clonedrathianClawAttackScope["StatusEffect"].Get<string>(0) == "none");
+			Assert::IsTrue(clonedrathianScope["Drops"].Get<string>(0) == rathianDrops[0]);
+			Assert::IsTrue(clonedrathianScope["Drops"].Get<string>(1) == rathianDrops[1]);
+			Assert::IsTrue(clonedrathianScope["Drops"].Get<string>(2) == rathianDrops[2]);
+			Assert::IsTrue(clonedrathianScope["Drops"].Get<string>(3) == rathianDrops[3]);
+			Assert::IsTrue(clonedrathianScope["Health"] == 9000);
+			Assert::IsTrue(clonedrathianScope["Size"] == 8888.8888f);
+			Assert::IsTrue(clonedrathianScope["Position"] == vec4(1.0f, 2.0f, 3.0f, 4.0f));
+			Assert::IsTrue(clonedrathianScope["Rotation"] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f));
+
+			delete clonedMaster;
+		}
+
 		TEST_METHOD(TestArrayScopeParser)
 		{
 			shared_ptr sharedScope = make_shared<Scope>();
-			ScopeJsonParseHelper::SharedData sharedData(sharedScope);
+			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
 			JsonParseMaster master(sharedData);
 			ScopeJsonParseHelper scopeHelper;
 
@@ -475,11 +579,101 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(rathianScope["Rotation"] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f));
 		}
 
+		TEST_METHOD(TestArrayScopeCloneParser)
+		{
+			shared_ptr sharedScope = make_shared<Scope>();
+			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
+			JsonParseMaster master(sharedData);
+			ScopeJsonParseHelper scopeHelper;
+
+			master.Initialize();
+
+			Assert::IsFalse(master.ParseFromFile("Content/monsterArray.json"));
+
+			master.AddHelper(scopeHelper);
+
+			master.Initialize();
+
+			JsonParseMaster* clonedMaster = master.Clone();
+
+			clonedMaster->Initialize();
+
+			Assert::IsTrue(clonedMaster->ParseFromFile("Content/monsterArray.json"));
+
+			JsonParseMaster::SharedData * clonedsharedData = clonedMaster->GetSharedData();
+
+			Assert::IsTrue(clonedsharedData->Is(sharedData.TypeIdInstance()));
+
+			Scope & clonedourScope = clonedsharedData->As<ScopeJsonParseHelper::ScopeSharedData>()->GetScope();
+
+			Scope & clonedrathalosScope = clonedourScope["Monsters"][0]["Rathalos"][0];
+
+			Scope & clonedrathalosAttacksScope = clonedrathalosScope["Attacks"][0];
+
+			Scope & clonedrathalosFireballScope = clonedrathalosAttacksScope["Fireball"][0];
+
+			Scope & clonedrathalosTailSpinScope = clonedrathalosAttacksScope["TailSpin"][0];
+
+			Scope & clonedrathalosClawAttackScope = clonedrathalosAttacksScope["ClawAttack"][0];
+
+			Scope & clonedrathianScope = clonedourScope["Monsters"][1]["Rathian"][0];
+
+			Scope & clonedrathianAttacksScope = clonedrathianScope["Attacks"][0];
+
+			Scope & clonedrathianFireballScope = clonedrathianAttacksScope["Fireball"][0];
+
+			Scope & clonedrathianTailSpinScope = clonedrathianAttacksScope["TailSpin"][0];
+
+			Scope & clonedrathianClawAttackScope = clonedrathianAttacksScope["ClawAttack"][0];
+
+			string rathalosDrops[4] = { "Rathalos Plate", "Rathalos Webbing", "Wing Talon", "Rathalos Tail" };
+
+			string rathianDrops[4] = { "Rathian Plate", "Rathian Webbing", "Wing Talon", "Rathian Tail" };
+
+			Assert::IsTrue(clonedrathalosFireballScope["Damage"].Get<int>(0) == 111);
+			Assert::IsTrue(clonedrathalosFireballScope["KnockBack"].Get<float>(0) == 111.f);
+			Assert::IsTrue(clonedrathalosFireballScope["StatusEffect"].Get<string>(0) == "burning");
+			Assert::IsTrue(clonedrathalosTailSpinScope["Damage"].Get<int>(0) == 222);
+			Assert::IsTrue(clonedrathalosTailSpinScope["KnockBack"].Get<float>(0) == 222.f);
+			Assert::IsTrue(clonedrathalosTailSpinScope["StatusEffect"].Get<string>(0) == "none");
+			Assert::IsTrue(clonedrathalosClawAttackScope["Damage"].Get<int>(0) == 333);
+			Assert::IsTrue(clonedrathalosClawAttackScope["KnockBack"].Get<float>(0) == 333.f);
+			Assert::IsTrue(clonedrathalosClawAttackScope["StatusEffect"].Get<string>(0) == "poison");
+			Assert::IsTrue(clonedrathalosScope["Drops"].Get<string>(0) == rathalosDrops[0]);
+			Assert::IsTrue(clonedrathalosScope["Drops"].Get<string>(1) == rathalosDrops[1]);
+			Assert::IsTrue(clonedrathalosScope["Drops"].Get<string>(2) == rathalosDrops[2]);
+			Assert::IsTrue(clonedrathalosScope["Drops"].Get<string>(3) == rathalosDrops[3]);
+			Assert::IsTrue(clonedrathalosScope["Health"] == 8000);
+			Assert::IsTrue(clonedrathalosScope["Size"] == 7777.7777f);
+			Assert::IsTrue(clonedrathalosScope["Position"] == vec4(1.0f, 2.0f, 3.0f, 4.0f));
+			Assert::IsTrue(clonedrathalosScope["Rotation"] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f));
+
+			Assert::IsTrue(clonedrathianFireballScope["Damage"].Get<int>(0) == 444);
+			Assert::IsTrue(clonedrathianFireballScope["KnockBack"].Get<float>(0) == 444.f);
+			Assert::IsTrue(clonedrathianFireballScope["StatusEffect"].Get<string>(0) == "burning");
+			Assert::IsTrue(clonedrathianTailSpinScope["Damage"].Get<int>(0) == 555);
+			Assert::IsTrue(clonedrathianTailSpinScope["KnockBack"].Get<float>(0) == 555.f);
+			Assert::IsTrue(clonedrathianTailSpinScope["StatusEffect"].Get<string>(0) == "poison");
+			Assert::IsTrue(clonedrathianClawAttackScope["Damage"].Get<int>(0) == 666);
+			Assert::IsTrue(clonedrathianClawAttackScope["KnockBack"].Get<float>(0) == 666.f);
+			Assert::IsTrue(clonedrathianClawAttackScope["StatusEffect"].Get<string>(0) == "none");
+			Assert::IsTrue(clonedrathianScope["Drops"].Get<string>(0) == rathianDrops[0]);
+			Assert::IsTrue(clonedrathianScope["Drops"].Get<string>(1) == rathianDrops[1]);
+			Assert::IsTrue(clonedrathianScope["Drops"].Get<string>(2) == rathianDrops[2]);
+			Assert::IsTrue(clonedrathianScope["Drops"].Get<string>(3) == rathianDrops[3]);
+			Assert::IsTrue(clonedrathianScope["Health"] == 9000);
+			Assert::IsTrue(clonedrathianScope["Size"] == 8888.8888f);
+			Assert::IsTrue(clonedrathianScope["Position"] == vec4(1.0f, 2.0f, 3.0f, 4.0f));
+			Assert::IsTrue(clonedrathianScope["Rotation"] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f));
+
+			delete clonedMaster;
+		}
+
 		TEST_METHOD(TestAttributedFooParse)
 		{
 			AttributedFoo foo;
 			shared_ptr sharedScope = make_shared<Scope>(foo);
-			ScopeJsonParseHelper::SharedData sharedData(sharedScope);
+			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
 			JsonParseMaster master(sharedData);
 			ScopeJsonParseHelper scopeHelper;
 
@@ -524,20 +718,22 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(foo.ExternalMatrixArray[2] == mat4x4(3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f));
 			Assert::IsTrue(foo.ExternalMatrixArray[3] == mat4x4(4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f));
 			Assert::IsTrue(foo.ExternalMatrixArray[4] == mat4x4(5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f));
-			//Assert::IsTrue(foo["NestedScope"][0]["NestedInteger"] == 0);
-			//Assert::IsTrue(foo["NestedScopeArray"][0]["NestedInteger1"] == 1);
-			//Assert::IsTrue(foo["NestedScopeArray"][1]["NestedInteger2"] == 2);
-			//Assert::IsTrue(foo["NestedScopeArray"][2]["NestedInteger3"] == 3);
-			//Assert::IsTrue(foo["NestedScopeArray"][3]["NestedInteger4"] == 4);
-			//Assert::IsTrue(foo["NestedScopeArray"][4]["NestedInteger5"] == 5);
+			//Datum & test1 = foo["ExternalInteger"];
+			//Datum & test = foo["NestedScope"];
+			/*Assert::IsTrue(foo["NestedScope"][0]["NestedInteger"].Front<int>() == 0);
+			Assert::IsTrue(foo["NestedScopeArray"][0]["NestedInteger1"] == 1);
+			Assert::IsTrue(foo["NestedScopeArray"][1]["NestedInteger2"] == 2);
+			Assert::IsTrue(foo["NestedScopeArray"][2]["NestedInteger3"] == 3);
+			Assert::IsTrue(foo["NestedScopeArray"][3]["NestedInteger4"] == 4);
+			Assert::IsTrue(foo["NestedScopeArray"][4]["NestedInteger5"] == 5);*/
 		}
 
-		/*
-		TEST_METHOD(TestCloneAndCreate)
+		
+		TEST_METHOD(TestAttributedCloneParse)
 		{
 			AttributedFoo foo;
 			shared_ptr sharedScope = make_shared<Scope>(foo);
-			ScopeJsonParseHelper::SharedData sharedData(sharedScope);
+			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
 			JsonParseMaster master(sharedData);
 			ScopeJsonParseHelper scopeHelper;
 
@@ -581,57 +777,77 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(foo.ExternalMatrixArray[2] == mat4x4(3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f));
 			Assert::IsTrue(foo.ExternalMatrixArray[3] == mat4x4(4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f));
 			Assert::IsTrue(foo.ExternalMatrixArray[4] == mat4x4(5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f));
-			//Assert::IsTrue(foo["NestedScope"][0]["NestedInteger"] == 0);
-			//Assert::IsTrue(foo["NestedScopeArray"][0]["NestedInteger1"] == 1);
-			//Assert::IsTrue(foo["NestedScopeArray"][1]["NestedInteger2"] == 2);
-			//Assert::IsTrue(foo["NestedScopeArray"][2]["NestedInteger3"] == 3);
-			//Assert::IsTrue(foo["NestedScopeArray"][3]["NestedInteger4"] == 4);
-			//Assert::IsTrue(foo["NestedScopeArray"][4]["NestedInteger5"] == 5);
+			/*Assert::IsTrue(foo["NestedScope"][0]["NestedInteger"].Front<int>() == 0);
+			Assert::IsTrue(foo["NestedScopeArray"][0]["NestedInteger1"] == 1);
+			Assert::IsTrue(foo["NestedScopeArray"][1]["NestedInteger2"] == 2);
+			Assert::IsTrue(foo["NestedScopeArray"][2]["NestedInteger3"] == 3);
+			Assert::IsTrue(foo["NestedScopeArray"][3]["NestedInteger4"] == 4);
+			Assert::IsTrue(foo["NestedScopeArray"][4]["NestedInteger5"] == 5);*/
 
 			JsonParseMaster* clonedMaster = master.Clone();
-
-			
 
 			clonedMaster->Initialize();
 
 			Assert::IsTrue(clonedMaster->ParseFromFile("Content/AttributedFoo.json"));
+			
+			ScopeJsonParseHelper::ScopeSharedData * clonedSharedData = clonedMaster->GetSharedData()->As< ScopeJsonParseHelper::ScopeSharedData>();
+
+			Assert::IsTrue(clonedSharedData->Is(sharedData.TypeIdInstance()));
+
+			/*string sharedDataTypeName = sharedData.TypeName();
+
+			string clonedSharedDataTypeName = clonedSharedData->TypeName();
+
+			Assert::IsTrue(clonedSharedDataTypeName == sharedDataTypeName);*/
+
 
 			
-			Assert::IsTrue(clonedFoo.ExternalInteger == 500);
-			Assert::IsTrue(clonedFoo.ExternalFloat == 500.5);
-			Assert::IsTrue(clonedFoo.ExternalString == "500.5");
-			Assert::IsTrue(clonedFoo.ExternalVector == vec4(1.f, 2.f, 3.f, 4.f));
-			Assert::IsTrue(clonedFoo.ExternalMatrix == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f));
-			Assert::IsTrue(clonedFoo.ExternalIntegerArray[0] == 500);
-			Assert::IsTrue(clonedFoo.ExternalIntegerArray[1] == 501);
-			Assert::IsTrue(clonedFoo.ExternalIntegerArray[2] == 502);
-			Assert::IsTrue(clonedFoo.ExternalIntegerArray[3] == 503);
-			Assert::IsTrue(clonedFoo.ExternalIntegerArray[4] == 504);
-			Assert::IsTrue(clonedFoo.ExternalFloatArray[0] == 500.5);
-			Assert::IsTrue(clonedFoo.ExternalFloatArray[1] == 501.5);
-			Assert::IsTrue(clonedFoo.ExternalFloatArray[2] == 502.5);
-			Assert::IsTrue(clonedFoo.ExternalFloatArray[3] == 503.5);
-			Assert::IsTrue(clonedFoo.ExternalFloatArray[4] == 504.5);
-			Assert::IsTrue(clonedFoo.ExternalStringArray[0] == "500.5");
-			Assert::IsTrue(clonedFoo.ExternalStringArray[1] == "501.5");
-			Assert::IsTrue(clonedFoo.ExternalStringArray[2] == "502.5");
-			Assert::IsTrue(clonedFoo.ExternalStringArray[3] == "503.5");
-			Assert::IsTrue(clonedFoo.ExternalStringArray[4] == "504.5");
-			Assert::IsTrue(clonedFoo.ExternalVectorArray[0] == vec4(1.f, 1.f, 1.f, 1.f));
-			Assert::IsTrue(clonedFoo.ExternalVectorArray[1] == vec4(2.f, 2.f, 2.f, 2.f));
-			Assert::IsTrue(clonedFoo.ExternalVectorArray[2] == vec4(3.f, 3.f, 3.f, 3.f));
-			Assert::IsTrue(clonedFoo.ExternalVectorArray[3] == vec4(4.f, 4.f, 4.f, 4.f));
-			Assert::IsTrue(clonedFoo.ExternalVectorArray[4] == vec4(5.f, 5.f, 5.f, 5.f));
-			Assert::IsTrue(clonedFoo.ExternalMatrixArray[0] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f));
-			Assert::IsTrue(clonedFoo.ExternalMatrixArray[1] == mat4x4(2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f));
-			Assert::IsTrue(clonedFoo.ExternalMatrixArray[2] == mat4x4(3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f));
-			Assert::IsTrue(clonedFoo.ExternalMatrixArray[3] == mat4x4(4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f));
-			Assert::IsTrue(clonedFoo.ExternalMatrixArray[4] == mat4x4(5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f));
-			
+			/*Scope & clonedFoo = clonedSharedData->GetScope();
 
+			
+			Assert::IsTrue(clonedFoo["ExternalInteger"] == 500);
+			Assert::IsTrue(clonedFoo["ExternalFloat"] == 500.5);
+			Assert::IsTrue(clonedFoo["ExternalString"] == "500.5");
+			Assert::IsTrue(clonedFoo["ExternalVector"] == vec4(1.f, 2.f, 3.f, 4.f));
+			Assert::IsTrue(clonedFoo["ExternalMatrix"] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f));
+			Assert::IsTrue(clonedFoo["ExternalIntegerArray"][0] == 500);
+			Assert::IsTrue(clonedFoo["ExternalIntegerArray"][1] == 501);
+			Assert::IsTrue(clonedFoo["ExternalIntegerArray"][2] == 502);
+			Assert::IsTrue(clonedFoo["ExternalIntegerArray"][3] == 503);
+			Assert::IsTrue(clonedFoo["ExternalIntegerArray"][4] == 504);
+			Assert::IsTrue(clonedFoo["ExternalFloatArray"][0] == 500.5);
+			Assert::IsTrue(clonedFoo["ExternalFloatArray"][1] == 501.5);
+			Assert::IsTrue(clonedFoo["ExternalFloatArray"][2] == 502.5);
+			Assert::IsTrue(clonedFoo["ExternalFloatArray"][3] == 503.5);
+			Assert::IsTrue(clonedFoo["ExternalFloatArray"][4] == 504.5);
+			Assert::IsTrue(clonedFoo["ExternalStringArray"][0] == "500.5");
+			Assert::IsTrue(clonedFoo["ExternalStringArray"][1] == "501.5");
+			Assert::IsTrue(clonedFoo["ExternalStringArray"][2] == "502.5");
+			Assert::IsTrue(clonedFoo["ExternalStringArray"][3] == "503.5");
+			Assert::IsTrue(clonedFoo["ExternalStringArray"][4] == "504.5");
+			Assert::IsTrue(clonedFoo["ExternalVectorArray"][0] == vec4(1.f, 1.f, 1.f, 1.f));
+			Assert::IsTrue(clonedFoo["ExternalVectorArray"][1] == vec4(2.f, 2.f, 2.f, 2.f));
+			Assert::IsTrue(clonedFoo["ExternalVectorArray"][2] == vec4(3.f, 3.f, 3.f, 3.f));
+			Assert::IsTrue(clonedFoo["ExternalVectorArray"][3] == vec4(4.f, 4.f, 4.f, 4.f));
+			Assert::IsTrue(clonedFoo["ExternalVectorArray"][4] == vec4(5.f, 5.f, 5.f, 5.f));
+			Assert::IsTrue(clonedFoo["ExternalMatrixArray"][0] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f));
+			Assert::IsTrue(clonedFoo["ExternalMatrixArray"][1] == mat4x4(2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f));
+			Assert::IsTrue(clonedFoo["ExternalMatrixArray"][2] == mat4x4(3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f));
+			Assert::IsTrue(clonedFoo["ExternalMatrixArray"][3] == mat4x4(4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f, 4.0f));
+			Assert::IsTrue(clonedFoo["ExternalMatrixArray"][4] == mat4x4(5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f));
+			*/
+			
 			delete clonedMaster;
 		}
-		*/
+
+		TEST_METHOD(SimplePolymorphismTest)
+		{
+			AttributedFoo foo;
+			Scope & scopeFoo = foo;
+			Scope & fooClone = *scopeFoo.Clone();
+			delete &fooClone;
+		}
+		
 
 
 	private:

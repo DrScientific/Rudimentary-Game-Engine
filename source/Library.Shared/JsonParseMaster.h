@@ -18,7 +18,7 @@ namespace FIEAGameEngine
 	class JsonParseMaster final: public RTTI
 	{
 		
-		RTTI_DECLARATIONS(JsonParseMaster, FIEAGameEngine::RTTI);
+		RTTI_DECLARATIONS(JsonParseMaster, RTTI);
 	public:
 		/// <summary>
 		/// Shared data is an abstract class from which different shared data types storing different shared datas may be derived.
@@ -26,7 +26,7 @@ namespace FIEAGameEngine
 		class SharedData : public RTTI
 		{
 			friend JsonParseMaster;
-			RTTI_DECLARATIONS(SharedData, FIEAGameEngine::RTTI);
+			RTTI_DECLARATIONS(SharedData, RTTI);
 		public:
 
 			/// <summary>

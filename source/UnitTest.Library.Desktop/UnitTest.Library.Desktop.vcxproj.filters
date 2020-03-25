@@ -13,9 +13,10 @@
     <ClCompile Include="AttributedFoo.cpp" />
     <ClCompile Include="AttributedFooTest.cpp" />
     <ClCompile Include="Bar.cpp" />
-    <ClCompile Include="..\Library.Shared\IDepthTestParseHelper.cpp" />
-    <ClCompile Include="..\Library.Shared\IIntegerJsonParseHelper.cpp" />
     <ClCompile Include="ParsingTest.cpp" />
+    <ClCompile Include="IDepthTestParseHelper.cpp" />
+    <ClCompile Include="IIntegerJsonParseHelper.cpp" />
+    <ClCompile Include="FooFactoryTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -24,7 +25,7 @@
     <ClInclude Include="DefaultHashFunctorTemplates.h" />
     <ClInclude Include="AttributedFoo.h" />
     <ClInclude Include="Bar.h" />
-    <ClInclude Include="..\Library.Shared\IDepthTestParseHelper.h" />
-    <ClInclude Include="..\Library.Shared\IIntegerJsonParseHelper.h" />
+    <ClInclude Include="IDepthTestParseHelper.h" />
+    <ClInclude Include="IIntegerJsonParseHelper.h" />
   </ItemGroup>
 </Project>

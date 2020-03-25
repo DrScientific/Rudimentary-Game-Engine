@@ -30,6 +30,7 @@ namespace UnitTests
 		glm::mat4x4 ExternalMatrixArray[ArraySize];
 		glm::vec4 ExternalVectorArray[ArraySize];
 		virtual std::string ToString() const override;
+		virtual gsl::owner<Scope*> Clone() const override;
 
 		static const FIEAGameEngine::Vector<Signature> Signatures();
 

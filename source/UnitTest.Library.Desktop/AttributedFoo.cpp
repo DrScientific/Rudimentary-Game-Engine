@@ -20,6 +20,11 @@ namespace UnitTests
 		return "AttributedFoo";
 	}
 
+	gsl::owner<Scope*> AttributedFoo::Clone() const
+	{
+		return new AttributedFoo(*this);
+	}
+
 	const Vector<Attributed::Signature> AttributedFoo::Signatures()
 	{
 		return Vector<Attributed::Signature>

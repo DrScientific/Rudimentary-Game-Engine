@@ -5,8 +5,6 @@
 #include <sstream>
 #include <fstream>
 #include "json/json.h"
-#include "IIntegerJsonParseHelper.h"
-#include "IDepthTestParseHelper.h"
 
 using namespace std;
 using namespace gsl;
@@ -146,8 +144,12 @@ namespace FIEAGameEngine
 
 	void JsonParseMaster::AddHelper(IJsonParseHelper & helper)
 	{
-		//TODO add filter
-		mParseHandlers.PushBack(pair<bool, IJsonParseHelper*>(false, &helper));
+		bool alreadyExists = false;
+		alreadyExists |= mParseHandlers.Find(pair<bool, IJsonParseHelper*>(true, &helper)) != mParseHandlers.end() || mParseHandlers.Find(pair<bool, IJsonParseHelper*>(false, &helper)) != mParseHandlers.end();
+		if (!alreadyExists)
+		{
+			mParseHandlers.PushBack(pair<bool, IJsonParseHelper*>(false, &helper));
+		}
 	}
 
 
@@ -155,12 +157,12 @@ namespace FIEAGameEngine
 	{
 		for (size_t i = 0; i < mParseHandlers.Size(); i++)
 		{
-			//TODO cache
-			if (mParseHandlers[i].second == &helper)
+			pair<bool , IJsonParseHelper*> currentHelper = mParseHandlers[i];
+			if (currentHelper.second == &helper)
 			{
-				if (mParseHandlers[i].first)
+				if (currentHelper.first)
 				{
-					delete mParseHandlers[i].second;
+					delete currentHelper.second;
 				}
 				mParseHandlers.RemoveAt(i);
 				break;
