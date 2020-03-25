@@ -17,6 +17,8 @@ namespace FIEAGameEngine
 
 	class Attributed : public Scope
 	{
+		RTTI_DECLARATIONS(Attributed, Scope);
+
 	public:
 		/// <summary>
 		/// Signature struct used for storing name, type, num elements, and offset of attributed derived classes
@@ -30,19 +32,6 @@ namespace FIEAGameEngine
 			Datum::DatumType mType = Datum::DatumType::Unknown;
 			size_t mSize = 0;
 			size_t mOffset = 0;
-
-			/// <summary>
-			/// Signature equivalence operator used by HashMap find in type manager when looking up signature-type table.
-			/// </summary>
-			/// <returns>Whether the signatures are equal.</returns>
-			//bool operator==(Signature const & rhs) const { return mName == rhs.mName && mType == rhs.mType && mSize == rhs.mSize && mOffset == rhs.mOffset; };
-			
-			/// <summary>
-			/// Signature equivalence operator used by HashMap find in type manager when looking up signature-type table.
-			/// </summary>
-			/// <returns>Whether the signatures are not equal.</returns>
-			//bool operator!=(Signature const & rhs) const { return !(*this == rhs); };
-
 		};
 
 	protected:
@@ -148,6 +137,8 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <returns>A scope pinter pointer to the newly created attributed object</returns>
 		virtual gsl::owner<Scope*> Clone();
+
+		virtual std::string ToString() const override;
 
 	private:
 

@@ -621,6 +621,14 @@ namespace FIEAGameEngine
 		template<> RTTI* Get<RTTI*>(size_t const & index) const;
 #pragma endregion
 
+#pragma region PushBackFromString
+		/// <summary>
+		/// Pushes back the string value converted to the datum's data type.
+		/// </summary>
+		/// <param name="value">Value to set data to.</param>
+		void PushBackFromString(std::string const & value);
+#pragma endregion
+
 #pragma region SetFromString
 		/// <summary>
 		/// Sets data at the given index to the passed in string value converted to the datum's data type.
@@ -629,6 +637,8 @@ namespace FIEAGameEngine
 		/// <param name="index">Index to set to value.</param>
 		void SetFromString(std::string const & value, size_t const & index = 0);
 #pragma endregion
+
+
 
 #pragma region ToString
 		/// <summary>
@@ -663,7 +673,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="value">Value to push back.</param>
 		glm::mat4x4 & PushBack(glm::mat4x4 const & value);
-	private:
+
 		/// <summary>
 		/// Increases the datum's size by one and places the given value at the back of the datum.
 		/// </summary>
@@ -1001,6 +1011,52 @@ namespace FIEAGameEngine
 		/// <param name="value">String representative to be converted to data of approproate type.</param>
 		/// <param name="index">Index to set to value.</param>
 		template<> void SetFromStringTemplated<RTTI*>(std::string const & value, size_t const & index);
+#pragma endregion
+
+#pragma region PushBackFromStringTemplated
+		/// <summary>
+		/// Templated push back from string.
+		/// If this function is ever called it means it was called on a type the datum does not support.
+		/// Thus it always throws an exception.
+		/// </summary>
+		/// <param name="value">String representative to be converted to data of approproate type.</param>
+		template<typename T> void PushBackFromStringTemplated(std::string const & value);
+
+		/// <summary>
+		/// Pushes back the string value converted to the appropriate type.
+		/// </summary>
+		/// <param name="value">String representative to be converted to data of approproate type.</param>
+		template<> void PushBackFromStringTemplated<int>(std::string const & value);
+
+		/// <summary>
+		/// Pushes back the string value converted to the appropriate type.
+		/// </summary>
+		/// <param name="value">String representative to be converted to data of approproate type.</param>
+		template<> void PushBackFromStringTemplated<float>(std::string const & value);
+
+		/// <summary>
+		/// Pushes back the string value converted to the appropriate type.
+		/// </summary>
+		/// <param name="value">String representative to be converted to data of approproate type.</param>
+		template<> void PushBackFromStringTemplated<glm::vec4>(std::string const & value);
+
+		/// <summary>
+		/// Pushes back the string value converted to the appropriate type.
+		/// </summary>
+		/// <param name="value">String representative to be converted to data of approproate type.</param>
+		template<> void PushBackFromStringTemplated<glm::mat4x4>(std::string const & value);
+
+		/// <summary>
+		/// Pushes back the string value converted to the appropriate type.
+		/// </summary>
+		/// <param name="value">String representative to be converted to data of approproate type.</param>
+		template<> void PushBackFromStringTemplated<std::string>(std::string const & value);
+
+		/// <summary>
+		/// Pushes back the string value converted to the appropriate type.
+		/// </summary>
+		/// <param name="value">String representative to be converted to data of approproate type.</param>
+		template<> void PushBackFromStringTemplated<RTTI*>(std::string const & value);
 #pragma endregion
 
 #pragma region ToStringTemplated

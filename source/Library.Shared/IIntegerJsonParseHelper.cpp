@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "IIntegerJsonParseHelper.h"
-
+#include "json/json.h"
 
 
 namespace FIEAGameEngine
@@ -28,8 +28,9 @@ namespace FIEAGameEngine
 		IJsonParseHelper::Initialize();
 	}
 	
-	bool IIntegerJsonParseHelper::StartHandler(JsonParseMaster::SharedData const * const sharedData, std::string const & key, Json::Value jsonValue, bool isArray)
+	bool IIntegerJsonParseHelper::StartHandler(JsonParseMaster::SharedData  * const sharedData, std::string const & key, Json::Value const & jsonValue, bool const & isArray, size_t const & index)
 	{
+		index;
 		isArray;
 		if ((key != "integer" && key != "Integer") || !jsonValue.isInt() || sharedData->As< IIntegerJsonParseHelper::SharedData>() == nullptr)
 		{

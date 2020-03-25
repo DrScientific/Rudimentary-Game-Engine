@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "json/json.h"
+#include "json/forwards.h"
 #include "JsonParseMaster.h"
 #include "RTTI.h"
 #include "gsl/gsl"
@@ -34,7 +34,7 @@ namespace FIEAGameEngine
 		/// <param name="jsonValue">The Json value</param>
 		/// <param name="isArray">Whether the key value pair is in an array</param>
 		/// <returns>Whether the key value pair was successfully parsed.</returns>
-		virtual bool StartHandler(JsonParseMaster::SharedData const * const sharedData, std::string const & key, Json::Value jsonValue, bool isArray) = 0;
+		virtual bool StartHandler(JsonParseMaster::SharedData  * const sharedData, std::string const & key, Json::Value const & jsonValue, bool const & isArray, size_t const & index) = 0;
 
 		/// <summary>
 		/// Pure virtual function that ends a handler by determining if we successfully parse the data.

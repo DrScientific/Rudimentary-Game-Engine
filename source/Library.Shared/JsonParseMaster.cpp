@@ -4,6 +4,7 @@
 #include <vector>
 #include <sstream>
 #include <fstream>
+#include "json/json.h"
 #include "IIntegerJsonParseHelper.h"
 #include "IDepthTestParseHelper.h"
 
@@ -25,41 +26,44 @@ namespace FIEAGameEngine
 		return mMaster;
 	}
 
-	size_t const JsonParseMaster::SharedData::IncrementDepth()
+	size_t JsonParseMaster::SharedData::IncrementDepth()
 	{
-		return mDepth++;
+		return ++mDepth;
 	}
 
-	size_t const JsonParseMaster::SharedData::DecrementDepth()
+	size_t JsonParseMaster::SharedData::DecrementDepth()
 	{
-		return mDepth--;
+		if (mDepth > 0)
+		{
+			return --mDepth;
+		}
+		return mDepth;
 	}
 
-	size_t const JsonParseMaster::SharedData::Depth()
+	size_t JsonParseMaster::SharedData::Depth() const
 	{
 		return mDepth;
 	}
 
-	void JsonParseMaster::SharedData::SetJsonParseMaster(JsonParseMaster * master)
+	void JsonParseMaster::SharedData::SetJsonParseMaster(JsonParseMaster & master)
 	{
-		mMaster = master;
+		mMaster = &master;
 	}
 
-	JsonParseMaster::JsonParseMaster(SharedData * sharedData):
-		mSharedData(sharedData)
+	JsonParseMaster::JsonParseMaster(SharedData & sharedData):
+		mSharedData(&sharedData)
 	{
-		if (sharedData != nullptr)
-		{
-			mSharedData->SetJsonParseMaster(this);
-		}
+		mSharedData->SetJsonParseMaster(*this);
 	}
 
 	JsonParseMaster::JsonParseMaster(JsonParseMaster && other) :
-		mParseHandlers(std::move(other.mParseHandlers)),	mCurrentFileBeingParsed(std::move(other.mCurrentFileBeingParsed)), mSharedData(other.mSharedData)
+		mParseHandlers(std::move(other.mParseHandlers)),	mCurrentFileBeingParsed(std::move(other.mCurrentFileBeingParsed)), mSharedData(other.mSharedData), doesOwnSharedData(other.doesOwnSharedData)
 	{
+		other.mSharedData = nullptr;
+		other.doesOwnSharedData = false;
 		if (mSharedData != nullptr)
 		{
-			mSharedData->SetJsonParseMaster(this);
+			mSharedData->SetJsonParseMaster(*this);
 		}
 	}
 
@@ -81,19 +85,42 @@ namespace FIEAGameEngine
 
 	JsonParseMaster & JsonParseMaster::operator=(JsonParseMaster && other)
 	{
-		mParseHandlers = std::move(other.mParseHandlers);
-		mCurrentFileBeingParsed = std::move(other.mCurrentFileBeingParsed);
-		mSharedData = std::move(other.mSharedData);
+		
+		if (this != &other)
+		{
+			//Should be made into clear functions
+			for (auto & i : mParseHandlers)
+			{
+				if (i.first)
+				{
+					delete i.second;
+				}
+			}
 
+			if (doesOwnSharedData)
+			{
+				delete mSharedData;
+			}
+			//^
+			mParseHandlers = std::move(other.mParseHandlers);
+			mCurrentFileBeingParsed = std::move(other.mCurrentFileBeingParsed);
+			mSharedData = std::move(other.mSharedData);
+			other.mSharedData = nullptr;
+			other.doesOwnSharedData = false;
+		}
 		return *this;
 	}
 
 	void JsonParseMaster::Initialize()
 	{
+		mSharedData->Initialize();
+		
 		for (auto & i: mParseHandlers)
 		{
 			i.second->Initialize();
 		}
+
+		mCurrentFileBeingParsed.clear();
 	}
 
 	owner<JsonParseMaster*> JsonParseMaster::Clone()
@@ -103,7 +130,7 @@ namespace FIEAGameEngine
 		{
 			clonedData = mSharedData->Create();
 		}
-		JsonParseMaster * clone = new JsonParseMaster(clonedData);
+		JsonParseMaster * clone = new JsonParseMaster(*clonedData);
 
 		clone->doesOwnSharedData = true;
 
@@ -119,6 +146,7 @@ namespace FIEAGameEngine
 
 	void JsonParseMaster::AddHelper(IJsonParseHelper & helper)
 	{
+		//TODO add filter
 		mParseHandlers.PushBack(pair<bool, IJsonParseHelper*>(false, &helper));
 	}
 
@@ -127,6 +155,7 @@ namespace FIEAGameEngine
 	{
 		for (size_t i = 0; i < mParseHandlers.Size(); i++)
 		{
+			//TODO cache
 			if (mParseHandlers[i].second == &helper)
 			{
 				if (mParseHandlers[i].first)
@@ -139,32 +168,17 @@ namespace FIEAGameEngine
 		}
 	}
 
-	bool JsonParseMaster::Parse(std::string jsonString)
+	bool JsonParseMaster::Parse(std::string const & jsonString)
 	{
-		if (mSharedData == nullptr)
-		{
-			throw exception(sharedDataUninitializedExceptionText.c_str());
-		}
-		Json::Value jsonValue;
-		stringstream intermediateStream;
-		intermediateStream << jsonString;
-		intermediateStream >> jsonValue;
-		return ParseMembers(jsonValue);
+		istringstream intermediateStream(jsonString);
+		return Parse(intermediateStream);
 	}
 
-	bool JsonParseMaster::ParseFromFile(std::string jsonFile)
+	bool JsonParseMaster::ParseFromFile(std::string const & jsonFile)
 	{
-		if (mSharedData == nullptr)
-		{
-			throw exception(sharedDataUninitializedExceptionText.c_str());
-		}
-		Json::Value jsonValue;
-		fstream intermediateStream;
-		intermediateStream.open(jsonFile);
 		mCurrentFileBeingParsed = jsonFile;
-		intermediateStream >> jsonValue;
-		intermediateStream.close();
-		return ParseMembers(jsonValue);
+		fstream intermediateStream(jsonFile);
+		return Parse(intermediateStream);
 	}
 
 	bool JsonParseMaster::Parse(std::istream & jsonIStream)
@@ -178,7 +192,7 @@ namespace FIEAGameEngine
 		return ParseMembers(jsonValue);
 	}
 
-	std::string JsonParseMaster::GetFileName()
+	std::string const & JsonParseMaster::GetFileName() const
 	{
 		return mCurrentFileBeingParsed;
 	}
@@ -188,46 +202,75 @@ namespace FIEAGameEngine
 		return mSharedData;
 	}
 
-	void JsonParseMaster::SetSharedData(SharedData * sharedData)
+	void JsonParseMaster::SetSharedData(SharedData & sharedData)
 	{
-		mSharedData = sharedData;
+		mSharedData = &sharedData;
 	}
 
-	bool JsonParseMaster::ParseMembers(Json::Value jsonValue)
+	bool JsonParseMaster::ParseMembers(Json::Value const & jsonValue)
 	{
-		bool succeeded = true;
 		std::vector<string> memberNames = jsonValue.getMemberNames();
-		
+
 		for (auto & i : memberNames)
 		{
-			succeeded = Parse(i, jsonValue[i], jsonValue[i].isArray());
-			mSharedData->DecrementDepth();
-			if (!succeeded)
+			if (!Parse(i, jsonValue[i], jsonValue[i].isArray(), 0))
 			{
-				break;
+				return false;
 			}
 		}
-		return succeeded;
+		return true;
 	}
 
-	bool JsonParseMaster::Parse(std::string key, Json::Value value, bool isInArray)
+	bool JsonParseMaster::Parse(std::string const & key, Json::Value const & value, bool const & isArrayElement, size_t const & index)
 	{
-		mSharedData->IncrementDepth();
-		for (size_t i = 0; i < mParseHandlers.Size(); i++)
+		bool result = false;
+		if (value.isObject())
 		{
-			if (mParseHandlers[i].second->StartHandler(mSharedData, key, value, isInArray))
+			mSharedData->IncrementDepth();
+			for (auto const & pair : mParseHandlers)
 			{
-				if (value.type() == Json::ValueType::objectValue)
+				IJsonParseHelper* handler = pair.second;
+				if (handler->StartHandler(mSharedData, key, value, isArrayElement, index))
 				{
-					ParseMembers(value);
-				}
-				if (mParseHandlers[i].second->EndHandler(mSharedData, key))
-				{
-					return true;
+					result = ParseMembers(value);
+					if (!handler->EndHandler(mSharedData, key))
+					{
+						throw exception(startHandlerFailedToEndException.c_str());
+					}
+					break;
 				}
 			}
+			mSharedData->DecrementDepth();
 		}
-		return false;
+		else if (value.isArray())
+		{
+			result = true;
+			size_t i = 0;
+			for (auto const & element : value)
+			{
+				result |= Parse(key, element, true, i);
+				++i;
+			}
+		}
+		else
+		{
+			mSharedData->IncrementDepth();
+			for (auto const & pair : mParseHandlers)
+			{
+				IJsonParseHelper* handler = pair.second;
+				if (handler->StartHandler(mSharedData, key, value, isArrayElement, index))
+				{
+					if (!handler->EndHandler(mSharedData, key))
+					{
+						throw exception(startHandlerFailedToEndException.c_str());
+					}
+					result = true;
+					break;
+				}
+			}
+			mSharedData->DecrementDepth();
+		}
+		return result;
 	}
 
 	

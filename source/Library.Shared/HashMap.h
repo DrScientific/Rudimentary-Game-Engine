@@ -11,9 +11,6 @@
 #include "Vector.h"
 #include "DefaultHashFunctor.h"
 
-
-using namespace std;
-
 namespace FIEAGameEngine
 {
 	/// <summary>
@@ -325,7 +322,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="keyDataPair">A key-data pair which will hash key to find an empty index and store the key-data pair at that location. </param>
 		/// <returns>An Iterator to the inserted key-data pair.</returns>
-		pair <bool, Iterator> Insert(PairType const & keyDataPair);
+		std::pair <bool, Iterator> Insert(PairType const & keyDataPair);
 
 		/// <summary>
 		/// Inserts the pair at the index mapped to by the hashed key. If the pair already exists then an Iterator to the pair is returned.
@@ -333,7 +330,7 @@ namespace FIEAGameEngine
 		/// <param name="key">A key which will be hashed to find an empty index and store the key-data pair at that location.</param>
 		/// <param name="data">Data to store at the hashed key index.</param>
 		/// <returns>An Iterator to the inserted key-data pair.</returns>
-		pair <bool, Iterator>  Insert(TKey const & key, TData const & data);
+		std::pair <bool, Iterator>  Insert(TKey const & key, TData const & data);
 
 		/// <summary>
 		/// Returns the data stored in the key-data pair stored in the HashMap at the passed in key. If no key-data pair exists inserts a key-data pair into the HashMap where the key is th passed in key and the data is the default constructor of the data type.
@@ -405,7 +402,7 @@ namespace FIEAGameEngine
 		/// <param name="key">The key we are searching for within the HashMap.</param>
 		/// <param name="data">Out param of value at key.</param>
 		/// <returns>True if the key is in the HashMap and false otherwise.</returns>
-		pair<bool, TData*> ContainsKey(TKey const & key) const;
+		std::pair<bool, TData*> ContainsKey(TKey const & key) const;
 
 
 	private:

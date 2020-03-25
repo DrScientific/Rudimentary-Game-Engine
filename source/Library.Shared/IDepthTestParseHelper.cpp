@@ -1,7 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "IDepthTestParseHelper.h"
-
+#include "json/json.h"
 
 namespace FIEAGameEngine
 {
@@ -29,10 +29,8 @@ namespace FIEAGameEngine
 		mStartHandlerCount = 0;
 		mEndHandlerCount = 0;
 	}
-	bool IDepthTestParseHelper::StartHandler(JsonParseMaster::SharedData const * const sharedData, std::string const & key, Json::Value jsonValue, bool isArray)
+	bool IDepthTestParseHelper::StartHandler(JsonParseMaster::SharedData  * const sharedData, std::string const &, Json::Value const & , bool const & , size_t const &)
 	{
-		isArray;
-		key;
 		IDepthTestParseHelper::SharedData* depthSharedData = sharedData->As<IDepthTestParseHelper::SharedData>();
 		if (depthSharedData == nullptr)
 		{

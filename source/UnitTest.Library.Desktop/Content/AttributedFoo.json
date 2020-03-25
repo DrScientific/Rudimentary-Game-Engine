@@ -1,0 +1,116 @@
+{
+  "ExternalInteger": {
+    "type": "integer",
+    "value": 500
+  },
+  "ExternalFloat": {
+    "type": "float",
+    "value": 500.5
+  },
+  "ExternalString": {
+    "type": "string",
+    "value": "500.5"
+  },
+  "ExternalVector": {
+    "type": "vector",
+    "value": "vec4(1.0, 2.0, 3.0, 4.0)"
+  },
+  "ExternalMatrix": {
+    "type": "matrix",
+    "value": "mat4x4((1.0, 1.0, 1.0, 1.0), (2.0, 2.0, 2.0, 2.0), (3.0, 3.0, 3.0, 3.0), (4.0, 4.0, 4.0, 4.0))"
+  },
+  "ExternalIntegerArray": {
+    "type": "integer",
+    "value": [
+      500,
+      501,
+      502,
+      503,
+      504
+    ]
+  },
+  "ExternalFloatArray": {
+    "type": "float",
+    "value": [
+      500.5,
+      501.5,
+      502.5,
+      503.5,
+      504.5
+    ]
+  },
+  "ExternalStringArray": {
+    "type": "string",
+    "value": [
+      "500.5",
+      "501.5",
+      "502.5",
+      "503.5",
+      "504.5"
+    ]
+  },
+  "ExternalVectorArray": {
+    "type": "vector",
+    "value": [
+      "vec4(1.0, 1.0, 1.0, 1.0)",
+      "vec4(2.0, 2.0, 2.0, 2.0)",
+      "vec4(3.0, 3.0, 3.0, 3.0)",
+      "vec4(4.0, 4.0, 4.0, 4.0)",
+      "vec4(5.0, 5.0, 5.0, 5.0)"
+    ]
+  },
+  "ExternalMatrixArray": {
+    "type": "matrix",
+    "value": [
+      "mat4x4((1.0, 1.0, 1.0, 1.0), (1.0, 1.0, 1.0, 1.0), (1.0, 1.0, 1.0, 1.0), (1.0, 1.0, 1.0, 1.0))",
+      "mat4x4((2.0, 2.0, 2.0, 2.0), (2.0, 2.0, 2.0, 2.0), (2.0, 2.0, 2.0, 2.0), (2.0, 2.0, 2.0, 2.0))",
+      "mat4x4((3.0, 3.0, 3.0, 3.0), (3.0, 3.0, 3.0, 3.0), (3.0, 3.0, 3.0, 3.0), (3.0, 3.0, 3.0, 3.0))",
+      "mat4x4((4.0, 4.0, 4.0, 4.0), (4.0, 4.0, 4.0, 4.0), (4.0, 4.0, 4.0, 4.0), (4.0, 4.0, 4.0, 4.0))",
+      "mat4x4((5.0, 5.0, 5.0, 5.0), (5.0, 5.0, 5.0, 5.0), (5.0, 5.0, 5.0, 5.0), (5.0, 5.0, 5.0, 5.0))"
+    ]
+  },
+  "NestedScope": {
+    "type": "scope",
+    "value": {
+      "NestedInteger": {
+        "type": "integer",
+        "value": 0
+      }
+    }
+  },
+  "NestedScopeArray": {
+    "type": "scope",
+    "value": [
+      {
+        "NestedInteger1": {
+          "type": "integer",
+          "value": 1
+        }
+      },
+      {
+        "NestedInteger2": {
+          "type": "integer",
+          "value": 2
+        }
+      },
+      {
+        "NestedInteger3": {
+          "type": "integer",
+          "value": 3
+        }
+      },
+      {
+        "NestedInteger4": {
+          "type": "integer",
+          "value": 4
+        }
+      },
+      {
+        "NestedInteger5": {
+          "type": "integer",
+          "value": 5
+        }
+      }
+    ]
+  }
+}

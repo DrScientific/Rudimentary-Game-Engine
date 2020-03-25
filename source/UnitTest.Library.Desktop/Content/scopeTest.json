@@ -1,0 +1,34 @@
+{
+  "A": {
+    "type": "string",
+    "value": "A"
+  },
+  "B": {
+    "type": "float",
+    "value": 66.1
+  },
+  "C": {
+        "type": "integer",
+        "value": 67
+  },
+  "D": {
+        "type": "float",
+        "value": "68.0f"
+  },
+  "E": {
+        "type": "integer",
+        "value": "69"
+  },
+  "F": {
+        "type": "string",
+        "value": "F"
+  },
+  "G": {
+        "type": "vec4",
+        "value": "vec4(1.0, 2.0, 3.0, 4.0)"
+  },
+  "H": {
+        "type": "matrix",
+        "value": "mat4x4((1.0, 1.0, 1.0, 1.0), (2.0, 2.0, 2.0, 2.0), (3.0, 3.0, 3.0, 3.0), (4.0, 4.0, 4.0, 4.0))"
+  }
+}

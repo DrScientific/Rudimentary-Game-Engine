@@ -910,6 +910,39 @@ namespace FIEAGameEngine
 	}
 	#pragma endregion
 
+#pragma region PushBackFromString
+	void Datum::PushBackFromString(string const & value)
+	{
+		switch (mType)
+		{
+		case DatumType::Integer:
+			PushBackFromStringTemplated<int>(value);
+			break;
+		case DatumType::Float:
+			PushBackFromStringTemplated<float>(value);
+			break;
+		case DatumType::Vector4:
+			PushBackFromStringTemplated<vec4>(value);
+			break;
+		case DatumType::Matrix4x4:
+			PushBackFromStringTemplated<mat4x4>(value);
+			break;
+		case DatumType::Scope:
+			//TODO: Future implementation
+			break;
+		case DatumType::String:
+			PushBackFromStringTemplated<string>(value);
+			break;
+		case DatumType::RTTIPtr:
+			PushBackFromStringTemplated<RTTI*>(value);
+			break;
+		default:
+			throw exception(datumTypeNotInitializedExceptionText.c_str());
+			break;
+		}
+	}
+#pragma endregion
+
 	#pragma region ToString
 	string Datum::ToString(size_t const & index) const
 	{
@@ -1400,11 +1433,9 @@ namespace FIEAGameEngine
 
 	#pragma region SetFromStringTemplated
 	template<typename T>
-	void Datum::SetFromStringTemplated(string const & value, size_t const & index)
+	void Datum::SetFromStringTemplated(string const &, size_t const &)
 	{
 		throw exception(unsupportedDataTypeExceptionText.c_str());
-		value;
-		index;
 	}
 
 	template<>
@@ -1451,6 +1482,58 @@ namespace FIEAGameEngine
 		throw exception(unsupportedDataTypeExceptionText.c_str());
 	}
 	#pragma endregion
+
+#pragma region PushBackFromStringTemplated
+	template<typename T>
+	void Datum::PushBackFromStringTemplated(string const &)
+	{
+		throw exception(unsupportedDataTypeExceptionText.c_str());
+	}
+
+	template<>
+	void Datum::PushBackFromStringTemplated<int>(string const & value)
+	{
+		PushBack(stoi(value));
+	}
+
+	template<>
+	void Datum::PushBackFromStringTemplated<float>(string const & value)
+	{
+		PushBack(stof(value));
+	}
+
+	template<>
+	void Datum::PushBackFromStringTemplated<vec4>(string const & value)
+	{
+		vec4 readInVec;
+		sscanf_s(value.c_str(), "vec4(%f, %f, %f, %f)", &readInVec[0], &readInVec[1], &readInVec[2], &readInVec[3]);
+		PushBack(readInVec);
+	}
+
+	template<>
+	void Datum::PushBackFromStringTemplated<mat4x4>(string const & value)
+	{
+		mat4x4 readInMat;
+		sscanf_s(value.c_str(), "mat4x4((%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f))",
+			&readInMat[0][0], &readInMat[0][1], &readInMat[0][2], &readInMat[0][3],
+			&readInMat[1][0], &readInMat[1][1], &readInMat[1][2], &readInMat[1][3],
+			&readInMat[2][0], &readInMat[2][1], &readInMat[2][2], &readInMat[2][3],
+			&readInMat[3][0], &readInMat[3][1], &readInMat[3][2], &readInMat[3][3]);
+		PushBack(readInMat);
+	}
+
+	template<>
+	void Datum::PushBackFromStringTemplated<string>(string const & value)
+	{
+		PushBack(value);
+	}
+
+	template<>
+	void Datum::PushBackFromStringTemplated<RTTI*>(string const &)
+	{
+		throw exception(unsupportedDataTypeExceptionText.c_str());
+	}
+#pragma endregion
 
 	#pragma region ToStringTemplated
 	template<typename T>

@@ -3,8 +3,12 @@
 #include "Attributed.h"
 #include "TypeManager.h"
 
+using namespace std;
+
 namespace FIEAGameEngine
 {
+	RTTI_DEFINITIONS(Attributed);
+
 	Attributed::Signature::Signature(string name, Datum::DatumType type, size_t size, size_t offset) :
 		mName(name), mType(type), mSize(size), mOffset(offset)
 	{
@@ -142,6 +146,11 @@ namespace FIEAGameEngine
 		return new Attributed(*this);
 	}
 
+	std::string Attributed::ToString() const
+	{
+		return "Attributed";
+	}
+
 	void Attributed::Populate(IdType id)
 	{
 		(*this)["this"] = this;
@@ -155,13 +164,13 @@ namespace FIEAGameEngine
 			{
 				element.SetStorage(reinterpret_cast<uint8_t*>(this) + currentSignature.mOffset, currentSignature.mSize);
 			}
-			else
+			/*else
 			{
 				for (size_t j = 0; j < currentSignature.mSize; j++)
 				{
 					AppendScope(currentSignature.mName);
 				}
-			}
+			}*/
 		}
 	}
 	void Attributed::UpdateExternalStorage(IdType id)

@@ -6,9 +6,6 @@
 #include "RTTI.h"
 #include "gsl/gsl"
 
-using namespace std;
-using namespace glm;
-
 namespace FIEAGameEngine
 {
 	class Scope : public RTTI
@@ -21,8 +18,8 @@ namespace FIEAGameEngine
 		friend class Attributed;
 		
 
-		using PairType = pair<string const, Datum>;
-		using DatumMap = HashMap<string const, Datum>;
+		using PairType = std::pair<std::string const, Datum>;
+		using DatumMap = HashMap<std::string const, Datum>;
 		using DatumVector = Vector<PairType*>;
 
 		/// <summary>
@@ -68,14 +65,14 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="key">Key to search for.</param>
 		/// <returns>A pointer to the datum at the given key. If there is nothing at the provided key returns the nullptr.</returns>
-		Datum* Find(string const & key);
+		Datum* Find(std::string const & key);
 
 		/// <summary>
 		/// Returns a pointer to the datum at the given key. If there is nothing at the provided key returns the nullptr.
 		/// </summary>
 		/// <param name="key">Key to search for.</param>
 		/// <returns>A pointer to the datum at the given key. If there is nothing at the provided key returns the nullptr.</returns>
-		Datum const * Find(string const & key) const;
+		Datum const * Find(std::string const & key) const;
 
 		/// <summary>
 		/// Returns a pointer to the datum at the given key in this scope or it's ancestors. If this scope or it's ancestors do not posses anything at the given key returns the nullptr.
@@ -84,7 +81,7 @@ namespace FIEAGameEngine
 		/// <param name="key">Key to search for.</param>
 		/// <param name="scopeAddress">Scope address is a second optional parameter that will return a pointer to a pointer of the scope the key was found in.</param>
 		/// <returns>A pointer to the datum at the given key in this scope or it's ancestors.</returns>
-		Datum* Search(string const & key, Scope** scopeAddress = nullptr);
+		Datum* Search(std::string const & key, Scope** scopeAddress = nullptr);
 
 		/// <summary>
 		/// Returns a pointer to the datum at the given key in this scope or it's ancestors. If this scope or it's ancestors do not posses anything at the given key returns the nullptr.
@@ -100,7 +97,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="key">The key to append the datum at.</param>
 		/// <returns>The newly constructed datum or if a datum exists at that key already returns that datum instead.</returns>
-		Datum & Append(string const & key);
+		Datum & Append(std::string const & key);
 
 		/// <summary>
 		/// Appends a datum containing an empty scope at the given key.
@@ -109,14 +106,14 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="key">The key to append the datum at.</param>
 		/// <returns>The newly constructed scope.</returns>
-		Scope & AppendScope(string const & key);
+		Scope & AppendScope(std::string const & key);
 
 		/// <summary>
 		/// Adopts an existiing scope placing it at the provided key. Removes the scope from it's previous parent.
 		/// </summary>
 		/// <param name="child">Scope to adopt.</param>
 		/// <param name="newChildKey">Key to place the newly adopted scope at.</param>
-		void Adopt(Scope & child, string const & newChildKey);
+		void Adopt(Scope & child, std::string const & newChildKey);
 
 		/// <summary>
 		/// Returns the parent of this scope.
@@ -129,7 +126,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="key">The key of the datum we wish to access.</param>
 		/// <returns>The datum at the given key.</returns>
-		Datum & operator[](string const & key);
+		Datum & operator[](std::string const & key);
 
 		/// <summary>
 		/// Returns the datum at the given index.
@@ -157,7 +154,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="scope">Pointer to the scope we wish to find the name of</param>
 		/// <returns>Name of the passed in scope.</returns>
-		string const FindName(Scope * const scope);
+		std::string const FindName(Scope * const scope);
 
 		/// <summary>
 		/// Returns whether the passed in scope is an ancester of this scope.
@@ -201,7 +198,7 @@ namespace FIEAGameEngine
 		/// Virtual constructor
 		/// </summary>
 		/// <returns></returns>
-		virtual gsl::owner<Scope*> Clone();
+		virtual gsl::owner<Scope*> Clone() const;
 
 		/// <summary>
 		/// Public clear that can be overloaded by derived objects.
@@ -235,16 +232,16 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Communicates the cause of an index out of bounds exception to the user.
 		/// </summary>
-		inline static const string indexOutOfBoundsExceptionText = "Attempted to access an out of bounds index.\n";
+		inline static const std::string indexOutOfBoundsExceptionText = "Attempted to access an out of bounds index.\n";
 
 		/// <summary>
 		/// Communicates the cause of an index out of bounds exception to the user.
 		/// </summary>
-		inline static const string scopeCannotHaveEmptyKeyExceptionText = "Scope cannot have an empty key.\n";
+		inline static const std::string scopeCannotHaveEmptyKeyExceptionText = "Scope cannot have an empty key.\n";
 		/// <summary>
 		/// Communicates the cause of a may not adopt ancestor exception to the user.
 		/// </summary>
-		inline static const string mayNotAdoptAncestorExceptionText = "Scope may not adopt a scope that is its ancestor.\n";
+		inline static const std::string mayNotAdoptAncestorExceptionText = "Scope may not adopt a scope that is its ancestor.\n";
 #pragma endregion
 	};
 }

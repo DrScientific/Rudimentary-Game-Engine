@@ -7,7 +7,7 @@ namespace UnitTests
 	/// </summary>
 	class AttributedFoo final : public Attributed
 	{
-		RTTI_DECLARATIONS(AttributedFoo, FIEAGameEngine::RTTI);
+		RTTI_DECLARATIONS(AttributedFoo, Attributed);
 		static const std::size_t ArraySize = 5;
 
 	public:

@@ -2,10 +2,10 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include "json/json.h"
+#include <json/forwards.h>
 #include "Vector.h"
 #include "RTTI.h"
-#include "gsl/gsl"
+#include <gsl/gsl>
 
 namespace FIEAGameEngine
 {
@@ -25,7 +25,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		class SharedData : public RTTI
 		{
-			friend class JsonParseMaster;
+			friend JsonParseMaster;
 			RTTI_DECLARATIONS(SharedData, FIEAGameEngine::RTTI);
 		public:
 
@@ -52,30 +52,30 @@ namespace FIEAGameEngine
 			JsonParseMaster* GetJsonParseMaster();
 
 			/// <summary>
+			/// Returns the current depth of the shared data.
+			/// </summary>
+			/// <returns>Returns the current depth of the shared data.</returns>
+			size_t Depth() const;
+
+		protected:
+
+			/// <summary>
 			/// Increments the current depth of the shared data.
 			/// </summary>
 			/// <returns>Returns the current depth of the shared data.</returns>
-			size_t const IncrementDepth();
+			size_t IncrementDepth();
 
 			/// <summary>
 			/// Decrements the current depth of the shared data.
 			/// </summary>
 			/// <returns>Returns the current depth of the shared data.</returns>
-			size_t const DecrementDepth();
-
-			/// <summary>
-			/// Returns the current depth of the shared data.
-			/// </summary>
-			/// <returns>Returns the current depth of the shared data.</returns>
-			size_t const Depth();
-
-		protected:
+			size_t DecrementDepth();
 
 			/// <summary>
 			/// Set's the parse master of the shared data object.
 			/// </summary>
 			/// <param name="master">The new parse master that will own the shared data.</param>
-			void SetJsonParseMaster(JsonParseMaster * master);
+			void SetJsonParseMaster(JsonParseMaster & master);
 
 			/// <summary>
 			/// The parse master that owns the shared data
@@ -93,7 +93,7 @@ namespace FIEAGameEngine
 		/// Parse Master Constructor
 		/// </summary>
 		/// <param name="sharedData">A pointer to the parse master's shared data.</param>
-		JsonParseMaster(SharedData * sharedData = nullptr);
+		explicit JsonParseMaster(SharedData & sharedData);
 
 		JsonParseMaster(JsonParseMaster const &) = delete;
 
@@ -145,14 +145,14 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="jsonString">The string to parse</param>
 		/// <returns>Whether the parse was successful</returns>
-		bool Parse(std::string jsonString);
+		bool Parse(std::string const & jsonString);
 
 		/// <summary>
 		/// Attempt to parse a file.
 		/// </summary>
 		/// <param name="jsonFile">The path to the file we want to parse.</param>
 		/// <returns>Whether the parse was successful</returns>
-		bool ParseFromFile(std::string jsonFile);
+		bool ParseFromFile(std::string const & jsonFile);
 
 		/// <summary>
 		/// Attempt to parse an istream
@@ -165,13 +165,19 @@ namespace FIEAGameEngine
 		/// Returns the name of the current file we are parsing.
 		/// </summary>
 		/// <returns>Returns the name of the current file we are parsing.</returns>
-		std::string GetFileName();
+		std::string const & GetFileName() const;
 
 		/// <summary>
 		/// Returns a pointer to the shared data owned by this parse master.
 		/// </summary>
 		/// <returns>Returns a pointer to the shared data owned by this parse master.</returns>
-		SharedData* GetSharedData();
+		SharedData * GetSharedData();
+
+		/// <summary>
+		/// Returns a pointer to the shared data owned by this parse master.
+		/// </summary>
+		/// <returns>Returns a pointer to the shared data owned by this parse master.</returns>
+		SharedData const * GetSharedData() const;
 
 		/// <summary>
 		/// Sets a new shared data for this parse master.
@@ -179,7 +185,7 @@ namespace FIEAGameEngine
 		/// or to pass that responsibility off to the user so that they can move that data and use it after we set the new shared data.
 		/// </summary>
 		/// <param name="sharedData">The new shared data the parse master will point at.</param>
-		void SetSharedData(SharedData* sharedData);
+		void SetSharedData(SharedData & sharedData);
 
 	private:
 
@@ -188,7 +194,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="jsonValue">The Json::Value to parse.</param>
 		/// <returns>Whether the members of the Json::Value were successfully parsed.</returns>
-		bool ParseMembers(Json::Value jsonValue);
+		bool ParseMembers(Json::Value const & jsonValue);
 
 		/// <summary>
 		/// Parses a string-key Json::Value-value pair.
@@ -196,8 +202,9 @@ namespace FIEAGameEngine
 		/// <param name="key">Key</param>
 		/// <param name="value">Value</param>
 		/// <param name="isInArray">Whether the key value pair is in an array.</param>
+		/// <param name="index">The current index we are parsing.</param>
 		/// <returns>Whether the key-value pair was successfully parsed.</returns>
-		bool Parse(std::string key, Json::Value value, bool isInArray);
+		bool Parse(std::string const & key, Json::Value const & value, bool const & isInArray, size_t const & index);
 
 		/// <summary>
 		/// Vector of parse handlers employed by the parse master.
@@ -207,7 +214,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// The name of the current file we are parsing.
 		/// </summary>
-		std::string mCurrentFileBeingParsed = "";
+		std::string mCurrentFileBeingParsed;
 
 		/// <summary>
 		/// Whether the parse master is responsible for the memory of the shared data it is pointing to.
@@ -220,8 +227,18 @@ namespace FIEAGameEngine
 		SharedData * mSharedData = nullptr;
 
 		/// <summary>
-		/// Communicates the cause of a may not adopt ancestor exception to the user.
+		/// Communicates the cause of a shared data uninitiailized exception.
 		/// </summary>
 		inline static const std::string sharedDataUninitializedExceptionText = "Shared data is pointing to nullptr.\n";
+
+		/// <summary>
+		/// Communicates the cause of a could not open file exception.
+		/// </summary>
+		inline static const std::string couldNotOpenFileExceptionText = "Could not open file.\n";
+
+		/// <summary>
+		/// Communicates the cause of a  exception.
+		/// </summary>
+		inline static const std::string startHandlerFailedToEndException = "Parser started handler but was unable to finish handler.\n";
 	};
 }

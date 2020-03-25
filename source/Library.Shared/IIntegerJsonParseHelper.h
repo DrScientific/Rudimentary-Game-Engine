@@ -56,11 +56,11 @@ namespace FIEAGameEngine
 		/// <returns>A pointer to the newly constructed object.</returns>
 		gsl::owner<IJsonParseHelper*> Create() const override;
 
-		void Initialize();
+		virtual void Initialize() override;
 
-		bool StartHandler(JsonParseMaster::SharedData const * const sharedData, std::string const & key, Json::Value jsonValue, bool isArray) override;
+		virtual bool StartHandler(JsonParseMaster::SharedData  * const sharedData, std::string const & key, Json::Value const & jsonValue, bool const & isArray, size_t const & index);
 
-		bool EndHandler(JsonParseMaster::SharedData * const sharedData, std::string const & key) override;
+		virtual bool EndHandler(JsonParseMaster::SharedData * const sharedData, std::string const & key) override;
 
 	private:
 

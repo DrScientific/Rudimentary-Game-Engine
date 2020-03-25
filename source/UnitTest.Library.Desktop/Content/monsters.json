@@ -1,0 +1,175 @@
+{
+  "Rathalos": {
+    "type": "scope",
+    "value": {
+      "Attacks": {
+        "type": "scope",
+        "value": {
+          "Fireball": {
+            "type": "scope",
+            "value": {
+              "Damage": {
+                "type": "integer",
+                "value": 111
+              },
+              "StatusEffect": {
+                "type": "string",
+                "value": "burning"
+              },
+              "KnockBack": {
+                "type": "float",
+                "value": "111.0f"
+              }
+            }
+          },
+          "TailSpin": {
+            "type": "scope",
+            "value": {
+              "Damage": {
+                "type": "integer",
+                "value": 222
+              },
+              "StatusEffect": {
+                "type": "string",
+                "value": "none"
+              },
+              "KnockBack": {
+                "type": "float",
+                "value": "222.0f"
+              }
+            }
+          },
+          "ClawAttack": {
+            "type": "scope",
+            "value": {
+              "Damage": {
+                "type": "integer",
+                "value": 333
+              },
+              "StatusEffect": {
+                "type": "string",
+                "value": "poison"
+              },
+              "KnockBack": {
+                "type": "float",
+                "value": "333.0f"
+              }
+            }
+          }
+        }
+      },
+	  "Drops": {
+        "type": "string",
+        "value": [
+          "Rathalos Plate",
+          "Rathalos Webbing",
+          "Wing Talon",
+          "Rathalos Tail"
+        ]
+      },
+      "Health": {
+        "type": "integer",
+        "value": 8000
+      },
+      "Size": {
+        "type": "float",
+        "value": 7777.7777
+      },
+      "Position": {
+        "type": "vec4",
+        "value": "vec4(1.0, 2.0, 3.0, 4.0)"
+      },
+      "Rotation": {
+        "type": "matrix",
+        "value": "mat4x4((1.0, 1.0, 1.0, 1.0), (2.0, 2.0, 2.0, 2.0), (3.0, 3.0, 3.0, 3.0), (4.0, 4.0, 4.0, 4.0))"
+      }
+    }
+  },
+  
+  "Rathian": {
+    "type": "scope",
+    "value": {
+      "Attacks": {
+        "type": "scope",
+        "value": {
+          "Fireball": {
+            "type": "scope",
+            "value": {
+              "Damage": {
+                "type": "integer",
+                "value": 444
+              },
+              "StatusEffect": {
+                "type": "string",
+                "value": "burning"
+              },
+              "KnockBack": {
+                "type": "float",
+                "value": "444.0f"
+              }
+            }
+          },
+          "TailSpin": {
+            "type": "scope",
+            "value": {
+              "Damage": {
+                "type": "integer",
+                "value": 555
+              },
+              "StatusEffect": {
+                "type": "string",
+                "value": "poison"
+              },
+              "KnockBack": {
+                "type": "float",
+                "value": "555.0f"
+              }
+            }
+          },
+          "ClawAttack": {
+            "type": "scope",
+            "value": {
+              "Damage": {
+                "type": "integer",
+                "value": 666
+              },
+              "StatusEffect": {
+                "type": "string",
+                "value": "none"
+              },
+              "KnockBack": {
+                "type": "float",
+                "value": "666.0f"
+              }
+            }
+          }
+        }
+      },
+	  "Drops": {
+        "type": "string",
+        "value": [
+          "Rathian Plate",
+          "Rathian Webbing",
+          "Wing Talon",
+          "Rathian Tail"
+        ]
+      },
+      "Health": {
+        "type": "integer",
+        "value": 9000
+      },
+      "Size": {
+        "type": "float",
+        "value": 8888.8888
+      },
+      "Position": {
+        "type": "vec4",
+        "value": "vec4(1.0, 2.0, 3.0, 4.0)"
+      },
+      "Rotation": {
+        "type": "matrix",
+        "value": "mat4x4((1.0, 1.0, 1.0, 1.0), (2.0, 2.0, 2.0, 2.0), (3.0, 3.0, 3.0, 3.0), (4.0, 4.0, 4.0, 4.0))"
+      }
+    }
+  }
+}

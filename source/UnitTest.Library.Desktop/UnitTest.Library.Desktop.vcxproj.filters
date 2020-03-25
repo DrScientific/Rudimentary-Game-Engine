@@ -13,9 +13,9 @@
     <ClCompile Include="AttributedFoo.cpp" />
     <ClCompile Include="AttributedFooTest.cpp" />
     <ClCompile Include="Bar.cpp" />
-    <ClCompile Include="JsonCppTest.cpp" />
     <ClCompile Include="..\Library.Shared\IDepthTestParseHelper.cpp" />
     <ClCompile Include="..\Library.Shared\IIntegerJsonParseHelper.cpp" />
+    <ClCompile Include="ParsingTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

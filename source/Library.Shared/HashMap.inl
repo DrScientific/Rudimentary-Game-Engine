@@ -4,6 +4,8 @@
 
 #include "HashMap.h"
 
+using namespace std;
+
 namespace FIEAGameEngine
 {
 	template<typename TKey, typename TData, typename HashFunctor>
@@ -356,7 +358,7 @@ namespace FIEAGameEngine
 	{
 
 		const_Iterator foundIt = end();
-		size_t hashedBucket = Hash(key);
+		size_t hashedBucket = HashKey(key);
 		for (typename ChainType::Iterator listIt = mBucketVector[hashedBucket].begin(); listIt != mBucketVector[hashedBucket].end(); listIt++)
 		{
 			if ((*listIt).first == key)
