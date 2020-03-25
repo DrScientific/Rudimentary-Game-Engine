@@ -259,7 +259,6 @@ namespace FIEAGameEngine
 		}
 		mCapacity = newCapacity;
 		mArray = static_cast<T*>(realloc(mArray, mCapacity * sizeof(T)));
-		
 	}
 
 	template<typename T>
@@ -443,7 +442,7 @@ namespace FIEAGameEngine
 		{
 			if (mCapacity == 0)
 			{
-				mCapacity = 2;
+				mCapacity = 1;
 			}
 			Reserve(mCapacity * 2);
 		}

@@ -162,6 +162,7 @@
     <ClInclude Include="ToStringTemplates.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DatumTest.cpp" />
     <ClCompile Include="Foo.cpp" />
     <ClCompile Include="DefaultHashFunctorTest.cpp" />
     <ClCompile Include="HashMapTest.cpp" />

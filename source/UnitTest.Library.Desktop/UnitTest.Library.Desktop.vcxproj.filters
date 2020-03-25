@@ -8,6 +8,7 @@
     <ClCompile Include="VectorTest.cpp" />
     <ClCompile Include="HashMapTest.cpp" />
     <ClCompile Include="DefaultHashFunctorTest.cpp" />
+    <ClCompile Include="DatumTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

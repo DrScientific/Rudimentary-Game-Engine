@@ -11,6 +11,9 @@
 #include "Vector.h"
 #include "DefaultHashFunctor.h"
 
+
+using namespace std;
+
 namespace FIEAGameEngine
 {
 	/// <summary>
@@ -100,7 +103,7 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// The list that owns the Iterator.
 			/// </summary>
-			const HashMap* mOwner;
+			const HashMap* mOwner = nullptr;
 
 			/// <summary>
 			/// Index relative to start of array where value is stored.
@@ -113,7 +116,7 @@ namespace FIEAGameEngine
 			typename ChainType::Iterator mListIterator;
 
 			friend class const_Iterator;
-			friend class HashMap<TKey, TData, HashFunctor>;
+			friend HashMap;
 		};
 
 		/// <summary>
@@ -203,7 +206,7 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// The list that owns the Iterator.
 			/// </summary>
-			const HashMap* mOwner;
+			const HashMap* mOwner = nullptr;
 
 			/// <summary>
 			/// Index relative to start of array where value is stored.
@@ -215,13 +218,13 @@ namespace FIEAGameEngine
 			/// </summary>
 			typename ChainType::const_Iterator mListIterator;
 
-			friend class HashMap<TKey, TData, HashFunctor>;
+			friend HashMap;
 		};
 
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
-		HashMap(size_t const & numBuckets = 2);
+		explicit HashMap(size_t const & numBuckets = 1000);
 
 		/// <summary>
 		/// Initializer list constructor.
@@ -378,11 +381,18 @@ namespace FIEAGameEngine
 		double LoadFactor() const;
 
 		/// <summary>
-		/// Returns true if the key is in the HashMap and false otherwise.
+		/// Resizes the hash map to a new number of buckets. Remaps all values when called.
+		/// </summary>
+		/// <param name="numBuckets">New number of buckets</param>
+		void Resize(size_t numBuckets);
+
+		/// <summary>
+		/// Returns true if the key is in the HashMap and false otherwise Returns data at key as out parameter if it exists.
 		/// </summary>
 		/// <param name="key">The key we are searching for within the HashMap.</param>
+		/// <param name="data">Out param of value at key.</param>
 		/// <returns>True if the key is in the HashMap and false otherwise.</returns>
-		bool ContainsKey(TKey key) const;
+		pair<bool, TData*> ContainsKey(TKey const & key) const;
 
 		
 	private:
@@ -410,6 +420,17 @@ namespace FIEAGameEngine
 		/// 
 		/// </summary>
 		inline static const std::string keyNotInHashMapException = "Key searched for was not found in hash map.\n";
+
+		/// <summary>
+		/// 
+		/// </summary>
+		inline static const std::string hashMapMustHaveSizeGreaterThanZeroException = "Hash map must have bucket size greater than 0.\n";
+
+		/// <summary>
+		/// 
+		/// </summary>
+		inline static const std::string ownerIsNullException = "Iterator owner is null and cannot be dereferenced.\n";
+
 	};
 	
 	

@@ -4,6 +4,8 @@
 #include "HashMap.h"
 #include "DefaultHashFunctorTemplates.h"
 
+//TODO Hash map Resize test
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace FIEAGameEngine;
 using namespace UnitTests;
@@ -269,32 +271,32 @@ namespace UnitTestLibraryDesktop
 		TEST_METHOD(TestContainsKey)
 		{
 			HashMapCharFoo charFooHashMap = { std::pair<char*,Foo>("Up", Foo(1)), std::pair<char*,Foo>("Down", Foo(2)), std::pair<char*,Foo>("Left", Foo(3)), std::pair<char*,Foo>("Left", Foo(3)), std::pair<char*,Foo>("A", Foo(4)), std::pair<char*,Foo>("Start", Foo(5)) };
-			Assert::IsTrue(charFooHashMap.ContainsKey("Up"));
-			Assert::IsTrue(charFooHashMap.ContainsKey("Down"));
-			Assert::IsTrue(charFooHashMap.ContainsKey("Left"));
-			Assert::IsTrue(charFooHashMap.ContainsKey("A"));
-			Assert::IsTrue(charFooHashMap.ContainsKey("Start"));
-			Assert::IsTrue(!charFooHashMap.ContainsKey("B"));
-			Assert::IsTrue(!charFooHashMap.ContainsKey("C"));
+			Assert::IsTrue(charFooHashMap.ContainsKey("Up").first);
+			Assert::IsTrue(charFooHashMap.ContainsKey("Down").first);
+			Assert::IsTrue(charFooHashMap.ContainsKey("Left").first);
+			Assert::IsTrue(charFooHashMap.ContainsKey("A").first);
+			Assert::IsTrue(charFooHashMap.ContainsKey("Start").first);
+			Assert::IsTrue(!charFooHashMap.ContainsKey("B").first);
+			Assert::IsTrue(!charFooHashMap.ContainsKey("C").first);
 
 			HashMapFooString fooStringHashMap = { std::pair<Foo,std::string>(Foo(1), "Up"),std::pair<Foo,std::string>(Foo(2), "Down"), std::pair<Foo,std::string>(Foo(3), "Right"), std::pair<Foo,std::string>(Foo(3), "Right"), std::pair<Foo,std::string>(Foo(4), "B"), std::pair<Foo,std::string>(Foo(5), "") };
-			Assert::IsTrue(fooStringHashMap.ContainsKey(Foo(1)));
-			Assert::IsTrue(fooStringHashMap.ContainsKey(Foo(2)));
-			Assert::IsTrue(fooStringHashMap.ContainsKey(Foo(3)));
-			Assert::IsTrue(fooStringHashMap.ContainsKey(Foo(4)));
-			Assert::IsTrue(fooStringHashMap.ContainsKey(Foo(5)));
-			Assert::IsTrue(!fooStringHashMap.ContainsKey(Foo(6)));
-			Assert::IsTrue(!fooStringHashMap.ContainsKey(Foo(7)));;
+			Assert::IsTrue(fooStringHashMap.ContainsKey(Foo(1)).first);
+			Assert::IsTrue(fooStringHashMap.ContainsKey(Foo(2)).first);
+			Assert::IsTrue(fooStringHashMap.ContainsKey(Foo(3)).first);
+			Assert::IsTrue(fooStringHashMap.ContainsKey(Foo(4)).first);
+			Assert::IsTrue(fooStringHashMap.ContainsKey(Foo(5)).first);
+			Assert::IsTrue(!fooStringHashMap.ContainsKey(Foo(6)).first);
+			Assert::IsTrue(!fooStringHashMap.ContainsKey(Foo(7)).first);
 
 
 			HashMapString2 string2HashMap = { std::pair<std::string,std::string>("Up", "Up"), std::pair<std::string,std::string>("Down", "Down"), std::pair<std::string,std::string>("Left", "Right"), std::pair<std::string,std::string>("Left", "Right"), std::pair<std::string,std::string>("A", "B"), std::pair<std::string,std::string>("Start", "") };
-			Assert::IsTrue(string2HashMap.ContainsKey("Up"));
-			Assert::IsTrue(string2HashMap.ContainsKey("Down"));
-			Assert::IsTrue(string2HashMap.ContainsKey("Left"));
-			Assert::IsTrue(string2HashMap.ContainsKey("A"));
-			Assert::IsTrue(string2HashMap.ContainsKey("Start"));
-			Assert::IsTrue(!string2HashMap.ContainsKey("B"));
-			Assert::IsTrue(!string2HashMap.ContainsKey("C"));
+			Assert::IsTrue(string2HashMap.ContainsKey("Up").first);
+			Assert::IsTrue(string2HashMap.ContainsKey("Down").first);
+			Assert::IsTrue(string2HashMap.ContainsKey("Left").first);
+			Assert::IsTrue(string2HashMap.ContainsKey("A").first);
+			Assert::IsTrue(string2HashMap.ContainsKey("Start").first);
+			Assert::IsTrue(!string2HashMap.ContainsKey("B").first);
+			Assert::IsTrue(!string2HashMap.ContainsKey("C").first);
 		}
 		TEST_METHOD(TestRemove)
 		{

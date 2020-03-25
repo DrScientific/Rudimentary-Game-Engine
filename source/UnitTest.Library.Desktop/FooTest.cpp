@@ -1,7 +1,4 @@
 #pragma once
-/// /// <summary>
-/// 
-/// </summary>
 
 #include "pch.h"
 #include "CppUnitTest.h"

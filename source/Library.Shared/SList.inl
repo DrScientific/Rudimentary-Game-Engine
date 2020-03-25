@@ -400,7 +400,10 @@ namespace FIEAGameEngine
 	template<typename T> typename
 	inline SList<T>::const_Iterator & SList<T>::const_Iterator::operator++()
 	{
-		mNode = mNode->mNext;
+		if (mNode != nullptr && mOwner != nullptr)
+		{
+			mNode = mNode->mNext;
+		}
 		return *this;
 	}
 

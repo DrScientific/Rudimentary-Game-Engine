@@ -1,10 +1,11 @@
 #pragma once
+#include "RTTI.h"
 
 namespace UnitTests
 {
-	class Foo
+	class Foo : public FIEAGameEngine::RTTI
 	{
-
+		RTTI_DECLARATIONS(Foo, FIEAGameEngine::RTTI);
 
 	public:
 		Foo(int data = 0);
@@ -14,6 +15,9 @@ namespace UnitTests
 
 		bool operator==(const Foo& rhs) const;
 		bool operator!=(const Foo& rhs) const;
+
+		bool Equals(RTTI const* rhs) const override;
+		std::string ToString() const override;
 
 		int Data() const;
 		void SetData(int data);
