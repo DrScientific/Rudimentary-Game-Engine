@@ -3,6 +3,8 @@
 #include <set>
 #include <chrono>
 #include <memory>
+#include <thread>
+#include <future>
 
 namespace FIEAGameEngine
 {
@@ -46,7 +48,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Virtual Destructor
 		/// </summary>
-		virtual ~EventPublisher() = 0;
+		virtual ~EventPublisher() = default;
 
 		/// <summary>
 		/// Sets the time the event was queued as well as it's delay until it is ready to be published.
@@ -83,7 +85,7 @@ namespace FIEAGameEngine
 		/// Constructs an event publisher given a pointer to the set of event subscribers. Only called by a concrete event's constructor.
 		/// </summary>
 		/// <param name="subscribers">List of event subscribers contained by the concrete event.</param>
-		EventPublisher(std::set<IEventSubscriber *> * const subscribers);
+		EventPublisher(std::set<IEventSubscriber *> * const subscribers, std::recursive_mutex * const lock);
 
 	private:
 
@@ -101,6 +103,11 @@ namespace FIEAGameEngine
 		/// The number of milliseconds the event should wait to be published after the time it was enqueued.
 		/// </summary>
 		std::chrono::milliseconds mDelay;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		std::recursive_mutex* const mMutexPtr;
 	};
 
 }

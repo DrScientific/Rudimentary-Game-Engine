@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "EventPublisher.h"
 #include "IEventSubscriber.h"
+#include <thread>
+#include <future>
+#include "Assert.h"
+
+using namespace std;
 
 namespace FIEAGameEngine
 {
@@ -8,22 +13,20 @@ namespace FIEAGameEngine
 
 
 
-	EventPublisher::EventPublisher(std::set<IEventSubscriber*>* const subscribers) : mSubscribersPtr(subscribers), mDelay(0)
-	{
-	}
-
-	EventPublisher::~EventPublisher()
+	EventPublisher::EventPublisher(std::set<IEventSubscriber*>* const subscribers, std::recursive_mutex * const lock) : mSubscribersPtr(subscribers), mMutexPtr(lock), mDelay(0)
 	{
 	}
 
 	void EventPublisher::SetTime(std::chrono::high_resolution_clock::time_point timeEnqueued, std::chrono::milliseconds delay)
 	{
+		lock_guard<recursive_mutex> lock(*mMutexPtr);
 		mTimeEnqueued = timeEnqueued;
 		mDelay = delay;
 	}
 
 	std::chrono::high_resolution_clock::time_point EventPublisher::TimeEnqueued() const
 	{
+		lock_guard<recursive_mutex> lock(*mMutexPtr);
 		return mTimeEnqueued;
 	}
 
@@ -34,14 +37,27 @@ namespace FIEAGameEngine
 
 	bool EventPublisher::IsExpired(std::chrono::high_resolution_clock::time_point currentTime) const
 	{
-		return currentTime >= mTimeEnqueued + mDelay;
+		lock_guard<recursive_mutex> lock(*mMutexPtr);
+		return currentTime > mTimeEnqueued + mDelay;
 	}
 
 	void EventPublisher::Deliver()
 	{
-		for (auto subscriber : *mSubscribersPtr)
+		vector<future<void>> futures;
 		{
-			subscriber->Notify(*this);
+			lock_guard<recursive_mutex> lock(*mMutexPtr);
+
+			for (auto & subscriber : *mSubscribersPtr)
+			{
+				futures.emplace_back(std::async(launch::async, [&subscriber, this]
+				{
+					subscriber->Notify(*this);
+				}));
+			}
+		}
+		for (auto & i : futures)
+		{
+			i.get();
 		}
 	}
 }

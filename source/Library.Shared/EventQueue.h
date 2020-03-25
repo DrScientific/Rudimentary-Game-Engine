@@ -1,8 +1,12 @@
 #pragma once
 #include "GameTime.h"
+#include "Vector.h"
 #include <chrono>
 #include <memory>
-#include "Vector.h"
+#include <vector>
+#include <thread>
+#include <future>
+
 
 namespace FIEAGameEngine
 {
@@ -32,7 +36,7 @@ namespace FIEAGameEngine
 		/// <param name="eventToQueue">The event to queue.</param>
 		/// <param name="currentTime">The time the event was queued.</param>
 		/// <param name="delay">The delay from the time the event is queued to when the event should be published.</param>
-		void Enqueue(std::shared_ptr<EventPublisher> eventToQueue, GameTime & currentTime, std::chrono::milliseconds delay = std::chrono::milliseconds(0));
+		void Enqueue(std::shared_ptr<EventPublisher> eventToQueue, GameTime const & currentTime, std::chrono::milliseconds delay = std::chrono::milliseconds(0));
 
 		/// <summary>
 		/// Delivers the passed in event.
@@ -69,5 +73,15 @@ namespace FIEAGameEngine
 		/// Queue of events to publish.
 		/// </summary>
 		Vector<std::shared_ptr<EventPublisher>> mEvents;
+
+		/// <summary>
+		/// Queue of events waiting to be added to the event queue.
+		/// </summary>
+		Vector<std::shared_ptr<EventPublisher>> mPendingEvents;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		mutable std::recursive_mutex mMutex;
 	};
 }

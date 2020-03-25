@@ -43,7 +43,8 @@ namespace UnitTestLibraryDesktop
 		TEST_METHOD(WorldConstructorTest)
 		{
 			GameTime time;
-			World world(time);
+			EventQueue eventQueue;
+			World world(&time, &eventQueue);
 		}
 
 		TEST_METHOD(SectorConstructorTest)
@@ -59,7 +60,8 @@ namespace UnitTestLibraryDesktop
 		TEST_METHOD(RTTITests)
 		{
 			GameTime time;
-			World world(time);
+			EventQueue eventQueue;
+			World world(&time, &eventQueue);
 			Sector sector;
 			Entity entity;
 
@@ -74,7 +76,8 @@ namespace UnitTestLibraryDesktop
 		TEST_METHOD(WorldNameAndAwakeTest)
 		{
 			GameTime time;
-			World world(time);
+			EventQueue eventQueue;
+			World world(&time, &eventQueue);
 
 			Assert::IsTrue(world.Name() == "");
 			world.SetName("world");
@@ -124,7 +127,8 @@ namespace UnitTestLibraryDesktop
 			SectorFactory sectorFactory;
 
 			GameTime time;
-			World world(time);
+			EventQueue eventQueue;
+			World world(&time, &eventQueue);
 
 			world.SetName("world");
 
@@ -162,7 +166,8 @@ namespace UnitTestLibraryDesktop
 			EntityFactory entityFactory;
 
 			GameTime time;
-			World world(time);
+			EventQueue eventQueue;
+			World world(&time, &eventQueue);
 
 			world.SetName("world");
 
@@ -222,7 +227,8 @@ namespace UnitTestLibraryDesktop
 			EntityFactory entityFactory;
 
 			GameTime time1;
-			World world1(time1);
+			EventQueue eventQueue1;
+			World world1(&time1, &eventQueue1);
 
 			world1.SetName("world1");
 
@@ -276,7 +282,8 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(sector1D.Entities()[3] == entity1D4);
 
 			GameTime time2;
-			World world2(time2);
+			EventQueue eventQueue2;
+			World world2(&time2, &eventQueue2);
 
 			world2.SetName("world2");
 
@@ -367,7 +374,8 @@ namespace UnitTestLibraryDesktop
 			EntityFactory entityFactory;
 
 			GameTime time;
-			World world(time);
+			EventQueue eventQueue;
+			World world(&time, &eventQueue);
 
 			world.SetName("world");
 
@@ -406,8 +414,9 @@ namespace UnitTestLibraryDesktop
 		TEST_METHOD(WorldParseTest)
 		{
 			GameTime time;
+			EventQueue eventQueue;
 
-			shared_ptr<Scope> sharedScope = make_shared<World>(time);
+			shared_ptr<Scope> sharedScope = make_shared<World>(&time, &eventQueue);
 			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
 			JsonParseMaster master(sharedData);
 			ScopeJsonParseHelper scopeHelper;
@@ -548,8 +557,9 @@ namespace UnitTestLibraryDesktop
 		TEST_METHOD(WorldCloneTest)
 		{
 			GameTime time;
+			EventQueue eventQueue;
 
-			shared_ptr<Scope> sharedScope = make_shared<World>(time);
+			shared_ptr<Scope> sharedScope = make_shared<World>(&time, &eventQueue);
 			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
 			JsonParseMaster master(sharedData);
 			ScopeJsonParseHelper scopeHelper;

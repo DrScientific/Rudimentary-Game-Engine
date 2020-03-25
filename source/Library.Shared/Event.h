@@ -63,18 +63,24 @@ namespace FIEAGameEngine
 		/// Subscurbes the passed in subscriber to the event.
 		/// </summary>
 		/// <param name="subscriber">The subscriber to subscribe to the event.</param>
-		static void Subscribe(IEventSubscriber * subscriber);
+		static void Subscribe(IEventSubscriber & subscriber);
 		
 		/// <summary>
 		/// Unsubscribes the passed in subscriber from the event.
 		/// </summary>
 		/// <param name="subscriber">The subscriber to unsubscribe from the event.</param>
-		static void Unsubscribe(IEventSubscriber * subscriber);
+		static void Unsubscribe(IEventSubscriber & subscriber);
 
 		/// <summary>
 		/// Unsubscribes all subscribers from the event.
 		/// </summary>
 		static void UnsubscribeAll();
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		static bool HasSubscribers();
 
 		/// <summary>
 		/// Returns the message stored by the event.
@@ -100,6 +106,11 @@ namespace FIEAGameEngine
 		/// A list of the event's subscribers.
 		/// </summary>
 		static std::set<IEventSubscriber *> mSubscribers;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		static std::recursive_mutex mMutex;
 	};
 }
 

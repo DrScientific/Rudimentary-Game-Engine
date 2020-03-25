@@ -11,7 +11,7 @@ namespace UnitTests
 		/// <summary>
 		/// 
 		/// </summary>
-		FooSubscriber(int data = 0);
+		FooSubscriber(int id = 0, int data = 0);
 
 		/// <summary>
 		/// 
@@ -23,6 +23,8 @@ namespace UnitTests
 		/// </summary>
 		/// <param name="publisher"></param>
 		virtual void Notify(class FIEAGameEngine::EventPublisher const & publisher) override;
+		
+		int mID = 0;
 
 		int mData = 0;
 

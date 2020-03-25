@@ -19,6 +19,9 @@ namespace FIEAGameEngine
 	class Vector final
 	{
 	public:
+
+		typedef T value_type;
+
 		/// <summary>
 		/// An iterator that contains an index into a Vector. Any data dereferenced through a Iterator is not const. See const_Iterator.
 		/// </summary>
@@ -468,6 +471,12 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="value">Value to place at the back of the list.</param>
 		void PushBack(T const && value);
+
+		/// <summary>
+		/// Places the specified value at the back of the vector, resizing if necessary. Wrapper of PushBack() so back inserter can be used.
+		/// </summary>
+		/// <param name="value">Value to place at the back of the list.</param>
+		void push_back(T const & value);
 
 		/// <summary>
 		/// Removes the last element of the vector fromt the vector

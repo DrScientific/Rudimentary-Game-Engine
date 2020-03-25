@@ -19,6 +19,32 @@ namespace FIEAGameEngine
 		ReactionAttributed(std::string name = std::string(), std::string subtype = std::string());
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="other"></param>
+		ReactionAttributed(ReactionAttributed const & other);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		ReactionAttributed & operator=(ReactionAttributed const & other);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="other"></param>
+		ReactionAttributed(ReactionAttributed && other);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		ReactionAttributed & operator=(ReactionAttributed && other);
+
+		/// <summary>
 		/// Destructor
 		/// </summary>
 		virtual ~ReactionAttributed();
@@ -27,7 +53,7 @@ namespace FIEAGameEngine
 		/// Virtual constructor
 		/// </summary>
 		/// <returns></returns>
-		virtual gsl::owner<Scope*> Clone() const override;
+		virtual gsl::owner<ReactionAttributed*> Clone() const override;
 
 		/// <summary>
 		/// 

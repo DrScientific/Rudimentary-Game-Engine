@@ -83,11 +83,11 @@ namespace UnitTestLibraryDesktop
 		{
 			Event<Foo> fooEvent(10);
 
-			FooSubscriber subscriber1(1);
+			FooSubscriber subscriber1(1,1);
 
-			FooSubscriber subscriber2(2);
+			FooSubscriber subscriber2(2, 2);
 			
-			FooSubscriber subscriber3(3);
+			FooSubscriber subscriber3(3, 3);
 
 			Assert::IsTrue(subscriber1.mData == 1);
 
@@ -114,7 +114,8 @@ namespace UnitTestLibraryDesktop
 			FooEntityFactory fooEntityFactory;
 
 			GameTime time;
-			World world(time);
+			EventQueue eventQueue;
+			World world(&time, &eventQueue);
 
 			world.SetName("world");
 
@@ -127,9 +128,9 @@ namespace UnitTestLibraryDesktop
 
 			shared_ptr<Event<Foo>> fooPtr = make_shared<Event<Foo>>(10);
 
-			world.mEventQueue.Enqueue(fooPtr, *world.mState.mGameTime, std::chrono::milliseconds(1000));
+			world.mEventQueue->Enqueue(fooPtr, *world.mState.mGameTime, std::chrono::milliseconds(1000));
 
-			world.mEventQueue.Send(fooPtr);
+			world.mEventQueue->Send(fooPtr);
 
 			Assert::IsTrue(fooEntityA1.mData == 10);
 		}
@@ -142,11 +143,12 @@ namespace UnitTestLibraryDesktop
 			FooEntityFactory fooEntityFactory;
 
 			GameTime time;
-			World world(time);
+			EventQueue eventQueue;
+			World world(&time, &eventQueue);
 
 			clock.UpdateGameTime(*world.mState.mGameTime);
 
-			world.mEventQueue.Enqueue(make_shared<Event<Foo>>(10), *world.mState.mGameTime, std::chrono::milliseconds(1000));
+			world.mEventQueue->Enqueue(make_shared<Event<Foo>>(10), *world.mState.mGameTime, std::chrono::milliseconds(1000));
 
 			world.SetName("world");
 
@@ -175,23 +177,24 @@ namespace UnitTestLibraryDesktop
 			FooEntityFactory fooEntityFactory;
 
 			GameTime time;
-			World world(time);
+			EventQueue eventQueue;
+			World world(&time, &eventQueue);
 
 			clock.UpdateGameTime(*world.mState.mGameTime);
 			
-			Assert::IsTrue(world.mEventQueue.IsEmpty());
+			Assert::IsTrue(world.mEventQueue->IsEmpty());
 
-			world.mEventQueue.Enqueue(make_shared<Event<Foo>>(10), *world.mState.mGameTime, std::chrono::milliseconds(1000));
+			world.mEventQueue->Enqueue(make_shared<Event<Foo>>(10), *world.mState.mGameTime, std::chrono::milliseconds(1000));
 
-			Assert::IsTrue(world.mEventQueue.Size() == 1);
+			Assert::IsTrue(world.mEventQueue->Size() == 1);
 
-			world.mEventQueue.Clear();
+			world.mEventQueue->Clear();
 
-			Assert::IsTrue(world.mEventQueue.IsEmpty());
+			Assert::IsTrue(world.mEventQueue->IsEmpty());
 
-			world.mEventQueue.Enqueue(make_shared<Event<Foo>>(10), *world.mState.mGameTime, std::chrono::milliseconds(1000));
+			world.mEventQueue->Enqueue(make_shared<Event<Foo>>(10), *world.mState.mGameTime, std::chrono::milliseconds(1000));
 
-			Assert::IsTrue(world.mEventQueue.Size() == 1);
+			Assert::IsTrue(world.mEventQueue->Size() == 1);
 
 			world.SetName("world");
 
@@ -206,12 +209,12 @@ namespace UnitTestLibraryDesktop
 
 			while (fooEntityA1.mData != 10)
 			{
-				Assert::IsTrue(world.mEventQueue.Size() == 1);
+				Assert::IsTrue(world.mEventQueue->Size() == 1);
 				clock.UpdateGameTime(*world.mState.mGameTime);
 				world.Update();
 			}
 
-			Assert::IsTrue(world.mEventQueue.IsEmpty());
+			Assert::IsTrue(world.mEventQueue->IsEmpty());
 
 			Assert::IsTrue(fooEntityA1.mData == 10);
 		}

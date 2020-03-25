@@ -99,7 +99,8 @@ namespace UnitTestLibraryDesktop
 			ActionIncrementFactory actionIncrementFactory;
 
 			GameTime time;
-			World world(time);
+			EventQueue eventQueue;
+			World world(&time, &eventQueue);
 
 			Sector & sectorA = world.CreateSector("Sector A");
 			sectorA.Wake();
@@ -129,7 +130,8 @@ namespace UnitTestLibraryDesktop
 			ActionIncrementFactory actionIncrementFactory;
 			
 			GameTime time;
-			World world(time);
+			EventQueue eventQueue;
+			World world(&time, &eventQueue);
 
 			Sector & sectorA = world.CreateSector("Sector A");
 			sectorA.Wake();
@@ -172,7 +174,8 @@ namespace UnitTestLibraryDesktop
 			ActionIncrementFactory actionIncrementFactory;
 
 			GameTime time;
-			World world(time);
+			EventQueue eventQueue;
+			World world(&time, &eventQueue);
 
 			Sector & sectorA = world.CreateSector("Sector A");
 			sectorA.Wake();
@@ -226,7 +229,8 @@ namespace UnitTestLibraryDesktop
 			ActionIncrementFactory actionIncrementFactory;
 
 			GameTime time;
-			World world(time);
+			EventQueue eventQueue;
+			World world(&time, &eventQueue);
 
 			Sector & sectorA = world.CreateSector("Sector A");
 			sectorA.Wake();
@@ -284,7 +288,8 @@ namespace UnitTestLibraryDesktop
 			ActionIncrementFactory actionIncrementFactory;
 
 			GameTime time;
-			World world(time);
+			EventQueue eventQueue;
+			World world(&time, &eventQueue);
 
 			Sector & sectorA = world.CreateSector("Sector A");
 			sectorA.Wake();
@@ -364,8 +369,9 @@ namespace UnitTestLibraryDesktop
 			//Action while is not running proper number of times, only running once
 
 			GameTime time;
+			EventQueue eventQueue;
 
-			shared_ptr<Scope> sharedScope = make_shared<World>(time);
+			shared_ptr<Scope> sharedScope = make_shared<World>(&time, &eventQueue);
 			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
 			JsonParseMaster master(sharedData);
 			ScopeJsonParseHelper scopeHelper;
@@ -403,8 +409,9 @@ namespace UnitTestLibraryDesktop
 		TEST_METHOD(ActionCloneTest)
 		{
 			GameTime time;
+			EventQueue eventQueue;
 
-			shared_ptr<Scope> sharedScope = make_shared<World>(time);
+			shared_ptr<Scope> sharedScope = make_shared<World>(&time, &eventQueue);
 			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
 			JsonParseMaster master(sharedData);
 			ScopeJsonParseHelper scopeHelper;

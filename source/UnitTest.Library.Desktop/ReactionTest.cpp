@@ -87,7 +87,8 @@ namespace UnitTestLibraryDesktop
 			ActionIncrementFactory actionIncrementFactory;
 
 			GameTime time;
-			World world(time);
+			EventQueue eventQueue;
+			World world(&time, &eventQueue);
 
 			world.SetName("world");
 
@@ -167,8 +168,9 @@ namespace UnitTestLibraryDesktop
 		TEST_METHOD(ReactionAttributedParseTest)
 		{
 			GameTime time;
+			EventQueue eventQueue;
 
-			shared_ptr<Scope> sharedScope = make_shared<World>(time);
+			shared_ptr<Scope> sharedScope = make_shared<World>(&time, &eventQueue);
 			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
 			JsonParseMaster master(sharedData);
 			ScopeJsonParseHelper scopeHelper;
@@ -210,8 +212,9 @@ namespace UnitTestLibraryDesktop
 		/*TEST_METHOD(ReactionAttributedCloneTest)
 		{
 			GameTime time;
+			EventQueue eventQueue;
 
-			shared_ptr<Scope> sharedScope = make_shared<World>(time);
+			shared_ptr<Scope> sharedScope = make_shared<World>(&time, &eventQueue);
 			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
 			JsonParseMaster master(sharedData);
 			ScopeJsonParseHelper scopeHelper;
@@ -232,12 +235,15 @@ namespace UnitTestLibraryDesktop
 
 			clonedMaster->Initialize();
 
-			Assert::IsTrue(clonedMaster->ParseFromFile("Content/WorldReaction.json"));
+			//Assert::IsTrue(clonedMaster->ParseFromFile("Content/WorldReaction.json"));
 
 			World & ourWorld = static_cast<World&>(clonedMaster->GetSharedData()->As< ScopeJsonParseHelper::ScopeSharedData>()->GetScope());
 
+			ourWorld.SetName("Cloned World");
+
 			Sector & sectorA = static_cast<Sector&>(ourWorld.Sectors()[0]);
 			Entity & entityA1 = static_cast<Entity&>(sectorA.Entities()[0]);
+
 
 			ourWorld.Update();
 

@@ -9,12 +9,12 @@ namespace UnitTests
 {
 	FooEntity::FooEntity()
 	{
-		Event<Foo>::Subscribe(this);
+		Event<Foo>::Subscribe(*this);
 	}
 
 	FooEntity::~FooEntity()
 	{
-		Event<Foo>::Unsubscribe(this);
+		Event<Foo>::Unsubscribe(*this);
 	}
 
 	void FooEntity::Notify(FIEAGameEngine::EventPublisher const & publisher)
