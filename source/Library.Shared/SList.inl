@@ -289,10 +289,11 @@ namespace FIEAGameEngine
 			}
 			else if (nodeToRemove != mBack)
 			{
-				Node *nodeAfterNodeToRemove = nodeToRemove->mNext;
-				nodeToRemove->mData = nodeAfterNodeToRemove->mData;
-				nodeToRemove->mNext = nodeAfterNodeToRemove->mNext;
-				delete nodeAfterNodeToRemove;
+				Node* next = nodeToRemove->mNext;
+				nodeToRemove->mData.~T();
+				new(&nodeToRemove->mData) T(std::move(next->mData));
+				nodeToRemove->mNext = next->mNext;
+				delete next;
 				mSize--;
 			}
 			else
@@ -349,7 +350,7 @@ namespace FIEAGameEngine
 	template<typename T> typename
 	inline SList<T>::Iterator & SList<T>::Iterator::operator++()
 	{
-		if (this->mNode != nullptr)
+		if (mNode != nullptr && mOwner != nullptr)
 		{
 			mNode = mNode->mNext;
 		}
@@ -377,13 +378,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline T& SList<T>::Iterator::operator*()
-	{
-		return mNode->mData;
-	}
-
-	template<typename T>
-	inline T const & SList<T>::Iterator::operator*() const
+	inline T& SList<T>::Iterator::operator*() const
 	{
 		return mNode->mData;
 	}

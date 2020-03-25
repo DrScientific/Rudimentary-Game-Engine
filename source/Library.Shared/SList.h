@@ -114,13 +114,7 @@ namespace FIEAGameEngine
 			/// Dereferences the Iterator.
 			/// </summary>
 			/// <returns>The data pointed to by the Iterator.</returns>
-			T& operator*();
-
-			/// <summary>
-			/// Dereferences the Iterator returning a const value.
-			/// </summary>
-			/// <returns>The const data pointed to by the Iterator.</returns>
-			T const & operator*() const;
+			T& operator*() const;
 
 		private:
 			/// <summary>

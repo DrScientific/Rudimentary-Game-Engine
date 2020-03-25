@@ -157,11 +157,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Foo.h" />
+    <ClInclude Include="DefaultHashFunctorTemplates.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ToStringTemplates.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Foo.cpp" />
+    <ClCompile Include="DefaultHashFunctorTest.cpp" />
+    <ClCompile Include="HashMapTest.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -4,6 +4,8 @@ namespace UnitTests
 {
 	class Foo
 	{
+
+
 	public:
 		Foo(int data = 0);
 		Foo(const Foo& rhs);

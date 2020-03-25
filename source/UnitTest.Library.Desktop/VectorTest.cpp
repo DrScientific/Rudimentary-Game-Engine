@@ -181,7 +181,9 @@ namespace UnitTestLibraryDesktop
 
 			Assert::IsTrue((*fooVector.PopBack()).Data() == car.Data());
 			Assert::IsTrue((*fooVector.PopBack()).Data() == bar.Data());
-			Assert::IsTrue(fooVector.PopBack() == fooVector.begin());
+			Vector<Foo>::Iterator lastPop = fooVector.PopBack();
+			Vector<Foo>::Iterator begin = fooVector.begin();
+			Assert::IsTrue(lastPop == begin);
 
 			Assert::IsTrue(fooVector.IsEmpty());
 

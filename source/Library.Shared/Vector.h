@@ -18,6 +18,7 @@ namespace FIEAGameEngine
 	template <typename T>
 	class Vector final
 	{
+	public:
 		/// <summary>
 		/// An iterator that contains an index into a Vector. Any data dereferenced through a Iterator is not const. See const_Iterator.
 		/// </summary>
@@ -28,7 +29,7 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// Default constructor for Iterator.
 			/// </summary>
-			Iterator();
+			Iterator() = default;
 
 			/// <summary>
 			/// Default copy constructor for Iterator
@@ -91,7 +92,7 @@ namespace FIEAGameEngine
 
 		private:
 			/// <summary>
-			/// Constructor for Iterator taking in a list owner and data.
+			/// Constructor for Iterator taking in a Vector owner and an index.
 			/// </summary>
 			/// <param name="owner">List owning the cIterator.</param>
 			/// <param name="index">Index in array iterator will point to.</param>
@@ -100,7 +101,7 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// The list that owns the Iterator.
 			/// </summary>
-			const Vector* mOwner;
+			Vector const * mOwner = nullptr;
 
 			/// <summary>
 			/// Index relative to start of array where value is stored.
@@ -108,7 +109,7 @@ namespace FIEAGameEngine
 			size_t mDataIndex = 0;
 
 			friend class const_Iterator;
-			friend class Vector<T>;
+			friend Vector;
 		};
 
 		/// <summary>
@@ -144,6 +145,12 @@ namespace FIEAGameEngine
 			/// </summary>
 			/// <param name="it">Iterator to create const_Iterator from</param>
 			const_Iterator(const Iterator & it);
+
+			/// <summary>
+			/// Assigns a iterator to a const iterator.
+			/// </summary>
+			const_Iterator& operator= (const Iterator & it);
+
 
 			/// <summary>
 			/// Preincrement operation. Increments index pointed to by iterator by 1.
@@ -189,7 +196,7 @@ namespace FIEAGameEngine
 
 		private:
 			/// <summary>
-			/// Constructor for const_Iterator taking in a list owner and data.
+			/// Constructor for const_Iterator taking in a Vector owner and an index.
 			/// </summary>
 			/// <param name="owner">List owning the const_Iterator.</param>
 			/// <param name="data">Data pointed to by the const_Iterator.</param>
@@ -198,23 +205,21 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// The list that owns the Iterator.
 			/// </summary>
-			const Vector* mOwner;
+			Vector const * mOwner = nullptr;
 
 			/// <summary>
 			/// Index relative to start of array where value is stored.
 			/// </summary>
 			size_t mDataIndex = 0;
 
-			friend class Vector<T>;
+			friend Vector;
 		};
 
-	public:
 		/// <summary>
 		/// Default constructor.
 		/// Initializes Vector with a capacity of 2 and a size of 0. 
-		/// TODO: Change default size to 256 after completing unit testing.
 		/// </summary>
-		Vector();
+		explicit Vector(size_t initialCapacity = 2);
 
 		/// <summary>
 		/// Copy constructor.
@@ -290,7 +295,14 @@ namespace FIEAGameEngine
 		/// Reserves an amount of memory for the vector equal to the new capacity if the new capacity is larger than the old capacity.
 		/// </summary>
 		/// <param name="newCapacity"> The new capacity of the vector.</param>
-		void Reserve(unsigned int newCapacity);
+		void Reserve(size_t newCapacity);
+
+		/// <summary>
+		/// Resize the vector. If it is sized to a size larger than it currently is, initialized the new elments to copies of the passed in T
+		/// </summary>
+		/// <param name="newSize">New size of the vector.</param>
+		/// /// <param name="valueToFill">Values any newly created T's are initialized to.</param>
+		void Resize(size_t newSize);
 
 		/// <summary>
 		/// Access the data stored at the given index. Works exactly like the [] operator in an array.
@@ -429,7 +441,7 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// The number of elements the vector can contain before it must resize.
 			/// </summary>
-			size_t mCapacity = 2;
+			size_t mCapacity;
 
 			/// <summary>
 			/// Communicates the cause of an empty vector exception to the user. 
