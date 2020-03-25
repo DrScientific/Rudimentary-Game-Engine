@@ -24,7 +24,6 @@ namespace FIEAGameEngine
 	Attributed::Attributed(Attributed && other) :
 		Scope(std::move(other))
 	{
-		(*this)["this"] = this;
 		UpdateExternalStorage(other.TypeIdInstance());
 	}
 
@@ -41,13 +40,8 @@ namespace FIEAGameEngine
 	Attributed & Attributed::operator=(Attributed && other)
 	{
 		Scope::operator=(std::move(other));
-		(*this)["this"] = this;
 		UpdateExternalStorage(other.TypeIdInstance());
 		return *this;
-	}
-
-	Attributed::~Attributed()
-	{
 	}
 
 	bool Attributed::IsAttribute(string const & name) const
@@ -111,7 +105,7 @@ namespace FIEAGameEngine
 		return *appendedDatum;
 	}
 
-	Vector<Scope::PairType*> Attributed::Attributes()
+	Vector<Scope::PairType*> const & Attributed::Attributes()
 	{
 		return mVector;
 	}
@@ -151,20 +145,21 @@ namespace FIEAGameEngine
 	void Attributed::Populate(IdType id)
 	{
 		(*this)["this"] = this;
-		Vector<Signature> attributes = TypeManager::GetTypeManager().GetTypeSignature(id);
+		Vector<Signature> const & attributes = TypeManager::GetTypeManager().GetTypeSignature(id);
 		for (size_t i = 0; i < attributes.Size(); i++)
 		{
-			Datum & element = Append(attributes[i].mName);
-			element.SetType(attributes[i].mType);
-			if (attributes[i].mType != Datum::DatumType::Scope)
+			Signature currentSignature = attributes[i];
+			Datum & element = Append(currentSignature.mName);
+			element.SetType(currentSignature.mType);
+			if (currentSignature.mType != Datum::DatumType::Scope)
 			{
-				element.SetStorage(reinterpret_cast<uint8_t*>(this) + attributes[i].mOffset, attributes[i].mSize);
+				element.SetStorage(reinterpret_cast<uint8_t*>(this) + currentSignature.mOffset, currentSignature.mSize);
 			}
 			else
 			{
-				for (size_t j = 0; j < attributes[i].mSize; j++)
+				for (size_t j = 0; j < currentSignature.mSize; j++)
 				{
-					AppendScope(attributes[i].mName);
+					AppendScope(currentSignature.mName);
 				}
 			}
 		}
@@ -175,9 +170,10 @@ namespace FIEAGameEngine
 		Vector<Signature> attributes = TypeManager::GetTypeManager().GetTypeSignature(id);
 		for (size_t i = 0; i < attributes.Size(); i++)
 		{
-			if (mVector[i + 1]->second.Type() != Datum::DatumType::Scope)
+			Signature currentSignature = attributes[i];
+			if (currentSignature.mType != Datum::DatumType::Scope)
 			{
-				mVector[i + 1]->second.SetStorage(reinterpret_cast<uint8_t*>(this) + attributes[i].mOffset, attributes[i].mSize * mVector[i]->second.mTypeSizes[static_cast<size_t>(attributes[i].mType)]);
+				mVector[i+1]->second.SetStorage(reinterpret_cast<uint8_t*>(this) + currentSignature.mOffset, currentSignature.mSize);
 			}
 		}
 	}

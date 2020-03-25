@@ -16,22 +16,17 @@ TypeManager& TypeManager::GetTypeManager()
 	return *mInstance;
 }
 
-TypeManager::TypeManager() :
-	SignatureMap()
+FIEAGameEngine::TypeManager::~TypeManager()
 {
-
-}
-
-TypeManager::~TypeManager()
-{
-
+	delete mInstance;
+	mInstance = nullptr;
 }
 
 void TypeManager::RegisterType(RTTI::IdType id, Vector<Attributed::Signature> signatures)
 {
 	SignatureMap.Insert(id, signatures);
 }
-Vector<Attributed::Signature> & TypeManager::GetTypeSignature(RTTI::IdType id)
+Vector<Attributed::Signature> const & TypeManager::GetTypeSignature(RTTI::IdType id)
 {
 	return SignatureMap.At(id);
 }
@@ -43,6 +38,4 @@ void TypeManager::UnregisterType(RTTI::IdType id)
 void TypeManager::Clear()
 {
 	SignatureMap.Clear();
-	delete mInstance;
-	mInstance = nullptr;
 }

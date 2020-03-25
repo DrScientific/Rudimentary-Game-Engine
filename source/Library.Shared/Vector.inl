@@ -83,7 +83,7 @@ namespace FIEAGameEngine
 	template<typename T>
 	inline typename Vector<T>::const_Iterator & Vector<T>::const_Iterator::operator=(const Iterator & it)
 	{
-		if (*this != it)
+		if (this != &it)
 		{
 			mDataIndex = it.mDataIndex;
 			mOwner = it.mOwner;
@@ -181,7 +181,7 @@ namespace FIEAGameEngine
 	template<typename T>
 	inline Vector<T> & Vector<T>::operator=(Vector const & rhs)
 	{
-		if (*this != rhs)
+		if (this != &rhs)
 		{
 			Clear();
 			if (mCapacity < rhs.mCapacity)
@@ -531,6 +531,18 @@ namespace FIEAGameEngine
 				break;
 			}
 		}
+	}
+
+	template<typename T>
+	inline void Vector<T>::RemoveAt(size_t index)
+	{
+		if (index >= mSize)
+		{
+			throw std::exception(indexOutOfBoundsExceptionText.c_str());
+		}
+		mArray[index].~T();
+		memmove(&(mArray[index]), &(mArray[index + 1]), (mSize - 1 - index) * sizeof(T));
+		mSize--;
 	}
 
 	template<typename T>

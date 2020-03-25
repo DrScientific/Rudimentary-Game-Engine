@@ -435,6 +435,12 @@ namespace FIEAGameEngine
 		void Remove(T const & value);
 
 		/// <summary>
+		/// Removes all elements equal to value in the list.
+		/// </summary>
+		/// <param name="value">Value to remove.</param>
+		void RemoveAt(size_t index);
+
+		/// <summary>
 		/// Removes all elements between two iterators inclusively.
 		/// </summary>
 		/// <param name="start">Iterator pointing to the first element to remove.</param>

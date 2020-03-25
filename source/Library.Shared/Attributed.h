@@ -35,28 +35,22 @@ namespace FIEAGameEngine
 			/// Signature equivalence operator used by HashMap find in type manager when looking up signature-type table.
 			/// </summary>
 			/// <returns>Whether the signatures are equal.</returns>
-			bool operator==(Signature const & rhs) const { return mName == rhs.mName && mType == rhs.mType && mSize == rhs.mSize && mOffset == rhs.mOffset; };
+			//bool operator==(Signature const & rhs) const { return mName == rhs.mName && mType == rhs.mType && mSize == rhs.mSize && mOffset == rhs.mOffset; };
 			
 			/// <summary>
 			/// Signature equivalence operator used by HashMap find in type manager when looking up signature-type table.
 			/// </summary>
 			/// <returns>Whether the signatures are not equal.</returns>
-			bool operator!=(Signature const & rhs) const { return !(*this == rhs); };
+			//bool operator!=(Signature const & rhs) const { return !(*this == rhs); };
 
 		};
 
-		
+	protected:
 		/// <summary>
 		/// Attributed constructor
 		/// </summary>
 		/// <param name="id">Type id of the object we are constructing. Must be passed in as vtable is not correctly setup on construction.</param>
 		Attributed(IdType id);
-
-		/// <summary>
-		/// Attributed copy constructor
-		/// </summary>
-		/// <param name="other">Object we wish to construct a copy from.</param>
-		Attributed(Attributed const & other);
 
 		/// <summary>
 		/// Attributed move constructor
@@ -71,15 +65,23 @@ namespace FIEAGameEngine
 		Attributed & operator=(Attributed const & other);
 
 		/// <summary>
+		/// Attributed copy constructor
+		/// </summary>
+		/// <param name="other">Object we wish to construct a copy from.</param>
+		Attributed(Attributed const & other);
+
+		/// <summary>
 		/// Move assignment operator
 		/// </summary>
 		/// <returns>Object we are setting this equal to.</returns>
 		Attributed & operator=(Attributed && other);
 
+	public:
+		
 		/// <summary>
 		/// Virtual destructor of Attributed class.
 		/// </summary>
-		virtual ~Attributed();
+		virtual ~Attributed() = default;
 
 		/// <summary>
 		/// Returns whether a given key (string) is present in the attributed object.
@@ -122,7 +124,7 @@ namespace FIEAGameEngine
 		/// Returns all attributes of the attributed object.
 		/// </summary>
 		/// <returns>A vector of pointers to each key datum pair in the attributes of the attributed object.</returns>
-		Vector<PairType*> Attributes();
+		Vector<PairType*> const & Attributes();
 
 		/// <summary>
 		/// Returns all prescribed attributes of the attributed object.

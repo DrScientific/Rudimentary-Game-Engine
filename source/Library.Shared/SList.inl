@@ -315,7 +315,7 @@ namespace FIEAGameEngine
 	template<typename T>
 	inline SList<T> & SList<T>::operator=(const SList & rhs)
 	{
-		if (*this != rhs)
+		if (this != &rhs)
 		{
 			Clear();
 			for (auto& i : rhs)

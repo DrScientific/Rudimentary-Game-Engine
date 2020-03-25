@@ -133,7 +133,6 @@ namespace UnitTestLibraryDesktop
 
 			Assert::IsFalse(foo.IsAuxiliaryAttribute("NestedScope"));
 			Assert::IsFalse(foo.IsAuxiliaryAttribute("NestedScopeArray"));
-
 		}
 		TEST_METHOD(PaulAppendAuxiliaryAttributeTest)
 		{
