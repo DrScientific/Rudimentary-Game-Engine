@@ -12,9 +12,8 @@
 #pragma warning(pop)
 
 #include <string>
-
-using namespace std;
-using namespace glm;
+#include <initializer_list>
+#include <tuple>
 
 namespace FIEAGameEngine
 {
@@ -68,10 +67,10 @@ namespace FIEAGameEngine
 		{
 			int * tInt;
 			float * tFloat;
-			vec4 *  tVec4;
-			mat4x4 * tMat4x4;
+			glm::vec4 *  tVec4;
+			glm::mat4x4 * tMat4x4;
 			Scope** tScope;
-			string * tString;
+			std::string * tString;
 			RTTI ** tRTTIPtr;
 			void* tVoid;
 
@@ -114,13 +113,13 @@ namespace FIEAGameEngine
 		/// Datum to vec4 copy constructor.
 		/// </summary>
 		/// <param name="other">Vec4 we wish our datum to store</param>
-		Datum(vec4 const & other);
+		Datum(glm::vec4 const & other);
 
 		/// <summary>
 		/// Datum to mat4x4 copy constructor.
 		/// </summary>
 		/// <param name="other">Mat4x4 we wish our datum to store</param>
-		Datum(mat4x4 const & other);
+		Datum(glm::mat4x4 const & other);
 	private:
 		/// <summary>
 		/// Datum to Scope copy constructor.
@@ -132,7 +131,7 @@ namespace FIEAGameEngine
 		/// Datum to string copy constructor.
 		/// </summary>
 		/// <param name="other">String we wish our datum to store</param>
-		Datum(string const & other);
+		Datum(std::string const & other);
 
 		/// <summary>
 		/// Datum to RTTI* copy constructor.
@@ -172,7 +171,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs"></param>
 		/// <returns>Datum on the left hand side of the assignment operator.</returns>
-		Datum& operator= (vec4 const & rhs);
+		Datum& operator= (glm::vec4 const & rhs);
 
 		/// <summary>
 		/// Datum to mat4x4 assignment operator.
@@ -180,7 +179,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs"></param>
 		/// <returns>Datum on the left hand side of the assignment operator.</returns>
-		Datum& operator= (mat4x4 const & rhs);
+		Datum& operator= (glm::mat4x4 const & rhs);
 
 	private:
 		/// <summary>
@@ -197,7 +196,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs"></param>
 		/// <returns>Datum on the left hand side of the assignment operator.</returns>
-		Datum& operator= (string const & rhs);
+		Datum& operator= (std::string const & rhs);
 
 		/// <summary>
 		/// Datum to RTTI* assignment operator.
@@ -213,43 +212,43 @@ namespace FIEAGameEngine
 		/// Populates datum with all elements in the initializer list.
 		/// </summary>
 		/// <param name="iList">Integer initializer list</param>
-		Datum(initializer_list<int> const & iList);
+		Datum(std::initializer_list<int> const & iList);
 
 		/// <summary>
 		/// Populates datum with all elements in the initializer list.
 		/// </summary>
 		/// <param name="iList">Float initializer list</param>
-		Datum(initializer_list<float> const & iList);
+		Datum(std::initializer_list<float> const & iList);
 
 		/// <summary>
 		/// Populates datum with all elements in the initializer list.
 		/// </summary>
 		/// <param name="iList">Vec4 initializer list</param>
-		Datum(initializer_list<vec4> const & iList);
+		Datum(std::initializer_list<glm::vec4> const & iList);
 
 		/// <summary>
 		/// Populates datum with all elements in the initializer list.
 		/// </summary>
 		/// <param name="iList">Mat4x4 initializer list</param>
-		Datum(initializer_list<mat4x4> const & iList);
+		Datum(std::initializer_list<glm::mat4x4> const & iList);
 
 		/// <summary>
 		/// Populates datum with all elements in the initializer list.
 		/// </summary>
 		/// <param name="iList">Scope* initializer list</param>
-		Datum(initializer_list<Scope> const & iList);
+		Datum(std::initializer_list<Scope> const & iList);
 
 		/// <summary>
 		/// Populates datum with all elements in the initializer list.
 		/// </summary>
 		/// <param name="iList">String initializer list</param>
-		Datum(initializer_list<string> const & iList);
+		Datum(std::initializer_list<std::string> const & iList);
 
 		/// <summary>
 		/// Populates datum with all elements in the initializer list.
 		/// </summary>
 		/// <param name="iList">RTTI* initializer list</param>
-		Datum(initializer_list<RTTI*> const & iList);
+		Datum(std::initializer_list<RTTI*> const & iList);
 #pragma endregion
 
 #pragma region Destructor
@@ -314,7 +313,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">Vec4 to compare to.</param>
 		/// <returns>Whether the datum and vec4 are equal.</returns>
-		bool operator== (vec4 const & rhs) const;
+		bool operator== (glm::vec4 const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to a mat4x4.
@@ -322,7 +321,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">Mat4x4 to compare to.</param>
 		/// <returns>Whether the datum and mat4x4 are equal.</returns>
-		bool operator== (mat4x4 const & rhs) const;
+		bool operator== (glm::mat4x4 const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to a string.
@@ -330,7 +329,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">String to compare to.</param>
 		/// <returns>Whether the datum and string are equal.</returns>
-		bool operator== (string const & rhs) const;
+		bool operator== (std::string const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to an RTTI*.
@@ -369,7 +368,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">Vec4 to compare to.</param>
 		/// <returns>Whether the datum and vec4 are not equal.</returns>
-		bool operator!= (vec4 const & rhs) const;
+		bool operator!= (glm::vec4 const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to a mat4x4.
@@ -377,7 +376,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">Mat4x4 to compare to.</param>
 		/// <returns>Whether the datum and mat4x4 are not equal.</returns>
-		bool operator!= (mat4x4 const & rhs) const;
+		bool operator!= (glm::mat4x4 const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to a string.
@@ -385,7 +384,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">String to compare to.</param>
 		/// <returns>Whether the datum and string are not equal.</returns>
-		bool operator!= (string const & rhs) const;
+		bool operator!= (std::string const & rhs) const;
 
 		/// <summary>
 		/// Compares a datum to an RTTI*.
@@ -467,7 +466,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="data">Vec4 pointer to overlay.</param>
 		/// <param name="size">Number of vec4s to overlay.</param>
-		void SetStorage(vec4 * const & data, size_t const & size);
+		void SetStorage(glm::vec4 * const & data, size_t const & size);
 
 		/// <summary>
 		/// Sets the datum to external storage, overlaying an existing array.
@@ -475,7 +474,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="data">Mat4x4 pointer to overlay.</param>
 		/// <param name="size">Number of mat4x4s to overlay.</param>
-		void SetStorage(mat4x4 * const & data, size_t const & size);
+		void SetStorage(glm::mat4x4 * const & data, size_t const & size);
 
 		//Scopes cannot be stored as external storage
 
@@ -485,7 +484,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="data">String pointer to overlay.</param>
 		/// <param name="size">Number of strings to overlay.</param>
-		void SetStorage(string * const & data, size_t const & size);
+		void SetStorage(std::string * const & data, size_t const & size);
 
 		/// <summary>
 		/// Sets the datum to external storage, overlaying an existing array.
@@ -524,14 +523,14 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="value">Value to set data to.</param>
 		/// <param name="index">Index to set to value.</param>
-		void Set(vec4 const & value, size_t const & index = 0);
+		void Set(glm::vec4 const & value, size_t const & index = 0);
 
 		/// <summary>
 		/// Sets data at the given index to the given value.
 		/// </summary>
 		/// <param name="value">Value to set data to.</param>
 		/// <param name="index">Index to set to value.</param>
-		void Set(mat4x4 const & value, size_t const & index = 0);
+		void Set(glm::mat4x4 const & value, size_t const & index = 0);
 
 		/// <summary>
 		/// Sets data at the given index to the given value.
@@ -545,7 +544,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="value">Value to set data to.</param>
 		/// <param name="index">Index to set to value.</param>
-		void Set(string const & value, size_t const & index = 0);
+		void Set(std::string const & value, size_t const & index = 0);
 
 		/// <summary>
 		/// Sets data at the given index to the given value.
@@ -587,7 +586,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="index">Index to retrieve data from.</param>
 		/// <returns>Data stored at given index.</returns>
-		template<> vec4 Get<vec4>(size_t const & index) const;
+		template<> glm::vec4 Get<glm::vec4>(size_t const & index) const;
 
 		/// <summary>
 		/// Mat4x4 specialization of templated get function.
@@ -595,7 +594,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="index">Index to retrieve data from.</param>
 		/// <returns>Data stored at given index.</returns>
-		template<> mat4x4 Get<mat4x4>(size_t const & index) const;
+		template<> glm::mat4x4 Get<glm::mat4x4>(size_t const & index) const;
 
 		/// <summary>
 		/// Mat4x4 specialization of templated get function.
@@ -611,7 +610,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="index">Index to retrieve data from.</param>
 		/// <returns>Data stored at given index.</returns>
-		template<> string Get<string>(size_t const & index) const;
+		template<> std::string Get<std::string>(size_t const & index) const;
 
 		/// <summary>
 		/// RTTI specialization of templated get function.
@@ -628,7 +627,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="value">Value to set data to.</param>
 		/// <param name="index">Index to set to value.</param>
-		void SetFromString(string const & value, size_t const & index = 0);
+		void SetFromString(std::string const & value, size_t const & index = 0);
 #pragma endregion
 
 #pragma region ToString
@@ -637,7 +636,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="index">Index to retrieve data from.</param>
 		/// <returns>Data at the given index converted to a string.</returns>
-		string ToString(size_t const & index = 0) const;
+		std::string ToString(size_t const & index = 0) const;
 #pragma endregion
 
 #pragma region PushBack
@@ -657,13 +656,13 @@ namespace FIEAGameEngine
 		/// Increases the datum's size by one and places the given value at the back of the datum.
 		/// </summary>
 		/// <param name="value">Value to push back.</param>
-		vec4 & PushBack(vec4 const & value);
+		glm::vec4 & PushBack(glm::vec4 const & value);
 
 		/// <summary>
 		/// Increases the datum's size by one and places the given value at the back of the datum.
 		/// </summary>
 		/// <param name="value">Value to push back.</param>
-		mat4x4 & PushBack(mat4x4 const & value);
+		glm::mat4x4 & PushBack(glm::mat4x4 const & value);
 	private:
 		/// <summary>
 		/// Increases the datum's size by one and places the given value at the back of the datum.
@@ -675,7 +674,7 @@ namespace FIEAGameEngine
 		/// Increases the datum's size by one and places the given value at the back of the datum.
 		/// </summary>
 		/// <param name="value">Value to push back.</param>
-		string & PushBack(string const & value);
+		std::string & PushBack(std::string const & value);
 
 		/// <summary>
 		/// Increases the datum's size by one and places the given value at the back of the datum.
@@ -719,14 +718,14 @@ namespace FIEAGameEngine
 		/// Returns the data at the first index of the datum.
 		/// </summary>
 		/// <returns>The data at the first index of the datum.</returns>
-		template<> vec4 Front<vec4>() const;
+		template<> glm::vec4 Front<glm::vec4>() const;
 
 		/// <summary>
 		/// Mat4x4 specialization of templated front function.
 		/// Returns the data at the first index of the datum.
 		/// </summary>
 		/// <returns>The data at the first index of the datum.</returns>
-		template<> mat4x4 Front<mat4x4>() const;
+		template<> glm::mat4x4 Front<glm::mat4x4>() const;
 
 		/// <summary>
 		/// Scope* specialization of templated front function.
@@ -740,7 +739,7 @@ namespace FIEAGameEngine
 		/// Returns the data at the first index of the datum.
 		/// </summary>
 		/// <returns>The data at the first index of the datum.</returns>
-		template<> string Front<string>() const;
+		template<> std::string Front<std::string>() const;
 
 		/// <summary>
 		/// RTTI* specialization of templated front function.
@@ -778,14 +777,14 @@ namespace FIEAGameEngine
 		/// Returns the data at the last index of the datum.
 		/// </summary>
 		/// <returns>The data at the last index of the datum.</returns>
-		template<> vec4 Back<vec4>() const;
+		template<> glm::vec4 Back<glm::vec4>() const;
 
 		/// <summary>
 		/// Mat4x4 specialization of templated back function.
 		/// Returns the data at the last index of the datum.
 		/// </summary>
 		/// <returns>The data at the last index of the datum.</returns>
-		template<> mat4x4 Back<mat4x4>() const;
+		template<> glm::mat4x4 Back<glm::mat4x4>() const;
 
 		/// <summary>
 		/// Scope* specialization of templated back function.
@@ -799,7 +798,7 @@ namespace FIEAGameEngine
 		/// Returns the data at the last index of the datum.
 		/// </summary>
 		/// <returns>The data at the last index of the datum.</returns>
-		template<> string Back<string>() const;
+		template<> std::string Back<std::string>() const;
 
 		/// <summary>
 		/// RTTI* specialization of templated back function.
@@ -826,19 +825,19 @@ namespace FIEAGameEngine
 		/// Removes the passed in value from the datum if it exists.
 		/// </summary>
 		/// <param name="value">Value to remove.</param>
-		void Remove(vec4 const & value);
+		void Remove(glm::vec4 const & value);
 
 		/// <summary>
 		/// Removes the passed in value from the datum if it exists.
 		/// </summary>
 		/// <param name="value">Value to remove.</param>
-		void Remove(mat4x4 const & value);
+		void Remove(glm::mat4x4 const & value);
 
 		/// <summary>
 		/// Removes the passed in value from the datum if it exists.
 		/// </summary>
 		/// <param name="value">Value to remove.</param>
-		void Remove(string const & value);
+		void Remove(std::string const & value);
 
 		/// <summary>
 		/// Removes the passed in value from the datum if it exists.
@@ -870,28 +869,28 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="searchedValue">Value to search the datum for.</param>
 		/// <returns>A pair with the first element relaying whether the value was found and the second element as a pointer to the found value.</returns>
-		pair<bool, int*> Find(int const & searchedValue) const;
+		std::pair<bool, int*> Find(int const & searchedValue) const;
 
 		/// <summary>
 		/// Searches the datum for a given value.
 		/// </summary>
 		/// <param name="searchedValue">Value to search the datum for.</param>
 		/// <returns>A pair with the first element relaying whether the value was found and the second element as a pointer to the found value.</returns>
-		pair<bool, float*> Find(float const & searchedValue) const;
+		std::pair<bool, float*> Find(float const & searchedValue) const;
 
 		/// <summary>
 		/// Searches the datum for a given value.
 		/// </summary>
 		/// <param name="searchedValue">Value to search the datum for.</param>
 		/// <returns>A pair with the first element relaying whether the value was found and the second element as a pointer to the found value.</returns>
-		pair<bool, vec4*> Find(vec4 const & searchedValue) const;
+		std::pair<bool, glm::vec4*> Find(glm::vec4 const & searchedValue) const;
 
 		/// <summary>
 		/// Searches the datum for a given value.
 		/// </summary>
 		/// <param name="searchedValue">Value to search the datum for.</param>
 		/// <returns>A pair with the first element relaying whether the value was found and the second element as a pointer to the found value.</returns>
-		pair<bool, mat4x4*> Find(mat4x4 const & searchedValue) const;
+		std::pair<bool, glm::mat4x4*> Find(glm::mat4x4 const & searchedValue) const;
 
 
 		/// <summary>
@@ -899,23 +898,34 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="searchedValue">Value to search the datum for.</param>
 		/// <returns>A pair with the first element relaying whether the value was found and the second element as a pointer to the found value.</returns>
-		pair<bool, Scope**> Find(Scope const & searchedValue) const;
+		std::pair<bool, Scope**> Find(Scope const & searchedValue) const;
 
 		/// <summary>
 		/// Searches the datum for a given value.
 		/// </summary>
 		/// <param name="searchedValue">Value to search the datum for.</param>
 		/// <returns>A pair with the first element relaying whether the value was found and the second element as a pointer to the found value.</returns>
-		pair<bool, string*> Find(string const & searchedValue) const;
+		std::pair<bool, std::string*> Find(std::string const & searchedValue) const;
 
 		/// <summary>
 		/// Searches the datum for a given value.
 		/// </summary>
 		/// <param name="searchedValue">Value to search the datum for.</param>
 		/// <returns>A pair with the first element relaying whether the value was found and the second element as a pointer to the found value.</returns>
-		pair<bool, RTTI **> Find(RTTI * const & searchedValue) const;
+		std::pair<bool, RTTI **> Find(RTTI * const & searchedValue) const;
 #pragma endregion
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="data"></param>
+		/// <param name="size"></param>
+		void SetStorage(void * const & data, size_t const & size);
+
+		/// <summary>
+		/// Scope of type sizes. Specified at the top of cpp file.
+		/// </summary>
+		static size_t const mTypeSizes[static_cast<size_t>(DatumType::END)];
 
 	private:
 #pragma region ResizeTemplated
@@ -948,49 +958,49 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="value">String representative to be converted to data of approproate type.</param>
 		/// <param name="index">Index to set to value.</param>
-		template<typename T> void SetFromStringTemplated(string const & value, size_t const & index = 0);
+		template<typename T> void SetFromStringTemplated(std::string const & value, size_t const & index = 0);
 
 		/// <summary>
 		/// Sets data at the given index to the given string value converted to the appropriate type.
 		/// </summary>
 		/// <param name="value">String representative to be converted to data of approproate type.</param>
 		/// <param name="index">Index to set to value.</param>
-		template<> void SetFromStringTemplated<int>(string const & value, size_t const & index);
+		template<> void SetFromStringTemplated<int>(std::string const & value, size_t const & index);
 
 		/// <summary>
 		/// Sets data at the given index to the given string value converted to the appropriate type.
 		/// </summary>
 		/// <param name="value">String representative to be converted to data of approproate type.</param>
 		/// <param name="index">Index to set to value.</param>
-		template<> void SetFromStringTemplated<float>(string const & value, size_t const & index);
+		template<> void SetFromStringTemplated<float>(std::string const & value, size_t const & index);
 
 		/// <summary>
 		/// Sets data at the given index to the given string value converted to the appropriate type.
 		/// </summary>
 		/// <param name="value">String representative to be converted to data of approproate type.</param>
 		/// <param name="index">Index to set to value.</param>
-		template<> void SetFromStringTemplated<vec4>(string const & value, size_t const & index);
+		template<> void SetFromStringTemplated<glm::vec4>(std::string const & value, size_t const & index);
 
 		/// <summary>
 		/// Sets data at the given index to the given string value converted to the appropriate type.
 		/// </summary>
 		/// <param name="value">String representative to be converted to data of approproate type.</param>
 		/// <param name="index">Index to set to value.</param>
-		template<> void SetFromStringTemplated<mat4x4>(string const & value, size_t const & index);
+		template<> void SetFromStringTemplated<glm::mat4x4>(std::string const & value, size_t const & index);
 
 		/// <summary>
 		/// Sets data at the given index to the given string value converted to the appropriate type.
 		/// </summary>
 		/// <param name="value">String representative to be converted to data of approproate type.</param>
 		/// <param name="index">Index to set to value.</param>
-		template<> void SetFromStringTemplated<string>(string const & value, size_t const & index);
+		template<> void SetFromStringTemplated<std::string>(std::string const & value, size_t const & index);
 
 		/// <summary>
 		/// Sets data at the given index to the given string value converted to the appropriate type.
 		/// </summary>
 		/// <param name="value">String representative to be converted to data of approproate type.</param>
 		/// <param name="index">Index to set to value.</param>
-		template<> void SetFromStringTemplated<RTTI*>(string const & value, size_t const & index);
+		template<> void SetFromStringTemplated<RTTI*>(std::string const & value, size_t const & index);
 #pragma endregion
 
 #pragma region ToStringTemplated
@@ -1003,7 +1013,7 @@ namespace FIEAGameEngine
 		/// <param name="templatedPtr">A pointer of the type the datum is.</param>
 		/// <param name="index">Index to get data from to convert to string.</param>
 		/// <returns>Data stored at index as a string.</returns>
-		template<typename T> string ToStringTemplated(T * const & templatedPtr, size_t const & index = 0) const;
+		template<typename T> std::string ToStringTemplated(T * const & templatedPtr, size_t const & index = 0) const;
 
 		/// <summary>
 		/// Returns data at a given index as a string.
@@ -1012,7 +1022,7 @@ namespace FIEAGameEngine
 		/// <param name="templatedPtr">A pointer of the type the datum is.</param>
 		/// <param name="index">Index to get data from to convert to string.</param>
 		/// <returns>Data stored at index as a string.</returns>
-		template<> string ToStringTemplated<int>(int * const & templatedPtr, size_t const & index) const;
+		template<> std::string ToStringTemplated<int>(int * const & templatedPtr, size_t const & index) const;
 
 		/// <summary>
 		/// Returns data at a given index as a string.
@@ -1021,7 +1031,7 @@ namespace FIEAGameEngine
 		/// <param name="templatedPtr">A pointer of the type the datum is.</param>
 		/// <param name="index">Index to get data from to convert to string.</param>
 		/// <returns>Data stored at index as a string.</returns>
-		template<> string ToStringTemplated<float>(float * const & templatedPtr, size_t const & index) const;
+		template<> std::string ToStringTemplated<float>(float * const & templatedPtr, size_t const & index) const;
 
 		/// <summary>
 		/// Returns data at a given index as a string.
@@ -1030,7 +1040,7 @@ namespace FIEAGameEngine
 		/// <param name="templatedPtr">A pointer of the type the datum is.</param>
 		/// <param name="index">Index to get data from to convert to string.</param>
 		/// <returns>Data stored at index as a string.</returns>
-		template<> string ToStringTemplated<vec4>(vec4 * const & templatedPtr, size_t const & index) const;
+		template<> std::string ToStringTemplated<glm::vec4>(glm::vec4 * const & templatedPtr, size_t const & index) const;
 
 		/// <summary>
 		/// Returns data at a given index as a string.
@@ -1039,7 +1049,7 @@ namespace FIEAGameEngine
 		/// <param name="templatedPtr">A pointer of the type the datum is.</param>
 		/// <param name="index">Index to get data from to convert to string.</param>
 		/// <returns>Data stored at index as a string.</returns>
-		template<> string ToStringTemplated<mat4x4>(mat4x4 * const & templatedPtr, size_t const & index) const;
+		template<> std::string ToStringTemplated<glm::mat4x4>(glm::mat4x4 * const & templatedPtr, size_t const & index) const;
 
 		/// <summary>
 		/// Returns data at a given index as a string.
@@ -1048,7 +1058,7 @@ namespace FIEAGameEngine
 		/// <param name="templatedPtr">A pointer of the type the datum is.</param>
 		/// <param name="index">Index to get data from to convert to string.</param>
 		/// <returns>Data stored at index as a string.</returns>
-		template<> string ToStringTemplated<string>(string * const & templatedPtr, size_t const & index) const;
+		template<> std::string ToStringTemplated<std::string>(std::string * const & templatedPtr, size_t const & index) const;
 
 		/// <summary>
 		/// Returns data at a given index as a string.
@@ -1057,7 +1067,7 @@ namespace FIEAGameEngine
 		/// <param name="templatedPtr">A pointer of the type the datum is.</param>
 		/// <param name="index">Index to get data from to convert to string.</param>
 		/// <returns>Data stored at index as a string.</returns>
-		template<> string ToStringTemplated<RTTI*>(RTTI ** const & templatedPtr, size_t const & index) const;
+		template<> std::string ToStringTemplated<RTTI*>(RTTI ** const & templatedPtr, size_t const & index) const;
 #pragma endregion
 
 #pragma region PushBackTemplated
@@ -1137,75 +1147,70 @@ namespace FIEAGameEngine
 		/// </summary>
 		bool mIsInternal = true;
 
-		/// <summary>
-		/// Scope of type sizes. Specified at the top of cpp file.
-		/// </summary>
-		static size_t const mTypeSizes[static_cast<size_t>(DatumType::END)];
-
 #pragma endregion
 
 #pragma region ExceptionStrings
 		/// <summary>
 		/// Communicates the cause of an data lost on resize exception to the user.
 		/// </summary>
-		inline static const string newCapacityCannotBeSmallerThanCapacityExceptionText = "New capacity cannot be smaller than old vector capacity.\n";
+		inline static const std::string newCapacityCannotBeSmallerThanCapacityExceptionText = "New capacity cannot be smaller than old vector capacity.\n";
 
 		/// <summary>
 		/// Communicates the cause of an index out of bounds exception to the user.
 		/// </summary>
-		inline static const string indexOutOfBoundsExceptionText = "Attempted to access an out of bounds index.\n";
+		inline static const std::string indexOutOfBoundsExceptionText = "Attempted to access an out of bounds index.\n";
 
 		/// <summary>
 		/// Communicates the cause of an operation type mismatch exception to the user.
 		/// </summary>
-		inline static const string operationTypeMismatchExceptionText = "Operation type does not match datum type.\n";
+		inline static const std::string operationTypeMismatchExceptionText = "Operation type does not match datum type.\n";
 
 		/// <summary>
 		/// Communicates the cause of a datum type not initialized exception to the user.
 		/// </summary>
-		inline static const string datumTypeNotInitializedExceptionText = "Datum type is not initialized.\n";
+		inline static const std::string datumTypeNotInitializedExceptionText = "Datum type is not initialized.\n";
 
 		/// <summary>
 		/// Communicates the cause of a datum type already initialized exception to the user.
 		/// </summary>
-		inline static const string datumTypeAlreadyInitializedExceptionText = "Datum type is already initialized. Once the data type is set it may not be changed.\n";
+		inline static const std::string datumTypeAlreadyInitializedExceptionText = "Datum type is already initialized. Once the data type is set it may not be changed.\n";
 
 		/// <summary>
 		/// Communicates the cause of an unsupported data type exception to the user.
 		/// </summary>
-		inline static const string unsupportedDataTypeExceptionText = "Data type passed in to templated function is not supported by datum.\n";
+		inline static const std::string unsupportedDataTypeExceptionText = "Data type passed in to templated function is not supported by datum.\n";
 
 		/// <summary>
 		/// Communicates the cause of a cannot mutate external storage exception to the user.
 		/// </summary>
-		inline static const string cannotMutateExternalStorageExceptionText = "Cannot mutate external storage.\n";
+		inline static const std::string cannotMutateExternalStorageExceptionText = "Cannot mutate external storage.\n";
 
 		/// <summary>
 		/// Communicates the cause of a cannot set RTTI* from string exception to the user.
 		/// </summary>
-		inline static const string cannotSetRTTIPtrFromStringExceptionText = "Cannot set RTTI * from string.\n";
+		inline static const std::string cannotSetRTTIPtrFromStringExceptionText = "Cannot set RTTI * from string.\n";
 
 		/// <summary>
 		/// Communicates the cause of a set stroage invalid parameters exception to the user.
 		/// </summary>
-		inline static const string cannotSetStorageInvalidParamExceptionText = "Cannot set storage to nullptr or size 0.\n";
+		inline static const std::string cannotSetStorageInvalidParamExceptionText = "Cannot set storage to nullptr or size 0.\n";
 
 		/// <summary>
 		/// Communicates the cause of a set stroage invalid parameters exception to the user.
 		/// </summary>
-		inline static const string bracketOperatorOnlyValidForScopesExceptionText = "Operator[] is only valid for scopes.\n";
+		inline static const std::string bracketOperatorOnlyValidForScopesExceptionText = "Operator[] is only valid for scopes.\n";
 
 		/// <summary>
 		/// Communicates the cause of a set stroage invalid parameters exception to the user.
 		/// </summary>
-		inline static const string noExternalScopesExceptionText = "External datum cannot be assigned to scope.\n";
+		inline static const std::string noExternalScopesExceptionText = "External datum cannot be assigned to scope.\n";
 #pragma endregion
 
 		//using CreateDefaultFunction = void(Datum::*)(size_t index);
 		//static const CreateDefaultFunction CreateDefaultFunctions[static_cast<int>(DatumType::END)];
 
 		//using DeleteFunction = void(Datum::*)();
-		
+
 		//using CopyFunction = void(Datum::*)();
 	};
 }

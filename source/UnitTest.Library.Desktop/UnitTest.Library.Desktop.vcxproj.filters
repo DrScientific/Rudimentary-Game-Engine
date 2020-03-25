@@ -10,11 +10,16 @@
     <ClCompile Include="DefaultHashFunctorTest.cpp" />
     <ClCompile Include="DatumTest.cpp" />
     <ClCompile Include="ScopeTest.cpp" />
+    <ClCompile Include="AttributedFoo.cpp" />
+    <ClCompile Include="AttributedFooTest.cpp" />
+    <ClCompile Include="Bar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="Foo.h" />
     <ClInclude Include="ToStringTemplates.h" />
     <ClInclude Include="DefaultHashFunctorTemplates.h" />
+    <ClInclude Include="AttributedFoo.h" />
+    <ClInclude Include="Bar.h" />
   </ItemGroup>
 </Project>

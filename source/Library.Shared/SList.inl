@@ -21,6 +21,15 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
+	inline SList<T>::SList(SList && other) :
+		mFront(std::move(other.mFront)), mBack(std::move(other.mBack))
+	{
+		other.mFront = nullptr;
+		other.mBack = nullptr;
+		other.mSize = 0;
+	}
+
+	template<typename T>
 	inline SList<T>::SList(std::initializer_list<T> iList)
 	{
 		for (auto& i: iList)
@@ -315,6 +324,19 @@ namespace FIEAGameEngine
 			}
 		}
 		return *this;
+	}
+
+	template<typename T>
+	inline SList<T> & SList<T>::operator=(SList && rhs)
+	{
+		mFront = rhs.mFront;
+		mBack = rhs.mBack;
+		mSize = rhs.mSize;
+		
+		rhs.mFront = nullptr;
+		rhs.mBack = nullptr;
+		rhs.mSize = 0;
+
 	}
 
 	template<typename T>

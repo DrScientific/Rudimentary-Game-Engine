@@ -23,6 +23,13 @@ FIEAGameEngine::Scope::Scope(Scope const & other)
 	*this = other;
 }
 
+FIEAGameEngine::Scope::Scope(Scope && other) :
+	mHashMap(std::move(other.mHashMap)), mVector(std::move(other.mVector)), mParent(other.mParent)
+{
+	Reparent(other);
+	other.mParent = nullptr;
+}
+
 Scope::~Scope()
 {
 	Clear();
@@ -30,31 +37,70 @@ Scope::~Scope()
 
 Scope & FIEAGameEngine::Scope::operator=(Scope const & rhs)
 {
-	if (*this != rhs)
+	if (this != &rhs)
 	{
-		Clear();
-	}
-	for (size_t i = 0; i < rhs.mVector.Size(); i++)
-	{
-		Datum & newDatum = Append(rhs.mVector[i]->first);
-		if (rhs.mVector[i]->second.Type() != Datum::DatumType::Scope)
+		_Clear(false);
+		mVector.Reserve(rhs.mVector.Size());
+		for (size_t i = 0; i < rhs.mVector.Size(); ++i)
 		{
-			newDatum = rhs.mVector[i]->second;
-		}
-		else
-		{
-			for (size_t j = 0; j < rhs.mVector[i]->second.Size(); j++)
+			string existingName = rhs.mVector[i]->first;
+			Datum& existingDatum = rhs.mVector[i]->second;
+
+			Datum& newDatum = Append(existingName);
+			newDatum.SetType(existingDatum.Type());
+
+			if (newDatum.Type() == Datum::DatumType::Scope)
 			{
-				(newDatum.PushBack(*(new Scope(rhs.mVector[i]->second[j]))))->mParent = this;
+				for (size_t j = 0; j < existingDatum.Size(); j++)
+				{
+					Scope& existingScope = *(existingDatum.Get<Scope*>(j));
+					Scope* newScope = existingScope.Clone();
+					newScope->mParent = this;
+					newDatum.PushBack(*newScope);
+				}
+			}
+			else
+			{
+				newDatum = existingDatum;;
 			}
 		}
 	}
 	return *this;
 }
 
-Datum * Scope::Find(string const & key) const
+Scope & FIEAGameEngine::Scope::operator=(Scope && rhs)
 {
-	if (key == "")
+	if (this != &rhs)
+	{
+		_Clear(false);
+		mHashMap = std::move(rhs.mHashMap);
+		mVector = std::move(rhs.mVector);
+		mParent = rhs.mParent;
+
+		Reparent(rhs);
+		rhs.mParent = nullptr;
+	}
+	return *this;
+}
+
+Datum * Scope::Find(string const & key)
+{
+	if (!key.size())
+	{
+		throw exception(scopeCannotHaveEmptyKeyExceptionText.c_str());
+	}
+	Datum * result = nullptr;
+	DatumMap::const_Iterator searchedPairIt = mHashMap.Find(key);
+	if (searchedPairIt != mHashMap.end())
+	{
+		result = const_cast<Datum*>(&((*searchedPairIt).second));
+	}
+	return result;
+}
+
+Datum const * Scope::Find(string const & key) const
+{
+	if (!key.size())
 	{
 		throw exception(scopeCannotHaveEmptyKeyExceptionText.c_str());
 	}
@@ -69,9 +115,13 @@ Datum * Scope::Find(string const & key) const
 
 Datum * Scope::Search(string const & key, Scope ** scopeAddress)
 {
-	if (key == "")
+	if (!key.size())
 	{
 		throw exception(scopeCannotHaveEmptyKeyExceptionText.c_str());
+	}
+	if (scopeAddress != nullptr)
+	{
+		*scopeAddress = nullptr;
 	}
 	Datum * result = Find(key);
 	if (result == nullptr)
@@ -88,9 +138,30 @@ Datum * Scope::Search(string const & key, Scope ** scopeAddress)
 	return result;
 }
 
+Datum const * Scope::Search(string const & key, Scope const ** scopeAddress) const
+{
+	if (!key.size())
+	{
+		throw exception(scopeCannotHaveEmptyKeyExceptionText.c_str());
+	}
+	Datum const * result = Find(key);
+	if (result == nullptr)
+	{
+		if (mParent != nullptr)
+		{
+			result = mParent->Search(key, scopeAddress);
+		}
+	}
+	else if (scopeAddress != nullptr)
+	{
+		*scopeAddress = this;
+	}
+	return result;
+}
+
 Datum & Scope::Append(string const & key)
 {
-	if (key == "")
+	if (!key.size())
 	{
 		throw exception(scopeCannotHaveEmptyKeyExceptionText.c_str());
 	}
@@ -111,15 +182,20 @@ Scope & Scope::AppendScope(string const & key)
 
 void FIEAGameEngine::Scope::Adopt(Scope & childToAdopt, string const & newChildKey)
 {
-	if (HasAncestor(childToAdopt))
+	if (this != &childToAdopt)
 	{
-		throw exception(mayNotAdoptAncestorExceptionText.c_str());
-	}
+		if (HasAncestor(childToAdopt))
+		{
+			throw exception(mayNotAdoptAncestorExceptionText.c_str());
+		}
 
-	childToAdopt.Orphan();
-	childToAdopt.mParent = this;
-	Append(newChildKey).PushBack(childToAdopt);
-	
+		Datum& datumToPlaceScopeIn = Append(newChildKey);
+		datumToPlaceScopeIn.SetType(Datum::DatumType::Scope);
+
+		childToAdopt.Orphan();
+		childToAdopt.mParent = this;
+		datumToPlaceScopeIn.PushBack(childToAdopt);
+	}
 }
 
 Scope * Scope::GetParent() const
@@ -167,30 +243,25 @@ bool FIEAGameEngine::Scope::operator!=(Scope const & rhs) const
 
 string const Scope::FindName(Scope * const searchedScope)
 {
-	string result = "";
 	if (searchedScope->mParent == this)
 	{
-		for (size_t i = 0; i < this->mVector.Size(); i++)
+		for (size_t i = 0; i < mVector.Size(); i++)
 		{
-			PairType* storedPair = this->mVector[i];
+			PairType* storedPair = mVector[i];
 			for (size_t j = 0; j < storedPair->second.Size(); j++)
 			{
 				if (storedPair->second.Type() == Datum::DatumType::Scope && &(storedPair->second[j]) == searchedScope)
 				{
-					result = storedPair->first;
-					break;
+					return storedPair->first;
 				}
 			}
-			if (result != "")
-			{
-				break;
-			}
+
 		}
 	}
-	return result;
+	return "";
 }
 
-bool FIEAGameEngine::Scope::HasAncestor(Scope const & scope)
+bool FIEAGameEngine::Scope::HasAncestor(Scope const & scope) const
 {
 	bool result = false;
 	if (mParent == &scope)
@@ -206,30 +277,27 @@ bool FIEAGameEngine::Scope::HasAncestor(Scope const & scope)
 
 pair<Datum*, size_t> FIEAGameEngine::Scope::FindNestedScope(Scope const & searchedScope)
 {
-	pair<Datum *, size_t> result = pair<Datum *, size_t>(nullptr, 0);
 	if (searchedScope.mParent == this)
 	{
-		for (size_t i = 0; i < this->mVector.Size(); i++)
+		for (size_t i = 0; i < mVector.Size(); i++)
 		{
-			PairType* storedPair = this->mVector[i];
-			for (size_t j = 0; j < storedPair->second.Size(); j++)
+			Datum& currentDatum = mVector[i]->second;
+			if (currentDatum.Type() == Datum::DatumType::Scope)
 			{
-				if (storedPair->second.Type() == Datum::DatumType::Scope && &(storedPair->second[j]) == &searchedScope)
+				for (size_t j = 0; j < currentDatum.Size(); j++)
 				{
-					result = pair<Datum *, size_t>(&storedPair->second, j);
-					break;
+					if (&(currentDatum[j]) == &searchedScope)
+					{
+						return pair<Datum *, size_t>(&currentDatum, j);
+					}
 				}
-			}
-			if (result != pair<Datum *, size_t>(nullptr, 0))
-			{
-				break;
 			}
 		}
 	}
-	return result;
+	return pair<Datum *, size_t>(nullptr, 0);
 }
 
-size_t FIEAGameEngine::Scope::Size()
+size_t FIEAGameEngine::Scope::Size() const
 {
 	return mVector.Size();
 }
@@ -261,18 +329,59 @@ bool FIEAGameEngine::Scope::Equals(const RTTI * rhs) const
 	return result;
 }
 
+gsl::owner<Scope*> FIEAGameEngine::Scope::Clone()
+{
+	return new Scope(*this);
+}
+
 void Scope::Clear()
 {
-	Orphan();
+	_Clear(true);
+}
+
+void Scope::_Clear(bool orphan)
+{
+	if (orphan)
+	{
+		Orphan();
+	}
+	for (const auto& pair : mVector)
+	{
+		const Datum& datum = pair->second;
+		if (datum.Type() == Datum::DatumType::Scope)
+		{
+			for (size_t i = 0; i < datum.Size(); i++)
+			{
+				Scope& scope = *(datum.Get<Scope*>(i));
+				scope.mParent = nullptr;
+				delete &scope;
+			}
+		}
+	}
+	mVector.Clear();
+	mHashMap.Clear();
+}
+
+void FIEAGameEngine::Scope::Reparent(Scope & oldParent)
+{
 	for (size_t i = 0; i < mVector.Size(); i++)
 	{
-		if (mVector[i]->second.Type() == Datum::DatumType::Scope)
+		Datum& datum = mVector[i]->second;
+		if (datum.Type() == Datum::DatumType::Scope)
 		{
-			for (size_t j = 0; j < mVector[i]->second.Size(); j++)
+			for (size_t j = 0; j < datum.Size(); j++)
 			{
-				mVector[i]->second.Get<Scope*>(j)->mParent = nullptr;
-				delete(mVector[i]->second.Get<Scope*>(j));
+				datum[j].mParent = this;
 			}
+		}
+	}
+
+	if (oldParent.mParent != nullptr)
+	{
+		auto[foundDatum, datumIndex] = oldParent.mParent->FindNestedScope(oldParent);
+		if(foundDatum != nullptr)
+		{
+			foundDatum->Set(this, datumIndex);
 		}
 	}
 }

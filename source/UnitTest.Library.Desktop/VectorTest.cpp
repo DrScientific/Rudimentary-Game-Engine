@@ -100,6 +100,7 @@ namespace UnitTestLibraryDesktop
 			Assert::ExpectException<std::exception>(iteratorsFromDifferentListsException);
 
 		}
+		/*
 		TEST_METHOD(ReserveException)
 		{
 			Foo bar(0), car(1), dar(2);
@@ -107,6 +108,7 @@ namespace UnitTestLibraryDesktop
 			auto reserveTooSmallException = [&fooVector] { fooVector.Reserve(2); };
 			Assert::ExpectException<std::exception>(reserveTooSmallException);
 		}
+		*/
 		TEST_METHOD(IndexOutOfBoundsException)
 		{
 			Foo bar(0), car(1), dar(2);

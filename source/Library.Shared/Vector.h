@@ -229,12 +229,26 @@ namespace FIEAGameEngine
 		Vector(Vector const & other);
 
 		/// <summary>
+		/// Move constructor.
+		/// </summary>
+		/// <param name="other">The list we are creating a deep copy of.</param>
+		Vector(Vector && other);
+
+
+		/// <summary>
 		/// Assignment Operator.
 		/// Makes the left hand side of the assignment a deep copy of the right hand side of the assignment. 
 		/// </summary>
 		/// <param name="rhs">The list on the right hand side of the expression we are setting our list equal to.</param>
 		/// <returns>A reference to the list on the left hand side of the operator.</returns>
 		Vector& operator=(Vector const & rhs);
+
+		/// <summary>
+		/// Move Assignment operator
+		/// </summary>
+		/// <param name="rhs">The list on the right hand side of the expression we are setting our list equal to.</param>
+		/// <returns>A reference to the list on the left hand side of the operator.</returns>
+		Vector& operator=(Vector && rhs);
 
 		/// <summary>
 		/// Initializer list constructor.
@@ -427,46 +441,51 @@ namespace FIEAGameEngine
 		/// <param name="finish">Iterator pointing to the last element to remove.</param>
 		void Remove(Iterator const & start, Iterator const & finish);
 
-		private:
-			/// <summary>
-			/// Points to an array of size mCapacity. mArray will change whenever the array is resized.
-			/// </summary>
-			T * mArray = nullptr;
+		/// <summary>
+		/// 
+		/// </summary>
+		void ShrinkToFit();
 
-			/// <summary>
-			/// The number of elements contained within vector.
-			/// </summary>
-			size_t mSize = 0;
+	private:
+		/// <summary>
+		/// Points to an array of size mCapacity. mArray will change whenever the array is resized.
+		/// </summary>
+		T * mArray = nullptr;
 
-			/// <summary>
-			/// The number of elements the vector can contain before it must resize.
-			/// </summary>
-			size_t mCapacity;
+		/// <summary>
+		/// The number of elements contained within vector.
+		/// </summary>
+		size_t mSize = 0;
 
-			/// <summary>
-			/// Communicates the cause of an empty vector exception to the user. 
-			/// </summary>
-			inline static const std::string vectorEmptyExceptionText = "Attempted to return data from an empty vector.\n";
+		/// <summary>
+		/// The number of elements the vector can contain before it must resize.
+		/// </summary>
+		size_t mCapacity = 0;
 
-			/// <summary>
-			/// Communicates the cause of an index out of bounds exception to the user.
-			/// </summary>
-			inline static const std::string indexOutOfBoundsExceptionText = "Attempted to access an out of bounds index.\n";
+		/// <summary>
+		/// Communicates the cause of an empty vector exception to the user. 
+		/// </summary>
+		inline static const std::string vectorEmptyExceptionText = "Attempted to return data from an empty vector.\n";
 
-			/// <summary>
-			/// Communicates the cause of an increment iterator past end exception to the user.
-			/// </summary>
-			inline static const std::string incrementIteratorPastEndExceptionText = "Attempted to increment an iterator past end of vector.\n";
+		/// <summary>
+		/// Communicates the cause of an index out of bounds exception to the user.
+		/// </summary>
+		inline static const std::string indexOutOfBoundsExceptionText = "Attempted to access an out of bounds index.\n";
 
-			/// <summary>
-			/// Communicates the cause of an data lost on resize exception to the user. 
-			/// </summary>
-			inline static const std::string newCapacityCannotBeSmallerThanCapacityExceptionText = "New capacity cannot be smaller than old vector capacity.\n";
+		/// <summary>
+		/// Communicates the cause of an increment iterator past end exception to the user.
+		/// </summary>
+		inline static const std::string incrementIteratorPastEndExceptionText = "Attempted to increment an iterator past end of vector.\n";
 
-			/// <summary>
-			///  Communicates the cause of an iterator from other list exception to the user.
-			/// </summary>
-			inline static const std::string iteratorFromOtherListExceptionText = "Iterator provided is from another list.\n";
+		/// <summary>
+		/// Communicates the cause of an data lost on resize exception to the user. 
+		/// </summary>
+		inline static const std::string newCapacityCannotBeSmallerThanCapacityExceptionText = "New capacity cannot be smaller than old vector capacity.\n";
+
+		/// <summary>
+		///  Communicates the cause of an iterator from other list exception to the user.
+		/// </summary>
+		inline static const std::string iteratorFromOtherListExceptionText = "Iterator provided is from another list.\n";
 	};
 }
 

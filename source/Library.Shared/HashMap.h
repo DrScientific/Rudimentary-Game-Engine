@@ -202,7 +202,7 @@ namespace FIEAGameEngine
 			/// <param name="owner">List owning the const_Iterator.</param>
 			/// <param name="data">Data pointed to by the const_Iterator.</param>
 			const_Iterator(HashMap const & owner, size_t index = 0, typename ChainType::const_Iterator listIt = owner.mBucketVector[index].cbegin());
-			
+
 			/// <summary>
 			/// The list that owns the Iterator.
 			/// </summary>
@@ -211,7 +211,7 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// Index relative to start of array where value is stored.
 			/// </summary>
-			size_t mDataIndex = 0;  
+			size_t mDataIndex = 0;
 
 			/// <summary>
 			/// An SList const_Iterator pointing to a specific element in a chain in a bucket.
@@ -242,12 +242,25 @@ namespace FIEAGameEngine
 		HashMap(HashMap const & other) = default;
 
 		/// <summary>
+		/// Move constructor.
+		/// </summary>
+		/// <param name="other">The HashMap we are moving.</param>
+		HashMap(HashMap && other);
+
+		/// <summary>
 		/// Assignment Operator.
 		/// Makes the left hand side of the assignment a deep copy of the right hand side of the assignment. 
 		/// </summary>
 		/// <param name="rhs">The list on the right hand side of the expression we are setting our HashMap equal to.</param>
 		/// <returns>A reference to the HashMap on the left hand side of the operator.</returns>
 		HashMap& operator=(HashMap const & rhs) = default;
+
+		/// <summary>
+		/// Move Assignment Operator.
+		/// </summary>
+		/// <param name="rhs">The list on the right hand side of the expression we are setting our HashMap equal to.</param>
+		/// <returns>A reference to the HashMap on the left hand side of the operator.</returns>
+		HashMap& operator=(HashMap && rhs);
 
 		/// <summary>
 		/// Deletes the hash map.
@@ -334,7 +347,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="key">The key to search the HashMap for.</param>
 		/// <returns>The data stored in the key-data pair stored in the HashMap at the passed in key. If no key-data pair throw an exception</returns>
-		TData & At (TKey const & key);
+		TData & At(TKey const & key);
 
 		/// <summary>
 		/// Returns a const reference to data stored in the key-data pair stored in the HashMap at the passed in key. If no key-data pair throw an exception
@@ -394,7 +407,7 @@ namespace FIEAGameEngine
 		/// <returns>True if the key is in the HashMap and false otherwise.</returns>
 		pair<bool, TData*> ContainsKey(TKey const & key) const;
 
-		
+
 	private:
 
 		/// <summary>
@@ -410,8 +423,8 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// 
 		/// </summary>
-		HashFunctor const mHash;
-		
+		HashFunctor mHash;
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -441,7 +454,7 @@ namespace FIEAGameEngine
 		inline static const std::string ownerIsNullException = "Iterator owner is null and cannot be dereferenced.\n";
 
 	};
-	
-	
+
+
 };
 #include "HashMap.inl"

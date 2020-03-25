@@ -7,7 +7,7 @@
 namespace FIEAGameEngine
 {
 	template<typename T> typename
-	inline Vector<T>::Iterator & Vector<T>::Iterator::operator++()
+		inline Vector<T>::Iterator & Vector<T>::Iterator::operator++()
 	{
 		if (mDataIndex >= mOwner->mSize)
 		{
@@ -18,7 +18,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-	inline Vector<T>::Iterator Vector<T>::Iterator::operator++(int)
+		inline Vector<T>::Iterator Vector<T>::Iterator::operator++(int)
 	{
 		Iterator iteratorBeforeIncrement = *this;
 		operator++();
@@ -26,7 +26,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-	inline Vector<T>::Iterator & Vector<T>::Iterator::operator--()
+		inline Vector<T>::Iterator & Vector<T>::Iterator::operator--()
 	{
 		if (mDataIndex <= 0)
 		{
@@ -37,7 +37,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-	inline Vector<T>::Iterator Vector<T>::Iterator::operator--(int)
+		inline Vector<T>::Iterator Vector<T>::Iterator::operator--(int)
 	{
 		Iterator iteratorBeforeIncrement = *this;
 		operator--();
@@ -79,7 +79,7 @@ namespace FIEAGameEngine
 	{
 
 	}
-	
+
 	template<typename T>
 	inline typename Vector<T>::const_Iterator & Vector<T>::const_Iterator::operator=(const Iterator & it)
 	{
@@ -89,9 +89,9 @@ namespace FIEAGameEngine
 			mOwner = it.mOwner;
 		}
 	}
-	
+
 	template<typename T> typename
-	inline Vector<T>::const_Iterator & Vector<T>::const_Iterator::operator++()
+		inline Vector<T>::const_Iterator & Vector<T>::const_Iterator::operator++()
 	{
 		if (mDataIndex >= mOwner->mSize)
 		{
@@ -170,6 +170,15 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
+	inline Vector<T>::Vector(Vector && other) :
+		mSize(other.mSize), mCapacity(other.mCapacity), mArray(other.mArray)
+	{
+		other.mSize = 0;
+		other.mCapacity = 0;
+		other.mArray = nullptr;
+	}
+
+	template<typename T>
 	inline Vector<T> & Vector<T>::operator=(Vector const & rhs)
 	{
 		if (*this != rhs)
@@ -184,6 +193,26 @@ namespace FIEAGameEngine
 				PushBack(rhs.mArray[mSize]);
 			}
 		}
+		return *this;
+	}
+
+	template<typename T>
+	inline Vector<T> & Vector<T>::operator=(Vector && rhs)
+	{
+		if (this != &rhs)
+		{
+			Clear();
+			ShrinkToFit();
+
+			mSize = rhs.mSize;
+			mCapacity = rhs.mCapacity;
+			mArray = rhs.mArray;
+
+			rhs.mSize = 0;
+			rhs.mCapacity = 0;
+			rhs.mArray = nullptr;
+		}
+
 		return *this;
 	}
 
@@ -205,37 +234,37 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-	inline Vector<T>::Iterator Vector<T>::begin()
+		inline Vector<T>::Iterator Vector<T>::begin()
 	{
 		return Iterator(*this, 0);
 	}
 
 	template<typename T> typename
-	inline Vector<T>::const_Iterator Vector<T>::begin() const
+		inline Vector<T>::const_Iterator Vector<T>::begin() const
 	{
 		return const_Iterator(*this, 0);
 	}
 
 	template<typename T> typename
-	inline Vector<T>::Iterator Vector<T>::end()
+		inline Vector<T>::Iterator Vector<T>::end()
 	{
 		return Iterator(*this, mSize);
 	}
 
 	template<typename T> typename
-	inline Vector<T>::const_Iterator Vector<T>::end() const
+		inline Vector<T>::const_Iterator Vector<T>::end() const
 	{
 		return const_Iterator(*this, mSize);
 	}
 
 	template<typename T> typename
-	inline Vector<T>::const_Iterator Vector<T>::cbegin() const
+		inline Vector<T>::const_Iterator Vector<T>::cbegin() const
 	{
 		return const_Iterator(*this, 0);
 	}
 
 	template<typename T> typename
-	inline Vector<T>::const_Iterator Vector<T>::cend() const
+		inline Vector<T>::const_Iterator Vector<T>::cend() const
 	{
 		return const_Iterator(*this, mSize);
 	}
@@ -253,12 +282,13 @@ namespace FIEAGameEngine
 	template<typename T>
 	inline void Vector<T>::Reserve(size_t newCapacity)
 	{
-		if (newCapacity < mCapacity)
+		if (newCapacity > mCapacity)
 		{
-			throw std::exception(newCapacityCannotBeSmallerThanCapacityExceptionText.c_str());
+			mCapacity = newCapacity;
+			mArray = static_cast<T*>(realloc(mArray, mCapacity * sizeof(T)));
 		}
-		mCapacity = newCapacity;
-		mArray = static_cast<T*>(realloc(mArray, mCapacity * sizeof(T)));
+		
+		//throw std::exception(newCapacityCannotBeSmallerThanCapacityExceptionText.c_str());
 	}
 
 	template<typename T>
@@ -361,7 +391,7 @@ namespace FIEAGameEngine
 	inline bool Vector<T>::operator==(Vector<T> const & rhs) const
 	{
 		//return std::equal(begin(), end(), rhs.begin(), rhs.end());
-		
+
 		if (mSize == rhs.mSize)
 		{
 			for (size_t i = 0; i < mSize; i++)
@@ -374,7 +404,7 @@ namespace FIEAGameEngine
 			return true;
 		}
 		return false;
-		
+
 	}
 
 	template<typename T>
@@ -447,13 +477,13 @@ namespace FIEAGameEngine
 			Reserve(mCapacity * 2);
 		}
 
-		new (mArray+(mSize++)) T (value);
+		new (mArray + (mSize++)) T(value);
 	}
 
 	template<typename T> typename
-	inline Vector<T>::Iterator Vector<T>::PopBack()
+		inline Vector<T>::Iterator Vector<T>::PopBack()
 	{
-		if(mSize == 0)
+		if (mSize == 0)
 		{
 			throw std::exception(vectorEmptyExceptionText.c_str());
 		}
@@ -467,7 +497,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-	inline Vector<T>::Iterator Vector<T>::Find(T const & value)
+		inline Vector<T>::Iterator Vector<T>::Find(T const & value)
 	{
 		Iterator it = begin();
 
@@ -482,7 +512,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-	inline Vector<T>::const_Iterator Vector<T>::Find(T const & value) const
+		inline Vector<T>::const_Iterator Vector<T>::Find(T const & value) const
 	{
 		Iterator it = const_cast<Vector&>(*this).Find(value);
 		return const_Iterator(it);
@@ -516,8 +546,26 @@ namespace FIEAGameEngine
 			{
 				mArray[i].~T();
 			}
-			memmove(&(mArray[start.mDataIndex]), &(mArray[finish.mDataIndex + 1]), (mSize -finish.mDataIndex - 1) * sizeof(T));
+			memmove(&(mArray[start.mDataIndex]), &(mArray[finish.mDataIndex + 1]), (mSize - finish.mDataIndex - 1) * sizeof(T));
 			mSize -= (finish.mDataIndex - start.mDataIndex + 1);
+		}
+	}
+	template<typename T>
+	inline void Vector<T>::ShrinkToFit()
+	{
+		if (mSize != mCapacity)
+		{
+			if (mSize == 0)
+			{
+				free(mArray);
+				mArray = nullptr;
+				mCapacity = 0;
+			}
+			else
+			{
+				mCapacity = mSize;
+				mArray= static_cast<T*>(realloc(mArray, mCapacity * sizeof(T)));
+			}
 		}
 	}
 }

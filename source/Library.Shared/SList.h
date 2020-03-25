@@ -239,6 +239,12 @@ namespace FIEAGameEngine
 		SList(SList const & other);
 
 		/// <summary>
+		/// Move constructor.
+		/// </summary>
+		/// <param name="other">The list we are creating a deep copy of.</param>
+		SList(SList && other);
+
+		/// <summary>
 		/// Initializer list constructor.
 		/// Takes each element in the initializer list and pushes it to the back of the SList.
 		/// This will result in an SList where the left most element is the front of the list, and the right most element is the back of the list.
@@ -389,6 +395,13 @@ namespace FIEAGameEngine
 		/// <param name="rhs">The list on the right hand side of the expression we are setting our list equal to.</param>
 		/// <returns>A reference to the list on the left hand side of the operator.</returns>
 		SList& operator=(SList const & rhs);
+
+		/// <summary>
+		/// Move Assignment Operator.
+		/// </summary>
+		/// <param name="rhs">The list on the right hand side of the expression we are setting our list equal to.</param>
+		/// <returns>A reference to the list on the left hand side of the operator.</returns>
+		SList& operator=(SList && rhs);
 
 		/// <summary>
 		/// First compares the sizes of the two lists.

@@ -14,1527 +14,1362 @@
 
 using namespace glm;
 using namespace std;
-using namespace FIEAGameEngine;
 
-#pragma region TypeSizesScope
-const size_t Datum::mTypeSizes[] =
+namespace FIEAGameEngine
 {
-	0, // Unknown
-	sizeof(int),
-	sizeof(float),
-	sizeof(vec4),
-	sizeof(mat4),
-	sizeof(Scope*),
-	sizeof(string),
-	sizeof(RTTI*)
-};
-#pragma endregion
-
-
-
-#pragma region Constructor
-Datum::Datum(Datum const & other)
-{
-	*this = other;
-}
-
-Datum::Datum(int const & other)
-{
-	PushBack(other);
-}
-
-Datum::Datum(float const & other)
-{
-	PushBack(other);
-}
-
-Datum::Datum(vec4 const & other)
-{
-	PushBack(other);
-}
-
-Datum::Datum(mat4x4 const & other)
-{
-	PushBack(other);
-}
-
-FIEAGameEngine::Datum::Datum(Scope const & other)
-{
-	PushBack(other);
-}
-
-Datum::Datum(string const & other)
-{
-	PushBack(other);
-}
-
-Datum::Datum(RTTI * const & other)
-{
-	PushBack(other);
-}
-#pragma endregion
-
-#pragma region operator=
-Datum & Datum::operator=(Datum const & rhs)
-{
-	if (*this != rhs)
+	#pragma region TypeSizesScope
+	const size_t Datum::mTypeSizes[] =
 	{
+		0, // Unknown
+		sizeof(int),
+		sizeof(float),
+		sizeof(vec4),
+		sizeof(mat4),
+		sizeof(Scope*),
+		sizeof(string),
+		sizeof(RTTI*)
+	};
+	#pragma endregion
+
+
+
+	#pragma region Constructor
+	Datum::Datum(Datum const & other)
+	{
+		*this = other;
+	}
+
+	Datum::Datum(int const & other)
+	{
+		PushBack(other);
+	}
+
+	Datum::Datum(float const & other)
+	{
+		PushBack(other);
+	}
+
+	Datum::Datum(vec4 const & other)
+	{
+		PushBack(other);
+	}
+
+	Datum::Datum(mat4x4 const & other)
+	{
+		PushBack(other);
+	}
+
+	FIEAGameEngine::Datum::Datum(Scope const & other)
+	{
+		PushBack(other);
+	}
+
+	Datum::Datum(string const & other)
+	{
+		PushBack(other);
+	}
+
+	Datum::Datum(RTTI * const & other)
+	{
+		PushBack(other);
+	}
+	#pragma endregion
+
+	#pragma region operator=
+	Datum & Datum::operator=(Datum const & rhs)
+	{
+		if (this != &rhs)
+		{
+			if (mIsInternal)
+			{
+				Clear();
+				ShrinkToFit();
+			}
+
+			mType = rhs.mType;
+
+			if (rhs.mIsInternal)
+			{
+				mIsInternal = true;
+				if (mType != DatumType::Unknown)
+				{
+					Reserve(rhs.mSize);
+				}
+				if(mType != DatumType::String)
+				{
+					memcpy(mArray.tVoid, rhs.mArray.tVoid, rhs.mSize * mTypeSizes[static_cast<size_t>(mType)]);
+					mSize = rhs.mSize;
+				}
+				else
+				{
+					for (size_t i = 0; i < rhs.mSize; i++)
+					{
+						PushBack(rhs.mArray.tString[i]);
+					}
+				}
+			}
+			else
+			{
+				mIsInternal = false;
+				mCapacity = rhs.mCapacity;
+				mSize = rhs.mSize;
+				mArray = rhs.mArray;
+			}
+		}
+		return *this;
+	}
+
+	Datum & Datum::operator=(int const & rhs)
+	{
+
+		if (mType == DatumType::Unknown || mType == DatumType::Integer)
+		{
+			mType = DatumType::Integer;
+		}
+		else
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		if (mIsInternal)
+		{
+			Resize(1);
+			ShrinkToFit();
+			Set(rhs);
+		}
+		else
+		{
+			mSize = 1;
+			mCapacity = 1;
+			mArray.tInt[0] = (const_cast<int&>(rhs));
+		}
+
+		return *this;
+	}
+
+	Datum & Datum::operator=(float const & rhs)
+	{
+		if (mType == DatumType::Unknown || mType == DatumType::Float)
+		{
+			mType = DatumType::Float;
+		}
+		else
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		if (mIsInternal)
+		{
+			Resize(1);
+			ShrinkToFit();
+			Set(rhs);
+		}
+		else
+		{
+			mSize = 1;
+			mCapacity = 1;
+			mArray.tFloat[0] = (const_cast<float&>(rhs));
+		}
+		return *this;
+	}
+
+	Datum & Datum::operator=(vec4 const & rhs)
+	{
+		if (mType == DatumType::Unknown || mType == DatumType::Vector4)
+		{
+			mType = DatumType::Vector4;
+		}
+		else
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		if (mIsInternal)
+		{
+			Resize(1);
+			ShrinkToFit();
+			Set(rhs);
+		}
+		else
+		{
+			mSize = 1;
+			mCapacity = 1;
+			mArray.tVec4[0] = (const_cast<vec4&>(rhs));
+		}
+		return *this;
+	}
+
+	Datum & Datum::operator=(mat4x4 const & rhs)
+	{
+		if (mType == DatumType::Unknown || mType == DatumType::Matrix4x4)
+		{
+			mType = DatumType::Matrix4x4;
+		}
+		else
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		if (mIsInternal)
+		{
+			Resize(1);
+			ShrinkToFit();
+			Set(rhs);
+		}
+		else
+		{
+			mSize = 1;
+			mCapacity = 1;
+			mArray.tMat4x4[0] = (const_cast<mat4x4&>(rhs));
+		}
+		return *this;
+	}
+
+	Datum & FIEAGameEngine::Datum::operator=(Scope const & rhs)
+	{
+		if (mType == DatumType::Unknown || mType == DatumType::Scope)
+		{
+			mType = DatumType::Scope;
+		}
+		else
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		if (mIsInternal)
+		{
+			Resize(1);
+			ShrinkToFit();
+			Set(rhs);
+		}
+		else
+		{
+			throw exception(noExternalScopesExceptionText.c_str());
+		}
+		return *this;
+	}
+
+	Datum & Datum::operator=(string const & rhs)
+	{
+		if (mType == DatumType::Unknown || mType == DatumType::String)
+		{
+			mType = DatumType::String;
+		}
+		else
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		if (mIsInternal)
+		{
+			Resize(1);
+			ShrinkToFit();
+			Set(rhs);
+		}
+		else
+		{
+			mSize = 1;
+			mCapacity = 1;
+			mArray.tString[0] = (const_cast<string&>(rhs));
+		}
+		return *this;
+	}
+
+	Datum & Datum::operator=(RTTI * const & rhs)
+	{
+		if (mType == DatumType::Unknown || mType == DatumType::RTTIPtr)
+		{
+			mType = DatumType::RTTIPtr;
+		}
+		else
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		if (mIsInternal)
+		{
+			Resize(1);
+			ShrinkToFit();
+			Set(rhs);
+		}
+		else
+		{
+			mSize = 1;
+			mCapacity = 1;
+			mArray.tRTTIPtr[0] = (const_cast<RTTI*&>(rhs));
+		}
+		return *this;
+	}
+	#pragma endregion
+
+	#pragma region InitializerList
+	Datum::Datum(initializer_list<int> const & iList)
+	{
+		SetType(DatumType::Integer);
+		for (auto const& i : iList)
+		{
+			PushBack(i);
+		}
+	}
+
+	Datum::Datum(initializer_list<float> const & iList)
+	{
+		SetType(DatumType::Float);
+		for (auto const& i : iList)
+		{
+			PushBack(i);
+		}
+	}
+
+	Datum::Datum(initializer_list<vec4> const & iList)
+	{
+		SetType(DatumType::Vector4);
+		for (auto const& i : iList)
+		{
+			PushBack(i);
+		}
+	}
+
+	Datum::Datum(initializer_list<mat4x4> const & iList)
+	{
+		SetType(DatumType::Matrix4x4);
+		for (auto const& i : iList)
+		{
+			PushBack(i);
+		}
+	}
+
+	Datum::Datum(initializer_list<string> const & iList)
+	{
+		SetType(DatumType::String);
+		for (auto const& i : iList)
+		{
+			PushBack(i);
+		}
+	}
+
+	Datum::Datum(initializer_list<RTTI*> const & iList)
+	{
+		SetType(DatumType::RTTIPtr);
+		for (auto const& i : iList)
+		{
+			PushBack(i);
+		}
+	}
+	#pragma endregion
+
+	#pragma region Destructor
+	Datum::~Datum()
+	{
+		if (mIsInternal && mSize > 0)
+		{
+				Clear();
+		}
+		ShrinkToFit();
+	}
+	#pragma endregion
+
+	#pragma region Reserve
+	void Datum::Reserve(size_t newCapacity)
+	{
+		if (!mIsInternal)
+		{
+			throw exception(cannotMutateExternalStorageExceptionText.c_str());
+		}
+		if (mType == DatumType::Unknown)
+		{
+			throw exception(datumTypeNotInitializedExceptionText.c_str());
+		}
+		if (newCapacity > mCapacity)
+		{
+			mCapacity = newCapacity;
+			mArray.tVoid = realloc(mArray.tVoid, mCapacity * mTypeSizes[static_cast<size_t>(mType)]);
+		}
+	}
+	#pragma endregion
+
+	#pragma region operator==
+	bool Datum::operator==(Datum const & rhs) const
+	{
+		bool result = false;
+		if (mSize == rhs.mSize && mIsInternal == rhs.mIsInternal && mType == rhs.mType)
+		{
+			if (mType == DatumType::Scope || mType == DatumType::RTTIPtr)
+			{
+				result = true;
+				for (size_t i = 0; i < mSize; i++)
+				{
+					if (!(mArray.tRTTIPtr[i]->Equals(rhs.mArray.tRTTIPtr[i])))
+					{
+						result = false;
+						break;
+					}
+				}
+			}
+			else if (mType == DatumType::String)
+			{
+				result = true;
+				for (size_t i = 0; i < mSize; i++)
+				{
+					if (mArray.tString[i] != rhs.mArray.tString[i])
+					{
+						result = false;
+						break;
+					}
+				}
+			}
+			else
+			{
+				result = memcmp(mArray.tVoid, rhs.mArray.tVoid, mSize * mTypeSizes[static_cast<size_t>(mType)]) == 0;
+			}
+		
+		
+		}
+		return result;
+	}
+
+	bool Datum::operator==(int const & rhs) const
+	{
+		if (DatumType::Integer != mType)
+		{
+			return false;
+		}
+		return mSize == 1 && mArray.tInt[0] == rhs;
+	}
+
+	bool Datum::operator==(float const & rhs) const
+	{
+		if (DatumType::Float != mType)
+		{
+			return false;
+		}
+		return mSize == 1 && mArray.tFloat[0] == rhs;
+	}
+
+	bool Datum::operator==(vec4 const & rhs) const
+	{
+		if (DatumType::Vector4 != mType)
+		{
+			return false;
+		}
+		return mSize == 1 && mArray.tVec4[0] == rhs;
+	}
+
+	bool Datum::operator==(mat4x4 const & rhs) const
+	{
+		if (DatumType::Matrix4x4 != mType)
+		{
+			return false;
+		}
+		return mSize == 1 && mArray.tMat4x4[0] == rhs;
+	}
+
+	bool Datum::operator==(string const & rhs) const
+	{
+		if (DatumType::String != mType)
+		{
+			return false;
+		}
+		return mSize == 1 && mArray.tString[0] == rhs;
+	}
+
+	bool Datum::operator==(RTTI * const & rhs) const
+	{
+		bool result = false;
+		if (DatumType::RTTIPtr != mType && DatumType::Scope != mType)
+		{
+			return false;
+		}
+		if (mArray.tRTTIPtr[0] != nullptr)
+		{
+			result = mSize == 1 && mArray.tRTTIPtr[0]->Equals(const_cast<RTTI*>(rhs));
+		}
+		else if (rhs == nullptr)
+		{
+			result = true;
+		}
+		return result;
+	}
+	#pragma endregion
+
+	#pragma region operator!=
+	bool Datum::operator!=(Datum const & rhs) const
+	{
+		return !(operator==(rhs));
+	}
+
+	bool Datum::operator!=(int const & rhs) const
+	{
+		return !(operator==(rhs));
+	}
+
+	bool Datum::operator!=(float const & rhs) const
+	{
+		return !(operator==(rhs));
+	}
+
+	bool Datum::operator!=(vec4 const & rhs) const
+	{
+		return !(operator==(rhs));
+	}
+
+	bool Datum::operator!=(mat4x4 const & rhs) const
+	{
+		return !(operator==(rhs));
+	}
+
+	bool Datum::operator!=(string const & rhs) const
+	{
+		return !(operator==(rhs));
+	}
+
+	bool Datum::operator!=(RTTI * const & rhs) const
+	{
+		return !(operator==(rhs));
+	}
+	#pragma endregion
+
+	#pragma region operator[]
+	Scope & FIEAGameEngine::Datum::operator[](size_t index)
+	{
+		if (mType != DatumType::Scope)
+		{
+			throw exception(bracketOperatorOnlyValidForScopesExceptionText.c_str());
+		}
+		return *Get<Scope*>(index);
+	}
+	#pragma endregion
+
+	#pragma region Type
+	Datum::DatumType Datum::Type() const
+	{
+		return mType;
+	}
+	#pragma endregion
+
+	#pragma region SetType
+	void Datum::SetType(DatumType type)
+	{
+		if (mType == DatumType::Unknown || mType == type)
+		{
+			mType = type;
+		}
+		else
+		{
+			throw exception(datumTypeAlreadyInitializedExceptionText.c_str());
+		}
+	}
+	#pragma endregion
+
+	#pragma region Size
+	size_t Datum::Size() const
+	{
+		return mSize;
+	}
+	#pragma endregion
+
+	#pragma region Capacity
+	size_t FIEAGameEngine::Datum::Capacity() const
+	{
+		return mCapacity;
+	}
+	#pragma endregion
+
+	#pragma region Resize
+	void Datum::Resize(size_t newSize)
+	{
+		//External memory check done in templated function.
+		switch (mType)
+		{
+		case DatumType::Integer:
+			ResizeTemplated<int>(mArray.tInt, newSize);
+			break;
+		case DatumType::Float:
+			ResizeTemplated<float>(mArray.tFloat, newSize);
+			break;
+		case DatumType::Vector4:
+			ResizeTemplated<vec4>(mArray.tVec4, newSize);
+			break;
+		case DatumType::Matrix4x4:
+			ResizeTemplated<mat4x4>(mArray.tMat4x4, newSize);
+			break;
+		case DatumType::Scope:
+			ResizeTemplated<Scope*>(mArray.tScope, newSize);
+			break;
+		case DatumType::String:
+			ResizeTemplated<string>(mArray.tString, newSize);
+			break;
+		case DatumType::RTTIPtr:
+			ResizeTemplated<RTTI*>(mArray.tRTTIPtr, newSize);
+			break;
+		default:
+			throw exception(datumTypeNotInitializedExceptionText.c_str());
+			break;
+		}
+	}
+	#pragma endregion
+
+	#pragma region ShrinkToFit
+	void FIEAGameEngine::Datum::ShrinkToFit()
+	{
+		if (mIsInternal)
+		{
+			if (mSize != mCapacity)
+			{
+				if (mSize == 0)
+				{
+					free(mArray.tVoid);
+					mArray.tVoid = nullptr;
+					mCapacity = 0;
+				}
+				else
+				{
+					mCapacity = mSize;
+					mArray.tVoid = realloc(mArray.tVoid, mCapacity * mTypeSizes[static_cast<size_t>(mType)]);
+				}
+			}
+		}
+	}
+	#pragma endregion
+
+	#pragma region Clear
+	void Datum::Clear()
+	{
+		//External memory check done in templated function.
+		switch (mType)
+		{
+		case DatumType::Integer:
+			ClearTemplated<int>(mArray.tInt);
+			break;
+		case DatumType::Float:
+			ClearTemplated<float>(mArray.tFloat);
+			break;
+		case DatumType::Vector4:
+			ClearTemplated<vec4>(mArray.tVec4);
+			break;
+		case DatumType::Matrix4x4:
+			ClearTemplated<mat4x4>(mArray.tMat4x4);
+			break;
+		case DatumType::Scope:
+			ClearTemplated<Scope*>(mArray.tScope);
+			break;
+		case DatumType::String:
+			ClearTemplated<string>(mArray.tString);
+			break;
+		case DatumType::RTTIPtr:
+			ClearTemplated<RTTI*>(mArray.tRTTIPtr);
+			break;
+		default:
+			break;
+		}
+	}
+	#pragma endregion
+
+	#pragma region SetStorage
+	void Datum::SetStorage(int * const & data, size_t const & size)
+	{
+		if (data == nullptr || size <= 0)
+		{
+			throw exception(cannotSetStorageInvalidParamExceptionText.c_str());
+		}
+		if (mType == DatumType::Unknown)
+		{
+			mType = DatumType::Integer;
+		}
+		if (mType != DatumType::Integer)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
 		if (mIsInternal)
 		{
 			Clear();
 			ShrinkToFit();
 		}
+		mIsInternal = false;
+		mArray.tInt = data;
+		mSize = mCapacity = size;
+	}
 
-		mType = rhs.mType;
-
-		if (rhs.mIsInternal)
+	void Datum::SetStorage(float * const & data, size_t const & size)
+	{
+		if (data == nullptr || size <= 0)
 		{
-			mIsInternal = true;
-			if (mType != DatumType::Unknown)
-			{
-				Reserve(rhs.mSize);
-			}
-			if(mType != DatumType::String)
-			{
-				memcpy(mArray.tVoid, rhs.mArray.tVoid, rhs.mSize * mTypeSizes[static_cast<size_t>(mType)]);
-				mSize = rhs.mSize;
-			}
-			else
-			{
-				for (size_t i = 0; i < rhs.mSize; i++)
-				{
-					PushBack(rhs.mArray.tString[i]);
-				}
-			}
+			throw exception(cannotSetStorageInvalidParamExceptionText.c_str());
 		}
-		else
+		if (mType == DatumType::Unknown)
 		{
-			mIsInternal = false;
-			mCapacity = rhs.mCapacity;
-			mSize = rhs.mSize;
-			mArray = rhs.mArray;
+			mType = DatumType::Float;
 		}
-	}
-	return *this;
-}
-
-Datum & Datum::operator=(int const & rhs)
-{
-
-	if (mType == DatumType::Unknown || mType == DatumType::Integer)
-	{
-		mType = DatumType::Integer;
-	}
-	else
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	if (mIsInternal)
-	{
-		Resize(1);
-		ShrinkToFit();
-		Set(rhs);
-	}
-	else
-	{
-		mSize = 1;
-		mCapacity = 1;
-		mArray.tInt = &(const_cast<int&>(rhs));
-	}
-
-	return *this;
-}
-
-Datum & Datum::operator=(float const & rhs)
-{
-	if (mType == DatumType::Unknown || mType == DatumType::Float)
-	{
-		mType = DatumType::Float;
-	}
-	else
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	if (mIsInternal)
-	{
-		Resize(1);
-		ShrinkToFit();
-		Set(rhs);
-	}
-	else
-	{
-		mSize = 1;
-		mCapacity = 1;
-		mArray.tFloat = &(const_cast<float&>(rhs));
-	}
-	return *this;
-}
-
-Datum & Datum::operator=(vec4 const & rhs)
-{
-	if (mType == DatumType::Unknown || mType == DatumType::Vector4)
-	{
-		mType = DatumType::Vector4;
-	}
-	else
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	if (mIsInternal)
-	{
-		Resize(1);
-		ShrinkToFit();
-		Set(rhs);
-	}
-	else
-	{
-		mSize = 1;
-		mCapacity = 1;
-		mArray.tVec4 = &(const_cast<vec4&>(rhs));
-	}
-	return *this;
-}
-
-Datum & Datum::operator=(mat4x4 const & rhs)
-{
-	if (mType == DatumType::Unknown || mType == DatumType::Matrix4x4)
-	{
-		mType = DatumType::Matrix4x4;
-	}
-	else
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	if (mIsInternal)
-	{
-		Resize(1);
-		ShrinkToFit();
-		Set(rhs);
-	}
-	else
-	{
-		mSize = 1;
-		mCapacity = 1;
-		mArray.tMat4x4 = &(const_cast<mat4x4&>(rhs));
-	}
-	return *this;
-}
-
-Datum & FIEAGameEngine::Datum::operator=(Scope const & rhs)
-{
-	if (mType == DatumType::Unknown || mType == DatumType::Scope)
-	{
-		mType = DatumType::Scope;
-	}
-	else
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	if (mIsInternal)
-	{
-		Resize(1);
-		ShrinkToFit();
-		Set(rhs);
-	}
-	else
-	{
-		throw exception(noExternalScopesExceptionText.c_str());
-	}
-	return *this;
-}
-
-Datum & Datum::operator=(string const & rhs)
-{
-	if (mType == DatumType::Unknown || mType == DatumType::String)
-	{
-		mType = DatumType::String;
-	}
-	else
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	if (mIsInternal)
-	{
-		Resize(1);
-		ShrinkToFit();
-		Set(rhs);
-	}
-	else
-	{
-		mSize = 1;
-		mCapacity = 1;
-		mArray.tString = &(const_cast<string&>(rhs));
-	}
-	return *this;
-}
-
-Datum & Datum::operator=(RTTI * const & rhs)
-{
-	if (mType == DatumType::Unknown || mType == DatumType::RTTIPtr)
-	{
-		mType = DatumType::RTTIPtr;
-	}
-	else
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	if (mIsInternal)
-	{
-		Resize(1);
-		ShrinkToFit();
-		Set(rhs);
-	}
-	else
-	{
-		mSize = 1;
-		mCapacity = 1;
-		mArray.tRTTIPtr = &(const_cast<RTTI*&>(rhs));
-	}
-	return *this;
-}
-#pragma endregion
-
-#pragma region InitializerList
-Datum::Datum(initializer_list<int> const & iList)
-{
-	SetType(DatumType::Integer);
-	for (auto const& i : iList)
-	{
-		PushBack(i);
-	}
-}
-
-Datum::Datum(initializer_list<float> const & iList)
-{
-	SetType(DatumType::Float);
-	for (auto const& i : iList)
-	{
-		PushBack(i);
-	}
-}
-
-Datum::Datum(initializer_list<vec4> const & iList)
-{
-	SetType(DatumType::Vector4);
-	for (auto const& i : iList)
-	{
-		PushBack(i);
-	}
-}
-
-Datum::Datum(initializer_list<mat4x4> const & iList)
-{
-	SetType(DatumType::Matrix4x4);
-	for (auto const& i : iList)
-	{
-		PushBack(i);
-	}
-}
-
-Datum::Datum(initializer_list<string> const & iList)
-{
-	SetType(DatumType::String);
-	for (auto const& i : iList)
-	{
-		PushBack(i);
-	}
-}
-
-Datum::Datum(initializer_list<RTTI*> const & iList)
-{
-	SetType(DatumType::RTTIPtr);
-	for (auto const& i : iList)
-	{
-		PushBack(i);
-	}
-}
-#pragma endregion
-
-#pragma region Destructor
-Datum::~Datum()
-{
-	if (mIsInternal && mSize > 0)
-	{
+		if (mType != DatumType::Float)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		if (mIsInternal)
+		{
 			Clear();
-	}
-	ShrinkToFit();
-}
-#pragma endregion
-
-#pragma region Reserve
-void Datum::Reserve(size_t newCapacity)
-{
-	if (!mIsInternal)
-	{
-		throw exception(cannotMutateExternalStorageExceptionText.c_str());
-	}
-	if (mType == DatumType::Unknown)
-	{
-		throw exception(datumTypeNotInitializedExceptionText.c_str());
-	}
-	if (newCapacity > mCapacity)
-	{
-		mCapacity = newCapacity;
-		mArray.tVoid = realloc(mArray.tVoid, mCapacity * mTypeSizes[static_cast<size_t>(mType)]);
-	}
-}
-#pragma endregion
-
-#pragma region operator==
-bool Datum::operator==(Datum const & rhs) const
-{
-	bool result = false;
-	if (mSize == rhs.mSize && mIsInternal == rhs.mIsInternal && mType == rhs.mType)
-	{
-		if (mType == DatumType::Scope || mType == DatumType::RTTIPtr)
-		{
-			result = true;
-			for (size_t i = 0; i < mSize; i++)
-			{
-				if (!(mArray.tRTTIPtr[i]->Equals(rhs.mArray.tRTTIPtr[i])))
-				{
-					result = false;
-					break;
-				}
-			}
+			free(mArray.tVoid);
 		}
-		else if (mType == DatumType::String)
+		mIsInternal = false;
+		mArray.tFloat = data;
+		mSize = mCapacity = size;
+	}
+
+	void Datum::SetStorage(vec4 * const & data, size_t const & size)
+	{
+		if (data == nullptr || size <= 0)
 		{
-			result = true;
-			for (size_t i = 0; i < mSize; i++)
-			{
-				if (mArray.tString[i] != rhs.mArray.tString[i])
-				{
-					result = false;
-					break;
-				}
-			}
+			throw exception(cannotSetStorageInvalidParamExceptionText.c_str());
+		}
+		if (mType == DatumType::Unknown)
+		{
+			mType = DatumType::Vector4;
+		}
+		if (mType != DatumType::Vector4)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		if (mIsInternal)
+		{
+			Clear();
+			free(mArray.tVoid);
+		}
+		mIsInternal = false;
+		mArray.tVec4 = data;
+		mSize = mCapacity = size;
+	}
+
+	void Datum::SetStorage(mat4x4 * const & data, size_t const & size)
+	{
+		if (data == nullptr || size <= 0)
+		{
+			throw exception(cannotSetStorageInvalidParamExceptionText.c_str());
+		}
+		if (mType == DatumType::Unknown)
+		{
+			mType = DatumType::Matrix4x4;
+		}
+		if (mType != DatumType::Matrix4x4)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		if (mIsInternal)
+		{
+			Clear();
+			free(mArray.tVoid);
+		}
+		mIsInternal = false;
+		mArray.tMat4x4 = data;
+		mSize = mCapacity = size;
+	}
+
+	void Datum::SetStorage(string * const & data, size_t const & size)
+	{
+		if (data == nullptr || size <= 0)
+		{
+			throw exception(cannotSetStorageInvalidParamExceptionText.c_str());
+		}
+		if (mType == DatumType::Unknown)
+		{
+			mType = DatumType::String;
+		}
+		if (mType != DatumType::String)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		if (mIsInternal)
+		{
+			Clear();
+			free(mArray.tVoid);
+		}
+		mIsInternal = false;
+		mArray.tString = data;
+		mSize = mCapacity = size;
+	}
+
+	void Datum::SetStorage(RTTI ** const & data, size_t const & size)
+	{
+		if (data == nullptr || size <= 0)
+		{
+			throw exception(cannotSetStorageInvalidParamExceptionText.c_str());
+		}
+		if (mType == DatumType::Unknown)
+		{
+			mType = DatumType::RTTIPtr;
+		}
+		if (mType != DatumType::RTTIPtr)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		if (mIsInternal)
+		{
+			Clear();
+			free(mArray.tVoid);
+		}
+		mIsInternal = false;
+		mArray.tRTTIPtr = data;
+		mSize = mCapacity = size;
+	}
+	#pragma endregion
+
+	#pragma region IsInternal
+	bool FIEAGameEngine::Datum::IsInternal() const
+	{
+		return mIsInternal;
+	}
+	#pragma endregion
+
+	#pragma region Set
+	void Datum::Set(int const & value, size_t const & index)
+	{
+		if (DatumType::Integer != mType)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		mArray.tInt[index] = value;
+	}
+
+	void Datum::Set(float const & value, size_t const & index)
+	{
+		if (DatumType::Float != mType)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		mArray.tFloat[index] = value;
+	}
+
+	void Datum::Set(vec4 const & value, size_t const & index)
+	{
+		if (DatumType::Vector4 != mType)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		mArray.tVec4[index] = value;
+	}
+
+	void Datum::Set(mat4x4 const & value, size_t const & index)
+	{
+		if (DatumType::Matrix4x4 != mType)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		mArray.tMat4x4[index] = value;
+	}
+
+	void FIEAGameEngine::Datum::Set(Scope const & value, size_t const & index)
+	{
+		if (DatumType::Scope != mType)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		mArray.tScope[index] = const_cast<Scope*>(&value);
+	}
+
+	void Datum::Set(string const & value, size_t const & index)
+	{
+		if (DatumType::String != mType)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		mArray.tString[index].~basic_string();
+		mArray.tString[index] = value;
+	}
+
+	void Datum::Set(RTTI * const & value, size_t const & index)
+	{
+		if (DatumType::RTTIPtr != mType)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		mArray.tRTTIPtr[index] = value;
+	}
+	#pragma endregion
+
+	#pragma region SetFromString
+	void Datum::SetFromString(string const & value, size_t const & index)
+	{
+		switch (mType)
+		{
+		case DatumType::Integer:
+			SetFromStringTemplated<int>(value, index);
+			break;
+		case DatumType::Float:
+			SetFromStringTemplated<float>(value, index);
+			break;
+		case DatumType::Vector4:
+			SetFromStringTemplated<vec4>(value, index);
+			break;
+		case DatumType::Matrix4x4:
+			SetFromStringTemplated<mat4x4>(value, index);
+			break;
+		case DatumType::Scope:
+			//TODO: Future implementation
+			break;
+		case DatumType::String:
+			SetFromStringTemplated<string>(value, index);
+			break;
+		case DatumType::RTTIPtr:
+			SetFromStringTemplated<RTTI*>(value, index);
+			break;
+		default:
+			throw exception(datumTypeNotInitializedExceptionText.c_str());
+			break;
+		}
+	}
+	#pragma endregion
+
+	#pragma region ToString
+	string Datum::ToString(size_t const & index) const
+	{
+		string result = "";
+		switch (mType)
+		{
+		case DatumType::Integer:
+			result = ToStringTemplated<int>(mArray.tInt, index);
+			break;
+		case DatumType::Float:
+			result = ToStringTemplated<float>(mArray.tFloat, index);
+			break;
+		case DatumType::Vector4:
+			result = ToStringTemplated<vec4>(mArray.tVec4, index);
+			break;
+		case DatumType::Matrix4x4:
+			result = ToStringTemplated<mat4x4>(mArray.tMat4x4, index);
+			break;
+		case DatumType::Scope:
+			result = ToStringTemplated<Scope*>(mArray.tScope, index);
+			break;
+		case DatumType::String:
+			result = ToStringTemplated<string>(mArray.tString, index);
+			break;
+		case DatumType::RTTIPtr:
+			result = ToStringTemplated<RTTI*>(mArray.tRTTIPtr, index);
+			break;
+		default:
+			throw exception(datumTypeNotInitializedExceptionText.c_str());
+			break;
+		}
+		return result;
+	}
+	#pragma endregion
+
+	#pragma region PushBack
+	int & Datum::PushBack(int const & value)
+	{
+		//External memory check done in templated function.
+		if (mType == DatumType::Unknown)
+		{
+			SetType(DatumType::Integer);
+		}
+		if (mType == DatumType::Integer)
+		{
+			return PushBackTemplated<int>(mArray.tInt, value);
 		}
 		else
 		{
-			result = memcmp(mArray.tVoid, rhs.mArray.tVoid, mSize * mTypeSizes[static_cast<size_t>(mType)]) == 0;
+			throw exception(operationTypeMismatchExceptionText.c_str());
 		}
-		
-		
 	}
-	return result;
-}
 
-bool Datum::operator==(int const & rhs) const
-{
-	if (DatumType::Integer != mType)
+	float & Datum::PushBack(float const & value)
 	{
-		return false;
-	}
-	return mSize == 1 && mArray.tInt[0] == rhs;
-}
-
-bool Datum::operator==(float const & rhs) const
-{
-	if (DatumType::Float != mType)
-	{
-		return false;
-	}
-	return mSize == 1 && mArray.tFloat[0] == rhs;
-}
-
-bool Datum::operator==(vec4 const & rhs) const
-{
-	if (DatumType::Vector4 != mType)
-	{
-		return false;
-	}
-	return mSize == 1 && mArray.tVec4[0] == rhs;
-}
-
-bool Datum::operator==(mat4x4 const & rhs) const
-{
-	if (DatumType::Matrix4x4 != mType)
-	{
-		return false;
-	}
-	return mSize == 1 && mArray.tMat4x4[0] == rhs;
-}
-
-bool Datum::operator==(string const & rhs) const
-{
-	if (DatumType::String != mType)
-	{
-		return false;
-	}
-	return mSize == 1 && mArray.tString[0] == rhs;
-}
-
-bool Datum::operator==(RTTI * const & rhs) const
-{
-	bool result = false;
-	if (DatumType::RTTIPtr != mType && DatumType::Scope != mType)
-	{
-		return false;
-	}
-	if (mArray.tRTTIPtr[0] != nullptr)
-	{
-		result = mSize == 1 && mArray.tRTTIPtr[0]->Equals(const_cast<RTTI*>(rhs));
-	}
-	else if (rhs == nullptr)
-	{
-		result = true;
-	}
-	return result;
-}
-#pragma endregion
-
-#pragma region operator!=
-bool Datum::operator!=(Datum const & rhs) const
-{
-	return !(operator==(rhs));
-}
-
-bool Datum::operator!=(int const & rhs) const
-{
-	return !(operator==(rhs));
-}
-
-bool Datum::operator!=(float const & rhs) const
-{
-	return !(operator==(rhs));
-}
-
-bool Datum::operator!=(vec4 const & rhs) const
-{
-	return !(operator==(rhs));
-}
-
-bool Datum::operator!=(mat4x4 const & rhs) const
-{
-	return !(operator==(rhs));
-}
-
-bool Datum::operator!=(string const & rhs) const
-{
-	return !(operator==(rhs));
-}
-
-bool Datum::operator!=(RTTI * const & rhs) const
-{
-	return !(operator==(rhs));
-}
-#pragma endregion
-
-#pragma region operator[]
-Scope & FIEAGameEngine::Datum::operator[](size_t index)
-{
-	if (mType != DatumType::Scope)
-	{
-		throw exception(bracketOperatorOnlyValidForScopesExceptionText.c_str());
-	}
-	return *Get<Scope*>(index);
-}
-#pragma endregion
-
-#pragma region Type
-Datum::DatumType Datum::Type() const
-{
-	return mType;
-}
-#pragma endregion
-
-#pragma region SetType
-void Datum::SetType(DatumType type)
-{
-	if (mType == DatumType::Unknown || mType == type)
-	{
-		mType = type;
-	}
-	else
-	{
-		throw exception(datumTypeAlreadyInitializedExceptionText.c_str());
-	}
-}
-#pragma endregion
-
-#pragma region Size
-size_t Datum::Size() const
-{
-	return mSize;
-}
-#pragma endregion
-
-#pragma region Capacity
-size_t FIEAGameEngine::Datum::Capacity() const
-{
-	return mCapacity;
-}
-#pragma endregion
-
-#pragma region Resize
-void Datum::Resize(size_t newSize)
-{
-	//External memory check done in templated function.
-	switch (mType)
-	{
-	case DatumType::Integer:
-		ResizeTemplated<int>(mArray.tInt, newSize);
-		break;
-	case DatumType::Float:
-		ResizeTemplated<float>(mArray.tFloat, newSize);
-		break;
-	case DatumType::Vector4:
-		ResizeTemplated<vec4>(mArray.tVec4, newSize);
-		break;
-	case DatumType::Matrix4x4:
-		ResizeTemplated<mat4x4>(mArray.tMat4x4, newSize);
-		break;
-	case DatumType::Scope:
-		ResizeTemplated<Scope*>(mArray.tScope, newSize);
-		break;
-	case DatumType::String:
-		ResizeTemplated<string>(mArray.tString, newSize);
-		break;
-	case DatumType::RTTIPtr:
-		ResizeTemplated<RTTI*>(mArray.tRTTIPtr, newSize);
-		break;
-	default:
-		throw exception(datumTypeNotInitializedExceptionText.c_str());
-		break;
-	}
-}
-#pragma endregion
-
-#pragma region ShrinkToFit
-void FIEAGameEngine::Datum::ShrinkToFit()
-{
-	if (mIsInternal)
-	{
-		if (mSize != mCapacity)
+		//External memory check done in templated function.
+		if (mType == DatumType::Unknown)
 		{
-			if (mSize == 0)
-			{
-				free(mArray.tVoid);
-				mArray.tVoid = nullptr;
-				mCapacity = 0;
-			}
-			else
-			{
-				mCapacity = mSize;
-				mArray.tVoid = realloc(mArray.tVoid, mCapacity * mTypeSizes[static_cast<size_t>(mType)]);
-			}
+			SetType(DatumType::Float);
 		}
-	}
-}
-#pragma endregion
-
-#pragma region Clear
-void Datum::Clear()
-{
-	//External memory check done in templated function.
-	switch (mType)
-	{
-	case DatumType::Integer:
-		ClearTemplated<int>(mArray.tInt);
-		break;
-	case DatumType::Float:
-		ClearTemplated<float>(mArray.tFloat);
-		break;
-	case DatumType::Vector4:
-		ClearTemplated<vec4>(mArray.tVec4);
-		break;
-	case DatumType::Matrix4x4:
-		ClearTemplated<mat4x4>(mArray.tMat4x4);
-		break;
-	case DatumType::Scope:
-		ClearTemplated<Scope*>(mArray.tScope);
-		break;
-	case DatumType::String:
-		ClearTemplated<string>(mArray.tString);
-		break;
-	case DatumType::RTTIPtr:
-		ClearTemplated<RTTI*>(mArray.tRTTIPtr);
-		break;
-	default:
-		break;
-	}
-}
-#pragma endregion
-
-#pragma region SetStorage
-void Datum::SetStorage(int * const & data, size_t const & size)
-{
-	if (data == nullptr || size <= 0)
-	{
-		throw exception(cannotSetStorageInvalidParamExceptionText.c_str());
-	}
-	if (mType == DatumType::Unknown)
-	{
-		mType = DatumType::Integer;
-	}
-	if (mType != DatumType::Integer)
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	if (mIsInternal)
-	{
-		Clear();
-		ShrinkToFit();
-	}
-	mIsInternal = false;
-	mArray.tInt = data;
-	mSize = mCapacity = size;
-}
-
-void Datum::SetStorage(float * const & data, size_t const & size)
-{
-	if (data == nullptr || size <= 0)
-	{
-		throw exception(cannotSetStorageInvalidParamExceptionText.c_str());
-	}
-	if (mType == DatumType::Unknown)
-	{
-		mType = DatumType::Float;
-	}
-	if (mType != DatumType::Float)
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	if (mIsInternal)
-	{
-		Clear();
-		free(mArray.tVoid);
-	}
-	mIsInternal = false;
-	mArray.tFloat = data;
-	mSize = mCapacity = size;
-}
-
-void Datum::SetStorage(vec4 * const & data, size_t const & size)
-{
-	if (data == nullptr || size <= 0)
-	{
-		throw exception(cannotSetStorageInvalidParamExceptionText.c_str());
-	}
-	if (mType == DatumType::Unknown)
-	{
-		mType = DatumType::Vector4;
-	}
-	if (mType != DatumType::Vector4)
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	if (mIsInternal)
-	{
-		Clear();
-		free(mArray.tVoid);
-	}
-	mIsInternal = false;
-	mArray.tVec4 = data;
-	mSize = mCapacity = size;
-}
-
-void Datum::SetStorage(mat4x4 * const & data, size_t const & size)
-{
-	if (data == nullptr || size <= 0)
-	{
-		throw exception(cannotSetStorageInvalidParamExceptionText.c_str());
-	}
-	if (mType == DatumType::Unknown)
-	{
-		mType = DatumType::Matrix4x4;
-	}
-	if (mType != DatumType::Matrix4x4)
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	if (mIsInternal)
-	{
-		Clear();
-		free(mArray.tVoid);
-	}
-	mIsInternal = false;
-	mArray.tMat4x4 = data;
-	mSize = mCapacity = size;
-}
-
-void Datum::SetStorage(string * const & data, size_t const & size)
-{
-	if (data == nullptr || size <= 0)
-	{
-		throw exception(cannotSetStorageInvalidParamExceptionText.c_str());
-	}
-	if (mType == DatumType::Unknown)
-	{
-		mType = DatumType::String;
-	}
-	if (mType != DatumType::String)
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	if (mIsInternal)
-	{
-		Clear();
-		free(mArray.tVoid);
-	}
-	mIsInternal = false;
-	mArray.tString = data;
-	mSize = mCapacity = size;
-}
-
-void Datum::SetStorage(RTTI ** const & data, size_t const & size)
-{
-	if (data == nullptr || size <= 0)
-	{
-		throw exception(cannotSetStorageInvalidParamExceptionText.c_str());
-	}
-	if (mType == DatumType::Unknown)
-	{
-		mType = DatumType::RTTIPtr;
-	}
-	if (mType != DatumType::RTTIPtr)
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	if (mIsInternal)
-	{
-		Clear();
-		free(mArray.tVoid);
-	}
-	mIsInternal = false;
-	mArray.tRTTIPtr = data;
-	mSize = mCapacity = size;
-}
-#pragma endregion
-
-#pragma region IsInternal
-bool FIEAGameEngine::Datum::IsInternal() const
-{
-	return mIsInternal;
-}
-#pragma endregion
-
-#pragma region Set
-void Datum::Set(int const & value, size_t const & index)
-{
-	if (DatumType::Integer != mType)
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	mArray.tInt[index] = value;
-}
-
-void Datum::Set(float const & value, size_t const & index)
-{
-	if (DatumType::Float != mType)
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	mArray.tFloat[index] = value;
-}
-
-void Datum::Set(vec4 const & value, size_t const & index)
-{
-	if (DatumType::Vector4 != mType)
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	mArray.tVec4[index] = value;
-}
-
-void Datum::Set(mat4x4 const & value, size_t const & index)
-{
-	if (DatumType::Matrix4x4 != mType)
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	mArray.tMat4x4[index] = value;
-}
-
-void FIEAGameEngine::Datum::Set(Scope const & value, size_t const & index)
-{
-	if (DatumType::Scope != mType)
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	mArray.tScope[index] = const_cast<Scope*>(&value);
-}
-
-void Datum::Set(string const & value, size_t const & index)
-{
-	if (DatumType::String != mType)
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	mArray.tString[index].~basic_string();
-	mArray.tString[index] = value;
-}
-
-void Datum::Set(RTTI * const & value, size_t const & index)
-{
-	if (DatumType::RTTIPtr != mType)
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	mArray.tRTTIPtr[index] = value;
-}
-#pragma endregion
-
-#pragma region SetFromString
-void Datum::SetFromString(string const & value, size_t const & index)
-{
-	switch (mType)
-	{
-	case DatumType::Integer:
-		SetFromStringTemplated<int>(value, index);
-		break;
-	case DatumType::Float:
-		SetFromStringTemplated<float>(value, index);
-		break;
-	case DatumType::Vector4:
-		SetFromStringTemplated<vec4>(value, index);
-		break;
-	case DatumType::Matrix4x4:
-		SetFromStringTemplated<mat4x4>(value, index);
-		break;
-	case DatumType::Scope:
-		//TODO: Future implementation
-		break;
-	case DatumType::String:
-		SetFromStringTemplated<string>(value, index);
-		break;
-	case DatumType::RTTIPtr:
-		SetFromStringTemplated<RTTI*>(value, index);
-		break;
-	default:
-		throw exception(datumTypeNotInitializedExceptionText.c_str());
-		break;
-	}
-}
-#pragma endregion
-
-#pragma region ToString
-string Datum::ToString(size_t const & index) const
-{
-	string result = "";
-	switch (mType)
-	{
-	case DatumType::Integer:
-		result = ToStringTemplated<int>(mArray.tInt, index);
-		break;
-	case DatumType::Float:
-		result = ToStringTemplated<float>(mArray.tFloat, index);
-		break;
-	case DatumType::Vector4:
-		result = ToStringTemplated<vec4>(mArray.tVec4, index);
-		break;
-	case DatumType::Matrix4x4:
-		result = ToStringTemplated<mat4x4>(mArray.tMat4x4, index);
-		break;
-	case DatumType::Scope:
-		result = ToStringTemplated<Scope*>(mArray.tScope, index);
-		break;
-	case DatumType::String:
-		result = ToStringTemplated<string>(mArray.tString, index);
-		break;
-	case DatumType::RTTIPtr:
-		result = ToStringTemplated<RTTI*>(mArray.tRTTIPtr, index);
-		break;
-	default:
-		throw exception(datumTypeNotInitializedExceptionText.c_str());
-		break;
-	}
-	return result;
-}
-#pragma endregion
-
-#pragma region PushBack
-int & Datum::PushBack(int const & value)
-{
-	//External memory check done in templated function.
-	if (mType == DatumType::Unknown)
-	{
-		SetType(DatumType::Integer);
-	}
-	if (mType == DatumType::Integer)
-	{
-		return PushBackTemplated<int>(mArray.tInt, value);
-	}
-	else
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-}
-
-float & Datum::PushBack(float const & value)
-{
-	//External memory check done in templated function.
-	if (mType == DatumType::Unknown)
-	{
-		SetType(DatumType::Float);
-	}
-	if (mType == DatumType::Float)
-	{
-		return PushBackTemplated<float>(mArray.tFloat, value);
-	}
-	else
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-}
-
-vec4 & Datum::PushBack(vec4 const & value)
-{
-	//External memory check done in templated function.
-	if (mType == DatumType::Unknown)
-	{
-		SetType(DatumType::Vector4);
-	}
-	if (mType == DatumType::Vector4)
-	{
-		return PushBackTemplated<vec4>(mArray.tVec4, value);
-	}
-	else
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-}
-
-mat4x4 & Datum::PushBack(mat4x4 const & value)
-{
-	//External memory check done in templated function.
-	if (mType == DatumType::Unknown)
-	{
-		SetType(DatumType::Matrix4x4);
-	}
-	if (mType == DatumType::Matrix4x4)
-	{
-		return PushBackTemplated<mat4x4>(mArray.tMat4x4, value);
-	}
-	else
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-}
-
-Scope * & FIEAGameEngine::Datum::PushBack(Scope const & value)
-{
-	//External memory check done in templated function.
-	if (mType == DatumType::Unknown)
-	{
-		SetType(DatumType::Scope);
-	}
-	if (mType == DatumType::Scope)
-	{
-		return PushBackTemplated<Scope*>(mArray.tScope,const_cast<Scope*>(&value));
-	}
-	else
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-}
-
-string & Datum::PushBack(string const & value)
-{
-	//External memory check done in templated function.
-	if (mType == DatumType::Unknown)
-	{
-		SetType(DatumType::String);
-	}
-	if (mType == DatumType::String)
-	{
-		return PushBackTemplated<string>(mArray.tString, value);
-	}
-	else
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-}
-
-
-RTTI * & Datum::PushBack(RTTI * const & value)
-{
-	//External memory check done in templated function.
-	if (mType == DatumType::Unknown)
-	{
-		SetType(DatumType::RTTIPtr);
-	}
-	if (mType == DatumType::RTTIPtr)
-	{
-		return PushBackTemplated<RTTI*>(mArray.tRTTIPtr, value);
-	}
-	else
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-}
-#pragma endregion
-
-#pragma region PopBack
-void Datum::PopBack()
-{
-	//External memory check done in templated function.
-	switch (mType)
-	{
-	case DatumType::Integer:
-		PopBackTemplated<int>(mArray.tInt);
-		break;
-	case DatumType::Float:
-		PopBackTemplated<float>(mArray.tFloat);
-		break;
-	case DatumType::Vector4:
-		PopBackTemplated<vec4>(mArray.tVec4);
-		break;
-	case DatumType::Matrix4x4:
-		PopBackTemplated<mat4x4>(mArray.tMat4x4);
-		break;
-	case DatumType::Scope:
-		PopBackTemplated<Scope*>(mArray.tScope);
-		break;
-	case DatumType::String:
-		PopBackTemplated<string>(mArray.tString);
-		break;
-	case DatumType::RTTIPtr:
-		PopBackTemplated<RTTI*>(mArray.tRTTIPtr);
-		break;
-	default:
-		throw exception(datumTypeNotInitializedExceptionText.c_str());
-		break;
-	}
-}
-#pragma endregion
-
-#pragma region Remove
-void Datum::Remove(int const & value)
-{
-	//External memory check done in templated function.
-	RemoveTemplated(mArray.tInt, value);
-}
-
-
-void Datum::Remove(float const & value)
-{
-	//External memory check done in templated function.
-	RemoveTemplated(mArray.tFloat, value);
-}
-
-void Datum::Remove(vec4 const & value)
-{
-	//External memory check done in templated function.
-	RemoveTemplated(mArray.tVec4, value);
-}
-
-void Datum::Remove(mat4x4 const & value)
-{
-	//External memory check done in templated function.
-	RemoveTemplated(mArray.tMat4x4, value);
-}
-
-void Datum::Remove(string const & value)
-{
-	//External memory check done in templated function.
-	RemoveTemplated(mArray.tString, value);
-}
-
-void Datum::Remove(RTTI* const & value)
-{
-	//External memory check done in templated function.
-	RemoveTemplated(mArray.tRTTIPtr, value);
-}
-#pragma endregion
-
-#pragma region RemoveAt
-void Datum::RemoveAt(size_t const & index)
-{
-	//External memory check done in templated function.
-	switch (mType)
-	{
-	case DatumType::Integer:
-		RemoveAtTemplated<int>(mArray.tInt, index);
-		break;
-	case DatumType::Float:
-		RemoveAtTemplated<float>(mArray.tFloat, index);
-		break;
-	case DatumType::Vector4:
-		RemoveAtTemplated<vec4>(mArray.tVec4, index);
-		break;
-	case DatumType::Matrix4x4:
-		RemoveAtTemplated<mat4x4>(mArray.tMat4x4, index);
-		break;
-	case DatumType::Scope:
-		RemoveAtTemplated<Scope*>(mArray.tScope, index);
-		break;
-	case DatumType::String:
-		RemoveAtTemplated<string>(mArray.tString, index);
-		break;
-	case DatumType::RTTIPtr:
-		RemoveAtTemplated<RTTI*>(mArray.tRTTIPtr, index);
-		break;
-	default:
-		throw exception(datumTypeNotInitializedExceptionText.c_str());
-		break;
-	}
-}
-#pragma endregion
-
-#pragma region RemoveRange
-void Datum::RemoveRange(size_t const & start, size_t const & finish)
-{
-	//External memory check done in templated function.
-	switch (mType)
-	{
-	case DatumType::Integer:
-		RemoveRangeTemplated<int>(mArray.tInt, start, finish);
-		break;
-	case DatumType::Float:
-		RemoveRangeTemplated<float>(mArray.tFloat, start, finish);
-		break;
-	case DatumType::Vector4:
-		RemoveRangeTemplated<vec4>(mArray.tVec4, start, finish);
-		break;
-	case DatumType::Matrix4x4:
-		RemoveRangeTemplated<mat4x4>(mArray.tMat4x4, start, finish);
-		break;
-	case DatumType::Scope:
-		RemoveRangeTemplated<Scope*>(mArray.tScope, start, finish);
-		break;
-	case DatumType::String:
-		RemoveRangeTemplated<string>(mArray.tString, start, finish);
-		break;
-	case DatumType::RTTIPtr:
-		RemoveRangeTemplated<RTTI*>(mArray.tRTTIPtr, start, finish);
-		break;
-	default:
-		throw exception(datumTypeNotInitializedExceptionText.c_str());
-		break;
-	}
-}
-#pragma endregion
-
-#pragma region Find
-pair<bool, int*>  Datum::Find(int const & searchedValue) const
-{
-	if (DatumType::Integer != mType)
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	for (size_t i = 0; i < mSize; i++)
-	{
-		if (mArray.tInt[i] == searchedValue)
+		if (mType == DatumType::Float)
 		{
-			return pair<bool, int*>(true, &(mArray.tInt[i]));
+			return PushBackTemplated<float>(mArray.tFloat, value);
+		}
+		else
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
 		}
 	}
-	return pair<bool, int*>(false, nullptr);
-}
 
-pair<bool, float*> Datum::Find(float const & searchedValue) const
-{
-	if (DatumType::Float != mType)
+	vec4 & Datum::PushBack(vec4 const & value)
 	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	for (size_t i = 0; i < mSize; i++)
-	{
-		if (mArray.tFloat[i] == searchedValue)
+		//External memory check done in templated function.
+		if (mType == DatumType::Unknown)
 		{
-			return pair<bool, float*>(true, &(mArray.tFloat[i]));
+			SetType(DatumType::Vector4);
+		}
+		if (mType == DatumType::Vector4)
+		{
+			return PushBackTemplated<vec4>(mArray.tVec4, value);
+		}
+		else
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
 		}
 	}
-	return pair<bool, float*>(false, nullptr);
-}
 
-pair<bool, vec4*> Datum::Find(vec4 const & searchedValue) const
-{
-	if (DatumType::Vector4 != mType)
+	mat4x4 & Datum::PushBack(mat4x4 const & value)
 	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	for (size_t i = 0; i < mSize; i++)
-	{
-		if (mArray.tVec4[i] == searchedValue)
+		//External memory check done in templated function.
+		if (mType == DatumType::Unknown)
 		{
-			return pair<bool, vec4*>(true, &(mArray.tVec4[i]));
+			SetType(DatumType::Matrix4x4);
+		}
+		if (mType == DatumType::Matrix4x4)
+		{
+			return PushBackTemplated<mat4x4>(mArray.tMat4x4, value);
+		}
+		else
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
 		}
 	}
-	return pair<bool, vec4*>(false, nullptr);
-}
 
-pair<bool, mat4x4*> Datum::Find(mat4x4 const & searchedValue) const
-{
-	if (DatumType::Matrix4x4 != mType)
+	Scope * & FIEAGameEngine::Datum::PushBack(Scope const & value)
 	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	for (size_t i = 0; i < mSize; i++)
-	{
-		if (mArray.tMat4x4[i] == searchedValue)
+		//External memory check done in templated function.
+		if (mType == DatumType::Unknown)
 		{
-			return pair<bool, mat4x4*>(true, &(mArray.tMat4x4[i]));
+			SetType(DatumType::Scope);
+		}
+		if (mType == DatumType::Scope)
+		{
+			return PushBackTemplated<Scope*>(mArray.tScope,const_cast<Scope*>(&value));
+		}
+		else
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
 		}
 	}
-	return pair<bool, mat4x4*>(false, nullptr);
-}
 
-pair<bool, Scope**> FIEAGameEngine::Datum::Find(Scope const & searchedValue) const
-{
-	if (DatumType::Scope != mType)
+	string & Datum::PushBack(string const & value)
 	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	for (size_t i = 0; i < mSize; i++)
-	{
-		if (mArray.tScope[i] == &searchedValue)
+		//External memory check done in templated function.
+		if (mType == DatumType::Unknown)
 		{
-			return pair<bool, Scope**>(true, &(mArray.tScope[i]));
+			SetType(DatumType::String);
+		}
+		if (mType == DatumType::String)
+		{
+			return PushBackTemplated<string>(mArray.tString, value);
+		}
+		else
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
 		}
 	}
-	return pair<bool, Scope**>(false, nullptr);
-}
 
-pair<bool, string*> Datum::Find(string const & searchedValue) const
-{
-	if (DatumType::String != mType)
-	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	for (size_t i = 0; i < mSize; i++)
-	{
-		if (mArray.tString[i] == searchedValue)
-		{
-			return pair<bool, string*>(true, &(mArray.tString[i]));
-		}
-	}
-	return pair<bool, string*>(false, nullptr);
-}
 
-pair<bool, RTTI**> Datum::Find(RTTI * const & searchedValue) const
-{
-	if (DatumType::RTTIPtr != mType)
+	RTTI * & Datum::PushBack(RTTI * const & value)
 	{
-		throw exception(operationTypeMismatchExceptionText.c_str());
-	}
-	for (size_t i = 0; i < mSize; i++)
-	{
-		if (mArray.tRTTIPtr[i] == searchedValue)
+		//External memory check done in templated function.
+		if (mType == DatumType::Unknown)
 		{
-			return pair<bool, RTTI**>(true, &(mArray.tRTTIPtr[i]));
+			SetType(DatumType::RTTIPtr);
+		}
+		if (mType == DatumType::RTTIPtr)
+		{
+			return PushBackTemplated<RTTI*>(mArray.tRTTIPtr, value);
+		}
+		else
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
 		}
 	}
-	return pair<bool, RTTI**>(false, nullptr);
-}
-#pragma endregion
+	#pragma endregion
 
-#pragma region ResizeTemplated
-template<typename T>
-inline void Datum::ResizeTemplated(T * const & templatedPtr, size_t const & newSize)
-{
-	if (mIsInternal)
+	#pragma region PopBack
+	void Datum::PopBack()
 	{
-		if (newSize > mCapacity)
+		//External memory check done in templated function.
+		switch (mType)
 		{
-			Reserve(newSize);
-			while (newSize > mSize)
-			{
-				PushBackTemplated<T>(templatedPtr, T());
-			}
-		}
-		else if (newSize > mSize)
-		{
-			while (newSize > mSize)
-			{
-				PushBackTemplated<T>(templatedPtr, T());
-				/*
-				auto func = CreateDefaultFunctions[static_cast<int>(mType)];
-				assert(func != nullptr);
-				(this->*func)(i)
-				*/
-			}
-		}
-		else if (newSize < mSize)
-		{
-			RemoveRange(newSize, mSize);
+		case DatumType::Integer:
+			PopBackTemplated<int>(mArray.tInt);
+			break;
+		case DatumType::Float:
+			PopBackTemplated<float>(mArray.tFloat);
+			break;
+		case DatumType::Vector4:
+			PopBackTemplated<vec4>(mArray.tVec4);
+			break;
+		case DatumType::Matrix4x4:
+			PopBackTemplated<mat4x4>(mArray.tMat4x4);
+			break;
+		case DatumType::Scope:
+			PopBackTemplated<Scope*>(mArray.tScope);
+			break;
+		case DatumType::String:
+			PopBackTemplated<string>(mArray.tString);
+			break;
+		case DatumType::RTTIPtr:
+			PopBackTemplated<RTTI*>(mArray.tRTTIPtr);
+			break;
+		default:
+			throw exception(datumTypeNotInitializedExceptionText.c_str());
+			break;
 		}
 	}
-	else
-	{
-		throw exception(cannotMutateExternalStorageExceptionText.c_str());
-	}
-}
-#pragma endregion
+	#pragma endregion
 
-#pragma region Clear
-template<typename T>
-inline void Datum::ClearTemplated(T * const & templatedPtr)
-{
-	if (mIsInternal)
+	#pragma region Remove
+	void Datum::Remove(int const & value)
 	{
+		//External memory check done in templated function.
+		RemoveTemplated(mArray.tInt, value);
+	}
+
+
+	void Datum::Remove(float const & value)
+	{
+		//External memory check done in templated function.
+		RemoveTemplated(mArray.tFloat, value);
+	}
+
+	void Datum::Remove(vec4 const & value)
+	{
+		//External memory check done in templated function.
+		RemoveTemplated(mArray.tVec4, value);
+	}
+
+	void Datum::Remove(mat4x4 const & value)
+	{
+		//External memory check done in templated function.
+		RemoveTemplated(mArray.tMat4x4, value);
+	}
+
+	void Datum::Remove(string const & value)
+	{
+		//External memory check done in templated function.
+		RemoveTemplated(mArray.tString, value);
+	}
+
+	void Datum::Remove(RTTI* const & value)
+	{
+		//External memory check done in templated function.
+		RemoveTemplated(mArray.tRTTIPtr, value);
+	}
+	#pragma endregion
+
+	#pragma region RemoveAt
+	void Datum::RemoveAt(size_t const & index)
+	{
+		//External memory check done in templated function.
+		switch (mType)
+		{
+		case DatumType::Integer:
+			RemoveAtTemplated<int>(mArray.tInt, index);
+			break;
+		case DatumType::Float:
+			RemoveAtTemplated<float>(mArray.tFloat, index);
+			break;
+		case DatumType::Vector4:
+			RemoveAtTemplated<vec4>(mArray.tVec4, index);
+			break;
+		case DatumType::Matrix4x4:
+			RemoveAtTemplated<mat4x4>(mArray.tMat4x4, index);
+			break;
+		case DatumType::Scope:
+			RemoveAtTemplated<Scope*>(mArray.tScope, index);
+			break;
+		case DatumType::String:
+			RemoveAtTemplated<string>(mArray.tString, index);
+			break;
+		case DatumType::RTTIPtr:
+			RemoveAtTemplated<RTTI*>(mArray.tRTTIPtr, index);
+			break;
+		default:
+			throw exception(datumTypeNotInitializedExceptionText.c_str());
+			break;
+		}
+	}
+	#pragma endregion
+
+	#pragma region RemoveRange
+	void Datum::RemoveRange(size_t const & start, size_t const & finish)
+	{
+		//External memory check done in templated function.
+		switch (mType)
+		{
+		case DatumType::Integer:
+			RemoveRangeTemplated<int>(mArray.tInt, start, finish);
+			break;
+		case DatumType::Float:
+			RemoveRangeTemplated<float>(mArray.tFloat, start, finish);
+			break;
+		case DatumType::Vector4:
+			RemoveRangeTemplated<vec4>(mArray.tVec4, start, finish);
+			break;
+		case DatumType::Matrix4x4:
+			RemoveRangeTemplated<mat4x4>(mArray.tMat4x4, start, finish);
+			break;
+		case DatumType::Scope:
+			RemoveRangeTemplated<Scope*>(mArray.tScope, start, finish);
+			break;
+		case DatumType::String:
+			RemoveRangeTemplated<string>(mArray.tString, start, finish);
+			break;
+		case DatumType::RTTIPtr:
+			RemoveRangeTemplated<RTTI*>(mArray.tRTTIPtr, start, finish);
+			break;
+		default:
+			throw exception(datumTypeNotInitializedExceptionText.c_str());
+			break;
+		}
+	}
+	#pragma endregion
+
+	#pragma region Find
+	pair<bool, int*>  Datum::Find(int const & searchedValue) const
+	{
+		if (DatumType::Integer != mType)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
 		for (size_t i = 0; i < mSize; i++)
 		{
-			templatedPtr[i].~T();
-		}
-		mSize = 0;
-	}
-	else
-	{
-		throw exception(cannotMutateExternalStorageExceptionText.c_str());
-	}
-}
-#pragma endregion
-
-#pragma region SetFromStringTemplated
-template<typename T>
-void Datum::SetFromStringTemplated(string const & value, size_t const & index)
-{
-	throw exception(unsupportedDataTypeExceptionText.c_str());
-	value;
-	index;
-}
-
-template<>
-void Datum::SetFromStringTemplated<int>(string const & value, size_t const & index)
-{
-	Set(stoi(value), index);
-}
-
-template<>
-void Datum::SetFromStringTemplated<float>(string const & value, size_t const & index)
-{
-	Set(stof(value), index);
-}
-
-template<>
-void Datum::SetFromStringTemplated<vec4>(string const & value, size_t const & index)
-{
-	vec4 readInVec;
-	sscanf_s(value.c_str(), "vec4(%f, %f, %f, %f)", &readInVec[0], &readInVec[1], &readInVec[2], &readInVec[3]);
-	Set(readInVec, index);
-}
-
-template<>
-void Datum::SetFromStringTemplated<mat4x4>(string const & value, size_t const & index)
-{
-	mat4x4 readInMat;
-	sscanf_s(value.c_str(), "mat4x4((%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f))",
-		&readInMat[0][0], &readInMat[0][1], &readInMat[0][2], &readInMat[0][3],
-		&readInMat[1][0], &readInMat[1][1], &readInMat[1][2], &readInMat[1][3],
-		&readInMat[2][0], &readInMat[2][1], &readInMat[2][2], &readInMat[2][3],
-		&readInMat[3][0], &readInMat[3][1], &readInMat[3][2], &readInMat[3][3]);
-	Set(readInMat, index);
-}
-
-template<>
-void Datum::SetFromStringTemplated<string>(string const & value, size_t const & index)
-{
-	Set(value, index);
-}
-
-template<>
-void Datum::SetFromStringTemplated<RTTI*>(string const &, size_t const &)
-{
-	throw exception(unsupportedDataTypeExceptionText.c_str());
-}
-#pragma endregion
-
-#pragma region ToStringTemplated
-template<typename T>
-string Datum::ToStringTemplated(T * const &, size_t const &) const
-{
-	throw exception(unsupportedDataTypeExceptionText.c_str());
-}
-
-template<>
-string Datum::ToStringTemplated(int * const & templatedPtr, size_t const & index) const
-{
-	return std::to_string(templatedPtr[index]);
-}
-
-template<>
-string Datum::ToStringTemplated(float * const & templatedPtr, size_t const & index) const
-{
-	return std::to_string(templatedPtr[index]);
-}
-
-template<>
-string Datum::ToStringTemplated(vec4 * const & templatedPtr, size_t const & index) const
-{
-	return glm::to_string(templatedPtr[index]);
-}
-
-template<>
-string Datum::ToStringTemplated(mat4x4 * const & templatedPtr, size_t const & index) const
-{
-	return glm::to_string(templatedPtr[index]);
-}
-
-template<>
-string Datum::ToStringTemplated(string * const & templatedPtr, size_t const & index) const
-{
-	return templatedPtr[index];
-}
-
-template<>
-string Datum::ToStringTemplated(RTTI ** const & templatedPtr, size_t const & index) const
-{
-	return (templatedPtr[index] != nullptr ? templatedPtr[index]->ToString() : "nullptr");
-}
-#pragma endregion
-
-#pragma region PushBackTemplated
-template<typename T>
-inline T & Datum::PushBackTemplated(T * const & templatedPtr, T const & value)
-{
-	if (mIsInternal)
-	{
-		if (mSize == mCapacity)
-		{
-			if (mCapacity == 0)
+			if (mArray.tInt[i] == searchedValue)
 			{
-				mCapacity = 1;
+				return pair<bool, int*>(true, &(mArray.tInt[i]));
 			}
-			Reserve(mCapacity * 2);
 		}
-
-		return *(new (templatedPtr + (mSize++)) T(value));
+		return pair<bool, int*>(false, nullptr);
 	}
-	else
-	{
-		throw exception(cannotMutateExternalStorageExceptionText.c_str());
-	}
-}
-#pragma endregion
 
-#pragma region PopBack
-template<typename T>
-inline void Datum::PopBackTemplated(T * const & templatedPtr)
-{
-	if (mIsInternal)
+	pair<bool, float*> Datum::Find(float const & searchedValue) const
 	{
-		if (mSize != 0)
+		if (DatumType::Float != mType)
 		{
-			templatedPtr[--mSize].~T();
+			throw exception(operationTypeMismatchExceptionText.c_str());
 		}
+		for (size_t i = 0; i < mSize; i++)
+		{
+			if (mArray.tFloat[i] == searchedValue)
+			{
+				return pair<bool, float*>(true, &(mArray.tFloat[i]));
+			}
+		}
+		return pair<bool, float*>(false, nullptr);
 	}
-	else
-	{
-		throw exception(cannotMutateExternalStorageExceptionText.c_str());
-	}
-}
-#pragma endregion
 
-#pragma region RemoveTemplated
-template<typename T>
-void Datum::RemoveTemplated(T * const & templatedPtr, T const & value)
-{
-	if (mType != DatumType::Unknown)
+	pair<bool, vec4*> Datum::Find(vec4 const & searchedValue) const
+	{
+		if (DatumType::Vector4 != mType)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		for (size_t i = 0; i < mSize; i++)
+		{
+			if (mArray.tVec4[i] == searchedValue)
+			{
+				return pair<bool, vec4*>(true, &(mArray.tVec4[i]));
+			}
+		}
+		return pair<bool, vec4*>(false, nullptr);
+	}
+
+	pair<bool, mat4x4*> Datum::Find(mat4x4 const & searchedValue) const
+	{
+		if (DatumType::Matrix4x4 != mType)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		for (size_t i = 0; i < mSize; i++)
+		{
+			if (mArray.tMat4x4[i] == searchedValue)
+			{
+				return pair<bool, mat4x4*>(true, &(mArray.tMat4x4[i]));
+			}
+		}
+		return pair<bool, mat4x4*>(false, nullptr);
+	}
+
+	pair<bool, Scope**> FIEAGameEngine::Datum::Find(Scope const & searchedValue) const
+	{
+		if (DatumType::Scope != mType)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		for (size_t i = 0; i < mSize; i++)
+		{
+			if (mArray.tScope[i] == &searchedValue)
+			{
+				return pair<bool, Scope**>(true, &(mArray.tScope[i]));
+			}
+		}
+		return pair<bool, Scope**>(false, nullptr);
+	}
+
+	pair<bool, string*> Datum::Find(string const & searchedValue) const
+	{
+		if (DatumType::String != mType)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		for (size_t i = 0; i < mSize; i++)
+		{
+			if (mArray.tString[i] == searchedValue)
+			{
+				return pair<bool, string*>(true, &(mArray.tString[i]));
+			}
+		}
+		return pair<bool, string*>(false, nullptr);
+	}
+
+	pair<bool, RTTI**> Datum::Find(RTTI * const & searchedValue) const
+	{
+		if (DatumType::RTTIPtr != mType)
+		{
+			throw exception(operationTypeMismatchExceptionText.c_str());
+		}
+		for (size_t i = 0; i < mSize; i++)
+		{
+			if (mArray.tRTTIPtr[i] == searchedValue)
+			{
+				return pair<bool, RTTI**>(true, &(mArray.tRTTIPtr[i]));
+			}
+		}
+		return pair<bool, RTTI**>(false, nullptr);
+	}
+	void Datum::SetStorage(void * const & data, size_t const & size)
+	{
+		if (data == nullptr || size <= 0)
+		{
+			throw exception(cannotSetStorageInvalidParamExceptionText.c_str());
+		}
+		if (mType == DatumType::Scope)
+		{
+			throw exception(noExternalScopesExceptionText.c_str());
+		}
+		if (mIsInternal)
+		{
+			Clear();
+			ShrinkToFit();
+		}
+		mIsInternal = false;
+		mArray.tVoid = data;
+		mSize = mCapacity = size;
+	}
+	#pragma endregion
+
+	#pragma region ResizeTemplated
+	template<typename T>
+	inline void Datum::ResizeTemplated(T * const & templatedPtr, size_t const & newSize)
 	{
 		if (mIsInternal)
 		{
-			for (size_t i = 0; i < mSize; i++)
+			if (newSize > mCapacity)
 			{
-				if (templatedPtr[i] == value)
+				Reserve(newSize);
+				while (newSize > mSize)
 				{
-					templatedPtr[i].~T();
-					memmove(&(templatedPtr[i]), &(templatedPtr[i + 1]), (mSize - 1 - i) * sizeof(T));
-					mSize--;
-					break;
+					PushBackTemplated<T>(templatedPtr, T());
 				}
+			}
+			else if (newSize > mSize)
+			{
+				while (newSize > mSize)
+				{
+					PushBackTemplated<T>(templatedPtr, T());
+					/*
+					auto func = CreateDefaultFunctions[static_cast<int>(mType)];
+					assert(func != nullptr);
+					(this->*func)(i)
+					*/
+				}
+			}
+			else if (newSize < mSize)
+			{
+				RemoveRange(newSize, mSize);
 			}
 		}
 		else
@@ -1542,65 +1377,251 @@ void Datum::RemoveTemplated(T * const & templatedPtr, T const & value)
 			throw exception(cannotMutateExternalStorageExceptionText.c_str());
 		}
 	}
-	else
-	{
-		throw exception(datumTypeNotInitializedExceptionText.c_str());
-	}
-}
-#pragma endregion
+	#pragma endregion
 
-#pragma region RemoveAtTemplated
-template<typename T>
-void Datum::RemoveAtTemplated(T * const & templatedPtr, size_t const & index)
-{
-	if (mIsInternal)
+	#pragma region Clear
+	template<typename T>
+	inline void Datum::ClearTemplated(T * const & templatedPtr)
 	{
-		if (index < mSize)
+		if (mIsInternal)
 		{
-			templatedPtr[index].~T();
-			memmove(&(templatedPtr[index]), &(templatedPtr[index + 1]), (mSize - 1 - index) * sizeof(T));
-			mSize--;
+			for (size_t i = 0; i < mSize; i++)
+			{
+				templatedPtr[i].~T();
+			}
+			mSize = 0;
 		}
 		else
 		{
-			throw exception(indexOutOfBoundsExceptionText.c_str());
+			throw exception(cannotMutateExternalStorageExceptionText.c_str());
 		}
 	}
-	else
+	#pragma endregion
+
+	#pragma region SetFromStringTemplated
+	template<typename T>
+	void Datum::SetFromStringTemplated(string const & value, size_t const & index)
 	{
-		throw exception(cannotMutateExternalStorageExceptionText.c_str());
+		throw exception(unsupportedDataTypeExceptionText.c_str());
+		value;
+		index;
 	}
-}
-#pragma endregion
 
-#pragma region RemoveRangeTemplated
-template<typename T>
-void Datum::RemoveRangeTemplated(T * const & templatedPtr, size_t const & start, size_t const & finish)
-{
-	if (mIsInternal)
+	template<>
+	void Datum::SetFromStringTemplated<int>(string const & value, size_t const & index)
 	{
-		if (start < mSize && finish <= mSize)
+		Set(stoi(value), index);
+	}
+
+	template<>
+	void Datum::SetFromStringTemplated<float>(string const & value, size_t const & index)
+	{
+		Set(stof(value), index);
+	}
+
+	template<>
+	void Datum::SetFromStringTemplated<vec4>(string const & value, size_t const & index)
+	{
+		vec4 readInVec;
+		sscanf_s(value.c_str(), "vec4(%f, %f, %f, %f)", &readInVec[0], &readInVec[1], &readInVec[2], &readInVec[3]);
+		Set(readInVec, index);
+	}
+
+	template<>
+	void Datum::SetFromStringTemplated<mat4x4>(string const & value, size_t const & index)
+	{
+		mat4x4 readInMat;
+		sscanf_s(value.c_str(), "mat4x4((%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f))",
+			&readInMat[0][0], &readInMat[0][1], &readInMat[0][2], &readInMat[0][3],
+			&readInMat[1][0], &readInMat[1][1], &readInMat[1][2], &readInMat[1][3],
+			&readInMat[2][0], &readInMat[2][1], &readInMat[2][2], &readInMat[2][3],
+			&readInMat[3][0], &readInMat[3][1], &readInMat[3][2], &readInMat[3][3]);
+		Set(readInMat, index);
+	}
+
+	template<>
+	void Datum::SetFromStringTemplated<string>(string const & value, size_t const & index)
+	{
+		Set(value, index);
+	}
+
+	template<>
+	void Datum::SetFromStringTemplated<RTTI*>(string const &, size_t const &)
+	{
+		throw exception(unsupportedDataTypeExceptionText.c_str());
+	}
+	#pragma endregion
+
+	#pragma region ToStringTemplated
+	template<typename T>
+	string Datum::ToStringTemplated(T * const &, size_t const &) const
+	{
+		throw exception(unsupportedDataTypeExceptionText.c_str());
+	}
+
+	template<>
+	string Datum::ToStringTemplated(int * const & templatedPtr, size_t const & index) const
+	{
+		return std::to_string(templatedPtr[index]);
+	}
+
+	template<>
+	string Datum::ToStringTemplated(float * const & templatedPtr, size_t const & index) const
+	{
+		return std::to_string(templatedPtr[index]);
+	}
+
+	template<>
+	string Datum::ToStringTemplated(vec4 * const & templatedPtr, size_t const & index) const
+	{
+		return glm::to_string(templatedPtr[index]);
+	}
+
+	template<>
+	string Datum::ToStringTemplated(mat4x4 * const & templatedPtr, size_t const & index) const
+	{
+		return glm::to_string(templatedPtr[index]);
+	}
+
+	template<>
+	string Datum::ToStringTemplated(string * const & templatedPtr, size_t const & index) const
+	{
+		return templatedPtr[index];
+	}
+
+	template<>
+	string Datum::ToStringTemplated(RTTI ** const & templatedPtr, size_t const & index) const
+	{
+		return (templatedPtr[index] != nullptr ? templatedPtr[index]->ToString() : "nullptr");
+	}
+	#pragma endregion
+
+	#pragma region PushBackTemplated
+	template<typename T>
+	inline T & Datum::PushBackTemplated(T * const & templatedPtr, T const & value)
+	{
+		if (mIsInternal)
 		{
-			if (mSize > 0 && start < finish)
+			if (mSize == mCapacity)
 			{
-
-				for (size_t i = start; i < finish; i++)
+				if (mCapacity == 0)
 				{
-					templatedPtr[i].~T();
+					mCapacity = 1;
 				}
-				memmove(&(templatedPtr[start]), &(templatedPtr[finish]), (mSize - finish) * sizeof(T));
-				mSize -= (finish - start);
+				Reserve(mCapacity * 2);
+			}
 
+			return *(new (templatedPtr + (mSize++)) T(value));
+		}
+		else
+		{
+			throw exception(cannotMutateExternalStorageExceptionText.c_str());
+		}
+	}
+	#pragma endregion
+
+	#pragma region PopBack
+	template<typename T>
+	inline void Datum::PopBackTemplated(T * const & templatedPtr)
+	{
+		if (mIsInternal)
+		{
+			if (mSize != 0)
+			{
+				templatedPtr[--mSize].~T();
 			}
 		}
 		else
 		{
-			throw exception(indexOutOfBoundsExceptionText.c_str());
+			throw exception(cannotMutateExternalStorageExceptionText.c_str());
 		}
 	}
-	else
+	#pragma endregion
+
+	#pragma region RemoveTemplated
+	template<typename T>
+	void Datum::RemoveTemplated(T * const & templatedPtr, T const & value)
 	{
-		throw exception(cannotMutateExternalStorageExceptionText.c_str());
+		if (mType != DatumType::Unknown)
+		{
+			if (mIsInternal)
+			{
+				for (size_t i = 0; i < mSize; i++)
+				{
+					if (templatedPtr[i] == value)
+					{
+						templatedPtr[i].~T();
+						memmove(&(templatedPtr[i]), &(templatedPtr[i + 1]), (mSize - 1 - i) * sizeof(T));
+						mSize--;
+						break;
+					}
+				}
+			}
+			else
+			{
+				throw exception(cannotMutateExternalStorageExceptionText.c_str());
+			}
+		}
+		else
+		{
+			throw exception(datumTypeNotInitializedExceptionText.c_str());
+		}
 	}
-}
+	#pragma endregion
+
+	#pragma region RemoveAtTemplated
+	template<typename T>
+	void Datum::RemoveAtTemplated(T * const & templatedPtr, size_t const & index)
+	{
+		if (mIsInternal)
+		{
+			if (index < mSize)
+			{
+				templatedPtr[index].~T();
+				memmove(&(templatedPtr[index]), &(templatedPtr[index + 1]), (mSize - 1 - index) * sizeof(T));
+				mSize--;
+			}
+			else
+			{
+				throw exception(indexOutOfBoundsExceptionText.c_str());
+			}
+		}
+		else
+		{
+			throw exception(cannotMutateExternalStorageExceptionText.c_str());
+		}
+	}
+	#pragma endregion
+
+	#pragma region RemoveRangeTemplated
+	template<typename T>
+	void Datum::RemoveRangeTemplated(T * const & templatedPtr, size_t const & start, size_t const & finish)
+	{
+		if (mIsInternal)
+		{
+			if (start < mSize && finish <= mSize)
+			{
+				if (mSize > 0 && start < finish)
+				{
+
+					for (size_t i = start; i < finish; i++)
+					{
+						templatedPtr[i].~T();
+					}
+					memmove(&(templatedPtr[start]), &(templatedPtr[finish]), (mSize - finish) * sizeof(T));
+					mSize -= (finish - start);
+
+				}
+			}
+			else
+			{
+				throw exception(indexOutOfBoundsExceptionText.c_str());
+			}
+		}
+		else
+		{
+			throw exception(cannotMutateExternalStorageExceptionText.c_str());
+		}
+	}
 #pragma endregion
+}
