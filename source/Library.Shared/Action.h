@@ -49,7 +49,7 @@ namespace FIEAGameEngine
 		/// Returns the name of the action
 		/// </summary>
 		/// <returns>The name of the action</returns>
-		std::string Name() const;
+		std::string const & Name() const;
 
 		/// <summary>
 		/// Sets the name field of the action
@@ -61,6 +61,11 @@ namespace FIEAGameEngine
 		/// Virtual update call that varies on concrete actions.
 		/// </summary>
 		virtual void Update(WorldState & worldState)= 0;
+
+		/// <summary>
+		/// Name of name attribute in action.
+		/// </summary>
+		inline static const std::string mNameKey = "Name";
 
 	protected:
 
@@ -75,6 +80,11 @@ namespace FIEAGameEngine
 		/// The name of the action.
 		/// </summary>
 		std::string mName;
+
+		/// <summary>
+		/// Index of name attribute in action.
+		/// </summary>
+		inline static const int mNameIndex = 1;
 
 		inline static const std::string actionCannotExistWithoutParentExceptionText = "Action cannot exist without parent. Pass a non null parameter into the constructor.\n";
 	};

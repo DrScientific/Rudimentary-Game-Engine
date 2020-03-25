@@ -23,6 +23,7 @@
     <ClCompile Include="EventTest.cpp" />
     <ClCompile Include="FooSubscriber.cpp" />
     <ClCompile Include="FooEntity.cpp" />
+    <ClCompile Include="ReactionTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

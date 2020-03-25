@@ -55,7 +55,7 @@ namespace FIEAGameEngine
 		/// Virtual constructor
 		/// </summary>
 		/// <returns></returns>
-		virtual gsl::owner<Scope*> Clone() const;
+		virtual gsl::owner<Scope*> Clone() const override;
 
 		/// <summary>
 		/// RTTI to string override. Returns "CreateAction".
@@ -69,6 +69,25 @@ namespace FIEAGameEngine
 		/// <returns>The signatures of create action.</returns>
 		static const Vector<Signature> Signatures();
 
+		/// <summary>
+		/// Name of class name attribute in create action.
+		/// </summary>
+		inline static const std::string mClassNameKey = "ClassName";
+
+		/// <summary>
+		/// Index of actions attribute in create action.
+		/// </summary>
+		inline static const size_t mClassNameIndex = 2;
+
+		/// <summary>
+		/// Name of instance name attribute in create action.
+		/// </summary>
+		inline static const std::string mInstanceNameKey = "InstanceName";
+
+		/// <summary>
+		/// Index of instance name attribute in create action.
+		/// </summary>
+		inline static const size_t mInstanceIndex = 3;
 
 	protected:
 

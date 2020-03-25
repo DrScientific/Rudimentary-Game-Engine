@@ -10,7 +10,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtx/string_cast.hpp"
 #pragma warning(pop)
-
+#include <algorithm>
 
 using namespace glm;
 using namespace std;
@@ -114,6 +114,53 @@ namespace FIEAGameEngine
 				mCapacity = rhs.mCapacity;
 				mSize = rhs.mSize;
 				mArray = rhs.mArray;
+			}
+		}
+		return *this;
+	}
+
+	Datum & Datum::StoragePreservedAssignment(Datum const & rhs)
+	{
+		if (this != &rhs)
+		{
+			if (mIsInternal)
+			{
+				Clear();
+				Reserve(rhs.mSize);
+				mType = rhs.mType;
+				if (mType != DatumType::String)
+				{
+					memcpy(mArray.tVoid, rhs.mArray.tVoid, rhs.mSize * mTypeSizes[static_cast<size_t>(mType)]);
+					mSize = rhs.mSize;
+				}
+				else
+				{
+					for (size_t i = 0; i < rhs.mSize; i++)
+					{
+						PushBack(rhs.mArray.tString[i]);
+					}
+				}
+			}
+			else
+			{
+				if (mType != rhs.mType)
+				{
+					throw exception(storagePreservedAssignmentTypeMismatchExceptionText.c_str());
+				}
+				size_t minSize = std::min(mSize, rhs.mSize);
+				if (mType != DatumType::String)
+				{
+					memcpy(mArray.tVoid, rhs.mArray.tVoid, minSize * mTypeSizes[static_cast<size_t>(mType)]);
+					mSize = rhs.mSize;
+				}
+				else
+				{
+					for (size_t i = 0; i < minSize; i++)
+					{
+						Set(rhs.mArray.tString[i], i);
+					}
+				}
+				
 			}
 		}
 		return *this;

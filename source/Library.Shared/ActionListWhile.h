@@ -54,7 +54,7 @@ namespace FIEAGameEngine
 		/// Virtual constructor
 		/// </summary>
 		/// <returns></returns>
-		virtual gsl::owner<Scope*> Clone() const;
+		virtual gsl::owner<Scope*> Clone() const override;
 
 		/// <summary>
 		/// RTTI to string override. Returns "ActionListWhile".
@@ -68,12 +68,37 @@ namespace FIEAGameEngine
 		/// <returns>The signatures of action list.</returns>
 		static const FIEAGameEngine::Vector<Signature> Signatures();
 
+		/// <summary>
+		/// Name of preamble attribute in action list while.
+		/// </summary>
+		inline static const std::string mConditionKey = "Condition";
+
+		/// <summary>
+		/// Name of preamble attribute in action list while.
+		/// </summary>
+		inline static const std::string mPreambleKey = "Preamble";
+
+		/// <summary>
+		/// Name of increment attribute in action list while.
+		/// </summary>
+		inline static const std::string mIncrementKey = "Increment";
+
 	private:
 
 		/// <summary>
 		/// Conditon of the while loop
 		/// </summary>
 		int mCondition = 0;
+
+		/// <summary>
+		/// Index of preamble attribute in action list while.
+		/// </summary>
+		inline static const int mPreambleIndex = 4;
+
+		/// <summary>
+		/// Index of increment attribute in action list while.
+		/// </summary>
+		inline static const int mIncrementIndex = 5;
 	};
 
 	CONCRETE_FACTORY(ActionListWhile, Scope);

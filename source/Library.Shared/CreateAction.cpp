@@ -13,6 +13,7 @@ namespace FIEAGameEngine
 	void CreateAction::Update(WorldState &)
 	{
 		Scope * newScope = Factory<Scope>::Create(mClassName);
+		assert(newScope->Is(Action::TypeIdClass()));
 		Action * newAction = static_cast<Action*>(newScope);
 		newAction->SetName(mInstanceName);
 		mParent->Adopt(*newAction, "Actions");
@@ -32,9 +33,9 @@ namespace FIEAGameEngine
 	{
 		return Vector<Attributed::Signature>
 		{
-			{"Name", Datum::DatumType::String, 1, offsetof(CreateAction, mName) },
-			{"ClassName", Datum::DatumType::String, 1, offsetof(CreateAction, mClassName)},
-			{"InstanceName", Datum::DatumType::String, 1, offsetof(CreateAction, mInstanceName) }
+			{mNameKey, Datum::DatumType::String, 1, offsetof(CreateAction, mName) },
+			{mClassNameKey, Datum::DatumType::String, 1, offsetof(CreateAction, mClassName)},
+			{mInstanceNameKey, Datum::DatumType::String, 1, offsetof(CreateAction, mInstanceName) }
 		};
 	}
 }

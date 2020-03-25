@@ -1,0 +1,125 @@
+{
+  "Name": {
+    "type": "string",
+    "value": "Test World"
+  },
+  "IsAwake": {
+    "type": "integer",
+    "value": 1
+  },
+  "Sectors": {
+    "type": "scope",
+    "value": [
+      {
+        "type": "scope",
+        "class": "Sector",
+        "value": {
+          "IsAwake": {
+            "type": "integer",
+            "value": 1
+          },
+          "Name": {
+            "type": "string",
+            "value": "Sector A"
+          },
+          "Entities": {
+            "type": "scope",
+            "value": [
+              {
+                "type": "scope",
+                "class": "Entity",
+								"value": {
+									"Name": {
+										"type": "string",
+										"value": "Entity A1"
+									},
+									"IsAwake": {
+										"type": "integer",
+										"value": 1
+									},
+									"Actions": {
+										"type": "scope",
+										"value": [
+											{
+												"type": "scope",
+												"class": "ActionEvent",
+												"value": {
+													"Name": {
+														"type": "string",
+														"value": "ActionEvent A1"
+													},
+													"Subtype": {
+														"type": "string",
+														"value": "Test"
+													},
+													"Delay": {
+														"type": "integer",
+														"value": 2000
+													},
+													"TargetGameContainer": {
+														"type": "string",
+														"value": "Entities"
+													},
+													"TargetName": {
+														"type": "string",
+														"value": "Entity A1"
+													},
+													"TargetAttribute": {
+														"type": "string",
+														"value": "Health"
+													},
+													"Step": {
+														"type": "integer",
+														"value": 2
+													}
+												}
+											}
+										]
+									},
+									"Reactions": {
+										"type": "scope",
+										"value": [
+											{
+												"type": "scope",
+												"class": "ReactionAttributed",
+												"value": {
+													"Name": {
+														"type": "string",
+														"value": "Test Reaction"
+													},
+													"Subtype": {
+														"type": "string",
+														"value": "Test"
+													},
+													"Actions": {
+														"type": "scope",
+														"value": [
+															{
+																"type": "scope",
+																"class": "ActionIncrement",
+																"value": {
+																	"Name": {
+																		"type": "string",
+																		"value": "Reaction Increment"
+																	}
+																}
+															}
+														]
+													}
+												}
+											}
+										]
+									},
+									"Health": {
+										"type": "integer",
+										"value": 10
+									}
+								}
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

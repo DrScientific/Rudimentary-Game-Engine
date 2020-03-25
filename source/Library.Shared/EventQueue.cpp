@@ -29,8 +29,6 @@ namespace FIEAGameEngine
 	{
 		GameTime * gameTime = worldState.mGameTime;
 
-		//TODO: Pass game time to IsExpired
-
 		Vector<std::shared_ptr<EventPublisher>>::Iterator expiredBoundary = partition(mEvents.begin(), mEvents.end(), [&gameTime](shared_ptr<EventPublisher> & i) {return !i->IsExpired(gameTime->CurrentTime()); });
 
 		for (auto i = expiredBoundary; i != mEvents.end(); i++ )

@@ -72,7 +72,7 @@ namespace FIEAGameEngine
 	{
 		return Vector<Attributed::Signature>
 		{
-			{"Name", Datum::DatumType::String, 1, offsetof(ActionList, mName) },
+			{mNameKey, Datum::DatumType::String, 1, offsetof(ActionList, mName) },
 			{ mActionsKey, Datum::DatumType::Scope, 0, 0 }
 		};
 	}

@@ -13,7 +13,7 @@ namespace FIEAGameEngine
 
 	}
 
-	std::string Action::Name() const
+	std::string const & Action::Name() const
 	{
 		return mName;
 	}

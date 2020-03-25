@@ -54,11 +54,11 @@ namespace FIEAGameEngine
 	{
 		return Vector<Attributed::Signature>
 		{
-			{"Name", Datum::DatumType::String, 1, offsetof(ActionIncrement, mName) },
-			{"TargetGameContainer", Datum::DatumType::String, 1, offsetof(ActionIncrement, mTargetGameContainer) },
-			{"TargetName", Datum::DatumType::String, 1, offsetof(ActionIncrement, mTargetName) },
-			{"TargetAttribute", Datum::DatumType::String, 1, offsetof(ActionIncrement, mTargetAttribute) },
-			{"Step", Datum::DatumType::Integer, 1, offsetof(ActionIncrement, mStep ) }
+			{mNameKey, Datum::DatumType::String, 1, offsetof(ActionIncrement, mName) },
+			{mTargetGameContainerKey, Datum::DatumType::String, 1, offsetof(ActionIncrement, mTargetGameContainer) },
+			{mTargetNameKey, Datum::DatumType::String, 1, offsetof(ActionIncrement, mTargetName) },
+			{mTargetAttributeKey, Datum::DatumType::String, 1, offsetof(ActionIncrement, mTargetAttribute) },
+			{mStepKey, Datum::DatumType::Integer, 1, offsetof(ActionIncrement, mStep ) }
 		};
 	}
 }

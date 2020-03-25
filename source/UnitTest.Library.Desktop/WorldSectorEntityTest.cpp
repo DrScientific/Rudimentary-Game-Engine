@@ -404,9 +404,6 @@ namespace UnitTestLibraryDesktop
 
 		TEST_METHOD(WorldParseTest)
 		{
-			/*
-			While the data is being parsed and accessible it is being stored in the wrong location.
-			*/
 			GameTime time;
 
 			shared_ptr<Scope> sharedScope = make_shared<World>(time);

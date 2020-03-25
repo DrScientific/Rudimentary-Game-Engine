@@ -120,13 +120,13 @@ namespace FIEAGameEngine
 		/// Returns all prescribed attributes of the attributed object.
 		/// </summary>
 		/// <returns>A vector of pointers to each key datum pair in the prescribed attributes of the attributed object.</returns>
-		Vector<PairType*> PrescribedAttributes();
+		Vector<PairType*> PrescribedAttributes() const;
 
 		/// <summary>
 		/// Returns all auxiliary attributes of the attributed object.
 		/// </summary>
 		/// <returns>A vector of pointers to each key datum pair in the auxiliary attributes of the attributed object.</returns>
-		Vector<PairType*> AuxiliaryAttributes();
+		Vector<PairType*> AuxiliaryAttributes() const;
 
 		/// <summary>
 		/// Overload of Scope's virtual clear function. Clear's all auxiliary attributes from the attributed object.

@@ -48,15 +48,15 @@ namespace FIEAGameEngine
 		~ActionIncrement() = default;
 
 		/// <summary>
-		/// Virtual update call.
-		/// </summary>
-		virtual void Update(WorldState &) override;
-
-		/// <summary>
 		/// Virtual constructor
 		/// </summary>
 		/// <returns></returns>
-		virtual gsl::owner<Scope*> Clone() const;
+		virtual gsl::owner<Scope*> Clone() const override;
+
+		/// <summary>
+		/// Virtual update call.
+		/// </summary>
+		virtual void Update(WorldState &) override;
 
 		/// <summary>
 		/// RTTI to string override. Returns "ActionIncrement".
@@ -69,6 +69,46 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <returns>The signatures of action increment.</returns>
 		static const FIEAGameEngine::Vector<Signature> Signatures();
+
+		/// <summary>
+		/// Name of target game container attribute in action increment.
+		/// </summary>
+		inline static const std::string mTargetGameContainerKey = "TargetGameContainer";
+
+		/// <summary>
+		/// Index of target game container attribute in action increment.
+		/// </summary>
+		inline static const size_t mTargetGameContainerIndex = 2;
+
+		/// <summary>
+		/// Name of target name attribute in action increment.
+		/// </summary>
+		inline static const std::string mTargetNameKey = "TargetName";
+
+		/// <summary>
+		/// Index of target name attribute in action increment.
+		/// </summary>
+		inline static const size_t mTargetNameIndex = 3;
+
+		/// <summary>
+		/// Name of target attribute attribute in action increment.
+		/// </summary>
+		inline static const std::string mTargetAttributeKey = "TargetAttribute";
+
+		/// <summary>
+		/// Index of target attribute attribute in action increment.
+		/// </summary>
+		inline static const size_t mTargetAttributeIndex = 4;
+
+		/// <summary>
+		/// Name of step attribute in action increment.
+		/// </summary>
+		inline static const std::string mStepKey = "Step";
+
+		/// <summary>
+		/// Index of step attribute in action increment.
+		/// </summary>
+		inline static const size_t mStepIndex = 5;
 
 	protected:
 		

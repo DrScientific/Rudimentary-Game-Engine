@@ -114,7 +114,7 @@ namespace FIEAGameEngine
 		return mVector;
 	}
 
-	Vector<Scope::PairType*> Attributed::PrescribedAttributes()
+	Vector<Scope::PairType*> Attributed::PrescribedAttributes() const
 	{
 		Vector<PairType*> prescribedAttributes;
 		for (size_t i = 0; i < TypeManager::GetTypeManager().GetTypeSignature(TypeIdInstance()).Size() + 1; i++)
@@ -125,7 +125,7 @@ namespace FIEAGameEngine
 	}
 
 
-	Vector<Scope::PairType*> Attributed::AuxiliaryAttributes()
+	Vector<Scope::PairType*> Attributed::AuxiliaryAttributes() const
 	{
 		Vector<PairType*> auxiliaryAttributes;
 		for (size_t i = TypeManager::GetTypeManager().GetTypeSignature(TypeIdInstance()).Size() + 1; i < mVector.Size(); i++)

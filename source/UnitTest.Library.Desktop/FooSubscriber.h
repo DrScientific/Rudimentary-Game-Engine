@@ -22,7 +22,7 @@ namespace UnitTests
 		/// 
 		/// </summary>
 		/// <param name="publisher"></param>
-		virtual void Notify(class FIEAGameEngine::EventPublisher const & publisher);
+		virtual void Notify(class FIEAGameEngine::EventPublisher const & publisher) override;
 
 		int mData = 0;
 

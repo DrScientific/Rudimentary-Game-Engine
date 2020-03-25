@@ -55,7 +55,7 @@ namespace FIEAGameEngine
 		/// Virtual constructor
 		/// </summary>
 		/// <returns></returns>
-		virtual gsl::owner<Scope*> Clone() const;
+		virtual gsl::owner<Scope*> Clone() const override;
 
 		/// <summary>
 		/// RTTI to string override. Returns "DestroyAction".
@@ -69,6 +69,15 @@ namespace FIEAGameEngine
 		/// <returns>The signatures of destroy action.</returns>
 		static const Vector<Signature> Signatures();
 
+		/// <summary>
+		/// Name of target attribute in destroy action.
+		/// </summary>
+		inline static const std::string mTargetKey = "Target";
+
+		/// <summary>
+		/// Index of actions attribute in destroy action.
+		/// </summary>
+		inline static const size_t mTargetIndex = 2;
 
 	protected:
 

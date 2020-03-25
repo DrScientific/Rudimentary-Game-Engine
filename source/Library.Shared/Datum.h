@@ -150,6 +150,13 @@ namespace FIEAGameEngine
 		Datum& operator= (Datum const & rhs);
 
 		/// <summary>
+		/// Preserve the storage setting of a datum while shallow copying in the contents of the right hand side. 
+		/// </summary>
+		/// <param name="rhs">Datum to assign left hand side to.</param>
+		/// <returns>Datum on the left hand side of the assignment operator.</returns>
+		Datum& StoragePreservedAssignment(Datum const & rhs);
+
+		/// <summary>
 		/// Datum to integer assignment operator.
 		/// Sets datum size to 1 and clears all elements previously stored in datum.
 		/// </summary>
@@ -1260,6 +1267,11 @@ namespace FIEAGameEngine
 		/// Communicates the cause of a set stroage invalid parameters exception to the user.
 		/// </summary>
 		inline static const std::string noExternalScopesExceptionText = "External datum cannot be assigned to scope.\n";
+
+		/// <summary>
+		/// Communicates the cause of a storage preserved assignment type mismatch exception to the user.
+		/// </summary>
+		inline static const std::string storagePreservedAssignmentTypeMismatchExceptionText = "External datum cannot change it's type to match assigned datum.\n";
 #pragma endregion
 
 		//using CreateDefaultFunction = void(Datum::*)(size_t index);

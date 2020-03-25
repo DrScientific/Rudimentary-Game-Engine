@@ -83,7 +83,7 @@ namespace FIEAGameEngine
 		/// Virtual constructor
 		/// </summary>
 		/// <returns></returns>
-		virtual gsl::owner<Scope*> Clone() const;
+		virtual gsl::owner<Scope*> Clone() const override;
 
 		/// <summary>
 		/// RTTI to string override. Returns "ActionList".
@@ -102,6 +102,10 @@ namespace FIEAGameEngine
 		/// </summary>
 		inline static const std::string mActionsKey = "Actions";
 
+		/// <summary>
+		/// Index of actions attribute in action list.
+		/// </summary>
+		inline static const size_t mActionsIndex = 2;
 
 	protected:
 
@@ -111,11 +115,6 @@ namespace FIEAGameEngine
 		/// <param name="typeId">RTTI type ID of the function</param>
 		/// <param name="name">Name of the Action List</param>
 		ActionList(ActionList::IdType typeId, std::string const & name);
-
-		/// <summary>
-		/// Index of sectors attribute in scope.
-		/// </summary>
-		inline static const int mActionsIndex = 2;
 
 		inline static const std::string nonActionInActionsText = "Only Action objects can be added to the Actions field.\n";
 	};
