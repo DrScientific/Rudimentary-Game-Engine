@@ -1,10 +1,10 @@
 #pragma once
-#include "Datum.h"
 #include "Attributed.h"
 #include "Factory.h"
 
 namespace FIEAGameEngine
 {
+
 	class Entity;
 	class World;
 	class WorldState;
@@ -15,15 +15,13 @@ namespace FIEAGameEngine
 	class Sector final :
 		public Attributed
 	{
-
 		RTTI_DECLARATIONS(Sector, Attributed);
-
 	public:
 		/// <summary>
 		/// Default sector constructor.
 		/// </summary>
-		/// <param name="world">Parent of sector.</param>
-		Sector(World * const world = nullptr);
+		/// <param name="name">Name of sector.</param>
+		Sector(std::string const & name = std::string());
 
 		/// <summary>
 		/// Default copy constructor.
@@ -54,10 +52,10 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Destructor
 		/// </summary>
-		~Sector();
+		~Sector() = default;
 
 		/// <summary>
-		/// Adopts an existing scope placing it at the provided key. If the new key is "Entities", verifies that the child scope is an entity. Removes the scope from it's previous parent.
+		/// Adopts an existing scope placing it at the provided key. If the new key is the entities key, verifies that the child scope is an entity. Removes the scope from it's previous parent.
 		/// </summary>
 		/// <param name="child">Scope to adopt.</param>
 		/// <param name="newChildKey">Key to place the newly adopted scope at.</param>
@@ -67,19 +65,19 @@ namespace FIEAGameEngine
 		/// Returns the name of the sector.
 		/// </summary>
 		/// <returns>The name of the sector.</returns>
-		std::string Name();
+		std::string Name() const;
 
 		/// <summary>
 		/// Sets the name of the sector.
 		/// </summary>
 		/// <param name="name">The new name of the sector.</param>
-		void SetName(std::string name);
+		void SetName(std::string const & name);
 
 		/// <summary>
 		/// Get the world containing this sector.
 		/// </summary>
 		/// <returns>The world containing this sector.</returns>
-		World const * GetWorld();
+		World const * GetWorld() const;
 
 		/// <summary>
 		/// Moves the sector to a new world.
@@ -114,6 +112,11 @@ namespace FIEAGameEngine
 		Datum & Entities();
 
 		/// <summary>
+		/// Returns a datum containing all entities contained by this sector.
+		/// </summary>
+		Datum const & Entities() const;
+
+		/// <summary>
 		/// Creates a new entity and inserts it into this sector's Entities attribute.
 		/// </summary>
 		/// <param name="className">Class name of the entity</param>
@@ -144,6 +147,16 @@ namespace FIEAGameEngine
 		static const FIEAGameEngine::Vector<Signature> Signatures();
 
 
+		/// <summary>
+		/// Name of sectors attribute in scope.
+		/// </summary>
+		inline static const std::string mEntitiesKey = "Entities";
+
+		/// <summary>
+		/// Index of sectors attribute in scope.
+		/// </summary>
+		inline static const int mEntitiesIndex = 3;
+
 	private:
 
 		/// <summary>
@@ -156,8 +169,8 @@ namespace FIEAGameEngine
 		/// </summary>
 		int mIsAwake = 0;
 
-		inline static const std::string nonEntityInEntitiesText = "Only Entity objects can be added to the \"Entities\" field.\n";
+		inline static const std::string nonEntityInEntitiesText = "Only Entity objects can be added to the Entities field.\n";
 	};
 
-	CONCRETE_FACTORY(Sector, FIEAGameEngine::Scope);
+	CONCRETE_FACTORY(Sector, Scope);
 }

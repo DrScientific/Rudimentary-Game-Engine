@@ -15,7 +15,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// 
 		/// </summary>
-		WorldState(GameTime time);
+		WorldState(GameTime const & time);
 		
 		/// <summary>
 		/// 
@@ -43,7 +43,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// 
 		/// </summary>
-		GameTime mGameTime;
+		GameTime  const * mGameTime;
 		
 	};
 

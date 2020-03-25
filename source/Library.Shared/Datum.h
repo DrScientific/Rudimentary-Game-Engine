@@ -417,7 +417,7 @@ namespace FIEAGameEngine
 		/// Sets the type of the datum. Only works if the datum's tyoe is unknown. 
 		/// </summary>
 		/// <param name="type">Enum specifying the type of the new datum.</param>
-		void SetType(DatumType type);
+		DatumType SetType(DatumType type);
 #pragma endregion
 
 #pragma region Size

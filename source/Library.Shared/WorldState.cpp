@@ -4,8 +4,8 @@
 
 namespace FIEAGameEngine
 {
-	WorldState::WorldState(GameTime time)
+	WorldState::WorldState(GameTime const & time)
 	{
-		mGameTime = time;
+		mGameTime = &time;
 	}
 }

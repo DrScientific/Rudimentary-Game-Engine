@@ -10,11 +10,8 @@ namespace FIEAGameEngine
 	class World final :
 		public Attributed
 	{
-
 		RTTI_DECLARATIONS(World, Attributed);
-
 	public:
-
 		/// <summary>
 		/// World Constructor.
 		/// </summary>
@@ -22,12 +19,18 @@ namespace FIEAGameEngine
 		explicit World(GameTime time);
 
 		/// <summary>
+		/// World Constructor.
+		/// </summary>
+		/// <param name="time">GameTime of the world to be used by world state.</param>
+		explicit World(GameTime time, std::string const & name);
+
+		/// <summary>
 		/// Destructor.
 		/// </summary>
 		~World() = default;
 
 		/// <summary>
-		/// Adopts an existing scope placing it at the provided key. If the new key is "Sectors", verifies that the child scope is a sector. Removes the scope from it's previous parent.
+		/// Adopts an existing scope placing it at the provided key. If the new key is the sectors key, verifies that the child scope is a sector. Removes the scope from it's previous parent.
 		/// </summary>
 		/// <param name="child">Scope to adopt.</param>
 		/// <param name="newChildKey">Key to place the newly adopted scope at.</param>
@@ -37,13 +40,13 @@ namespace FIEAGameEngine
 		/// Returns the name of the world.
 		/// </summary>
 		/// <returns>The name of the world.</returns>
-		std::string Name();
+		std::string Name() const;
 
 		/// <summary>
 		/// Sets the name of the world.
 		/// </summary>
 		/// <param name="name">The new name of the world.</param>
-		void SetName(std::string name);
+		void SetName(std::string const & name);
 
 		/// <summary>
 		/// Returns the sectors contained by this world.
@@ -52,37 +55,28 @@ namespace FIEAGameEngine
 		Datum & Sectors();
 
 		/// <summary>
+		/// Returns the sectors contained by this world.
+		/// </summary>
+		/// <returns>The sectors contained by this world.</returns>
+		Datum const & Sectors() const;
+
+		/// <summary>
 		/// Creates a new sector and inserts it into this world's Sectors attribute.
 		/// </summary>
 		/// <param name="className">Class name of the sector</param>
 		/// <returns>A reference to the newly created sector.</returns>
-		Sector & CreateSector(std::string name, std::string className);
-
+		
 		/// <summary>
-		/// Returns whether the world is awake.
+		/// Creates a new sector and inserts it into this world's Sectors attribute.
 		/// </summary>
-		/// <returns>Whether the world is awake.</returns>
-		bool IsAwake() const;
-
-		/// <summary>
-		/// Sets whether the world is awake.
-		/// </summary>
-		void SetIsAwake(bool const & awake);
-
-		/// <summary>
-		/// Wakes the world.
-		/// </summary>
-		void Wake();
-
-		/// <summary>
-		/// Puts the world to sleep.
-		/// </summary>
-		void Sleep();
+		/// <param name="name">The name of the news sector</param>
+		/// <returns>A reference to the newly created sector.</returns>
+		Sector & CreateSector(std::string const & name);
 
 		/// <summary>
 		/// Calls the update call of the actions contained by the world.
 		/// </summary>
-		void Update(WorldState & worldState);
+		void Update();
 
 		/// <summary>
 		/// RTTI to string override. Returns "World".
@@ -97,6 +91,11 @@ namespace FIEAGameEngine
 		virtual gsl::owner<Scope*> Clone() const override;
 
 		/// <summary>
+		/// 
+		/// </summary>
+		void AddActionToGraveYard(Action * actionToDelete);
+
+		/// <summary>
 		/// Returns the signatures of entity.
 		/// </summary>
 		/// <returns>The signatures of entity.</returns>
@@ -107,6 +106,16 @@ namespace FIEAGameEngine
 		/// </summary>
 		WorldState mState;
 
+		/// <summary>
+		/// Name of sectors attribute in scope.
+		/// </summary>
+		inline static const std::string mSectorsKey = "Sectors";
+
+		/// <summary>
+		/// Index of sectors attribute in scope.
+		/// </summary>
+		inline static const int mSectorsIndex = 2;
+
 	private:
 
 		/// <summary>
@@ -115,10 +124,15 @@ namespace FIEAGameEngine
 		std::string mName;
 
 		/// <summary>
-		/// Whether the world is awake.
+		/// A vector of actions that need to be deleted.
 		/// </summary>
-		int mIsAwake = 0;
+		Vector<Action *> mGraveyard;
 
-		inline static const std::string nonSectorInSectorsText = "Only Sector objects can be added to the \"Sectors\" field.\n";
+		/// <summary>
+		/// 
+		/// </summary>
+		void ClearGraveYard();
+
+		inline static const std::string nonSectorInSectorsText = "Only Sector objects can be added to the Sectors field.\n";
 	};
 }

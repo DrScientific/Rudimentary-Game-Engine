@@ -1,0 +1,32 @@
+{
+  "name": {
+    "type": "string",
+    "value": "Test Entity"
+  },
+  "number": {
+    "type": "integer",
+    "value": 10
+  },
+  "Actions": {
+    "type": "table",
+    "value": [
+			{
+				"type": "table",
+				"class": "ActionIncrement",
+				"value": {
+					"name": {
+						"type": "string",
+						"value": "Increment"
+					},
+					"Target": {
+						"type": "string",
+						"value": "number"
+					},
+					"step": {
+						"type": "integer",
+						"value": 4
+					}
+				}
+			}]
+  }
+}

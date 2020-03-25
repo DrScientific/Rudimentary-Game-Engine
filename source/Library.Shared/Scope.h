@@ -81,7 +81,16 @@ namespace FIEAGameEngine
 		/// <param name="key">Key to search for.</param>
 		/// <param name="scopeAddress">Scope address is a second optional parameter that will return a pointer to a pointer of the scope the key was found in.</param>
 		/// <returns>A pointer to the datum at the given key in this scope or it's ancestors.</returns>
-		Datum* Search(std::string const & key, Scope** scopeAddress = nullptr);
+		virtual Datum* Search(std::string const & key, Scope** scopeAddress = nullptr);
+
+		/// <summary>
+		/// Returns a pointer to the scope of the given name contained within the closest scope with the scope name in this scope or it's ancestors.
+		/// If this scope or it's ancestors do not posses an ancestor with the given table name that has a name atribute equal to the passed in name return nullptr.
+		/// </summary>
+		/// <param name="name">Name of attribute to search for.</param>
+		/// <param name="tableName">Table name to stop and search for the name at.</param>
+		/// <returns>A pointer to the datum of the given name contained within the closest scope with the scope name in this scope or it's ancestors.</returns>
+		Scope* NameSearch(std::string const & name, std::string const & tableName);
 
 		/// <summary>
 		/// Returns a pointer to the datum at the given key in this scope or it's ancestors. If this scope or it's ancestors do not posses anything at the given key returns the nullptr.
@@ -134,6 +143,13 @@ namespace FIEAGameEngine
 		/// <param name="index">Index of the datum we wish to acces.</param>
 		/// <returns>The datum at the given index.</returns>
 		Datum & operator[](size_t const index);
+
+		/// <summary>
+		/// Returns the datum at the given index.
+		/// </summary>
+		/// <param name="index">Index of the datum we wish to acces.</param>
+		/// <returns>The datum at the given index.</returns>
+		Datum const & operator[](size_t const index) const;
 
 		/// <summary>
 		/// Compares two scopes, comparing each key-datum pair.

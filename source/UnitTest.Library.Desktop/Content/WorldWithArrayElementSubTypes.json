@@ -9,6 +9,7 @@
 	},
 	"Sectors": {
 		"type": "scope",
+		"class": "Sector",
 		"value": [
 			{
 				"type": "scope",
@@ -24,6 +25,7 @@
 					},
 					"Entities": {
 						"type": "scope",
+						"class": "Entity",
 						"value": [
 							{
 								"type": "scope",
@@ -99,6 +101,7 @@
 					},
 					"Entities": {
 						"type": "scope",
+						"class": "Entity",
 						"value": [
 							{
 								"type": "scope",
@@ -174,6 +177,7 @@
 					},
 					"Entities": {
 						"type": "scope",
+						"class": "Entity",
 						"value": [
 							{
 								"type": "scope",
@@ -249,6 +253,7 @@
 					},
 					"Entities": {
 						"type": "scope",
+						"class": "Entity",
 						"value": [
 							{
 								"type": "scope",

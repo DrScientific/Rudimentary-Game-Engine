@@ -1,0 +1,65 @@
+{
+  "name": {
+    "type": "string",
+    "value": "Test Entity"
+  },
+  "number": {
+    "type": "integer",
+    "value": 10
+  },
+  "Actions": {
+    "type": "table",
+    "value": [
+      {
+        "type": "table",
+        "class": "ActionList",
+        "value":{
+          "name":{
+            "type": "string",
+            "value": "List"
+          },
+          "Actions":{
+            "type": "table",
+            "value": [
+              {
+				"type": "table",
+				"class": "ActionIncrement",
+				"value": {
+					"name": {
+						"type": "string",
+						"value": "Increment4"
+					},
+					"Target": {
+						"type": "string",
+						"value": "number"
+					},
+					"step": {
+						"type": "integer",
+						"value": 4
+					}
+				}
+			},
+			{
+				"type": "table",
+				"class": "ActionIncrement",
+				"value": {
+					"name": {
+						"type": "string",
+						"value": "Increment6"
+					},
+					"Target": {
+						"type": "string",
+						"value": "number"
+					},
+					"step": {
+						"type": "integer",
+						"value": 6
+					}
+				}
+			}
+              ]
+          }
+        }
+      }]
+  }
+}

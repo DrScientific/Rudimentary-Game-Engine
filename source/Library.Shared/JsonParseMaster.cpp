@@ -99,7 +99,7 @@ namespace FIEAGameEngine
 			{
 				delete mSharedData;
 			}
-			//^
+			
 			mParseHandlers = std::move(other.mParseHandlers);
 			mCurrentFileBeingParsed = std::move(other.mCurrentFileBeingParsed);
 			mSharedData = std::move(other.mSharedData);
@@ -191,7 +191,7 @@ namespace FIEAGameEngine
 		}
 		Json::Value jsonValue;
 		jsonIStream >> jsonValue;
-		return ParseMembers(jsonValue);
+		return ParseMembers(jsonValue, false, 0);
 	}
 
 	std::string const & JsonParseMaster::GetFileName() const
@@ -209,18 +209,19 @@ namespace FIEAGameEngine
 		mSharedData = &sharedData;
 	}
 
-	bool JsonParseMaster::ParseMembers(Json::Value const & jsonValue)
+	bool JsonParseMaster::ParseMembers(Json::Value const & jsonValue, bool const & isArrayElement, size_t const & index)
 	{
 		if (jsonValue.size() != 0)
 		{
 			std::vector<string> memberNames = jsonValue.getMemberNames();
 
-			for (auto & i : memberNames)
+			for (auto const & i : memberNames)
 			{
-				if (!Parse(i, jsonValue[i], false, 0))
+				if (!Parse(i, jsonValue[i], isArrayElement, index))
 				{
 					return false;
 				}
+
 			}
 		}
 		return true;
@@ -237,7 +238,7 @@ namespace FIEAGameEngine
 				IJsonParseHelper* handler = pair.second;
 				if (handler->StartHandler(mSharedData, key, value, isArrayElement, index))
 				{
-					result = ParseMembers(value);
+					result = ParseMembers(value, false, 0);
 					if (!handler->EndHandler(mSharedData, key))
 					{
 						throw exception(startHandlerFailedToEndException.c_str());
@@ -253,7 +254,16 @@ namespace FIEAGameEngine
 			size_t i = 0;
 			for (auto const & element : value)
 			{
-				result |= Parse(key, element, true, i);
+				if (element.isObject())
+				{
+					mSharedData->IncrementDepth();
+					result |= ParseMembers(element, true, i);
+					mSharedData->DecrementDepth();
+				}
+				else
+				{
+					result |= Parse(key, element, true, i);
+				}
 				++i;
 			}
 		}

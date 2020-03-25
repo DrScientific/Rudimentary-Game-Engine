@@ -46,24 +46,24 @@ namespace FIEAGameEngine
 		}
 	};
 
-#define RTTI_DECLARATIONS(Type, ParentType)																				 \
-		public:																											 \
-			static std::string TypeName() { return std::string(#Type); }												 \
-			static IdType TypeIdClass() { return sRunTimeTypeId; }												 \
-			virtual IdType TypeIdInstance() const override { return Type::TypeIdClass(); }						 \
-			virtual FIEAGameEngine::RTTI* QueryInterface(const IdType id) override										 \
-            {																											 \
+#define RTTI_DECLARATIONS(Type, ParentType)																				\
+		public:																											\
+			static std::string TypeName() { return std::string(#Type); }												\
+			static IdType TypeIdClass() { return sRunTimeTypeId; }														\
+			virtual IdType TypeIdInstance() const override { return Type::TypeIdClass(); }								\
+			virtual FIEAGameEngine::RTTI* QueryInterface(const IdType id) override										\
+            {																											\
 				return (id == sRunTimeTypeId ? reinterpret_cast<FIEAGameEngine::RTTI*>(this) : ParentType::QueryInterface(id)); \
-            }																											 \
-			virtual bool Is(IdType id) const override															 \
-			{																											 \
-				return (id == sRunTimeTypeId ? true : ParentType::Is(id));												 \
-			}																											 \
-			virtual bool Is(const std::string& name) const override														 \
-			{																											 \
-				return (name == TypeName() ? true : ParentType::Is(name));												 \
-			}																											 \
-			private:																									 \
+            }																											\
+			virtual bool Is(IdType id) const override																	\
+			{																											\
+				return (id == sRunTimeTypeId ? true : ParentType::Is(id));												\
+			}																											\
+			virtual bool Is(const std::string& name) const override														\
+			{																											\
+				return (name == TypeName() ? true : ParentType::Is(name));												\
+			}																											\
+			private:																									\
 				static IdType sRunTimeTypeId;
 
 #define RTTI_DEFINITIONS(Type) RTTI::IdType Type::sRunTimeTypeId = reinterpret_cast<RTTI::IdType>(&Type::sRunTimeTypeId);

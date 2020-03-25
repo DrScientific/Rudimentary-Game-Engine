@@ -4,52 +4,57 @@
 #include "World.h"
 #include "Factory.h"
 
+using namespace std;
+
 namespace FIEAGameEngine
 {
 	RTTI_DEFINITIONS(Sector)
 
-	Sector::Sector(World * const world) : Attributed(TypeIdClass())
-	{
-		mParent = world;
-	}
 
-	Sector::~Sector()
+	Sector::Sector(string const & name) : Attributed(Sector::TypeIdClass())
 	{
+		mName = name;
 	}
 
 	void Sector::Adopt(Scope & child, std::string const & newChildKey)
 	{
-		if (newChildKey == "Entities" && !child.Is(Entity::TypeIdClass()))
+		if (newChildKey == mEntitiesKey && !child.Is(Entity::TypeIdClass()))
 		{
 			throw exception(nonEntityInEntitiesText.c_str());
 		}
 		Scope::Adopt(child, newChildKey);
 	}
 
-	std::string Sector::Name()
+	std::string Sector::Name() const
 	{
 		return mName;
 	}
 
-	void Sector::SetName(std::string name)
+	void Sector::SetName(std::string const & name)
 	{
 		mName = name;
 	}
 
-	World const * Sector::GetWorld()
+	World const * Sector::GetWorld() const
 	{
 		World * worldPtr = nullptr;
 		if (mParent != nullptr)
 		{
-			assert(mParent->Is(World::TypeIdClass()));
-			worldPtr = static_cast<World*>(mParent);
+			worldPtr = mParent->As<World>();
 		}
 		return worldPtr;
 	}
 
 	void Sector::SetWorld(World * const newWorld)
 	{
-		newWorld->Adopt(*this, "Sectors");
+		if (newWorld == nullptr)
+		{
+			Orphan();
+		}
+		else
+		{
+			newWorld->Adopt(*this, newWorld->mSectorsKey);
+		}
 	}
 
 	bool Sector::IsAwake() const
@@ -59,14 +64,7 @@ namespace FIEAGameEngine
 
 	void Sector::SetIsAwake(bool const & awake)
 	{
-		if (awake)
-		{
-			mIsAwake = 1;
-		}
-		else
-		{
-			mIsAwake = 0;
-		}
+		awake ? mIsAwake = 1 : mIsAwake = 0;
 	}
 
 	void Sector::Wake()
@@ -81,7 +79,12 @@ namespace FIEAGameEngine
 
 	Datum & Sector::Entities()
 	{
-		return *Find("Entities");
+		return operator[](mEntitiesIndex);
+	}
+
+	Datum const & Sector::Entities() const
+	{
+		return operator[](mEntitiesIndex);
 	}
 
 	Entity & Sector::CreateEntity(std::string name, std::string className)
@@ -89,8 +92,9 @@ namespace FIEAGameEngine
 		Scope * newScope = Factory<Scope>::Create(className);
 		assert(newScope->Is(Entity::TypeIdClass()));
 		Entity * newEntity = static_cast<Entity*>(newScope);
+		newEntity->SetSector(this);
 		newEntity->SetName(name);
-		Adopt(*newEntity, "Entities");
+		Adopt(*newEntity, mEntitiesKey);
 		return *newEntity;
 	}
 
@@ -98,17 +102,19 @@ namespace FIEAGameEngine
 	{
 		if (mIsAwake)
 		{
-			Datum entities = *Find("Entities");
+			Datum & entities = Entities();
 			for (size_t i = 0; i < entities.Size(); i++)
 			{
+				worldState.mEntity = static_cast<Entity*>(&entities[i]);
 				static_cast<Entity*>(&entities[i])->Update(worldState);
 			}
+			worldState.mEntity = nullptr;
 		}
 	}
 
 	std::string Sector::ToString() const
 	{
-		return "Sector";
+		return Sector::TypeName();
 	}
 
 	gsl::owner<Scope*> Sector::Clone() const
@@ -122,7 +128,7 @@ namespace FIEAGameEngine
 		{
 			{"Name", Datum::DatumType::String, 1, offsetof(Sector, mName) },
 			{"IsAwake", Datum::DatumType::Integer, 1, offsetof(Sector, mIsAwake) },
-			{"Entities", Datum::DatumType::Scope, 0, 0 },
+			{ mEntitiesKey, Datum::DatumType::Scope, 0, 0 }
 		};
 	}
 

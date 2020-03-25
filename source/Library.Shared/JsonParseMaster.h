@@ -194,7 +194,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="jsonValue">The Json::Value to parse.</param>
 		/// <returns>Whether the members of the Json::Value were successfully parsed.</returns>
-		bool ParseMembers(Json::Value const & jsonValue);
+		bool ParseMembers(Json::Value const & jsonValue, bool const & isArrayElement = false, size_t const & index = 0);
 
 		/// <summary>
 		/// Parses a string-key Json::Value-value pair.

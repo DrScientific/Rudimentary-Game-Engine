@@ -161,6 +161,29 @@ namespace FIEAGameEngine
 		return result;
 	}
 
+	Scope * Scope::NameSearch(std::string const & name, std::string const & tableName)
+	{
+		Scope* scopeToStartSearchFrom = this;
+		Scope** scopeNameFoundIn = &scopeToStartSearchFrom;
+		Datum * actionsDatum = scopeToStartSearchFrom->Search(tableName, scopeNameFoundIn);
+		while (actionsDatum != nullptr)
+		{
+			for (size_t i = 0; i < actionsDatum->Size(); i++)
+			{
+				Datum * nameDatum = (*actionsDatum)[i].Find("Name");
+				if (nameDatum != nullptr)
+				{
+					if (nameDatum->Front<string>() == name)
+					{
+						return &(*actionsDatum)[i];
+					}
+				}
+			}
+			actionsDatum = ((*scopeNameFoundIn)->mParent)->Search(tableName, scopeNameFoundIn);
+		}
+		return nullptr;
+	}
+
 	Datum & Scope::Append(string const & key)
 	{
 		if (!key.size())
@@ -211,6 +234,15 @@ namespace FIEAGameEngine
 	}
 
 	Datum & Scope::operator[](size_t const index)
+	{
+		if (index >= mVector.Size())
+		{
+			throw exception(indexOutOfBoundsExceptionText.c_str());
+		}
+		return mVector[index]->second;
+	}
+
+	Datum const & Scope::operator[](size_t const index) const
 	{
 		if (index >= mVector.Size())
 		{

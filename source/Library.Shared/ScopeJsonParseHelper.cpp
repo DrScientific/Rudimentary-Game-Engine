@@ -63,114 +63,117 @@ namespace FIEAGameEngine
 	{
 		ScopeJsonParseHelper::ScopeSharedData * scopeSharedData = sharedData->As< ScopeJsonParseHelper::ScopeSharedData>();
 
+		bool result = true;
+
 		if (scopeSharedData == nullptr || key.empty())
 		{
-			return false;
+			result = false;
 		}
-
-		if (scopeSharedData->Depth() % 2 == 1)
+		else if (key == "class")
 		{
-			if (jsonValue.isObject())
+			StackFrame & top = stack.Top();
+			top.Class = jsonValue.asString();
+			result = true;
+		}
+		else if (key == "type")
+		{
+			StackFrame & top = stack.Top();
+			Datum::DatumType datumType = stringToTypeMap.At(jsonValue.asString());
+			top.Type = top.ContextFrame->Append(top.Key).SetType(datumType);
+			result = true;
+		}
+		else if (key == "value")
+		{
+			StackFrame & top = stack.Top();
+			if ((*(top.ContextFrame))[top.Key].IsInternal())
 			{
-				if (stack.IsEmpty())
+				if (jsonValue.isObject())
 				{
-					StackFrame baseFrame("", Datum::DatumType::Scope, &scopeSharedData->GetScope());
-					stack.Push(baseFrame);
+					Scope * newScope = nullptr;
+					if (!top.Class.empty() && top.Type != Datum::DatumType::Scope)
+					{
+						throw exception(classMustBeTypeScopeText.c_str());
+					}
+					else if (!top.Class.empty())
+					{
+						newScope = Factory<Scope>::Create(top.Class);
+					}
+					else
+					{
+						newScope = new Scope();
+					}
+
+					top.ContextFrame->Adopt(*newScope, top.Key);
+
+					if (isArrayElement)
+					{
+						//stack.Push(StackFrame(key, Datum::DatumType::Scope, &top.ContextFrame->AppendScope(top.Key)));
+						stack.Push(StackFrame(key, Datum::DatumType::Scope, top.Class, newScope));
+					}
+					else
+					{
+						//top.ContextFrame = &top.ContextFrame->AppendScope(top.Key);
+						top.ContextFrame = newScope;
+					}
+					result = true;
 				}
-				StackFrame currentFrame(key, Datum::DatumType::Unknown, stack.Top().ContextFrame);
-				stack.Push(currentFrame);
-				stack.Top().ContextFrame->Append(key);
-				return true;
+				else
+				{
+					Datum & newDatum = *top.ContextFrame->Find(top.Key);
+					if (jsonValue.isInt())
+					{
+						newDatum.PushBack(jsonValue.asInt());
+						result = true;
+					}
+					else if (jsonValue.isDouble())
+					{
+						newDatum.PushBack(jsonValue.asFloat());
+						result = true;
+					}
+					else if (jsonValue.isString())
+					{
+						newDatum.PushBackFromString(jsonValue.asString());
+						result = true;
+					}
+					else
+					{
+						result = false;
+					}
+				}
+				
+			}
+			else
+			{
+				Datum & newDatum = *top.ContextFrame->Find(top.Key);
+				if (jsonValue.isInt())
+				{
+					index;
+					newDatum.Set(jsonValue.asInt(), index);
+					result = true;
+				}
+				else if (jsonValue.isDouble())
+				{
+					newDatum.Set(jsonValue.asFloat(), index);
+					result = true;
+				}
+				else if (jsonValue.isString())
+				{
+					newDatum.Set(jsonValue.asString(), index);
+					result = true;
+				}
+				else
+				{
+					result = false;
+				}
 			}
 		}
 		else
 		{
-			if (key == "class")
-			{
-				stack.Top().Class = jsonValue.asString();
-				return true;
-			}
-			if (key == "type")
-			{
-				Datum::DatumType datumType = stringToTypeMap.At(jsonValue.asString());
-				stack.Top().ContextFrame->Find(stack.Top().Key)->SetType(datumType);
-				stack.Top().Type = datumType;
-				return true;
-			}
-			else if (key == "value")
-			{
-				if ((*(stack.Top().ContextFrame))[stack.Top().Key].IsInternal())
-				{
-					if (jsonValue.isObject() )
-					{
-						Scope * newScope = nullptr;
-						if (stack.Top().Class.length() != 0 && stack.Top().Type != Datum::DatumType::Scope)
-						{
-							throw exception(classMustBeTypeScopeText.c_str());
-						}
-						else if (stack.Top().Class.length() != 0)
-						{
-							newScope = Factory<Scope>::Create(stack.Top().Class);
-						}
-						else
-						{
-							newScope = new Scope();
-						}
-
-						stack.Top().ContextFrame->Adopt(*newScope, stack.Top().Key);
-
-						if (isArrayElement)
-						{
-							//stack.Push(StackFrame(key, Datum::DatumType::Scope, &stack.Top().ContextFrame->AppendScope(stack.Top().Key)));
-							stack.Push(StackFrame(key, Datum::DatumType::Scope, stack.Top().Class, newScope));
-							
-						}
-						else
-						{
-							//stack.Top().ContextFrame = &stack.Top().ContextFrame->AppendScope(stack.Top().Key);
-							stack.Top().ContextFrame = newScope;
-							
-						}
-						return true;
-					}
-					if (jsonValue.isInt())
-					{
-						stack.Top().ContextFrame->Append(stack.Top().Key).PushBack(jsonValue.asInt());
-						return true;
-					}
-					else if (jsonValue.isDouble())
-					{
-						stack.Top().ContextFrame->Append(stack.Top().Key).PushBack(jsonValue.asFloat());
-						return true;
-					}
-					else if (jsonValue.isString())
-					{
-						stack.Top().ContextFrame->Append(stack.Top().Key).PushBackFromString(jsonValue.asString());
-						return true;
-					}
-				}
-				else
-				{
-					if (jsonValue.isInt())
-					{
-						stack.Top().ContextFrame->Append(stack.Top().Key).Set(jsonValue.asInt(), index);
-						return true;
-					}
-					else if (jsonValue.isDouble())
-					{
-						stack.Top().ContextFrame->Append(stack.Top().Key).Set(jsonValue.asFloat(), index);
-						return true;
-					}
-					else if (jsonValue.isString())
-					{
-						stack.Top().ContextFrame->Append(stack.Top().Key).SetFromString(jsonValue.asString(), index);
-						return true;
-					}
-				}
-			}
+			Scope * contextFrame = stack.IsEmpty() ? &scopeSharedData->GetScope() : stack.Top().ContextFrame;
+			stack.Push(StackFrame(key, Datum::DatumType::Unknown, contextFrame));
 		}
 
-		return false;
+		return result;
 	}
 
 	bool ScopeJsonParseHelper::EndHandler(JsonParseMaster::SharedData * const sharedData, std::string const & key)
@@ -179,6 +182,8 @@ namespace FIEAGameEngine
 		{
 			return false;
 		}
+
+		StackFrame top = stack.Top();
 
 		if (stack.Top().Key == key)
 		{

@@ -5,6 +5,7 @@
 namespace FIEAGameEngine
 {
 	class Sector;
+	class Action;
 	class WorldState;
 
 	/// <summary>
@@ -15,12 +16,11 @@ namespace FIEAGameEngine
 	{
 		RTTI_DECLARATIONS(Entity, Attributed);
 	public:
-
 		/// <summary>
 		/// Default entity constructor
 		/// </summary>
 		/// <param name="sector">Parent of entity</param>
-		Entity(Sector * const sector = nullptr);
+		Entity(std::string const & name = std::string());
 
 		/// <summary>
 		/// Default copy constructor
@@ -51,7 +51,14 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Virtual Destructor
 		/// </summary>
-		virtual ~Entity();
+		virtual ~Entity() = default;
+
+		/// <summary>
+		/// Adopts an existing scope placing it at the provided key. If the new key is the actions key, verifies that the child scope is an action. Removes the scope from it's previous parent.
+		/// </summary>
+		/// <param name="child">Scope to adopt.</param>
+		/// <param name="newChildKey">Key to place the newly adopted scope at.</param>
+		virtual void Adopt(Scope & child, std::string const & newChildKey) override;
 
 		/// <summary>
 		/// Returns the name of the entity
@@ -99,6 +106,23 @@ namespace FIEAGameEngine
 		void Sleep();
 
 		/// <summary>
+		/// Returns a datum containing all actions contained by this entity.
+		/// </summary>
+		Datum & Actions();
+
+		/// <summary>
+		/// Returns a datum containing all actions contained by this entity.
+		/// </summary>
+		Datum const & Actions() const;
+
+		/// <summary>
+		/// Creates a new action and inserts it into this entity's Actions attribute.
+		/// </summary>
+		/// <param name="className">Class name of the action</param>
+		/// <returns>A reference to the newly created action.</returns>
+		Action & CreateAction(std::string name, std::string className);
+
+		/// <summary>
 		/// Calls the update call of the actions contained by the entity
 		/// </summary>
 		void Update(WorldState & worldState);
@@ -121,6 +145,31 @@ namespace FIEAGameEngine
 		/// <returns>The signatures of entity.</returns>
 		static const FIEAGameEngine::Vector<Signature> Signatures();
 
+		/// <summary>
+		/// Name of sectors attribute in scope.
+		/// </summary>
+		inline static const std::string mActionsKey = "Actions";
+
+		/// <summary>
+		/// Index of sectors attribute in scope.
+		/// </summary>
+		inline static const int mActionsIndex = 3;
+
+	protected:
+
+		/// <summary>
+		/// Entity IdType Constructor
+		/// </summary>
+		/// <param name="typeId">Type ID of the entity</param>
+		Entity(RTTI::IdType typeId);
+
+		/// <summary>
+		/// Entity Constructor
+		/// </summary>
+		/// <param name="typeId">Type ID of the entity</param>
+		/// <param name="name">Name of the entity</param>
+		Entity(RTTI::IdType typeId, string const & name);
+
 	private:
 		/// <summary>
 		/// The name of the entity.
@@ -131,7 +180,9 @@ namespace FIEAGameEngine
 		/// Whether the entity is awake.
 		/// </summary>
 		int mIsAwake = 0;
+
+		inline static const std::string nonActionInActionsText = "Only Action objects can be added to the Actions field.\n";
 	};
 
-	CONCRETE_FACTORY(Entity, FIEAGameEngine::Scope);
+	CONCRETE_FACTORY(Entity, Scope);
 }

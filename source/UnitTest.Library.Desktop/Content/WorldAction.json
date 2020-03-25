@@ -1,0 +1,498 @@
+{
+  "Name": {
+    "type": "string",
+    "value": "Test World"
+  },
+  "IsAwake": {
+    "type": "integer",
+    "value": 1
+  },
+  "Sectors": {
+    "type": "scope",
+    "value": [
+      {
+        "type": "scope",
+        "class": "Sector",
+        "value": {
+          "IsAwake": {
+            "type": "integer",
+            "value": 1
+          },
+          "Name": {
+            "type": "string",
+            "value": "Sector A"
+          },
+          "Entities": {
+            "type": "scope",
+            "value": [
+              {
+                "type": "scope",
+                "class": "Entity",
+                "value": {
+                  "Name": {
+                    "type": "string",
+                    "value": "Entity A1"
+                  },
+                  "IsAwake": {
+                    "type": "integer",
+                    "value": 1
+                  },
+                  "Actions": {
+                    "type": "scope",
+                    "value": [
+                      {
+                        "type": "scope",
+                        "class": "ActionListWhile",
+                        "value": {
+                          "Name": {
+                            "type": "string",
+                            "value": "ActionListWhile A1"
+                          },
+                          "Actions": {
+                            "type": "scope",
+                            "value": [
+                              {
+                                "type": "scope",
+                                "class": "ActionList",
+                                "value": {
+                                  "Name": {
+                                    "type": "string",
+                                    "value": "ActionList A1"
+                                  },
+                                  "Actions": {
+                                    "type": "scope",
+                                    "value": [
+                                      {
+                                        "type": "scope",
+                                        "class": "CreateAction",
+                                        "value": {
+                                          "Name": {
+                                            "type": "string",
+                                            "value": "CreateAction A1"
+                                          },
+                                          "ClassName": {
+                                            "type": "string",
+                                            "value": "ActionIncrement"
+                                          },
+                                          "InstanceName": {
+                                            "type": "string",
+                                            "value": "ActionToKill"
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "type": "scope",
+                                        "class": "ActionIncrement",
+                                        "value": {
+                                          "Name": {
+                                            "type": "string",
+                                            "value": "ActionIncrement A1"
+                                          },
+                                          "TargetGameContainer": {
+                                            "type": "string",
+                                            "value": "Entities"
+                                          },
+                                          "TargetName": {
+                                            "type": "string",
+                                            "value": "Entity A1"
+                                          },
+                                          "TargetAttribute": {
+                                            "type": "string",
+                                            "value": "Health"
+                                          },
+                                          "Step": {
+                                            "type": "float",
+                                            "value": 2.5
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "type": "scope",
+                                        "class": "DestroyAction",
+                                        "value": {
+                                          "Name": {
+                                            "type": "string",
+                                            "value": "DestroyAction A1"
+                                          },
+                                          "Target": {
+                                            "type": "string",
+                                            "value": "ActionToKill"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          "Condition": {
+                            "type": "integer",
+                            "value": 0
+                          },
+                          "Preamble": {
+                            "type": "scope",
+                            "class": "ActionList",
+                            "value": {
+                              "Name": {
+                                "type": "string",
+                                "value": "Preamble A1"
+                              },
+                              "Actions": {
+                                "type": "scope",
+                                "value": [
+                                  {
+                                    "type": "scope",
+                                    "class": "ActionIncrement",
+                                    "value": {
+                                      "Name": {
+                                        "type": "string",
+                                        "value": "ActionIncrement A1"
+                                      },
+                                      "TargetGameContainer": {
+                                        "type": "string",
+                                        "value": "Actions"
+                                      },
+                                      "TargetName": {
+                                        "type": "string",
+                                        "value": "ActionListWhile A1"
+                                      },
+                                      "TargetAttribute": {
+                                        "type": "string",
+                                        "value": "Condition"
+                                      },
+                                      "Step": {
+                                        "type": "float",
+                                        "value": -10.5
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "Increment": {
+                            "type": "scope",
+                            "class": "ActionList",
+                            "value": {
+                              "Name": {
+                                "type": "string",
+                                "value": "IncrementA1"
+                              },
+                              "Actions": {
+                                "type": "scope",
+                                "value": [
+                                  {
+                                    "type": "scope",
+                                    "class": "ActionIncrement",
+                                    "value": {
+                                      "Name": {
+                                        "type": "string",
+                                        "value": "ActionIncrement A1"
+                                      },
+                                      "TargetGameContainer": {
+                                        "type": "string",
+                                        "value": "Actions"
+                                      },
+                                      "TargetName": {
+                                        "type": "string",
+                                        "value": "ActionListWhile A1"
+                                      },
+                                      "TargetAttribute": {
+                                        "type": "string",
+                                        "value": "Condition"
+                                      },
+                                      "Step": {
+                                        "type": "float",
+                                        "value": 1.5
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "Health": {
+                    "type": "integer",
+                    "value": 10
+                  }
+                }
+              },
+              {
+                "type": "scope",
+                "class": "Entity",
+                "value": {
+                  "Name": {
+                    "type": "string",
+                    "value": "Entity A2"
+                  },
+                  "IsAwake": {
+                    "type": "integer",
+                    "value": 0
+                  }
+                }
+              },
+              {
+                "type": "scope",
+                "class": "Entity",
+                "value": {
+                  "Name": {
+                    "type": "string",
+                    "value": "Entity A3"
+                  },
+                  "IsAwake": {
+                    "type": "integer",
+                    "value": 1
+                  }
+                }
+              },
+              {
+                "type": "scope",
+                "class": "Entity",
+                "value": {
+                  "Name": {
+                    "type": "string",
+                    "value": "Entity A4"
+                  },
+                  "IsAwake": {
+                    "type": "integer",
+                    "value": 0
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "scope",
+        "class": "Sector",
+        "value": {
+          "IsAwake": {
+            "type": "integer",
+            "value": 1
+          },
+          "Name": {
+            "type": "string",
+            "value": "Sector B"
+          },
+          "Entities": {
+            "type": "scope",
+            "value": [
+              {
+                "type": "scope",
+                "class": "Entity",
+                "value": {
+                  "Name": {
+                    "type": "string",
+                    "value": "Entity B1"
+                  },
+                  "IsAwake": {
+                    "type": "integer",
+                    "value": 0
+                  }
+                }
+              },
+              {
+                "type": "scope",
+                "class": "Entity",
+                "value": {
+                  "Name": {
+                    "type": "string",
+                    "value": "Entity B2"
+                  },
+                  "IsAwake": {
+                    "type": "integer",
+                    "value": 0
+                  }
+                }
+              },
+              {
+                "type": "scope",
+                "class": "Entity",
+                "value": {
+                  "Name": {
+                    "type": "string",
+                    "value": "Entity B3"
+                  },
+                  "IsAwake": {
+                    "type": "integer",
+                    "value": 0
+                  }
+                }
+              },
+              {
+                "type": "scope",
+                "class": "Entity",
+                "value": {
+                  "Name": {
+                    "type": "string",
+                    "value": "Entity B4"
+                  },
+                  "IsAwake": {
+                    "type": "integer",
+                    "value": 0
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "scope",
+        "class": "Sector",
+        "value": {
+          "IsAwake": {
+            "type": "integer",
+            "value": 0
+          },
+          "Name": {
+            "type": "string",
+            "value": "Sector C"
+          },
+          "Entities": {
+            "type": "scope",
+            "value": [
+              {
+                "type": "scope",
+                "class": "Entity",
+                "value": {
+                  "Name": {
+                    "type": "string",
+                    "value": "Entity C1"
+                  },
+                  "IsAwake": {
+                    "type": "integer",
+                    "value": 1
+                  }
+                }
+              },
+              {
+                "type": "scope",
+                "class": "Entity",
+                "value": {
+                  "Name": {
+                    "type": "string",
+                    "value": "Entity C2"
+                  },
+                  "IsAwake": {
+                    "type": "integer",
+                    "value": 1
+                  }
+                }
+              },
+              {
+                "type": "scope",
+                "class": "Entity",
+                "value": {
+                  "Name": {
+                    "type": "string",
+                    "value": "Entity C3"
+                  },
+                  "IsAwake": {
+                    "type": "integer",
+                    "value": 1
+                  }
+                }
+              },
+              {
+                "type": "scope",
+                "class": "Entity",
+                "value": {
+                  "Name": {
+                    "type": "string",
+                    "value": "Entity C4"
+                  },
+                  "IsAwake": {
+                    "type": "integer",
+                    "value": 1
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "scope",
+        "class": "Sector",
+        "value": {
+          "IsAwake": {
+            "type": "integer",
+            "value": 0
+          },
+          "Name": {
+            "type": "string",
+            "value": "Sector D"
+          },
+          "Entities": {
+            "type": "scope",
+            "value": [
+              {
+                "type": "scope",
+                "class": "Entity",
+                "value": {
+                  "Name": {
+                    "type": "string",
+                    "value": "Entity D1"
+                  },
+                  "IsAwake": {
+                    "type": "integer",
+                    "value": 1
+                  }
+                }
+              },
+              {
+                "type": "scope",
+                "class": "Entity",
+                "value": {
+                  "Name": {
+                    "type": "string",
+                    "value": "Entity D2"
+                  },
+                  "IsAwake": {
+                    "type": "integer",
+                    "value": 0
+                  }
+                }
+              },
+              {
+                "type": "scope",
+                "class": "Entity",
+                "value": {
+                  "Name": {
+                    "type": "string",
+                    "value": "Entity D3"
+                  },
+                  "IsAwake": {
+                    "type": "integer",
+                    "value": 1
+                  }
+                }
+              },
+              {
+                "type": "scope",
+                "class": "Entity",
+                "value": {
+                  "Name": {
+                    "type": "string",
+                    "value": "Entity D4"
+                  },
+                  "IsAwake": {
+                    "type": "integer",
+                    "value": 0
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

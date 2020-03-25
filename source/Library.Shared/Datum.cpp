@@ -541,7 +541,7 @@ namespace FIEAGameEngine
 	#pragma endregion
 
 	#pragma region SetType
-	void Datum::SetType(DatumType type)
+	Datum::DatumType Datum::SetType(DatumType type)
 	{
 		if (mType == DatumType::Unknown || mType == type)
 		{
@@ -551,6 +551,7 @@ namespace FIEAGameEngine
 		{
 			throw exception(datumTypeAlreadyInitializedExceptionText.c_str());
 		}
+		return mType;
 	}
 	#pragma endregion
 
@@ -863,7 +864,7 @@ namespace FIEAGameEngine
 		{
 			throw exception(operationTypeMismatchExceptionText.c_str());
 		}
-		mArray.tString[index].~basic_string();
+		//mArray.tString[index].~basic_string();
 		mArray.tString[index] = value;
 	}
 
