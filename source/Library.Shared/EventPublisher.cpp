@@ -8,7 +8,7 @@ namespace FIEAGameEngine
 
 
 
-	EventPublisher::EventPublisher(std::set<IEventSubscriber*>* const subscribers) : mSubscribersPtr(subscribers)
+	EventPublisher::EventPublisher(std::set<IEventSubscriber*>* const subscribers) : mSubscribersPtr(subscribers), mDelay(0)
 	{
 	}
 

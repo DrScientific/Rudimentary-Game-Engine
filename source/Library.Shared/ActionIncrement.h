@@ -45,7 +45,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// 
 		/// </summary>
-		~ActionIncrement() = default;
+		virtual ~ActionIncrement() = default;
 
 		/// <summary>
 		/// Virtual constructor
