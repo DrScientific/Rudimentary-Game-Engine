@@ -45,26 +45,26 @@ namespace UnitTestLibraryDesktop
 			SList <int> intList = { a,b,c };
 
 			Assert::AreEqual(intList.Size(), size_t(3));
-			Assert::IsTrue(intList.PopFront() == a);
-			Assert::IsTrue(intList.PopFront() == b);
-			Assert::IsTrue(intList.PopFront() == c);
+			Assert::IsTrue(*(intList.PopFront()) == b);
+			Assert::IsTrue(*(intList.PopFront()) == c);
+			Assert::IsTrue(intList.PopFront() == intList.end());
 			Assert::IsTrue(intList.isEmpty());
 			
 			SList <int*> intPtrList = { &a,&b,&c };
 
 			Assert::AreEqual(intPtrList.Size(), size_t(3));
-			Assert::IsTrue(intPtrList.PopFront() == &a);
-			Assert::IsTrue(intPtrList.PopFront() == &b);
-			Assert::IsTrue(intPtrList.PopFront() == &c);
+			Assert::IsTrue(*(intPtrList.PopFront()) == &b);
+			Assert::IsTrue(*(intPtrList.PopFront()) == &c);
+			Assert::IsTrue(intPtrList.PopFront() == intPtrList.end());
 			Assert::IsTrue(intPtrList.isEmpty());
 
 			Foo bar, car(1), dar(2);
 			SList <Foo> fooList = { bar, car, dar };
 
 			Assert::AreEqual(fooList.Size(), size_t(3));
-			Assert::IsTrue(fooList.PopFront() == bar);
-			Assert::IsTrue(fooList.PopFront() == car);
-			Assert::IsTrue(fooList.PopFront() == dar);
+			Assert::IsTrue(*(fooList.PopFront()) == car);
+			Assert::IsTrue(*(fooList.PopFront()) == dar);
+			Assert::IsTrue(fooList.PopFront() == fooList.end());
 			Assert::IsTrue(fooList.isEmpty());
 		}
 		TEST_METHOD(TestFrontExceptionThrowsAndBackExceptionThrows)
@@ -215,9 +215,9 @@ namespace UnitTestLibraryDesktop
 			intList.PushFront(b);
 			intList.PushBack(c);
 
-			Assert::AreEqual(intList.PopFront(), b);
-			Assert::AreEqual(intList.PopFront(), a);
-			Assert::AreEqual(intList.PopFront(), c);
+			Assert::IsTrue(*(intList.PopFront()) == a);
+			Assert::IsTrue(*(intList.PopFront()) == c);
+			Assert::IsTrue(intList.PopFront() == intList.end());
 
 			Assert::IsTrue(intList.isEmpty());
 
@@ -229,9 +229,9 @@ namespace UnitTestLibraryDesktop
 			intPtrList.PushFront(&b);
 			intPtrList.PushBack(&c);
 
-			Assert::AreEqual(intPtrList.PopFront(), &b);
-			Assert::AreEqual(intPtrList.PopFront(), &a);
-			Assert::AreEqual(intPtrList.PopFront(), &c);
+			Assert::IsTrue(*(intPtrList.PopFront()) == &a);
+			Assert::IsTrue(*(intPtrList.PopFront()) == &c);
+			Assert::IsTrue(intPtrList.PopFront() == intPtrList.end());
 
 			Assert::IsTrue(intPtrList.isEmpty());
 
@@ -244,9 +244,9 @@ namespace UnitTestLibraryDesktop
 			fooList.PushFront(car);
 			fooList.PushBack(dar);
 
-			Assert::AreEqual(fooList.PopFront().Data(), car.Data());
-			Assert::AreEqual(fooList.PopFront().Data(), bar.Data());
-			Assert::AreEqual(fooList.PopFront().Data(), dar.Data());
+			Assert::IsTrue((*fooList.PopFront()).Data() == bar.Data());
+			Assert::IsTrue((*fooList.PopFront()).Data() == dar.Data());
+			Assert::IsTrue(fooList.PopFront() == fooList.end());
 
 			Assert::IsTrue(fooList.isEmpty());
 
@@ -263,9 +263,9 @@ namespace UnitTestLibraryDesktop
 			intList.PushFront(b);
 			intList.PushBack(c);
 
-			Assert::AreEqual(intList.PopBack(), c);
-			Assert::AreEqual(intList.PopBack(), a);
-			Assert::AreEqual(intList.PopBack(), b);
+			Assert::IsTrue(*intList.PopBack() == a);
+			Assert::IsTrue(*intList.PopBack() == b);
+			Assert::IsTrue(intList.PopBack() == intList.end());
 
 			Assert::IsTrue(intList.isEmpty());
 
@@ -277,9 +277,9 @@ namespace UnitTestLibraryDesktop
 			intPtrList.PushFront(&b);
 			intPtrList.PushBack(&c);
 
-			Assert::AreEqual(intPtrList.PopBack(), &c);
-			Assert::AreEqual(intPtrList.PopBack(), &a);
-			Assert::AreEqual(intPtrList.PopBack(), &b);
+			Assert::IsTrue(*intPtrList.PopBack() == &a);
+			Assert::IsTrue(*intPtrList.PopBack() == &b);
+			Assert::IsTrue(intPtrList.PopBack() == intPtrList.end());
 
 			Assert::IsTrue(intPtrList.isEmpty());
 
@@ -292,9 +292,9 @@ namespace UnitTestLibraryDesktop
 			fooList.PushFront(car);
 			fooList.PushBack(dar);
 
-			Assert::AreEqual(fooList.PopBack().Data(), dar.Data());
-			Assert::AreEqual(fooList.PopBack().Data(), bar.Data());
-			Assert::AreEqual(fooList.PopBack().Data(), car.Data());
+			Assert::IsTrue((*fooList.PopBack()).Data() == bar.Data());
+			Assert::IsTrue((*fooList.PopBack()).Data() == car.Data());
+			Assert::IsTrue(fooList.PopBack() == fooList.end());
 
 			Assert::IsTrue(fooList.isEmpty());
 
@@ -373,13 +373,13 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(intList1 == intList2);
 
 			Assert::AreEqual(intList2.Size(), size_t(3));
-			Assert::AreEqual(intList2.PopBack(), c);
+			Assert::IsTrue(*intList2.PopBack() == a);
 			Assert::IsTrue(intList1 != intList2);
 			Assert::AreEqual(intList2.Size(), size_t(2));
-			Assert::AreEqual(intList2.PopBack(), a);
+			Assert::IsTrue(*intList2.PopBack() == b);
 			Assert::IsTrue(intList1 != intList2);
 			Assert::AreEqual(intList2.Size(), size_t(1));
-			Assert::AreEqual(intList2.PopBack(), b);
+			Assert::IsTrue(intList2.PopBack() == intList2.end());
 			Assert::IsTrue(intList1 != intList2);
 			Assert::AreEqual(intList2.Size(), size_t(0));
 
@@ -418,13 +418,13 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(intPtrList1 == intPtrList2);
 
 			Assert::AreEqual(intPtrList2.Size(), size_t(3));
-			Assert::AreEqual(intPtrList2.PopBack(), &c);
+			Assert::IsTrue(*intPtrList2.PopBack() == &a);
 			Assert::IsTrue(intPtrList1 != intPtrList2);
 			Assert::AreEqual(intPtrList2.Size(), size_t(2));
-			Assert::AreEqual(intPtrList2.PopBack(), &a);
+			Assert::IsTrue(*intPtrList2.PopBack() == &b);
 			Assert::IsTrue(intPtrList1 != intPtrList2);
 			Assert::AreEqual(intPtrList2.Size(), size_t(1));
-			Assert::AreEqual(intPtrList2.PopBack(), &b);
+			Assert::IsTrue(intPtrList2.PopBack() == intPtrList2.end());
 			Assert::IsTrue(intPtrList1 != intPtrList2);
 			Assert::AreEqual(intPtrList2.Size(), size_t(0));
 
@@ -464,13 +464,13 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(fooList1 == fooList2);
 
 			Assert::IsTrue(fooList2.Size() == size_t(3));
-			Assert::IsTrue(fooList2.PopBack() == dar);
+			Assert::IsTrue(*fooList2.PopBack() == bar);
 			Assert::IsTrue(fooList1 != fooList2);
 			Assert::IsTrue(fooList2.Size() == size_t(2));
-			Assert::IsTrue(fooList2.PopBack() == bar);
+			Assert::IsTrue(*fooList2.PopBack() == car);
 			Assert::IsTrue(fooList1 != fooList2);
 			Assert::IsTrue(fooList2.Size() == size_t(1));
-			Assert::IsTrue(fooList2.PopBack() == car);
+			Assert::IsTrue(fooList2.PopBack() == fooList2.end());
 			Assert::IsTrue(fooList1 != fooList2);
 			Assert::IsTrue(fooList2.Size() == size_t(0));
 
@@ -499,7 +499,116 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(fooList1.Size() == fooList2.Size());
 		}
 
+		TEST_METHOD(TestFind)
+		{
+			int a = 0, b = 1, c = 2, d = 3, e = 4, f = 5, g = 6, h = 7;
+			SList <int> intList = { a,b,c,d,e,f,g };
 
+			Assert::IsTrue(*intList.Find(e) == e);
+			Assert::IsTrue(intList.Find(7) == intList.end());
+
+			SList <int*> intPtrList = { &a,&b,&c,&d,&e,&f,&g };
+
+			Assert::IsTrue(*intPtrList.Find(&e) == &e);
+			Assert::IsTrue(intPtrList.Find(&h) == intPtrList.end());
+
+			Foo bar, car(1), dar(2), ear(3), far(4), gar(5), har(6), iar(7);
+			SList <Foo> fooList = { bar, car, dar, ear, far, gar, har };
+
+			Assert::IsTrue(*fooList.Find(far) == far);
+			Assert::IsTrue(fooList.Find(iar) == fooList.end());
+		}
+
+		TEST_METHOD(TestRemove)
+		{
+			int a = 0, b = 1, c = 2, d = 3, e = 4, f = 5, g = 6, h = 7;
+			SList <int> intList = { a,b,c,d,e,f,g };
+
+			Assert::IsTrue(intList.Size() == 7);
+			intList.Remove(h);
+			Assert::IsTrue(intList.Size() == 7);
+			intList.Remove(g);
+			Assert::IsTrue(intList.Size() == 6);
+			intList.Remove(d);
+			Assert::IsTrue(intList.Size() == 5);
+			intList.Remove(a);
+			Assert::IsTrue(intList.Size() == 4);
+			Assert::IsTrue(intList.Front() == b);
+			intList.Remove(++intList.begin());
+			Assert::IsTrue(intList.Size() == 3);
+			Assert::IsTrue(intList.Front() == b);
+
+			SList <int*> intPtrList = { &a,&b,&c,&d,&e,&f,&g };
+			Assert::IsTrue(intPtrList.Size() == 7);
+			intPtrList.Remove(&h);
+			Assert::IsTrue(intPtrList.Size() == 7);
+			intPtrList.Remove(&g);
+			Assert::IsTrue(intPtrList.Size() == 6);
+			intPtrList.Remove(&d);
+			Assert::IsTrue(intPtrList.Size() == 5);
+			intPtrList.Remove(&a);
+			Assert::IsTrue(intPtrList.Size() == 4);
+			Assert::IsTrue(intPtrList.Front() == &b);
+			intPtrList.Remove(++intPtrList.begin());
+			Assert::IsTrue(intPtrList.Size() == 3);
+			Assert::IsTrue(intPtrList.Front() == &b);
+
+			Foo bar, car(1), dar(2), ear(3), far(4), gar(5), har(6), iar(7);
+			SList <Foo> fooList = { bar, car, dar, ear, far, gar, har };
+
+			Assert::IsTrue(fooList.Size() == 7);
+			fooList.Remove(iar);
+			Assert::IsTrue(fooList.Size() == 7);
+			fooList.Remove(har);
+			Assert::IsTrue(fooList.Size() == 6);
+			fooList.Remove(ear);
+			Assert::IsTrue(fooList.Size() == 5);
+			fooList.Remove(bar);
+			Assert::IsTrue(fooList.Size() == 4);
+			Assert::IsTrue(fooList.Front() == car);
+			fooList.Remove(++fooList.begin());
+			Assert::IsTrue(fooList.Size() == 3);
+			Assert::IsTrue(fooList.Front() == car);
+		}
+
+		TEST_METHOD(TestInsertAfter)
+		{
+			int a = 0, b = 1, c = 2, d = 3, e = 4, f = 5, g = 6, h = 7;
+			SList <int> intList = { a,b,c,d,e,f,g };
+
+			Assert::IsTrue(intList.Size() == 7);
+			intList.InsertAfter(intList.end(), h);
+			Assert::IsTrue(intList.Size() == 8);
+			intList.Remove(h);
+			Assert::IsTrue(intList.Size() == 7);
+			intList.InsertAfter(++(++(intList.begin())), h);
+			Assert::IsTrue(intList.Size() == 8);
+			Assert::IsTrue(intList.Find(h) == ++(++(++(intList.begin()))));
+
+
+			SList <int*> intPtrList = { &a,&b,&c,&d,&e,&f,&g };
+			
+			Assert::IsTrue(intPtrList.Size() == 7);
+			intPtrList.InsertAfter(intPtrList.end(), &h);
+			Assert::IsTrue(intPtrList.Size() == 8);
+			intPtrList.Remove(&h);
+			Assert::IsTrue(intPtrList.Size() == 7);
+			intPtrList.InsertAfter(++(++(intPtrList.begin())), &h);
+			Assert::IsTrue(intPtrList.Size() == 8);
+			Assert::IsTrue(intPtrList.Find(&h) == (++(++(++(intPtrList.begin())))));
+
+			Foo bar, car(1), dar(2), ear(3), far(4), gar(5), har(6), iar(7);
+			SList <Foo> fooList = { bar, car, dar, ear, far, gar, har };
+
+			Assert::IsTrue(fooList.Size() == 7);
+			fooList.InsertAfter(fooList.end(), iar);
+			Assert::IsTrue(fooList.Size() == 8);
+			fooList.Remove(iar);
+			Assert::IsTrue(fooList.Size() == 7);
+			fooList.InsertAfter(++(++(fooList.begin())), iar);
+			Assert::IsTrue(fooList.Size() == 8);
+			Assert::IsTrue(fooList.Find(iar) == (++(++(++(fooList.begin())))));
+		}
 	private:
 		static _CrtMemState sStartMemState;
 	};
