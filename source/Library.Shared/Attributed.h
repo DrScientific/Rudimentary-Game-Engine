@@ -13,6 +13,8 @@ namespace FIEAGameEngine
 	/// <summary>
 	/// An attributed object contains a scope with external datums pointing to the attributed object's member variables.
 	/// The member varaibles in question must be defined in a signatures function defined in the derieved class.
+	/// Any datums pointing to an object's member variables (the datum is using external storage) are refered to as "prescribed attributes."
+	/// Any datums pointing to additional variables placed within the object's scope through our scripting language (the datum is using interenal storage) are refered to as "auxilliary attributes." 
 	/// See the attributed foo class for an example implementation.
 	/// </summary>
 
@@ -39,7 +41,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Attributed constructor
 		/// </summary>
-		/// <param name="id">Type id of the object we are constructing. Must be passed in as vtable is not correctly setup on construction.</param>
+		/// <param name="id">Type id of the object we are constructing. Must be passed in as vtable is not correctly setup on construction so we do not have the scope's data members.</param>
 		Attributed(IdType id);
 
 		/// <summary>
@@ -58,13 +60,13 @@ namespace FIEAGameEngine
 		/// Attributed move constructor
 		/// </summary>
 		/// <param name="other"></param>
-		Attributed(Attributed && other);
+		Attributed(Attributed && other) noexcept;
 
 		/// <summary>
 		/// Move assignment operator
 		/// </summary>
 		/// <returns>Object we are setting this equal to.</returns>
-		Attributed & operator=(Attributed && other);
+		Attributed & operator=(Attributed && other) noexcept;
 
 	public:
 		
@@ -130,6 +132,7 @@ namespace FIEAGameEngine
 
 		/// <summary>
 		/// Overload of Scope's virtual clear function. Clear's all auxiliary attributes from the attributed object.
+		/// Does not clear prescribed attributes since we do not own that memory.
 		/// </summary>
 		virtual void Clear() override;
 
@@ -138,13 +141,13 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <returns>A scope pinter pointer to the newly created attributed object</returns>
 		virtual gsl::owner<Scope*> Clone() const override;
-
+		
 		virtual std::string ToString() const override;
 
 	private:
 
 		/// <summary>
-		/// 
+		/// TODO: Rembmer and document how this works/what it does.
 		/// </summary>
 		/// <param name="id"></param>
 		void Populate(IdType id);

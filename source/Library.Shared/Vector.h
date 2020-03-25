@@ -346,6 +346,48 @@ namespace FIEAGameEngine
 		T const & operator[](size_t const & index) const;
 
 		/// <summary>
+		/// Returns a new vector that is this vector appeneded to the other vector.
+		/// </summary>
+		/// <param name="other">The vector to append to this vector.</param>
+		/// <returns>A new vector that is this vector appeneded to the other vector..</returns>
+		Vector<T> operator+(Vector<T> const & other);
+
+		/// <summary>
+		/// Returns a new vector that is this vector appeneded to the other vector.
+		/// </summary>
+		/// <param name="other">The vector to append to this vector.</param>
+		/// <returns>A new vector that is this vector appeneded to the other vector..</returns>
+		Vector<T> const operator+(Vector<T> const & other) const;
+
+		/// <summary>
+		/// Appends the elements of the other vector to this vector.vector that is this vector appeneded to the other vector.
+		/// </summary>
+		/// <param name="other">The vector to append to this vector.</param>
+		/// <returns>This vector after having the other vector appended to it.</returns>
+		Vector<T> operator+=(Vector<T> const& other);
+
+		/// <summary>
+		/// Returns a new vector that is this vector appeneded to the other vector.
+		/// </summary>
+		/// <param name="other">The vector to append to this vector.</param>
+		/// <returns>A new vector that is this vector appeneded to the other vector..</returns>
+		Vector<T> operator-(Vector<T> const& other);
+
+		/// <summary>
+		/// Returns a new vector that is this vector appeneded to the other vector.
+		/// </summary>
+		/// <param name="other">The vector to append to this vector.</param>
+		/// <returns>A new vector that is this vector appeneded to the other vector..</returns>
+		Vector<T> const operator-(Vector<T> const& other) const;
+
+		/// <summary>
+		/// Appends the elements of the other vector to this vector.vector that is this vector appeneded to the other vector.
+		/// </summary>
+		/// <param name="other">The vector to append to this vector.</param>
+		/// <returns>This vector after having the other vector appended to it.</returns>
+		Vector<T> operator-=(Vector<T> const& other);
+
+		/// <summary>
 		/// Access the data stored at the given index. Works exactly like the [] operator in an array.
 		/// </summary>
 		/// <param name="index">Index where the data we want to access is located.</param>

@@ -13,9 +13,9 @@ namespace FIEAGameEngine
 
 	void ActionListWhile::Update(WorldState & worldState)
 	{
+		Datum& actions = operator[](mActionsIndex);
 		Datum & preambleActions = operator[](mPreambleIndex);
 		Datum & incrementActions = operator[](mIncrementIndex);
-		Datum & actions = operator[](mActionsIndex);
 
 		
 		for (size_t i = 0; i < preambleActions.Size(); i++)
@@ -61,12 +61,9 @@ namespace FIEAGameEngine
 
 		return Vector<Attributed::Signature>
 		{
-			{ mNameKey, Datum::DatumType::String, 1, offsetof(ActionListWhile, mName) },
-			{ mActionsKey, Datum::DatumType::Scope, 0, 0 },
 			{ mConditionKey, Datum::DatumType::Integer, 1, offsetof(ActionListWhile, mCondition) },
 			{ mPreambleKey, Datum::DatumType::Scope, 0, 0 },
 			{ mIncrementKey, Datum::DatumType::Scope, 0, 0 }
-
 		};
 	}
 }

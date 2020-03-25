@@ -8,13 +8,15 @@
 
 namespace FIEAGameEngine
 {
+	/// <summary>
+	/// TODO: Add comment explaining scope.
+	/// See the attributed class to understand how scopes are used to modify other C++ objects.
+	/// </summary>
 	class Scope : public RTTI
 	{
 
 		RTTI_DECLARATIONS(Scope, RTTI);
 	public:
-		
-		friend class Scope;
 		friend class Attributed;
 		
 
@@ -39,12 +41,12 @@ namespace FIEAGameEngine
 		/// Move constructor
 		/// </summary>
 		/// <param name="other">Scope to move construct from</param>
-		Scope(Scope && other);
+		Scope(Scope && other) noexcept;
 
 		/// <summary>
 		/// Destructor
 		/// </summary>
-		~Scope();
+		virtual ~Scope();
 
 		/// <summary>
 		/// Assignment operator
@@ -58,7 +60,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="rhs">Scope to move data from.</param>
 		/// <returns>This scope after moving the rhs.</returns>
-		Scope& operator= (Scope && rhs);
+		Scope& operator= (Scope && rhs) noexcept;
 
 		/// <summary>
 		/// Returns a pointer to the datum at the given key. If there is nothing at the provided key returns the nullptr.
@@ -83,15 +85,7 @@ namespace FIEAGameEngine
 		/// <returns>A pointer to the datum at the given key in this scope or it's ancestors.</returns>
 		virtual Datum* Search(std::string const & key, Scope** scopeAddress = nullptr);
 
-		/// <summary>
-		/// Returns a pointer to the scope of the given name contained within the closest scope with the scope name in this scope or it's ancestors.
-		/// If this scope or it's ancestors do not posses an ancestor with the given table name that has a name atribute equal to the passed in name return nullptr.
-		/// </summary>
-		/// <param name="name">Name of attribute to search for.</param>
-		/// <param name="tableName">Table name to stop and search for the name at.</param>
-		/// <returns>A pointer to the datum of the given name contained within the closest scope with the scope name in this scope or it's ancestors.</returns>
-		Scope* NameSearch(std::string const & name, std::string const & tableName);
-
+		//TODO: Implement const Search
 		/// <summary>
 		/// Returns a pointer to the datum at the given key in this scope or it's ancestors. If this scope or it's ancestors do not posses anything at the given key returns the nullptr.
 		/// Scope address is a second optional parameter that will return a pointer to a pointer of the scope the key was found in.
@@ -99,7 +93,18 @@ namespace FIEAGameEngine
 		/// <param name="key">Key to search for.</param>
 		/// <param name="scopeAddress">Scope address is a second optional parameter that will return a pointer to a pointer of the scope the key was found in.</param>
 		/// <returns>A pointer to the datum at the given key in this scope or it's ancestors.</returns>
-		Datum const * Search(std::string const & key, Scope const ** scopeAddress = nullptr) const;
+		virtual Datum const * Search(std::string const& key, Scope const** scopeAddress = nullptr) const;
+
+		/// <summary>
+		/// Returns a pointer to the scope of the given name contained within the closest scope with the scope name in this scope or it's ancestors.
+		/// If this scope or it's ancestors do not posses an ancestor with the given table name that has a name attribute equal to the passed in name return nullptr.
+		/// </summary>
+		/// <param name="name">Name of attribute to search for.</param>
+		/// <param name="tableName">Table name to stop and search for the name at.</param>
+		/// <returns>A pointer to the datum of the given name contained within the closest scope with the scope name in this scope or it's ancestors.</returns>
+		Scope* NameSearch(std::string const & name, std::string const & tableName);
+
+		
 
 		/// <summary>
 		/// Appends an empty datum at the given key. If a datum exists at that key already returns that datum instead.
@@ -131,7 +136,7 @@ namespace FIEAGameEngine
 		Scope * GetParent() const;
 
 		/// <summary>
-		/// Returns the datum at the given key. If no datum exists at the given key creates and empty datum and returns it/
+		/// Returns the datum at the given key. If no datum exists at the given key creates and empty datum and returns it.
 		/// </summary>
 		/// <param name="key">The key of the datum we wish to access.</param>
 		/// <returns>The datum at the given key.</returns>

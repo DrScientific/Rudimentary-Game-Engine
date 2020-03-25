@@ -74,11 +74,6 @@ namespace FIEAGameEngine
 		/// </summary>
 		inline static const std::string mTargetKey = "Target";
 
-		/// <summary>
-		/// Index of actions attribute in destroy action.
-		/// </summary>
-		inline static const size_t mTargetIndex = 2;
-
 	protected:
 
 		/// <summary>

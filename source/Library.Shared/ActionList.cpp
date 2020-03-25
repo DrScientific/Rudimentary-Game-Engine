@@ -37,12 +37,13 @@ namespace FIEAGameEngine
 		return operator[](mActionsIndex);
 	}
 
-	Action & ActionList::CreateAction(std::string name, std::string className)
+	Action & ActionList::CreateAction(std::string name, std::string className, bool isContinuous)
 	{
 		Scope * newScope = Factory<Scope>::Create(className);
 		assert(newScope->Is(Action::TypeIdClass()));
 		Action * newAction = static_cast<Action*>(newScope);
 		newAction->SetName(name);
+		newAction->SetIsContinuous(isContinuous);
 		Adopt(*newAction, mActionsKey);
 		return *newAction;
 	}
@@ -70,9 +71,8 @@ namespace FIEAGameEngine
 
 	const Vector<Attributed::Signature> ActionList::Signatures()
 	{
-		return Vector<Attributed::Signature>
+		return Action::Signatures() + Vector<Attributed::Signature>
 		{
-			{mNameKey, Datum::DatumType::String, 1, offsetof(ActionList, mName) },
 			{ mActionsKey, Datum::DatumType::Scope, 0, 0 }
 		};
 	}

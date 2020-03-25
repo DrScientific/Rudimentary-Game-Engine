@@ -22,6 +22,7 @@ namespace FIEAGameEngine
 	public:
 		/// <summary>
 		/// Shared data is an abstract class from which different shared data types storing different shared datas may be derived.
+		/// This class represents data that all helpers share with each other and with the master parser. 
 		/// </summary>
 		class SharedData : public RTTI
 		{
@@ -32,7 +33,7 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// Virtual destructor for Shared Datas
 			/// </summary>
-			virtual ~SharedData();
+			virtual ~SharedData() = default;
 	
 			/// <summary>
 			/// Virtual constructor for Shared Datas
@@ -83,7 +84,7 @@ namespace FIEAGameEngine
 			JsonParseMaster* mMaster = nullptr;
 
 			/// <summary>
-			/// The current depth of the shared data
+			/// The current "nesting" depth of the shared data, how many layers deep into a json object we are.
 			/// </summary>
 			size_t mDepth = 0;
 		};
@@ -106,7 +107,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Parse Master Destructor
 		/// </summary>
-		~JsonParseMaster();
+		virtual ~JsonParseMaster();
 
 		JsonParseMaster& operator=(JsonParseMaster const & other) = delete;
 
@@ -208,6 +209,8 @@ namespace FIEAGameEngine
 
 		/// <summary>
 		/// Vector of parse handlers employed by the parse master.
+		/// The bool indicates whether the parse master owns the memory of the helper it is storing.
+		/// If it is true the helper is deleted when it is removed.
 		/// </summary>
 		Vector<std::pair<bool, IJsonParseHelper*>> mParseHandlers;
 
@@ -222,7 +225,7 @@ namespace FIEAGameEngine
 		bool doesOwnSharedData = false;
 
 		/// <summary>
-		/// Whether the parse master owns the shared data it points to.
+		/// The shared data pointed to by the parse master.
 		/// </summary>
 		SharedData * mSharedData = nullptr;
 

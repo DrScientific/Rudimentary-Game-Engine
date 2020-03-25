@@ -59,9 +59,8 @@ namespace FIEAGameEngine
 
 	const Vector<Attributed::Signature> ReactionAttributed::Signatures()
 	{
-		return Vector<Attributed::Signature>
+		return Action::Signatures() + Vector<Attributed::Signature>
 		{
-			{mNameKey, Datum::DatumType::String, 1, offsetof(ReactionAttributed, mName) },
 			{ mActionsKey, Datum::DatumType::Scope, 0, 0 },
 			{ mSubtypeKey, Datum::DatumType::String, 1,  offsetof(ReactionAttributed, mSubtype) }
 		};

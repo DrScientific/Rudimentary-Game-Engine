@@ -27,22 +27,22 @@ namespace UnitTestLibraryDesktop
 
 	TEST_MODULE_INITIALIZE(AddAttributedFooToTypeManager)
 	{
-		TypeManager::GetTypeManager().RegisterType(AttributedFoo::TypeIdClass(), AttributedFoo::Signatures());
-		TypeManager::GetTypeManager().RegisterType(Entity::TypeIdClass(), Entity::Signatures());
-		TypeManager::GetTypeManager().RegisterType(Sector::TypeIdClass(), Sector::Signatures());
-		TypeManager::GetTypeManager().RegisterType(World::TypeIdClass(), World::Signatures());
-		TypeManager::GetTypeManager().RegisterType(ActionList::TypeIdClass(), ActionList::Signatures());
-		TypeManager::GetTypeManager().RegisterType(ActionListWhile::TypeIdClass(), ActionListWhile::Signatures());
-		TypeManager::GetTypeManager().RegisterType(ActionIncrement::TypeIdClass(), ActionIncrement::Signatures());
-		TypeManager::GetTypeManager().RegisterType(CreateAction::TypeIdClass(), CreateAction::Signatures());
-		TypeManager::GetTypeManager().RegisterType(DestroyAction::TypeIdClass(), DestroyAction::Signatures());
-		TypeManager::GetTypeManager().RegisterType(ActionEvent::TypeIdClass(), ActionEvent::Signatures());
-		TypeManager::GetTypeManager().RegisterType(ReactionAttributed::TypeIdClass(), ReactionAttributed::Signatures());
-		TypeManager::GetTypeManager().RegisterType(EventMessageAttributed::TypeIdClass(), EventMessageAttributed::Signatures());
+		REGISTER_TYPE(AttributedFoo);
+		REGISTER_TYPE(Entity);
+		REGISTER_TYPE(Sector);
+		REGISTER_TYPE(World);
+		REGISTER_TYPE(ActionList);
+		REGISTER_TYPE(ActionListWhile);
+		REGISTER_TYPE(ActionIncrement);
+		REGISTER_TYPE(CreateAction);
+		REGISTER_TYPE(DestroyAction);
+		REGISTER_TYPE(ActionEvent);
+		REGISTER_TYPE(ReactionAttributed);
+		REGISTER_TYPE(EventMessageAttributed);
 	}
 
 	TEST_MODULE_CLEANUP(ClearTypeManager)
 	{
-		TypeManager::GetTypeManager().Clear();
+		TypeManager::Clear();
 	}
 }

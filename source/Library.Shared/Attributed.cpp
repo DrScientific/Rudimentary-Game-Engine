@@ -25,7 +25,7 @@ namespace FIEAGameEngine
 		*this = other;
 	}
 
-	Attributed::Attributed(Attributed && other) :
+	Attributed::Attributed(Attributed && other) noexcept :
 		Scope(std::move(other))
 	{
 		UpdateExternalStorage(other.TypeIdInstance());
@@ -41,7 +41,7 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	Attributed & Attributed::operator=(Attributed && other)
+	Attributed & Attributed::operator=(Attributed && other) noexcept
 	{
 		Scope::operator=(std::move(other));
 		UpdateExternalStorage(other.TypeIdInstance());
@@ -58,7 +58,7 @@ namespace FIEAGameEngine
 		bool result = false;
 		if (IsAttribute(name))
 		{
-			for (size_t i = 0; i < TypeManager::GetTypeManager().GetTypeSignature(TypeIdInstance()).Size() + 1; i++)
+			for (size_t i = 0; i < TypeManager::GetSignatures(TypeIdInstance()).Size() + 1; i++)
 			{
 				if (mVector[i]->first == name)
 				{
@@ -117,7 +117,7 @@ namespace FIEAGameEngine
 	Vector<Scope::PairType*> Attributed::PrescribedAttributes() const
 	{
 		Vector<PairType*> prescribedAttributes;
-		for (size_t i = 0; i < TypeManager::GetTypeManager().GetTypeSignature(TypeIdInstance()).Size() + 1; i++)
+		for (size_t i = 0; i < TypeManager::GetSignatures(TypeIdInstance()).Size() + 1; i++)
 		{
 			prescribedAttributes.PushBack(mVector[i]);
 		}
@@ -128,7 +128,7 @@ namespace FIEAGameEngine
 	Vector<Scope::PairType*> Attributed::AuxiliaryAttributes() const
 	{
 		Vector<PairType*> auxiliaryAttributes;
-		for (size_t i = TypeManager::GetTypeManager().GetTypeSignature(TypeIdInstance()).Size() + 1; i < mVector.Size(); i++)
+		for (size_t i = TypeManager::GetSignatures(TypeIdInstance()).Size() + 1; i < mVector.Size(); i++)
 		{
 			auxiliaryAttributes.PushBack(mVector[i]);
 		}
@@ -154,29 +154,31 @@ namespace FIEAGameEngine
 	void Attributed::Populate(IdType id)
 	{
 		(*this)["this"] = this;
-		Vector<Signature> const & attributes = TypeManager::GetTypeManager().GetTypeSignature(id);
+		Vector<Signature> const & attributes = TypeManager::GetSignatures(id);
 		for (size_t i = 0; i < attributes.Size(); i++)
 		{
-			Signature currentSignature = attributes[i];
+			Signature const & currentSignature = attributes[i];
 			Datum & element = Append(currentSignature.mName);
 			element.SetType(currentSignature.mType);
 			if (currentSignature.mType != Datum::DatumType::Scope)
 			{
 				element.SetStorage(reinterpret_cast<uint8_t*>(this) + currentSignature.mOffset, currentSignature.mSize);
 			}
-			/*else
+			//Appending scopes is not necessary as our parser will append scopes as needed. 
+			//TODO: Verify this.
+			else
 			{
 				for (size_t j = 0; j < currentSignature.mSize; j++)
 				{
 					AppendScope(currentSignature.mName);
 				}
-			}*/
+			}
 		}
 	}
 	void Attributed::UpdateExternalStorage(IdType id)
 	{
 		(*this)["this"] = this;
-		Vector<Signature> attributes = TypeManager::GetTypeManager().GetTypeSignature(id);
+		Vector<Signature> const & attributes = TypeManager::GetSignatures(id);
 		for (size_t i = 0; i < attributes.Size(); i++)
 		{
 			Signature currentSignature = attributes[i];

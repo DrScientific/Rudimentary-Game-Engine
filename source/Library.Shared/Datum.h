@@ -24,7 +24,7 @@ namespace FIEAGameEngine
 	/// Datum is a runtime dynamicly sized array.
 	/// It stores data of any of the supported types in contiguous memory.
 	/// When the datum is at capacity and an attempt to store and element in it is made the vector will resize itself, moving all of it's data to a new location in memory.
-	/// Datum may be set to overlay external memory. It may not be resized be any call except setting it's storage once more.
+	/// Datum may be set to overlay external memory. It may not be resized by any call except setting it's storage once more.
 	/// An external datum may alter the data it's interfacing, through Set methods, but again, it may not alter the size.
 	/// The type of datum may not be changed once it gains a type UNLESS it is set equal to a datum of another type.
 	/// (The datum to datum assignment operator is the only thing that can change a datum's type once it has been assigned.)
@@ -453,7 +453,7 @@ namespace FIEAGameEngine
 #pragma region SetStorage
 		/// <summary>
 		/// Sets the datum to external storage, overlaying an existing array.
-		/// Size, capacity, and type become immuScope. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
+		/// Size, capacity, and type become immutable. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
 		/// </summary>
 		/// <param name="data">Int pointer to overlay.</param>
 		/// <param name="size">Number of ints to overlay.</param>
@@ -461,7 +461,7 @@ namespace FIEAGameEngine
 
 		/// <summary>
 		/// Sets the datum to external storage, overlaying an existing array.
-		/// Size, capacity, and type become immuScope. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
+		/// Size, capacity, and type become immutable. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
 		/// </summary>
 		/// <param name="data">Float pointer to overlay.</param>
 		/// <param name="size">Number of floats to overlay.</param>
@@ -469,7 +469,7 @@ namespace FIEAGameEngine
 
 		/// <summary>
 		/// Sets the datum to external storage, overlaying an existing array.
-		/// Size, capacity, and type become immuScope. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
+		/// Size, capacity, and type become immutable. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
 		/// </summary>
 		/// <param name="data">Vec4 pointer to overlay.</param>
 		/// <param name="size">Number of vec4s to overlay.</param>
@@ -477,7 +477,7 @@ namespace FIEAGameEngine
 
 		/// <summary>
 		/// Sets the datum to external storage, overlaying an existing array.
-		/// Size, capacity, and type become immuScope. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
+		/// Size, capacity, and type become immutable. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
 		/// </summary>
 		/// <param name="data">Mat4x4 pointer to overlay.</param>
 		/// <param name="size">Number of mat4x4s to overlay.</param>
@@ -487,7 +487,7 @@ namespace FIEAGameEngine
 
 		/// <summary>
 		/// Sets the datum to external storage, overlaying an existing array.
-		/// Size, capacity, and type become immuScope. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
+		/// Size, capacity, and type become immutable. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
 		/// </summary>
 		/// <param name="data">String pointer to overlay.</param>
 		/// <param name="size">Number of strings to overlay.</param>
@@ -495,7 +495,7 @@ namespace FIEAGameEngine
 
 		/// <summary>
 		/// Sets the datum to external storage, overlaying an existing array.
-		/// Size, capacity, and type become immuScope. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
+		/// Size, capacity, and type become immutable. (Unless this datum is assigned to another datum. Size, but not type, can also be changed by calling set storage again.)
 		/// </summary>
 		/// <param name="data">RTTI* pointer to overlay.</param>
 		/// <param name="size">Number of RTTI*s to overlay.</param>
@@ -1274,6 +1274,7 @@ namespace FIEAGameEngine
 		inline static const std::string storagePreservedAssignmentTypeMismatchExceptionText = "External datum cannot change it's type to match assigned datum.\n";
 #pragma endregion
 
+		//TODO: Implement default functions table
 		//using CreateDefaultFunction = void(Datum::*)(size_t index);
 		//static const CreateDefaultFunction CreateDefaultFunctions[static_cast<int>(DatumType::END)];
 

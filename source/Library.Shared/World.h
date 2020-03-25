@@ -27,7 +27,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Destructor.
 		/// </summary>
-		~World() = default;
+		virtual ~World() = default;
 
 		/// <summary>
 		/// Adopts an existing scope placing it at the provided key. If the new key is the sectors key, verifies that the child scope is a sector. Removes the scope from it's previous parent.

@@ -29,7 +29,7 @@ namespace UnitTests
 	{
 		return Vector<Attributed::Signature>
 		{
-			{"ExternalInteger", Datum::DatumType::Integer, 1, offsetof(AttributedFoo, ExternalInteger) },
+			{ "ExternalInteger", Datum::DatumType::Integer, 1, offsetof(AttributedFoo, ExternalInteger) },
 			{ "ExternalFloat", Datum::DatumType::Float, 1, offsetof(AttributedFoo, ExternalFloat) },
 			{ "ExternalString", Datum::DatumType::String, 1, offsetof(AttributedFoo, ExternalString) },
 			{ "ExternalVector", Datum::DatumType::Vector4, 1, offsetof(AttributedFoo, ExternalVector) },

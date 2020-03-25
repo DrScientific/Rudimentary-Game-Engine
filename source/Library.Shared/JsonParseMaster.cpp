@@ -14,11 +14,6 @@ namespace FIEAGameEngine
 	RTTI_DEFINITIONS(JsonParseMaster);
 	RTTI_DEFINITIONS(JsonParseMaster::SharedData);
 
-	JsonParseMaster::SharedData::~SharedData()
-	{
-
-	}
-
 	JsonParseMaster * JsonParseMaster::SharedData::GetJsonParseMaster()
 	{
 		return mMaster;

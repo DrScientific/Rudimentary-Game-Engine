@@ -32,8 +32,8 @@ namespace UnitTestLibraryDesktop
 			_CrtMemCheckpoint(&endMemState);
 			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
 			{
-				_CrtMemDumpStatistics(&diffMemState);
-				Assert::Fail(L"Memory Leaks!");
+				_CrtMemDumpStatistics(&diffMemState); _CrtDumpMemoryLeaks();
+				Assert::Fail(L"Memory leak detected!\nIf a static object is dynamically allocating memory this may be a false positive.");
 			}
 #endif
 		}

@@ -34,7 +34,8 @@ namespace UnitTestLibraryDesktop
 			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
 			{
 				_CrtMemDumpStatistics(&diffMemState);
-				Assert::Fail(L"Memory Leaks!");
+				_CrtDumpMemoryLeaks();
+				Assert::Fail(L"Memory leak detected!\nIf a static object is dynamically allocating memory this may be a false positive.");
 			}
 #endif
 		}
@@ -1474,8 +1475,6 @@ namespace UnitTestLibraryDesktop
 				Assert::IsTrue(mat4x4Datum.ToString(i) == glm::to_string(mat4x4Datum.Get<mat4x4>(i)));
 				Assert::IsTrue(stringDatum.ToString(i) == stringDatum.Get<string>(i));
 				Assert::IsTrue(RTTIDatum.ToString(i) == std::to_string(testFoos[i].Data()));
-				//auto unsupportedDataTypeException = [&RTTIDatum, &i] {RTTIDatum.ToString(i); };
-				//Assert::ExpectException<std::exception>(unsupportedDataTypeException);
 			}
 
 			Datum unknownDatum;

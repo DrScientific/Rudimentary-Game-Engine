@@ -46,11 +46,6 @@ namespace FIEAGameEngine
 		/// </summary>
 		inline static const std::string mSubtypeKey = "Subtype";
 
-		/// <summary>
-		/// Name of subtype attribute in reaction attributed.
-		/// </summary>
-		inline static const std::size_t mSubtypeIndex = 3;
-
 
 	private:
 

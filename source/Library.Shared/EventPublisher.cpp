@@ -34,7 +34,7 @@ namespace FIEAGameEngine
 
 	bool EventPublisher::IsExpired(std::chrono::high_resolution_clock::time_point currentTime) const
 	{
-		return currentTime > mTimeEnqueued + mDelay;
+		return currentTime >= mTimeEnqueued + mDelay;
 	}
 
 	void EventPublisher::Deliver()

@@ -52,7 +52,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Destructor
 		/// </summary>
-		~Sector() = default;
+		virtual ~Sector() = default;
 
 		/// <summary>
 		/// Adopts an existing scope placing it at the provided key. If the new key is the entities key, verifies that the child scope is an entity. Removes the scope from it's previous parent.

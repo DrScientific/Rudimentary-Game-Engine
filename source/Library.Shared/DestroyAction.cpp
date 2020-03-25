@@ -35,9 +35,8 @@ namespace FIEAGameEngine
 
 	const Vector<Attributed::Signature> DestroyAction::Signatures()
 	{
-		return Vector<Attributed::Signature>
+		return Action::Signatures() + Vector<Attributed::Signature>
 		{
-			{mNameKey, Datum::DatumType::String, 1, offsetof(DestroyAction, mName) },
 			{mTargetKey, Datum::DatumType::String, 1, offsetof(DestroyAction, mTarget) }
 		};
 	}

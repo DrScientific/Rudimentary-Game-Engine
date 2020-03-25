@@ -464,6 +464,7 @@ namespace FIEAGameEngine
 		}
 		return result;
 	}
+
 	template<typename TKey, typename TData, typename HashFunctor>
 	inline size_t HashMap<TKey, TData, HashFunctor>::HashKey(TKey const & key) const
 	{

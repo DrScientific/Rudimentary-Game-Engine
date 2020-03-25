@@ -93,12 +93,12 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Index of preamble attribute in action list while.
 		/// </summary>
-		inline static const int mPreambleIndex = 4;
+		inline static const int mPreambleIndex = 5;
 
 		/// <summary>
 		/// Index of increment attribute in action list while.
 		/// </summary>
-		inline static const int mIncrementIndex = 5;
+		inline static const int mIncrementIndex = 6;
 	};
 
 	CONCRETE_FACTORY(ActionListWhile, Scope);

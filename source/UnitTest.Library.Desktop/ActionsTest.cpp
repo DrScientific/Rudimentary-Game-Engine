@@ -40,7 +40,8 @@ namespace UnitTestLibraryDesktop
 			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
 			{
 				_CrtMemDumpStatistics(&diffMemState);
-				Assert::Fail(L"Memory Leaks!");
+				_CrtDumpMemoryLeaks();
+				Assert::Fail(L"Memory leak detected!\nIf a static object is dynamically allocating memory this may be a false positive.");
 			}
 #endif
 		}
@@ -141,7 +142,7 @@ namespace UnitTestLibraryDesktop
 
 			ActionList & actionListA1 = static_cast<ActionList &>(entityA.CreateAction("ActionList A1", "ActionList"));
 
-			actionListA1.CreateAction("ActionIncrement A1", "ActionIncrement");
+			actionListA1.CreateAction("ActionIncrement A1", "ActionIncrement", true);
 
 			ActionIncrement & actionIncrementA1 = static_cast<ActionIncrement &>(actionListA1.Actions()[0]);
 
@@ -246,6 +247,7 @@ namespace UnitTestLibraryDesktop
 
 			Assert::IsNotNull(actionIncrementA1.Find("this"));
 			Assert::IsNotNull(actionIncrementA1.Find("Name"));
+			Assert::IsNotNull(actionIncrementA1.Find("IsContinuous"));
 			Assert::IsNotNull(actionIncrementA1.Find("TargetGameContainer"));
 			Assert::IsNotNull(actionIncrementA1.Find("TargetName"));
 			Assert::IsNotNull(actionIncrementA1.Find("TargetAttribute"));
@@ -260,6 +262,7 @@ namespace UnitTestLibraryDesktop
 
 			Assert::IsNotNull(destroyActionA1.Find("this"));
 			Assert::IsNotNull(destroyActionA1.Find("Name"));
+			Assert::IsNotNull(destroyActionA1.Find("IsContinuous"));
 			Assert::IsNotNull(destroyActionA1.Find("Target"));
 
 			*destroyActionA1.Find("Target") = "ActionIncrement A1";

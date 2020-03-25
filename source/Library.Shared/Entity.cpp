@@ -3,6 +3,7 @@
 #include "Sector.h"
 #include "Action.h"
 #include "WorldState.h"
+#include "World.h"
 
 using namespace std;
 
@@ -115,7 +116,12 @@ namespace FIEAGameEngine
 			for (size_t i = 0; i < actions.Size(); i++)
 			{
 				worldState.mAction = static_cast<Action*>(&actions[i]);
-				static_cast<Action*>(&actions[i])->Update(worldState);
+				worldState.mAction->Update(worldState);
+
+				if (worldState.mAction &&!(worldState.mAction->IsContinuous()))
+				{
+					worldState.mWorld->AddActionToGraveYard(worldState.mAction);
+				}
 			}
 			worldState.mAction = nullptr;
 		}

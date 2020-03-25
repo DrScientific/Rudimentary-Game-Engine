@@ -76,19 +76,9 @@ namespace FIEAGameEngine
 		inline static const std::string mTargetGameContainerKey = "TargetGameContainer";
 
 		/// <summary>
-		/// Index of target game container attribute in action increment.
-		/// </summary>
-		inline static const size_t mTargetGameContainerIndex = 2;
-
-		/// <summary>
 		/// Name of target name attribute in action increment.
 		/// </summary>
 		inline static const std::string mTargetNameKey = "TargetName";
-
-		/// <summary>
-		/// Index of target name attribute in action increment.
-		/// </summary>
-		inline static const size_t mTargetNameIndex = 3;
 
 		/// <summary>
 		/// Name of target attribute attribute in action increment.
@@ -96,19 +86,9 @@ namespace FIEAGameEngine
 		inline static const std::string mTargetAttributeKey = "TargetAttribute";
 
 		/// <summary>
-		/// Index of target attribute attribute in action increment.
-		/// </summary>
-		inline static const size_t mTargetAttributeIndex = 4;
-
-		/// <summary>
 		/// Name of step attribute in action increment.
 		/// </summary>
 		inline static const std::string mStepKey = "Step";
-
-		/// <summary>
-		/// Index of step attribute in action increment.
-		/// </summary>
-		inline static const size_t mStepIndex = 5;
 
 	protected:
 		

@@ -12,6 +12,8 @@ namespace FIEAGameEngine
 
 		virtual ~RTTI() = default;
 
+		static IdType TypeIdClass() { return 0; };
+
 		virtual std::uint64_t TypeIdInstance() const = 0;
 
 		virtual RTTI* QueryInterface(const IdType)
@@ -50,6 +52,7 @@ namespace FIEAGameEngine
 		public:																											\
 			static std::string TypeName() { return std::string(#Type); }												\
 			static IdType TypeIdClass() { return sRunTimeTypeId; }														\
+			static IdType ParentTypeIdClass() { return ParentType::TypeIdClass(); }										\
 			virtual IdType TypeIdInstance() const override { return Type::TypeIdClass(); }								\
 			virtual FIEAGameEngine::RTTI* QueryInterface(const IdType id) override										\
             {																											\

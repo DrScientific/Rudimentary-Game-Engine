@@ -52,9 +52,9 @@ namespace FIEAGameEngine
 
 	const FIEAGameEngine::Vector<Attributed::Signature> ActionIncrement::Signatures()
 	{
-		return Vector<Attributed::Signature>
+		
+		return Action::Signatures() + Vector<Attributed::Signature>
 		{
-			{mNameKey, Datum::DatumType::String, 1, offsetof(ActionIncrement, mName) },
 			{mTargetGameContainerKey, Datum::DatumType::String, 1, offsetof(ActionIncrement, mTargetGameContainer) },
 			{mTargetNameKey, Datum::DatumType::String, 1, offsetof(ActionIncrement, mTargetName) },
 			{mTargetAttributeKey, Datum::DatumType::String, 1, offsetof(ActionIncrement, mTargetAttribute) },

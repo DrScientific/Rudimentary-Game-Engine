@@ -26,7 +26,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Destructor
 		/// </summary>
-		virtual ~ActionEvent();
+		virtual ~ActionEvent() = default;
 
 		/// <summary>
 		/// Virtual constructor
@@ -52,19 +52,9 @@ namespace FIEAGameEngine
 		inline static const std::string mSubtypeKey = "Subtype";
 
 		/// <summary>
-		/// Name of subtype attribute in action.
-		/// </summary>
-		inline static const size_t mSubtypeIndex = 2;
-
-		/// <summary>
 		/// Name of delay attribute in action.
 		/// </summary>
 		inline static const std::string mDelayKey = "Delay";
-
-		/// <summary>
-		/// Name of delay attribute in action.
-		/// </summary>
-		inline static const size_t mDelayIndex = 3;
 
 	private:
 

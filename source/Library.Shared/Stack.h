@@ -10,8 +10,6 @@ namespace FIEAGameEngine
 	public:
 		
 		void Push(T const & value);
-		
-		//void Push(T& value);
 
 		void Pop();
 

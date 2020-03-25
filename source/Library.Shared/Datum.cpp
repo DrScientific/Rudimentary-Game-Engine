@@ -403,7 +403,7 @@ namespace FIEAGameEngine
 	{
 		if (mIsInternal && mSize > 0)
 		{
-				Clear();
+			Clear();
 		}
 		ShrinkToFit();
 	}
@@ -423,7 +423,13 @@ namespace FIEAGameEngine
 		if (newCapacity > mCapacity)
 		{
 			mCapacity = newCapacity;
-			mArray.tVoid = realloc(mArray.tVoid, mCapacity * mTypeSizes[static_cast<size_t>(mType)]);
+
+			DatumPointer newMemoryAdrress;
+			newMemoryAdrress.tVoid = realloc(mArray.tVoid, mCapacity * mTypeSizes[static_cast<size_t>(mType)]);
+			if (newMemoryAdrress.tVoid)
+			{
+				mArray.tVoid = newMemoryAdrress.tVoid;
+			}
 		}
 	}
 	#pragma endregion
@@ -665,8 +671,14 @@ namespace FIEAGameEngine
 				}
 				else
 				{
+
 					mCapacity = mSize;
-					mArray.tVoid = realloc(mArray.tVoid, mCapacity * mTypeSizes[static_cast<size_t>(mType)]);
+					DatumPointer newMemoryAdrress;
+					newMemoryAdrress.tVoid = realloc(mArray.tVoid, mCapacity * mTypeSizes[static_cast<size_t>(mType)]);
+					if (newMemoryAdrress.tVoid)
+					{
+						mArray.tVoid = newMemoryAdrress.tVoid;
+					}
 				}
 			}
 		}
@@ -1442,6 +1454,8 @@ namespace FIEAGameEngine
 				{
 					PushBackTemplated<T>(templatedPtr, T());
 					/*
+					TODO:
+					This is if a function table of default functions is ever implemented.
 					auto func = CreateDefaultFunctions[static_cast<int>(mType)];
 					assert(func != nullptr);
 					(this->*func)(i)

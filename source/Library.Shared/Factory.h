@@ -2,6 +2,7 @@
 #include <string>
 #include "HashMap.h"
 #include <gsl/gsl>
+#include <assert.h>
 
 namespace FIEAGameEngine
 {

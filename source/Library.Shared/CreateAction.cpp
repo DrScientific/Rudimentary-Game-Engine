@@ -31,9 +31,8 @@ namespace FIEAGameEngine
 
 	const Vector<Attributed::Signature> CreateAction::Signatures()
 	{
-		return Vector<Attributed::Signature>
+		return Action::Signatures() + Vector<Attributed::Signature>
 		{
-			{mNameKey, Datum::DatumType::String, 1, offsetof(CreateAction, mName) },
 			{mClassNameKey, Datum::DatumType::String, 1, offsetof(CreateAction, mClassName)},
 			{mInstanceNameKey, Datum::DatumType::String, 1, offsetof(CreateAction, mInstanceName) }
 		};

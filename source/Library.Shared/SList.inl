@@ -22,7 +22,7 @@ namespace FIEAGameEngine
 
 	template<typename T>
 	inline SList<T>::SList(SList && other) :
-		mFront(std::move(other.mFront)), mBack(std::move(other.mBack))
+		mFront(std::move(other.mFront)), mBack(std::move(other.mBack)), mSize(other.mSize)
 	{
 		other.mFront = nullptr;
 		other.mBack = nullptr;

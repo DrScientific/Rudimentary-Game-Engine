@@ -37,7 +37,8 @@ namespace UnitTestLibraryDesktop
 			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
 			{
 				_CrtMemDumpStatistics(&diffMemState);
-				Assert::Fail(L"Memory Leaks!");
+				_CrtDumpMemoryLeaks();
+				Assert::Fail(L"Memory leak detected!\nIf a static object is dynamically allocating memory this may be a false positive.");
 			}
 #endif
 		}
@@ -68,7 +69,6 @@ namespace UnitTestLibraryDesktop
 			Assert::IsNotNull(r);
 
 			AttributedFoo otherFoo;
-			//Assert::IsTrue(rtti->Equals(&otherFoo));
 
 			Bar otherBar(10);
 			Assert::IsFalse(rtti->Equals(&otherBar));

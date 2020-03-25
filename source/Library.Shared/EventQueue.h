@@ -13,7 +13,7 @@ namespace FIEAGameEngine
 	/// <summary>
 	/// Queue of a variety of events which are delivered to subscribers when they have expired.
 	/// </summary>
-	class EventQueue
+	class EventQueue final
 	{
 	public:
 		/// <summary>

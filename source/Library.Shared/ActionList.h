@@ -72,7 +72,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="className">Class name of the action</param>
 		/// <returns>A reference to the newly created action.</returns>
-		Action & CreateAction(std::string name, std::string className);
+		Action& CreateAction(std::string name, std::string className, bool isContinuous = 0);
 
 		/// <summary>
 		/// Virtual update call that iterates through all actions in the action list.
@@ -105,7 +105,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Index of actions attribute in action list.
 		/// </summary>
-		inline static const size_t mActionsIndex = 2;
+		inline static const size_t mActionsIndex = 3;
 
 	protected:
 

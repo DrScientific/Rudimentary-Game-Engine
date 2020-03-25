@@ -285,10 +285,12 @@ namespace FIEAGameEngine
 		if (newCapacity > mCapacity)
 		{
 			mCapacity = newCapacity;
-			mArray = static_cast<T*>(realloc(mArray, mCapacity * sizeof(T)));
+			T* newMemAddress = static_cast<T*>(realloc(mArray, mCapacity * sizeof(T)));
+			if (newMemAddress)
+			{
+				mArray = newMemAddress;
+			}
 		}
-		
-		//throw std::exception(newCapacityCannotBeSmallerThanCapacityExceptionText.c_str());
 	}
 
 	template<typename T>
@@ -341,6 +343,70 @@ namespace FIEAGameEngine
 		{
 			return mArray[index];
 		}
+	}
+
+	template<typename T>
+	inline Vector<T> Vector<T>::operator+(Vector<T> const & other)
+	{
+		Vector<T> sum = *this;
+		for (auto element : other)
+		{
+			sum.PushBack(element);
+		}
+		return sum;
+	}
+
+	template<typename T>
+	inline Vector<T> const Vector<T>::operator+(Vector<T> const& other) const
+	{
+		Vector<T> sum = *this;
+		for (auto element : other)
+		{
+			sum.PushBack(element);
+		}
+		return sum;
+	}
+
+	template<typename T>
+	inline Vector<T> Vector<T>::operator+=(Vector<T> const& other)
+	{
+		for (auto element : other)
+		{
+			this->PushBack(element);
+		}
+		return *this;
+	}
+
+	template<typename T>
+	inline Vector<T> Vector<T>::operator-(Vector<T> const& other)
+	{
+		Vector<T> difference = *this;
+		for (auto element : other)
+		{
+			difference->Remove(element);
+		}
+		return difference;
+	}
+
+	template<typename T>
+	inline Vector<T> const Vector<T>::operator-(Vector<T> const& other) const
+	{
+		Vector<T> difference = *this;
+		for (auto element : other)
+		{
+			difference->Remove(element);
+		}
+		return difference;
+	}
+
+	template<typename T>
+	inline Vector<T> Vector<T>::operator-=(Vector<T> const& other)
+	{
+		for (auto element : other)
+		{
+			this->Remove(element);
+		}
+		return *this;
 	}
 
 	template<typename T>

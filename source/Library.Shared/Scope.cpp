@@ -25,7 +25,7 @@ namespace FIEAGameEngine
 		*this = other;
 	}
 
-	FIEAGameEngine::Scope::Scope(Scope && other) :
+	FIEAGameEngine::Scope::Scope(Scope && other) noexcept :
 		mHashMap(move(other.mHashMap)), mVector(move(other.mVector)), mParent(other.mParent)
 	{
 		Reparent(other);
@@ -70,7 +70,7 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	Scope & FIEAGameEngine::Scope::operator=(Scope && rhs)
+	Scope & FIEAGameEngine::Scope::operator=(Scope && rhs) noexcept
 	{
 		if (this != &rhs)
 		{
@@ -106,11 +106,11 @@ namespace FIEAGameEngine
 		{
 			throw exception(scopeCannotHaveEmptyKeyExceptionText.c_str());
 		}
-		Datum * result = nullptr;
+		Datum const * result = nullptr;
 		DatumMap::const_Iterator searchedPairIt = mHashMap.Find(key);
 		if (searchedPairIt != mHashMap.end())
 		{
-			result = const_cast<Datum*>(&((*searchedPairIt).second));
+			result = &((*searchedPairIt).second);
 		}
 		return result;
 	}
@@ -126,6 +126,31 @@ namespace FIEAGameEngine
 			*scopeAddress = nullptr;
 		}
 		Datum * result = Find(key);
+		if (result == nullptr)
+		{
+			if (mParent != nullptr)
+			{
+				result = mParent->Search(key, scopeAddress);
+			}
+		}
+		else if (scopeAddress != nullptr)
+		{
+			*scopeAddress = this;
+		}
+		return result;
+	}
+
+	Datum const * Scope::Search(string const& key, Scope const** scopeAddress) const
+	{
+		if (!key.size())
+		{
+			throw exception(scopeCannotHaveEmptyKeyExceptionText.c_str());
+		}
+		if (scopeAddress != nullptr)
+		{
+			*scopeAddress = nullptr;
+		}
+		Datum const* result = Find(key);
 		if (result == nullptr)
 		{
 			if (mParent != nullptr)

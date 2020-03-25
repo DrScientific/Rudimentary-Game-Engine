@@ -41,7 +41,8 @@ namespace UnitTestLibraryDesktop
 			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
 			{
 				_CrtMemDumpStatistics(&diffMemState);
-				Assert::Fail(L"Memory Leaks!");
+				_CrtDumpMemoryLeaks();
+				Assert::Fail(L"Memory leak detected!\nIf a static object is dynamically allocating memory this may be a false positive.");
 			}
 #endif
 		}
@@ -98,6 +99,8 @@ namespace UnitTestLibraryDesktop
 			entityA1.Wake();
 			entityA1.Append("Health") = 10;
 
+			//Because this newly created action is of type Action Event it does nothing. It would need to be a more specific action event to actually have any functionality (i.e.ActionIncrement)
+			//But it's auxillary attributes are passed to all reactions sharing it's subtype.
 			Action & actionEventA1 = static_cast<Action &>(entityA1.CreateAction("ActionEvent A1", "ActionEvent"));
 
 			*actionEventA1.Find("Subtype") = "Test";
@@ -109,11 +112,14 @@ namespace UnitTestLibraryDesktop
 			actionEventA1.AppendAuxiliaryAttribute("TargetAttribute") = "Health";
 			actionEventA1.AppendAuxiliaryAttribute("Step") = 2;
 
-			ReactionAttributed * testReaction = new ReactionAttributed("TestReaction", "Test");
+			//This reaction will recieve the attriibutes of actionEventA1, pass those to its contained action, which will then use those arguements to increment health.
+			ReactionAttributed * reactionA1 = new ReactionAttributed("TestReaction", "Test");
 
-			testReaction->CreateAction("ReactionIncrement", "ActionIncrement");
+			Action& reactionA1Action1 = static_cast<Action&>(reactionA1->CreateAction("ReactionIncrement", "ActionIncrement"));
 
-			entityA1.Adopt(*testReaction, "Reactions");
+			reactionA1Action1;
+
+			entityA1.Adopt(*reactionA1, "Reactions");
 
 			world.Update();
 
@@ -125,13 +131,37 @@ namespace UnitTestLibraryDesktop
 
 			Assert::IsTrue(entityA1["Health"] == 10);
 
+			time.SetCurrentTime(chrono::high_resolution_clock::time_point(chrono::seconds(2)));
+
+			world.Update();
+
+			Assert::IsTrue(entityA1["Health"] == 12);
+
 			time.SetCurrentTime(chrono::high_resolution_clock::time_point(chrono::seconds(3)));
 
 			world.Update();
 
-			Assert::IsTrue(entityA1["Health"] == 12); 
+			Assert::IsTrue(entityA1["Health"] == 12);
 
-			delete testReaction;
+			time.SetCurrentTime(chrono::high_resolution_clock::time_point(chrono::seconds(4)));
+
+			world.Update();
+
+			Assert::IsTrue(entityA1["Health"] == 12);
+
+			time.SetCurrentTime(chrono::high_resolution_clock::time_point(chrono::seconds(5)));
+
+			world.Update();
+
+			Assert::IsTrue(entityA1["Health"] == 12);
+
+			time.SetCurrentTime(chrono::high_resolution_clock::time_point(chrono::seconds(6)));
+
+			world.Update();
+
+			Assert::IsTrue(entityA1["Health"] == 12);
+
+			delete reactionA1;
 		}
 
 		TEST_METHOD(ReactionAttributedParseTest)

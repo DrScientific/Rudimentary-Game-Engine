@@ -9,7 +9,7 @@ namespace FIEAGameEngine
 		size_t hashValue = 0;
 		for (size_t i = 0; i < size; i++)
 		{
-			hashValue += data[i] * 33;
+			hashValue += data[i] * size_t(33);
 		}
 
 		return hashValue;
