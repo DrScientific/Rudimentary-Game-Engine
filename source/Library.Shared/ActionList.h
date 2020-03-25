@@ -106,17 +106,11 @@ namespace FIEAGameEngine
 	protected:
 
 		/// <summary>
-		/// Action List IdType Constructor
-		/// </summary>
-		/// <param name="typeId">RTTI type ID of the function</param>
-		ActionList(ActionList::IdType typeId);
-
-		/// <summary>
 		/// Action List Constructor. All other constructors forwarded to this constructor.
 		/// </summary>
 		/// <param name="typeId">RTTI type ID of the function</param>
 		/// <param name="name">Name of the Action List</param>
-		ActionList(ActionList::IdType typeId, string const & name);
+		ActionList(ActionList::IdType typeId, std::string const & name);
 
 		/// <summary>
 		/// Index of sectors attribute in scope.

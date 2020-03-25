@@ -4,23 +4,24 @@
 #include "Factory.h"
 #include "Action.h"
 
+using namespace std;
 
 namespace FIEAGameEngine
 {
 	RTTI_DEFINITIONS(World)
 
-	World::World(GameTime time) : Attributed(TypeIdClass()), mState(time)
+	World::World(GameTime & time) : Attributed(TypeIdClass()), mState(time)
 	{
 		assert(mVector[mSectorsIndex]->first == mSectorsKey);
 		mState.mWorld = this;
 	}
 
-	World::World(GameTime time, std::string const & name) : World(time)
+	World::World(GameTime & time, string const & name) : World(time)
 	{
 		mName = name;
 	}
 
-	void World::Adopt(Scope & child, std::string const & newChildKey)
+	void World::Adopt(Scope & child, string const & newChildKey)
 	{
 		if (newChildKey == mSectorsKey && !child.Is(Sector::TypeIdClass()))
 		{
@@ -29,12 +30,12 @@ namespace FIEAGameEngine
 		Scope::Adopt(child, newChildKey);
 	}
 
-	std::string World::Name() const
+	string World::Name() const
 	{
 		return mName;
 	}
 
-	void World::SetName(std::string const & name)
+	void World::SetName(string const & name)
 	{
 		mName = name;
 	}
@@ -49,7 +50,7 @@ namespace FIEAGameEngine
 		return operator[](mSectorsIndex);
 	}
 
-	Sector & World::CreateSector(std::string const & name)
+	Sector & World::CreateSector(string const & name)
 	{
 		Sector* newSector = new Sector();
 		newSector->SetWorld(this);
@@ -68,9 +69,10 @@ namespace FIEAGameEngine
 		}
 		mState.mSector = nullptr;
 		ClearGraveYard();
+		mEventQueue.Update(mState);
 	}
 
-	std::string World::ToString() const
+	string World::ToString() const
 	{
 		return  World::TypeName();
 	}
@@ -82,7 +84,10 @@ namespace FIEAGameEngine
 
 	void World::AddActionToGraveYard(Action * actionToDelete)
 	{
-		mGraveyard.PushBack(actionToDelete);
+		if (mGraveyard.Find(actionToDelete) == mGraveyard.end())
+		{
+			mGraveyard.PushBack(actionToDelete);
+		}
 	}
 
 	const FIEAGameEngine::Vector<Attributed::Signature> World::Signatures()

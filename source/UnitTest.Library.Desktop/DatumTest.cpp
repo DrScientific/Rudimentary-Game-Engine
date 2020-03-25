@@ -11,6 +11,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace FIEAGameEngine;
 using namespace std;
 using namespace UnitTests;
+using namespace glm;
 
 namespace UnitTestLibraryDesktop
 {
@@ -1841,7 +1842,7 @@ namespace UnitTestLibraryDesktop
 			delete[] testIntArr;
 		}
 
-		TEST_METHOD(TestRemoveRange)
+		/*TEST_METHOD(TestRemoveRange)
 		{
 			size_t testSize = 16;
 
@@ -1920,7 +1921,7 @@ namespace UnitTestLibraryDesktop
 			Assert::ExpectException<std::exception>(externalDatumException);
 
 			delete[] testIntArr;
-		}
+		}*/
 
 		TEST_METHOD(TestFind)
 		{

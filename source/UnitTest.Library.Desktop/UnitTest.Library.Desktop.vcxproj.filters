@@ -20,6 +20,9 @@
     <ClCompile Include="WorldSectorEntityTest.cpp" />
     <ClCompile Include="ActionsTest.cpp" />
     <ClCompile Include="TestModuleInitialize.cpp" />
+    <ClCompile Include="EventTest.cpp" />
+    <ClCompile Include="FooSubscriber.cpp" />
+    <ClCompile Include="FooEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -30,5 +33,7 @@
     <ClInclude Include="Bar.h" />
     <ClInclude Include="IDepthTestParseHelper.h" />
     <ClInclude Include="IIntegerJsonParseHelper.h" />
+    <ClInclude Include="FooSubscriber.h" />
+    <ClInclude Include="FooEntity.h" />
   </ItemGroup>
 </Project>

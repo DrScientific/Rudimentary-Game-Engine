@@ -1,13 +1,15 @@
 #pragma once
 #include "Attributed.h"
+#include "RTTI.h"
+
 namespace UnitTests
 {
 	/// <summary>
 	/// Class for testing all types of members that may be contained within an attributed class.
 	/// </summary>
-	class AttributedFoo final : public Attributed
+	class AttributedFoo final : public FIEAGameEngine::Attributed
 	{
-		RTTI_DECLARATIONS(AttributedFoo, Attributed);
+		RTTI_DECLARATIONS(AttributedFoo, FIEAGameEngine::Attributed);
 		static const std::size_t ArraySize = 5;
 
 	public:

@@ -1243,7 +1243,7 @@ namespace FIEAGameEngine
 	#pragma endregion
 
 	#pragma region Find
-	pair<bool, int*>  Datum::Find(int const & searchedValue) const
+	std::pair<bool, int*>  Datum::Find(int const & searchedValue) const
 	{
 		if (DatumType::Integer != mType)
 		{
@@ -1253,13 +1253,13 @@ namespace FIEAGameEngine
 		{
 			if (mArray.tInt[i] == searchedValue)
 			{
-				return pair<bool, int*>(true, &(mArray.tInt[i]));
+				return std::pair<bool, int*>(true, &(mArray.tInt[i]));
 			}
 		}
-		return pair<bool, int*>(false, nullptr);
+		return std::pair<bool, int*>(false, nullptr);
 	}
 
-	pair<bool, float*> Datum::Find(float const & searchedValue) const
+	std::pair<bool, float*> Datum::Find(float const & searchedValue) const
 	{
 		if (DatumType::Float != mType)
 		{
@@ -1269,13 +1269,13 @@ namespace FIEAGameEngine
 		{
 			if (mArray.tFloat[i] == searchedValue)
 			{
-				return pair<bool, float*>(true, &(mArray.tFloat[i]));
+				return std::pair<bool, float*>(true, &(mArray.tFloat[i]));
 			}
 		}
-		return pair<bool, float*>(false, nullptr);
+		return std::pair<bool, float*>(false, nullptr);
 	}
 
-	pair<bool, vec4*> Datum::Find(vec4 const & searchedValue) const
+	std::pair<bool, vec4*> Datum::Find(vec4 const & searchedValue) const
 	{
 		if (DatumType::Vector4 != mType)
 		{
@@ -1285,13 +1285,13 @@ namespace FIEAGameEngine
 		{
 			if (mArray.tVec4[i] == searchedValue)
 			{
-				return pair<bool, vec4*>(true, &(mArray.tVec4[i]));
+				return std::pair<bool, vec4*>(true, &(mArray.tVec4[i]));
 			}
 		}
-		return pair<bool, vec4*>(false, nullptr);
+		return std::pair<bool, vec4*>(false, nullptr);
 	}
 
-	pair<bool, mat4x4*> Datum::Find(mat4x4 const & searchedValue) const
+	std::pair<bool, mat4x4*> Datum::Find(mat4x4 const & searchedValue) const
 	{
 		if (DatumType::Matrix4x4 != mType)
 		{
@@ -1301,13 +1301,13 @@ namespace FIEAGameEngine
 		{
 			if (mArray.tMat4x4[i] == searchedValue)
 			{
-				return pair<bool, mat4x4*>(true, &(mArray.tMat4x4[i]));
+				return std::pair<bool, mat4x4*>(true, &(mArray.tMat4x4[i]));
 			}
 		}
-		return pair<bool, mat4x4*>(false, nullptr);
+		return std::pair<bool, mat4x4*>(false, nullptr);
 	}
 
-	pair<bool, Scope**> FIEAGameEngine::Datum::Find(Scope const & searchedValue) const
+	std::pair<bool, Scope**> FIEAGameEngine::Datum::Find(Scope const & searchedValue) const
 	{
 		if (DatumType::Scope != mType)
 		{
@@ -1317,13 +1317,13 @@ namespace FIEAGameEngine
 		{
 			if (mArray.tScope[i] == &searchedValue)
 			{
-				return pair<bool, Scope**>(true, &(mArray.tScope[i]));
+				return std::pair<bool, Scope**>(true, &(mArray.tScope[i]));
 			}
 		}
-		return pair<bool, Scope**>(false, nullptr);
+		return std::pair<bool, Scope**>(false, nullptr);
 	}
 
-	pair<bool, string*> Datum::Find(string const & searchedValue) const
+	std::pair<bool, string*> Datum::Find(string const & searchedValue) const
 	{
 		if (DatumType::String != mType)
 		{
@@ -1333,13 +1333,13 @@ namespace FIEAGameEngine
 		{
 			if (mArray.tString[i] == searchedValue)
 			{
-				return pair<bool, string*>(true, &(mArray.tString[i]));
+				return std::pair<bool, string*>(true, &(mArray.tString[i]));
 			}
 		}
-		return pair<bool, string*>(false, nullptr);
+		return std::pair<bool, string*>(false, nullptr);
 	}
 
-	pair<bool, RTTI**> Datum::Find(RTTI * const & searchedValue) const
+	std::pair<bool, RTTI**> Datum::Find(RTTI * const & searchedValue) const
 	{
 		if (DatumType::RTTIPtr != mType)
 		{
@@ -1349,10 +1349,10 @@ namespace FIEAGameEngine
 		{
 			if (mArray.tRTTIPtr[i] == searchedValue)
 			{
-				return pair<bool, RTTI**>(true, &(mArray.tRTTIPtr[i]));
+				return std::pair<bool, RTTI**>(true, &(mArray.tRTTIPtr[i]));
 			}
 		}
-		return pair<bool, RTTI**>(false, nullptr);
+		return std::pair<bool, RTTI**>(false, nullptr);
 	}
 	void Datum::SetStorage(void * const & data, size_t const & size)
 	{

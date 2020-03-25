@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Factory.h"
 
-using namespace std;
 
 namespace FIEAGameEngine
 {
@@ -40,7 +39,7 @@ namespace FIEAGameEngine
 	{
 		if (Find(pFactory.GetClassName()) != nullptr)
 		{
-			throw exception(cannotCreateDuplicateFactory.c_str());
+			throw std::exception(cannotCreateDuplicateFactory.c_str());
 		}
 		sFactoryTable.Insert(pFactory.GetClassName(), &pFactory);
 	}

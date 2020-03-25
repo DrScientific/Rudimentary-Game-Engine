@@ -9,6 +9,9 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace UnitTests;
+using namespace FIEAGameEngine;
+using namespace glm;
+using namespace std;
 
 namespace UnitTestLibraryDesktop
 {

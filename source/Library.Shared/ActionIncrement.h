@@ -90,7 +90,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// 
 		/// </summary>
-		float mStep = 1;
+		int mStep = 1;
 	};
 
 	CONCRETE_FACTORY(ActionIncrement, Scope);

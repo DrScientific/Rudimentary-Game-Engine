@@ -311,7 +311,7 @@ namespace UnitTestLibraryDesktop
 
 			Vector <Foo> foo2Vector = { bar,car,dar,ear,far };
 			Assert::IsTrue(foo2Vector.Size() == 5);
-			foo2Vector.Remove(++(foo2Vector.begin()), --(--(foo2Vector.end())));
+			foo2Vector.Remove(++(foo2Vector.begin()), --(foo2Vector.end()));
 			Assert::IsTrue(foo2Vector.Size() == 2);
 			Assert::IsTrue(foo2Vector.Front() == bar);
 			Assert::IsTrue(foo2Vector.Back() == far);

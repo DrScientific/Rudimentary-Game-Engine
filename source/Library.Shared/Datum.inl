@@ -10,17 +10,13 @@
 #include "glm/gtx/string_cast.hpp"
 #pragma warning(pop)
 
-using namespace glm;
-using namespace std;
-using namespace FIEAGameEngine;
-
 namespace FIEAGameEngine
 {
 #pragma region Get
 	template<typename T>
 	inline T Datum::Get(size_t const &) const
 	{
-		throw exception(unsupportedDataTypeExceptionText.c_str());
+		throw std::exception(unsupportedDataTypeExceptionText.c_str());
 	}
 
 	template<>
@@ -28,11 +24,11 @@ namespace FIEAGameEngine
 	{
 		if (index >= mSize)
 		{
-			throw exception(indexOutOfBoundsExceptionText.c_str());
+			throw std::exception(indexOutOfBoundsExceptionText.c_str());
 		}
 		if (mType != DatumType::Integer)
 		{
-			throw exception(operationTypeMismatchExceptionText.c_str());
+			throw std::exception(operationTypeMismatchExceptionText.c_str());
 		}
 		return mArray.tInt[index];
 	}
@@ -42,39 +38,39 @@ namespace FIEAGameEngine
 	{
 		if (index >= mSize)
 		{
-			throw exception(indexOutOfBoundsExceptionText.c_str());
+			throw std::exception(indexOutOfBoundsExceptionText.c_str());
 		}
 		if (mType != DatumType::Float)
 		{
-			throw exception(operationTypeMismatchExceptionText.c_str());
+			throw std::exception(operationTypeMismatchExceptionText.c_str());
 		}
 		return mArray.tFloat[index];
 	}
 
 	template<>
-	inline vec4 Datum::Get<vec4>(size_t const & index) const
+	inline glm::vec4 Datum::Get<glm::vec4>(size_t const & index) const
 	{
 		if (index >= mSize)
 		{
-			throw exception(indexOutOfBoundsExceptionText.c_str());
+			throw std::exception(indexOutOfBoundsExceptionText.c_str());
 		}
 		if (mType != DatumType::Vector4)
 		{
-			throw exception(operationTypeMismatchExceptionText.c_str());
+			throw std::exception(operationTypeMismatchExceptionText.c_str());
 		}
 		return mArray.tVec4[index];
 	}
 
 	template<>
-	inline mat4x4 Datum::Get<mat4x4>(size_t const & index) const
+	inline glm::mat4x4 Datum::Get<glm::mat4x4>(size_t const & index) const
 	{
 		if (index >= mSize)
 		{
-			throw exception(indexOutOfBoundsExceptionText.c_str());
+			throw std::exception(indexOutOfBoundsExceptionText.c_str());
 		}
 		if (mType != DatumType::Matrix4x4)
 		{
-			throw exception(operationTypeMismatchExceptionText.c_str());
+			throw std::exception(operationTypeMismatchExceptionText.c_str());
 		}
 		return mArray.tMat4x4[index];
 	}
@@ -84,25 +80,25 @@ namespace FIEAGameEngine
 	{
 		if (index >= mSize)
 		{
-			throw exception(indexOutOfBoundsExceptionText.c_str());
+			throw std::exception(indexOutOfBoundsExceptionText.c_str());
 		}
 		if (mType != DatumType::Scope)
 		{
-			throw exception(operationTypeMismatchExceptionText.c_str());
+			throw std::exception(operationTypeMismatchExceptionText.c_str());
 		}
 		return mArray.tScope[index];
 	}
 
 	template<>
-	inline string Datum::Get<string>(size_t const & index) const
+	inline std::string Datum::Get<std::string>(size_t const & index) const
 	{
 		if (index >= mSize)
 		{
-			throw exception(indexOutOfBoundsExceptionText.c_str());
+			throw std::exception(indexOutOfBoundsExceptionText.c_str());
 		}
 		if (mType != DatumType::String)
 		{
-			throw exception(operationTypeMismatchExceptionText.c_str());
+			throw std::exception(operationTypeMismatchExceptionText.c_str());
 		}
 		return mArray.tString[index];
 	}
@@ -112,11 +108,11 @@ namespace FIEAGameEngine
 	{
 		if (index >= mSize)
 		{
-			throw exception(indexOutOfBoundsExceptionText.c_str());
+			throw std::exception(indexOutOfBoundsExceptionText.c_str());
 		}
 		if (mType != DatumType::RTTIPtr)
 		{
-			throw exception(operationTypeMismatchExceptionText.c_str());
+			throw std::exception(operationTypeMismatchExceptionText.c_str());
 		}
 		return mArray.tRTTIPtr[index];
 	}
@@ -126,7 +122,7 @@ namespace FIEAGameEngine
 	template<typename T>
 	inline T Datum::Front() const
 	{
-		throw exception(unsupportedDataTypeExceptionText.c_str());
+		throw std::exception(unsupportedDataTypeExceptionText.c_str());
 	}
 
 	template<>
@@ -142,15 +138,15 @@ namespace FIEAGameEngine
 	}
 
 	template<>
-	inline vec4 Datum::Front<vec4>() const
+	inline glm::vec4 Datum::Front<glm::vec4>() const
 	{
-		return Get<vec4>(0);
+		return Get<glm::vec4>(0);
 	}
 
 	template<>
-	inline mat4x4 Datum::Front<mat4x4>() const
+	inline glm::mat4x4 Datum::Front<glm::mat4x4>() const
 	{
-		return Get<mat4x4>(0);
+		return Get<glm::mat4x4>(0);
 	}
 
 	template<>
@@ -160,9 +156,9 @@ namespace FIEAGameEngine
 	}
 
 	template<>
-	inline string Datum::Front<string>() const
+	inline std::string Datum::Front<std::string>() const
 	{
-		return Get<string>(0);
+		return Get<std::string>(0);
 	}
 
 	template<>
@@ -176,7 +172,7 @@ namespace FIEAGameEngine
 	template<typename T>
 	inline T Datum::Back() const
 	{
-		throw exception(unsupportedDataTypeExceptionText.c_str());
+		throw std::exception(unsupportedDataTypeExceptionText.c_str());
 	}
 
 	template<>
@@ -192,15 +188,15 @@ namespace FIEAGameEngine
 	}
 
 	template<>
-	inline vec4 Datum::Back<vec4>() const
+	inline glm::vec4 Datum::Back<glm::vec4>() const
 	{
-		return Get<vec4>(mSize - 1);
+		return Get<glm::vec4>(mSize - 1);
 	}
 
 	template<>
-	inline mat4x4 Datum::Back<mat4x4>() const
+	inline glm::mat4x4 Datum::Back<glm::mat4x4>() const
 	{
-		return Get<mat4x4>(mSize - 1);
+		return Get<glm::mat4x4>(mSize - 1);
 	}
 
 	template<>
@@ -210,9 +206,9 @@ namespace FIEAGameEngine
 	}
 
 	template<>
-	inline string Datum::Back<string>() const
+	inline std::string Datum::Back<std::string>() const
 	{
-		return Get<string>(mSize - 1);
+		return Get<std::string>(mSize - 1);
 	}
 
 	template<>

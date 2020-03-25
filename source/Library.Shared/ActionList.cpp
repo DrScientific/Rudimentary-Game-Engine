@@ -2,6 +2,8 @@
 #include "ActionList.h"
 #include "WorldState.h"
 
+using namespace std;
+
 namespace FIEAGameEngine
 {
 	RTTI_DEFINITIONS(ActionList)

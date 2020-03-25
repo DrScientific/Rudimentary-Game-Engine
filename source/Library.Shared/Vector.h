@@ -26,6 +26,13 @@ namespace FIEAGameEngine
 		{
 		public:
 
+			using size_type = std::size_t;
+			using difference_type = std::ptrdiff_t;
+			using value_type = T;
+			using reference = T;
+			using pointer = T * ;
+			using iterator_category = std::forward_iterator_tag;
+
 			/// <summary>
 			/// Default constructor for Iterator.
 			/// </summary>
@@ -118,6 +125,12 @@ namespace FIEAGameEngine
 		class const_Iterator
 		{
 		public:
+			using size_type = std::size_t;
+			using difference_type = std::ptrdiff_t;
+			using value_type = T;
+			using reference = T;
+			using pointer = T * ;
+			using iterator_category = std::forward_iterator_tag;
 
 			/// <summary>
 			/// Default constructor for const_Iterator
@@ -409,6 +422,12 @@ namespace FIEAGameEngine
 		void PushBack(T const & value);
 
 		/// <summary>
+		/// Places the specified value at the back of the vector, resizing if necessary.
+		/// </summary>
+		/// <param name="value">Value to place at the back of the list.</param>
+		void PushBack(T const && value);
+
+		/// <summary>
 		/// Removes the last element of the vector fromt the vector
 		/// </summary>
 		/// <returns>An iterator to the last element in the list after we have popped the last element off.</returns>
@@ -435,16 +454,22 @@ namespace FIEAGameEngine
 		void Remove(T const & value);
 
 		/// <summary>
+		/// Removes the element at the passed in iterator.
+		/// </summary>
+		/// <param name="iteratorToRemove">Iterator pointing to the element to remove.</param>
+		void Remove(Iterator const & iteratorToRemove);
+
+		/// <summary>
 		/// Removes all elements equal to value in the list.
 		/// </summary>
 		/// <param name="value">Value to remove.</param>
 		void RemoveAt(size_t index);
 
 		/// <summary>
-		/// Removes all elements between two iterators inclusively.
+		/// Removes all elements between two iterators exclusive of the finish iterator.
 		/// </summary>
 		/// <param name="start">Iterator pointing to the first element to remove.</param>
-		/// <param name="finish">Iterator pointing to the last element to remove.</param>
+		/// <param name="finish">Iterator pointing to the element before the last element to remove.</param>
 		void Remove(Iterator const & start, Iterator const & finish);
 
 		/// <summary>

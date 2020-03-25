@@ -16,13 +16,13 @@ namespace FIEAGameEngine
 		/// World Constructor.
 		/// </summary>
 		/// <param name="time">GameTime of the world to be used by world state.</param>
-		explicit World(GameTime time);
+		explicit World(GameTime & time);
 
 		/// <summary>
 		/// World Constructor.
 		/// </summary>
 		/// <param name="time">GameTime of the world to be used by world state.</param>
-		explicit World(GameTime time, std::string const & name);
+		explicit World(GameTime & time, std::string const & name);
 
 		/// <summary>
 		/// Destructor.
@@ -105,6 +105,11 @@ namespace FIEAGameEngine
 		/// World state of the world.
 		/// </summary>
 		WorldState mState;
+
+		/// <summary>
+		/// World's current queue of events
+		/// </summary>
+		EventQueue mEventQueue;
 
 		/// <summary>
 		/// Name of sectors attribute in scope.

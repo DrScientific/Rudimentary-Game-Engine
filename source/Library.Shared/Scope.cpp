@@ -26,7 +26,7 @@ namespace FIEAGameEngine
 	}
 
 	FIEAGameEngine::Scope::Scope(Scope && other) :
-		mHashMap(std::move(other.mHashMap)), mVector(std::move(other.mVector)), mParent(other.mParent)
+		mHashMap(move(other.mHashMap)), mVector(move(other.mVector)), mParent(other.mParent)
 	{
 		Reparent(other);
 		other.mParent = nullptr;
@@ -75,8 +75,8 @@ namespace FIEAGameEngine
 		if (this != &rhs)
 		{
 			_Clear(false);
-			mHashMap = std::move(rhs.mHashMap);
-			mVector = std::move(rhs.mVector);
+			mHashMap = move(rhs.mHashMap);
+			mVector = move(rhs.mVector);
 			mParent = rhs.mParent;
 
 			Reparent(rhs);
@@ -140,28 +140,7 @@ namespace FIEAGameEngine
 		return result;
 	}
 
-	Datum const * Scope::Search(string const & key, Scope const ** scopeAddress) const
-	{
-		if (!key.size())
-		{
-			throw exception(scopeCannotHaveEmptyKeyExceptionText.c_str());
-		}
-		Datum const * result = Find(key);
-		if (result == nullptr)
-		{
-			if (mParent != nullptr)
-			{
-				result = mParent->Search(key, scopeAddress);
-			}
-		}
-		else if (scopeAddress != nullptr)
-		{
-			*scopeAddress = this;
-		}
-		return result;
-	}
-
-	Scope * Scope::NameSearch(std::string const & name, std::string const & tableName)
+	Scope * Scope::NameSearch(string const & name, string const & tableName)
 	{
 		Scope* scopeToStartSearchFrom = this;
 		Scope** scopeNameFoundIn = &scopeToStartSearchFrom;
@@ -340,7 +319,7 @@ namespace FIEAGameEngine
 		return mVector.Size();
 	}
 
-	std::string FIEAGameEngine::Scope::ToString() const
+	string FIEAGameEngine::Scope::ToString() const
 	{
 		return "Scope";
 	}
@@ -383,9 +362,9 @@ namespace FIEAGameEngine
 		{
 			Orphan();
 		}
-		for (const auto& pair : mVector)
+		for (const auto& keyValPair : mVector)
 		{
-			const Datum& datum = pair->second;
+			const Datum& datum = keyValPair->second;
 			if (datum.Type() == Datum::DatumType::Scope)
 			{
 				for (size_t i = 0; i < datum.Size(); i++)

@@ -43,7 +43,7 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// Key of the current datum
 			/// </summary>
-			string const Key;
+			std::string const Key;
 			
 			/// <summary>
 			/// Datum type of the datum that corresponds to the key
@@ -74,12 +74,12 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// Shared Pointer constructor
 			/// </summary>
-			ScopeSharedData(shared_ptr<Scope> & scope);
+			ScopeSharedData(std::shared_ptr<Scope> & scope);
 
 			/// <summary>
 			/// Shared Pointer move constructor
 			/// </summary>
-			ScopeSharedData(shared_ptr<Scope> && scope);
+			ScopeSharedData(std::shared_ptr<Scope> && scope);
 
 			/// <summary>
 			/// Virtual destructor
@@ -109,7 +109,7 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// Shared pointer pointing to the root scope we will be populating.
 			/// </summary>
-			shared_ptr<Scope> rootScope;
+			std::shared_ptr<Scope> rootScope;
 		};
 
 

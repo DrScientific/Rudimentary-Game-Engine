@@ -1,6 +1,7 @@
 #pragma once
 #include "GameClock.h"
 #include "GameTime.h"
+#include "EventQueue.h"
 
 namespace FIEAGameEngine
 {
@@ -15,7 +16,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// 
 		/// </summary>
-		WorldState(GameTime const & time);
+		WorldState(GameTime & time);
 		
 		/// <summary>
 		/// 
@@ -37,13 +38,15 @@ namespace FIEAGameEngine
 		/// </summary>
 		Entity * mEntity = nullptr;
 		
-		//
+		/// <summary>
+		/// 
+		/// </summary>
 		Action * mAction = nullptr;
 
 		/// <summary>
 		/// 
 		/// </summary>
-		GameTime  const * mGameTime;
+		GameTime * mGameTime = nullptr;
 		
 	};
 

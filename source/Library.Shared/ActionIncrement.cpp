@@ -36,13 +36,6 @@ namespace FIEAGameEngine
 						datumToIncrement->Set(static_cast<int>(datumToIncrement->Get<int>(i) + mStep), i);
 					}
 				}
-				else if (datumToIncrement->Type() == Datum::DatumType::Float)
-				{
-					for (size_t i = 0; i < datumToIncrement->Size(); i++)
-					{
-						datumToIncrement->Set(datumToIncrement->Get<float>(i) + mStep, i);
-					}
-				}
 			}
 		}
 	}
@@ -65,7 +58,7 @@ namespace FIEAGameEngine
 			{"TargetGameContainer", Datum::DatumType::String, 1, offsetof(ActionIncrement, mTargetGameContainer) },
 			{"TargetName", Datum::DatumType::String, 1, offsetof(ActionIncrement, mTargetName) },
 			{"TargetAttribute", Datum::DatumType::String, 1, offsetof(ActionIncrement, mTargetAttribute) },
-			{"Step", Datum::DatumType::Float, 1, offsetof(ActionIncrement, mStep ) }
+			{"Step", Datum::DatumType::Integer, 1, offsetof(ActionIncrement, mStep ) }
 		};
 	}
 }

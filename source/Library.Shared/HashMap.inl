@@ -4,7 +4,6 @@
 
 #include "HashMap.h"
 
-using namespace std;
 
 namespace FIEAGameEngine
 {
@@ -307,7 +306,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline pair<bool, typename HashMap<TKey, TData, HashFunctor>::Iterator> HashMap<TKey, TData, HashFunctor>::Insert(PairType const & keyDataPair)
+	inline std::pair<bool, typename HashMap<TKey, TData, HashFunctor>::Iterator> HashMap<TKey, TData, HashFunctor>::Insert(PairType const & keyDataPair)
 	{
 		Iterator foundIt = end();
 		bool alreadyInMap = true;
@@ -329,11 +328,11 @@ namespace FIEAGameEngine
 			foundIt = Iterator(*this, hashedBucket, listIt);
 		}
 
-		return pair<bool, Iterator>(alreadyInMap, foundIt);
+		return std::pair<bool, Iterator>(alreadyInMap, foundIt);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline pair<bool, typename HashMap<TKey, TData, HashFunctor>::Iterator> HashMap<TKey, TData, HashFunctor>::Insert(TKey const & key, TData const & data)
+	inline std::pair<bool, typename HashMap<TKey, TData, HashFunctor>::Iterator> HashMap<TKey, TData, HashFunctor>::Insert(TKey const & key, TData const & data)
 	{
 		PairType keyDataPair(key, data);
 		return Insert(keyDataPair);
@@ -453,9 +452,9 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline pair<bool, TData*> HashMap<TKey, TData, HashFunctor>::ContainsKey(TKey const & key) const
+	inline std::pair<bool, TData*> HashMap<TKey, TData, HashFunctor>::ContainsKey(TKey const & key) const
 	{
-		pair<bool, TData*> result = pair<bool, TData*>(false, nullptr);
+		std::pair<bool, TData*> result = std::pair<bool, TData*>(false, nullptr);
 
 		const_Iterator foundIt = Find(key);
 		if (foundIt != cend())

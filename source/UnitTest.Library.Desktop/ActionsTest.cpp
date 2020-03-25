@@ -90,6 +90,36 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(actionIncrement.ToString() == "ActionIncrement");
 		}
 
+		TEST_METHOD(ActionNameTest)
+		{
+			SectorFactory sectorFactory;
+			EntityFactory entityFactory;
+			ActionListFactory actionListFactory;
+			ActionIncrementFactory actionIncrementFactory;
+
+			GameTime time;
+			World world(time);
+
+			Sector & sectorA = world.CreateSector("Sector A");
+			sectorA.Wake();
+
+			Entity & entityA = sectorA.CreateEntity("Entity A", "Entity");
+			entityA.Wake();
+			entityA.Append("Health").PushBack(10);
+
+			Assert::IsTrue(entityA.Actions().Size() == 0);
+
+			ActionList & actionListA1 = static_cast<ActionList &>(entityA.CreateAction("ActionList A1", "ActionList"));
+
+			Assert::IsTrue(actionListA1.Name() == "ActionList A1");
+
+			actionListA1.CreateAction("ActionIncrement A1", "ActionIncrement");
+
+			ActionIncrement & actionIncrementA1 = static_cast<ActionIncrement &>(actionListA1.Actions()[0]);
+
+			Assert::IsTrue(actionIncrementA1.Name() == "ActionIncrement A1");
+		}
+
 		TEST_METHOD(ActionIncrementTest)
 		{
 			SectorFactory sectorFactory;
@@ -105,7 +135,7 @@ namespace UnitTestLibraryDesktop
 
 			Entity & entityA = sectorA.CreateEntity("Entity A", "Entity");
 			entityA.Wake();
-			entityA.Append("Health").PushBack(10.0f);
+			entityA.Append("Health").PushBack(10);
 
 			Assert::IsTrue(entityA.Actions().Size() == 0);
 
@@ -125,11 +155,11 @@ namespace UnitTestLibraryDesktop
 			*actionIncrementA1.Find("TargetGameContainer") = "Entities";
 			*actionIncrementA1.Find("TargetName") = "Entity A";
 			*actionIncrementA1.Find("TargetAttribute") = "Health";
-			*actionIncrementA1.Find("Step") = 2.0f;
+			*actionIncrementA1.Find("Step") = 2;
 
 			world.Update();
 
-			Assert::IsTrue(entityA["Health"].Front<float>() == 12);
+			Assert::IsTrue(entityA["Health"] == 12);
 		}
 
 		TEST_METHOD(CreateActionTest)
@@ -148,7 +178,7 @@ namespace UnitTestLibraryDesktop
 
 			Entity & entityA = sectorA.CreateEntity("Entity A", "Entity");
 			entityA.Wake();
-			entityA.Append("Health").PushBack(10.0f);
+			entityA.Append("Health").PushBack(10);
 
 			Assert::IsTrue(entityA.Actions().Size() == 0);
 
@@ -179,11 +209,11 @@ namespace UnitTestLibraryDesktop
 			*actionIncrementA1.Find("TargetGameContainer") = "Entities";
 			*actionIncrementA1.Find("TargetName") = "Entity A";
 			*actionIncrementA1.Find("TargetAttribute") = "Health";
-			*actionIncrementA1.Find("Step") = 2.0f;
+			*actionIncrementA1.Find("Step") = 2;
 
 			world.Update();
 
-			Assert::IsTrue(entityA["Health"].Front<float>() == 12);
+			Assert::IsTrue(entityA["Health"] == 12);
 		}
 
 		TEST_METHOD(DestroyActionTest)
@@ -202,7 +232,7 @@ namespace UnitTestLibraryDesktop
 
 			Entity & entityA = sectorA.CreateEntity("Entity A", "Entity");
 			entityA.Wake();
-			entityA.Append("Health").PushBack(10.0f);
+			entityA.Append("Health").PushBack(10);
 
 			Assert::IsTrue(entityA.Actions().Size() == 0);
 
@@ -224,7 +254,7 @@ namespace UnitTestLibraryDesktop
 			*actionIncrementA1.Find("TargetGameContainer") = "Entities";
 			*actionIncrementA1.Find("TargetName") = "Entity A";
 			*actionIncrementA1.Find("TargetAttribute") = "Health";
-			*actionIncrementA1.Find("Step") = 2.0f;
+			*actionIncrementA1.Find("Step") = 2;
 
 			DestroyAction & destroyActionA1 = static_cast<DestroyAction &>(actionListA1.CreateAction("DestroyAction A1", "DestroyAction"));
 
@@ -236,11 +266,11 @@ namespace UnitTestLibraryDesktop
 
 			world.Update();
 
-			Assert::IsTrue(entityA["Health"].Front<float>() == 12);
+			Assert::IsTrue(entityA["Health"] == 12);
 			
 			world.Update();
 
-			Assert::IsTrue(entityA["Health"].Front<float>() == 12);
+			Assert::IsTrue(entityA["Health"] == 12);
 		}
 
 		TEST_METHOD(ActionListWhileTest)
@@ -258,7 +288,7 @@ namespace UnitTestLibraryDesktop
 
 			Entity & entityA = sectorA.CreateEntity("Entity A", "Entity");
 			entityA.Wake();
-			entityA.Append("Health").PushBack(10.0f);
+			entityA.Append("Health").PushBack(10);
 
 			Assert::IsTrue(entityA.Actions().Size() == 0);
 
@@ -285,7 +315,7 @@ namespace UnitTestLibraryDesktop
 			*actionListWhileA1PreambleAction.Find("TargetGameContainer") = "Actions";
 			*actionListWhileA1PreambleAction.Find("TargetName") = "ActionListWhile A1";
 			*actionListWhileA1PreambleAction.Find("TargetAttribute") = "Condition";
-			*actionListWhileA1PreambleAction.Find("Step") = -10.0f;
+			*actionListWhileA1PreambleAction.Find("Step") = -10;
 
 			actionListWhileA1.CreateAction("IncrementHealth", "ActionIncrement");
 
@@ -301,7 +331,7 @@ namespace UnitTestLibraryDesktop
 			*actionListWhileA1LoopAction.Find("TargetGameContainer") = "Entities";
 			*actionListWhileA1LoopAction.Find("TargetName") = "Entity A";
 			*actionListWhileA1LoopAction.Find("TargetAttribute") = "Health";
-			*actionListWhileA1LoopAction.Find("Step") = 2.0f;
+			*actionListWhileA1LoopAction.Find("Step") = 2;
 
 			ActionIncrement actionListWhileA1IncrementAction;
 
@@ -317,13 +347,13 @@ namespace UnitTestLibraryDesktop
 			*actionListWhileA1IncrementAction.Find("TargetGameContainer") = "Actions";
 			*actionListWhileA1IncrementAction.Find("TargetName") = "ActionListWhile A1";
 			*actionListWhileA1IncrementAction.Find("TargetAttribute") = "Condition";
-			*actionListWhileA1IncrementAction.Find("Step") = 1.0f;
+			*actionListWhileA1IncrementAction.Find("Step") = 1;
 
-			Assert::IsTrue(entityA["Health"].Front<float>() == 10);
+			Assert::IsTrue(entityA["Health"] == 10);
 
 			world.Update();
 
-			Assert::IsTrue(entityA["Health"].Front<float>() == 30);
+			Assert::IsTrue(entityA["Health"] == 30);
 		}
 
 		TEST_METHOD(ActionParseTest)
@@ -359,74 +389,73 @@ namespace UnitTestLibraryDesktop
 
 			entityA1;
 
-			//ourWorld.Update();
+			ourWorld.Update();
 
-			//Health is 12, should be 30
+			int health = entityA1["Health"].Front<int>();
+			health;
 
-			//Assert::IsTrue(entityA1["Health"] == 30);
+			Assert::IsTrue(entityA1["Health"] == 30);
 		}
 
-		//TEST_METHOD(ActionCloneTest)
-		//{
-		//	GameTime time;
+		TEST_METHOD(ActionCloneTest)
+		{
+			GameTime time;
 
-		//	shared_ptr<Scope> sharedScope = make_shared<World>(time);
-		//	ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
-		//	JsonParseMaster master(sharedData);
-		//	ScopeJsonParseHelper scopeHelper;
+			shared_ptr<Scope> sharedScope = make_shared<World>(time);
+			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
+			JsonParseMaster master(sharedData);
+			ScopeJsonParseHelper scopeHelper;
 
-		//	SectorFactory sectorFactory;
-		//	EntityFactory entityFactory;
-		//	ActionListFactory actionListFactory;
-		//	ActionListWhileFactory actionListWhileFactory;
-		//	CreateActionFactory createActionFactory;
-		//	DestroyActionFactory destroyActionFactory;
-		//	ActionIncrementFactory actionIncrementFactory;
+			SectorFactory sectorFactory;
+			EntityFactory entityFactory;
+			ActionListFactory actionListFactory;
+			ActionListWhileFactory actionListWhileFactory;
+			CreateActionFactory createActionFactory;
+			DestroyActionFactory destroyActionFactory;
+			ActionIncrementFactory actionIncrementFactory;
 
-		//	master.AddHelper(scopeHelper);
+			master.AddHelper(scopeHelper);
 
-		//	master.Initialize();
+			master.Initialize();
 
-		//	Assert::IsTrue(master.ParseFromFile("Content/WorldAction.json"));
+			Assert::IsTrue(master.ParseFromFile("Content/WorldAction.json"));
 
-		//	World & ourWorld = static_cast<World&>(sharedData.GetScope());
+			World & ourWorld = static_cast<World&>(sharedData.GetScope());
 
-		//	Sector & sectorA = static_cast<Sector&>(ourWorld.Sectors()[0]);
+			Sector & sectorA = static_cast<Sector&>(ourWorld.Sectors()[0]);
 
-		//	Entity & entityA1 = static_cast<Entity&>(sectorA.Entities()[0]);
+			Entity & entityA1 = static_cast<Entity&>(sectorA.Entities()[0]);
 
-		//	//JsonParseMaster& clonedMaster = *master.Clone();
+			ourWorld.Update();
 
-		//	//clonedMaster.Initialize();
+			Assert::IsTrue(entityA1["Health"] == 30);
 
-		//	//Assert::IsTrue(clonedMaster.ParseFromFile("Content/WorldAction.json"));
+			JsonParseMaster& clonedMaster = *master.Clone();
 
-		//	//ScopeJsonParseHelper::ScopeSharedData & clonedSharedData = *clonedMaster.GetSharedData()->As< ScopeJsonParseHelper::ScopeSharedData>();
+			clonedMaster.Initialize();			
 
-		//	//World & cloneOurWorld = static_cast<World&>(clonedSharedData.GetScope());
+			Assert::IsTrue(clonedMaster.ParseFromFile("Content/WorldAction.json"));
 
+			ScopeJsonParseHelper::ScopeSharedData & clonedSharedData = *clonedMaster.GetSharedData()->As< ScopeJsonParseHelper::ScopeSharedData>();
 
-		//	//Sector & sectorA = static_cast<Sector&>(cloneOurWorld.Sectors()[0]);
-		//	//
-		//	//Entity & entityA1 = static_cast<Entity&>(sectorA.Entities()[0]);
-		//	////ActionListWhile & actionListWhileA1 = static_cast<ActionListWhile&>(entityA1.Actions()[0]);
-		//	////ActionList & actionListA1 = static_cast<ActionList&>(actionListWhileA1.Actions()[0]);
-		//	////CreateAction & createActionA1 = static_cast<CreateAction&>(actionListA1.Actions()[0]);
-		//	////ActionIncrement & actionIncrementA1 =
-		//	////DestroyAction & destroyActionA1 = static_cast<DestroyAction&>(actionListA1.Actions()[2]);
+			World & clonedOurWorld = static_cast<World&>(clonedSharedData.GetScope());
 
-		//	ourWorld.Update();
+			Sector & clonedSectorA = static_cast<Sector&>(clonedOurWorld.Sectors()[0]);
 
+			Entity & clonedEntityA1 = static_cast<Entity&>(clonedSectorA.Entities()[0]);
 
-		//	int health = entityA1["Health"].Front<int>();
+			clonedOurWorld.Update();
 
-		//	health;
+			int health = clonedEntityA1["Health"].Front<int>();
+			health;
 
-		//	Assert::IsTrue(entityA1["Health"] == 30);
+			Assert::IsTrue(clonedEntityA1["Health"] == 50);
+
+			Assert::IsTrue(entityA1["Health"] == 30);
 
 
-		//	//delete &clonedMaster;
-		//}
+			delete &clonedMaster;
+		}
 
 	private:
 		static _CrtMemState sStartMemState;

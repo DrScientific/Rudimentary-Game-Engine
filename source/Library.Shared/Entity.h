@@ -168,7 +168,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="typeId">Type ID of the entity</param>
 		/// <param name="name">Name of the entity</param>
-		Entity(RTTI::IdType typeId, string const & name);
+		Entity(RTTI::IdType typeId, std::string const & name);
 
 	private:
 		/// <summary>

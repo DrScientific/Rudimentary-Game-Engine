@@ -480,6 +480,21 @@ namespace FIEAGameEngine
 		new (mArray + (mSize++)) T(value);
 	}
 
+	template<typename T>
+	inline void Vector<T>::PushBack(T const && value)
+	{
+		if (mSize == mCapacity)
+		{
+			if (mCapacity == 0)
+			{
+				mCapacity = 1;
+			}
+			Reserve(mCapacity * 2);
+		}
+
+		new (mArray + (mSize++)) T(value);
+	}
+
 	template<typename T> typename
 		inline Vector<T>::Iterator Vector<T>::PopBack()
 	{
@@ -534,6 +549,22 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
+	inline void Vector<T>::Remove(Iterator const & iteratorToRemove)
+	{
+		if (iteratorToRemove.mOwner != this)
+		{
+			throw std::exception(iteratorFromOtherListExceptionText.c_str());
+		}
+		if (mSize > 0)
+		{
+			mArray[iteratorToRemove.mDataIndex].~T();
+	
+			memmove(&(mArray[iteratorToRemove.mDataIndex]), &(mArray[iteratorToRemove.mDataIndex + 1]), (mSize - iteratorToRemove.mDataIndex - 1) * sizeof(T));
+			mSize -= 1;
+		}
+	}
+
+	template<typename T>
 	inline void Vector<T>::RemoveAt(size_t index)
 	{
 		if (index >= mSize)
@@ -554,12 +585,12 @@ namespace FIEAGameEngine
 		}
 		if (mSize > 0 && start.mDataIndex < finish.mDataIndex)
 		{
-			for (size_t i = start.mDataIndex; i <= finish.mDataIndex; i++)
+			for (size_t i = start.mDataIndex; i != finish.mDataIndex; i++)
 			{
 				mArray[i].~T();
 			}
-			memmove(&(mArray[start.mDataIndex]), &(mArray[finish.mDataIndex + 1]), (mSize - finish.mDataIndex - 1) * sizeof(T));
-			mSize -= (finish.mDataIndex - start.mDataIndex + 1);
+			memmove(&(mArray[start.mDataIndex]), &(mArray[finish.mDataIndex]), (mSize - finish.mDataIndex) * sizeof(T));
+			mSize -= (finish.mDataIndex - start.mDataIndex);
 		}
 	}
 	template<typename T>

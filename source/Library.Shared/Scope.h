@@ -99,7 +99,7 @@ namespace FIEAGameEngine
 		/// <param name="key">Key to search for.</param>
 		/// <param name="scopeAddress">Scope address is a second optional parameter that will return a pointer to a pointer of the scope the key was found in.</param>
 		/// <returns>A pointer to the datum at the given key in this scope or it's ancestors.</returns>
-		Datum const * Search(string const & key, Scope const ** scopeAddress = nullptr) const;
+		Datum const * Search(std::string const & key, Scope const ** scopeAddress = nullptr) const;
 
 		/// <summary>
 		/// Appends an empty datum at the given key. If a datum exists at that key already returns that datum instead.
@@ -184,7 +184,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="searchedScope">The scope to search for.</param>
 		/// <returns>The datum and datum index the scope is located at</returns>
-		pair<Datum *, size_t> FindNestedScope(Scope const & searchedScope);
+		std::pair<Datum *, size_t> FindNestedScope(Scope const & searchedScope);
 
 		/// <summary>
 		/// Returns the number of key-datum pairs in this scope.

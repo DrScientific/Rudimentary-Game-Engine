@@ -1,12 +1,13 @@
 #include "pch.h"
 #include "Bar.h"
 
-namespace FIEAGameEngine
+using namespace FIEAGameEngine;
+
+namespace UnitTests
 {
 	RTTI_DEFINITIONS(Bar)
 
-		Bar::Bar(int data) :
-		mData(new int(data))
+	Bar::Bar(int data) : mData(new int(data))
 	{
 	}
 
@@ -18,5 +19,9 @@ namespace FIEAGameEngine
 	Bar::~Bar()
 	{
 		delete mData;
+	}
+	int const Bar::Data() const
+	{
+		return *mData;
 	}
 }
