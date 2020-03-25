@@ -24,6 +24,9 @@
     <ClCompile Include="FooSubscriber.cpp" />
     <ClCompile Include="FooEntity.cpp" />
     <ClCompile Include="ReactionTest.cpp" />
+    <ClCompile Include="AsyncEventTest.cpp" />
+    <ClCompile Include="AsyncSubscriberListTestSubscriber.cpp" />
+    <ClCompile Include="AsyncEventQueueTestSubscriber.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -36,5 +39,7 @@
     <ClInclude Include="IIntegerJsonParseHelper.h" />
     <ClInclude Include="FooSubscriber.h" />
     <ClInclude Include="FooEntity.h" />
+    <ClInclude Include="AsyncSubscriberListTestSubscriber.h" />
+    <ClInclude Include="AsyncEventQueueTestSubscriber.h" />
   </ItemGroup>
 </Project>

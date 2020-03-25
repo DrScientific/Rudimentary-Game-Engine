@@ -6,5 +6,6 @@ namespace FIEAGameEngine
 {
 	WorldState::WorldState(GameTime & time) : mGameTime(&time)
 	{
+
 	}
 }

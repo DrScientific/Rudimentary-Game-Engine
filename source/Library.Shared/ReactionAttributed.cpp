@@ -14,22 +14,53 @@ namespace FIEAGameEngine
 
 	ReactionAttributed::ReactionAttributed(std::string name, std::string subtype) : Reaction(ReactionAttributed::TypeIdClass(), name), mSubtype(subtype)
 	{
-		Event<EventMessageAttributed>::Subscribe(this);
+		Event<EventMessageAttributed>::Subscribe(*this);
 	}
 
+	ReactionAttributed::ReactionAttributed(ReactionAttributed const & other) : Reaction(ReactionAttributed::TypeIdClass(), other.mName), mSubtype(other.mSubtype), mWorld(other.mWorld)
+	{
+		Event<EventMessageAttributed>::Subscribe(*this);
+	}
+
+	ReactionAttributed & ReactionAttributed::operator=(ReactionAttributed const & other)
+	{
+		Event<EventMessageAttributed>::Unsubscribe(*this);
+		mName = other.mName;
+		mSubtype = other.mSubtype;
+		mWorld = other.mWorld;
+		Event<EventMessageAttributed>::Subscribe(*this);
+		return *this;
+	}
+
+	ReactionAttributed::ReactionAttributed(ReactionAttributed && other) : Reaction(ReactionAttributed::TypeIdClass(), other.mName), mSubtype(other.mSubtype), mWorld(other.mWorld)
+	{
+		Event<EventMessageAttributed>::Subscribe(*this);
+	}
+
+
+	ReactionAttributed & ReactionAttributed::operator=(ReactionAttributed && other)
+	{
+		Event<EventMessageAttributed>::Unsubscribe(*this);
+		mName = std::move(other.mName);
+		mSubtype = std::move(other.mSubtype);
+		mWorld = std::move(other.mWorld);
+		Event<EventMessageAttributed>::Subscribe(*this);
+		return *this;
+	}
 
 	ReactionAttributed::~ReactionAttributed()
 	{
-		Event<EventMessageAttributed>::Unsubscribe(this);
+		Event<EventMessageAttributed>::Unsubscribe(*this);
 	}
 
-	gsl::owner<Scope*> ReactionAttributed::Clone() const
+	gsl::owner<ReactionAttributed*> ReactionAttributed::Clone() const
 	{
 		return new ReactionAttributed(*this);
 	}
 
 	void ReactionAttributed::Notify(FIEAGameEngine::EventPublisher const & publisher)
 	{
+		lock_guard<mutex> lock(mMutex);
 		assert(publisher.Is(Event<EventMessageAttributed>::TypeIdClass()));
 		Event<EventMessageAttributed> const * attributedEvent = static_cast<Event<EventMessageAttributed> const *>(&publisher);
 
@@ -54,6 +85,7 @@ namespace FIEAGameEngine
 				
 			}
 			ActionList::Update(mWorld->mState);
+			mWorld->mState.mAction = nullptr;
 		}
 	}
 

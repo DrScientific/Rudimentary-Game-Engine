@@ -32,7 +32,7 @@ namespace FIEAGameEngine
 		/// Virtual constructor
 		/// </summary>
 		/// <returns></returns>
-		virtual gsl::owner<Scope*> Clone() const override;
+		virtual gsl::owner<ActionEvent*> Clone() const override;
 
 		/// <summary>
 		/// Create an attributed event, assign its world and subtype, copy all auxiliary parameters into the event and queue the event with the given delay.

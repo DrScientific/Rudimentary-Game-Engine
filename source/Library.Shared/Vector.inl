@@ -495,6 +495,12 @@ namespace FIEAGameEngine
 		new (mArray + (mSize++)) T(value);
 	}
 
+	template<typename T>
+	inline void Vector<T>::push_back(T const & value)
+	{
+		PushBack(value);
+	}
+
 	template<typename T> typename
 		inline Vector<T>::Iterator Vector<T>::PopBack()
 	{

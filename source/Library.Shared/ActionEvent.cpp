@@ -21,7 +21,7 @@ namespace FIEAGameEngine
 	{
 	}
 
-	gsl::owner<Scope*> ActionEvent::Clone() const
+	gsl::owner<ActionEvent*> ActionEvent::Clone() const
 	{
 		return new ActionEvent(*this);
 	}
@@ -29,7 +29,7 @@ namespace FIEAGameEngine
 	void ActionEvent::Update(WorldState & worldState)
 	{
 		shared_ptr<Event<EventMessageAttributed>> attributedEvent = make_shared<Event<EventMessageAttributed>>(EventMessageAttributed(mSubtype, worldState.mWorld, AuxiliaryAttributes()));
-		worldState.mWorld->mEventQueue.Enqueue(attributedEvent, *worldState.mGameTime, std::chrono::milliseconds(mDelay));
+		worldState.mWorld->mEventQueue->Enqueue(attributedEvent, *worldState.mGameTime, std::chrono::milliseconds(mDelay));
 	}
 
 	const FIEAGameEngine::Vector<Attributed::Signature> ActionEvent::Signatures()

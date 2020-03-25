@@ -14,6 +14,32 @@ namespace FIEAGameEngine
 	public:
 
 		/// <summary>
+		/// Copy constructor
+		/// </summary>
+		/// <param name="other"></param>
+		Reaction(Reaction const & other) = default;
+		
+		/// <summary>
+		/// Copy assignment
+		/// </summary>
+		/// <param name="rhs"></param>
+		/// <returns></returns>
+		Reaction & operator=(Reaction const & rhs) = default;
+		
+		/// <summary>
+		/// Move constructor
+		/// </summary>
+		/// <param name="other"></param>
+		Reaction(Reaction && other) = default;
+
+		/// <summary>
+		/// Move assignment
+		/// </summary>
+		/// <param name="rhs"></param>
+		/// <returns></returns>
+		Reaction & operator=(Reaction && rhs) = default;
+		
+		/// /// <summary>
 		/// Destructor
 		/// </summary>
 		virtual ~Reaction() = default;

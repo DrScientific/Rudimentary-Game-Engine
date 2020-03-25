@@ -10,13 +10,13 @@ namespace FIEAGameEngine
 {
 	RTTI_DEFINITIONS(World)
 
-	World::World(GameTime & time) : Attributed(TypeIdClass()), mState(time)
+	World::World(GameTime * time, EventQueue * eventQueue) : Attributed(World::TypeIdClass()), mEventQueue(eventQueue), mState(*time)
 	{
 		assert(mVector[mSectorsIndex]->first == mSectorsKey);
 		mState.mWorld = this;
 	}
 
-	World::World(GameTime & time, string const & name) : World(time)
+	World::World(string const & name, GameTime * time, EventQueue * eventQueue) : World(time, eventQueue)
 	{
 		mName = name;
 	}
@@ -69,7 +69,7 @@ namespace FIEAGameEngine
 		}
 		mState.mSector = nullptr;
 		ClearGraveYard();
-		mEventQueue.Update(mState);
+		mEventQueue->Update(mState);
 	}
 
 	string World::ToString() const
@@ -79,7 +79,12 @@ namespace FIEAGameEngine
 
 	gsl::owner<Scope*> World::Clone() const
 	{
-		return new World(*this);
+		World * newWorld = new World(*this);
+		newWorld->mState.mWorld = newWorld;
+		newWorld->mState.mSector = nullptr;
+		newWorld->mState.mEntity = nullptr;
+		newWorld->mState.mAction = nullptr;
+		return newWorld;
 	}
 
 	void World::AddActionToGraveYard(Action * actionToDelete)
