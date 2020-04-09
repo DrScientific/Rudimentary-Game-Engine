@@ -27,6 +27,7 @@
     <ClCompile Include="AsyncEventTest.cpp" />
     <ClCompile Include="AsyncSubscriberListTestSubscriber.cpp" />
     <ClCompile Include="AsyncEventQueueTestSubscriber.cpp" />
+    <ClCompile Include="RedBlackTreeTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

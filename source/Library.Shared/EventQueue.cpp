@@ -47,24 +47,24 @@ namespace FIEAGameEngine
 
 		Vector<std::shared_ptr<EventPublisher>>::Iterator expiredBoundary = partition(mEvents.begin(), mEvents.end(), [&gameTime](shared_ptr<EventPublisher> & i) {return !i->IsExpired(gameTime->CurrentTime()); });
 		
+		//note this is an std::vector
 		vector<future<void>> futures;
 		{
 			lock_guard<recursive_mutex> lock(mMutex);
 
 			for (auto i = expiredBoundary; i != mEvents.end(); i++)
 			{
-				auto & expiredEvent = *i;
+				auto& expiredEvent = *i;
 				futures.emplace_back(std::async(launch::async, [&expiredEvent]
-				{
-					expiredEvent->Deliver();
-				}));
+					{
+						expiredEvent->Deliver();
+					}));
 			}
 		}
-		for (auto & i : futures)
+		for (auto& i : futures)
 		{
 			i.get();
 		}
-
 
 		mEvents.Remove(expiredBoundary, mEvents.end());
 	}

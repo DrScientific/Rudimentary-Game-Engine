@@ -120,7 +120,7 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// Constructor for Iterator taking in a list owner and a node.
 			/// </summary>
-			/// <param name="owner">List owning the cIterator.</param>
+			/// <param name="owner">List owning the Iterator.</param>
 			/// <param name="node">Node pointed to by the Iterator.</param>
 			Iterator(const SList& owner, Node* node = nullptr);
 

@@ -38,7 +38,7 @@ namespace FIEAGameEngine
 	bool EventPublisher::IsExpired(std::chrono::high_resolution_clock::time_point currentTime) const
 	{
 		lock_guard<recursive_mutex> lock(*mMutexPtr);
-		return currentTime > mTimeEnqueued + mDelay;
+		return currentTime >= mTimeEnqueued + mDelay;
 	}
 
 	void EventPublisher::Deliver()

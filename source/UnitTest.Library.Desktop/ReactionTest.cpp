@@ -14,6 +14,8 @@
 #include "ReactionAttributed.h"
 #include "EventMessageAttributed.h"
 #include "ActionIncrement.h"
+#include <chrono>
+#include <thread>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
@@ -28,7 +30,7 @@ namespace UnitTestLibraryDesktop
 		TEST_METHOD_INITIALIZE(Initialize)
 		{
 #if defined(DEBUG) || defined(_DEBUG)
-			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
+			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 			_CrtMemCheckpoint(&sStartMemState);
 #endif
 		}

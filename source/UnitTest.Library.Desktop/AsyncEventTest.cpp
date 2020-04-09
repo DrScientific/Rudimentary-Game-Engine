@@ -29,7 +29,7 @@ namespace UnitTestLibraryDesktop
 		TEST_METHOD_INITIALIZE(Initialize)
 		{
 #if defined(DEBUG) || defined(_DEBUG)
-			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
+			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 			_CrtMemCheckpoint(&sStartMemState);
 #endif
 		}
@@ -42,7 +42,8 @@ namespace UnitTestLibraryDesktop
 			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
 			{
 				_CrtMemDumpStatistics(&diffMemState);
-				Assert::Fail(L"Memory Leaks!");
+				_CrtDumpMemoryLeaks();
+				Assert::Fail(L"Memory leak detected!\nIf a static object is dynamically allocating memory this may be a false positive.");
 			}
 #endif
 		}
@@ -70,30 +71,6 @@ namespace UnitTestLibraryDesktop
 				world.Update();
 			}
 		}
-
-		/*
-		TEST_METHOD(AsyncQueuePushTest)
-		{
-			GameClock clock;
-			GameTime time;
-			EventQueue eventQueue;
-			World world(&time, &eventQueue);
-
-			clock.UpdateGameTime(*world.mState.mGameTime);
-
-			AsyncEventQueueTestSubscriber subscribers[10];
-
-			clock.UpdateGameTime(*world.mState.mGameTime);
-
-			world.mEventQueue->Enqueue(make_shared<Event<EventQueue*>>(&eventQueue), *world.mState.mGameTime);
-
-			while (eventQueue.Size() < 10000)
-			{
-				Logger::WriteMessage(to_string(eventQueue.Size()).c_str());
-				clock.UpdateGameTime(*world.mState.mGameTime);
-				world.Update();
-			}
-		}*/
 
 	private:
 		static _CrtMemState sStartMemState;
