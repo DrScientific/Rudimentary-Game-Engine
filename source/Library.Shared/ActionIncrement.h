@@ -27,7 +27,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">ActionIncrement to assign to</param>
 		/// <returns>Reference this</returns>
-		ActionIncrement & operator=(ActionIncrement const & rhs) = default;
+		ActionIncrement & operator=(ActionIncrement const & other) = default;
 
 		/// <summary>
 		/// Default move constructor 
@@ -40,7 +40,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">ActionIncrement to assign to</param>
 		/// <returns>Reference to this</returns>
-		ActionIncrement & operator=(ActionIncrement && rhs) = default;
+		ActionIncrement & operator=(ActionIncrement && other) = default;
 
 		/// <summary>
 		/// 

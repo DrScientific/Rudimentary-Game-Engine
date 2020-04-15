@@ -82,16 +82,16 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// Checks that two Iterators are equal.
 			/// </summary>
-			/// <param name="rhs">Iterator to compare with.</param>
+			/// <param name="other">Iterator to compare with.</param>
 			/// <returns>Whether the Iterators are equal.</returns>
-			bool operator==(Iterator const & rhs) const;
+			bool operator==(Iterator const & other) const;
 
 			/// <summary>
 			/// Checks that two Iterators are not equal.
 			/// </summary>
-			/// <param name="rhs">Iterator to compare with.</param>
+			/// <param name="other">Iterator to compare with.</param>
 			/// <returns>Whether the Iterators are not equal.</returns>
-			bool operator!=(Iterator const & rhs) const;
+			bool operator!=(Iterator const & other) const;
 
 			/// <summary>
 			/// Dereferences the Iterator.
@@ -193,16 +193,16 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// Checks that two const_Iterators are equal.
 			/// </summary>
-			/// <param name="rhs">const_Iterator to compare with.</param>
+			/// <param name="other">const_Iterator to compare with.</param>
 			/// <returns>Whether the const_Iterators are equal.</returns>
-			bool operator==(const_Iterator const & rhs) const;
+			bool operator==(const_Iterator const & other) const;
 
 			/// <summary>
 			/// Checks that two const_Iterators are not equal.
 			/// </summary>
-			/// <param name="rhs">const_Iterator to compare with.</param>
+			/// <param name="other">const_Iterator to compare with.</param>
 			/// <returns>Whether the const_Iterators are not equal.</returns>
-			bool operator!=(const_Iterator const & rhs) const;
+			bool operator!=(const_Iterator const & other) const;
 
 			/// <summary>
 			/// Dereferences the const_Iterator.
@@ -255,16 +255,16 @@ namespace FIEAGameEngine
 		/// Assignment Operator.
 		/// Makes the left hand side of the assignment a deep copy of the right hand side of the assignment. 
 		/// </summary>
-		/// <param name="rhs">The list on the right hand side of the expression we are setting our list equal to.</param>
+		/// <param name="other">The list on the right hand side of the expression we are setting our list equal to.</param>
 		/// <returns>A reference to the list on the left hand side of the operator.</returns>
-		Vector& operator=(Vector const & rhs);
+		Vector& operator=(Vector const & other);
 
 		/// <summary>
 		/// Move Assignment operator
 		/// </summary>
-		/// <param name="rhs">The list on the right hand side of the expression we are setting our list equal to.</param>
+		/// <param name="other">The list on the right hand side of the expression we are setting our list equal to.</param>
 		/// <returns>A reference to the list on the left hand side of the operator.</returns>
-		Vector& operator=(Vector && rhs);
+		Vector& operator=(Vector && other);
 
 		/// <summary>
 		/// Initializer list constructor.
@@ -425,16 +425,16 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Checks that two vectors are equal.
 		/// </summary>
-		/// <param name="rhs">Vector to compare with.</param>
+		/// <param name="other">Vector to compare with.</param>
 		/// <returns>Whether the vectors are equal.</returns>
-		bool operator==(Vector<T> const & rhs) const;
+		bool operator==(Vector<T> const & other) const;
 
 		/// <summary>
 		/// Checks that two vectors are equal.
 		/// </summary>
-		/// <param name="rhs">Vector to compare with.</param>
+		/// <param name="other">Vector to compare with.</param>
 		/// <returns>Whether the vectors are equal.</returns>
-		bool operator!=(Vector<T> const & rhs) const;
+		bool operator!=(Vector<T> const & other) const;
 
 		/// <summary>
 		/// Returns the value of the front element of the vector.

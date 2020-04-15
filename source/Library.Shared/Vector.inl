@@ -45,15 +45,15 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline bool Vector<T>::Iterator::operator==(Iterator const & rhs) const
+	inline bool Vector<T>::Iterator::operator==(Iterator const & other) const
 	{
-		return (mOwner == rhs.mOwner) && (mDataIndex == rhs.mDataIndex);
+		return (mOwner == other.mOwner) && (mDataIndex == other.mDataIndex);
 	}
 
 	template<typename T>
-	inline bool Vector<T>::Iterator::operator!=(Iterator const & rhs) const
+	inline bool Vector<T>::Iterator::operator!=(Iterator const & other) const
 	{
-		return !(*this == rhs);
+		return !(*this == other);
 	}
 
 	template<typename T>
@@ -129,15 +129,15 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline bool Vector<T>::const_Iterator::operator==(const_Iterator const & rhs) const
+	inline bool Vector<T>::const_Iterator::operator==(const_Iterator const & other) const
 	{
-		return (mOwner == rhs.mOwner) && (mDataIndex == rhs.mDataIndex);
+		return (mOwner == other.mOwner) && (mDataIndex == other.mDataIndex);
 	}
 
 	template<typename T>
-	inline bool Vector<T>::const_Iterator::operator!=(const_Iterator const & rhs) const
+	inline bool Vector<T>::const_Iterator::operator!=(const_Iterator const & other) const
 	{
-		return !(*this == rhs);
+		return !(*this == other);
 	}
 
 	template<typename T>
@@ -179,38 +179,38 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline Vector<T> & Vector<T>::operator=(Vector const & rhs)
+	inline Vector<T> & Vector<T>::operator=(Vector const & other)
 	{
-		if (this != &rhs)
+		if (this != &other)
 		{
 			Clear();
-			if (mCapacity < rhs.mCapacity)
+			if (mCapacity < other.mCapacity)
 			{
-				Reserve(static_cast<unsigned int>(rhs.mCapacity));
+				Reserve(static_cast<unsigned int>(other.mCapacity));
 			}
-			while (mSize < rhs.mSize)
+			while (mSize < other.mSize)
 			{
-				PushBack(rhs.mArray[mSize]);
+				PushBack(other.mArray[mSize]);
 			}
 		}
 		return *this;
 	}
 
 	template<typename T>
-	inline Vector<T> & Vector<T>::operator=(Vector && rhs)
+	inline Vector<T> & Vector<T>::operator=(Vector && other)
 	{
-		if (this != &rhs)
+		if (this != &other)
 		{
 			Clear();
 			ShrinkToFit();
 
-			mSize = rhs.mSize;
-			mCapacity = rhs.mCapacity;
-			mArray = rhs.mArray;
+			mSize = other.mSize;
+			mCapacity = other.mCapacity;
+			mArray = other.mArray;
 
-			rhs.mSize = 0;
-			rhs.mCapacity = 0;
-			rhs.mArray = nullptr;
+			other.mSize = 0;
+			other.mCapacity = 0;
+			other.mArray = nullptr;
 		}
 
 		return *this;
@@ -454,15 +454,15 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline bool Vector<T>::operator==(Vector<T> const & rhs) const
+	inline bool Vector<T>::operator==(Vector<T> const & other) const
 	{
-		//return std::equal(begin(), end(), rhs.begin(), rhs.end());
+		//return std::equal(begin(), end(), other.begin(), other.end());
 
-		if (mSize == rhs.mSize)
+		if (mSize == other.mSize)
 		{
 			for (size_t i = 0; i < mSize; i++)
 			{
-				if ((*this)[i] != rhs[i])
+				if ((*this)[i] != other[i])
 				{
 					return false;
 				}
@@ -474,9 +474,9 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline bool Vector<T>::operator!=(Vector<T> const & rhs) const
+	inline bool Vector<T>::operator!=(Vector<T> const & other) const
 	{
-		return !(*this == rhs);
+		return !(*this == other);
 	}
 
 	template<typename T>

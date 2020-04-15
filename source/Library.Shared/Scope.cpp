@@ -37,16 +37,16 @@ namespace FIEAGameEngine
 		Clear();
 	}
 
-	Scope & FIEAGameEngine::Scope::operator=(Scope const & rhs)
+	Scope & FIEAGameEngine::Scope::operator=(Scope const & other)
 	{
-		if (this != &rhs)
+		if (this != &other)
 		{
 			_Clear(false);
-			mVector.Reserve(rhs.mVector.Size());
-			for (size_t i = 0; i < rhs.mVector.Size(); ++i)
+			mVector.Reserve(other.mVector.Size());
+			for (size_t i = 0; i < other.mVector.Size(); ++i)
 			{
-				string existingName = rhs.mVector[i]->first;
-				Datum& existingDatum = rhs.mVector[i]->second;
+				string existingName = other.mVector[i]->first;
+				Datum& existingDatum = other.mVector[i]->second;
 
 				Datum& newDatum = Append(existingName);
 				newDatum.SetType(existingDatum.Type());
@@ -70,17 +70,17 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	Scope & FIEAGameEngine::Scope::operator=(Scope && rhs) noexcept
+	Scope & FIEAGameEngine::Scope::operator=(Scope && other) noexcept
 	{
-		if (this != &rhs)
+		if (this != &other)
 		{
 			_Clear(false);
-			mHashMap = move(rhs.mHashMap);
-			mVector = move(rhs.mVector);
-			mParent = rhs.mParent;
+			mHashMap = move(other.mHashMap);
+			mVector = move(other.mVector);
+			mParent = other.mParent;
 
-			Reparent(rhs);
-			rhs.mParent = nullptr;
+			Reparent(other);
+			other.mParent = nullptr;
 		}
 		return *this;
 	}
@@ -255,19 +255,19 @@ namespace FIEAGameEngine
 		return mVector[index]->second;
 	}
 
-	bool FIEAGameEngine::Scope::operator==(Scope const & rhs) const
+	bool FIEAGameEngine::Scope::operator==(Scope const & other) const
 	{
 		bool result = true;
-		if(this != &rhs)
+		if(this != &other)
 		{
 			//Should do less comparisons than simply comparing hashmaps although that is a valid, easier to read option.
 			result = false;
-			if (mVector.Size() == rhs.mVector.Size())
+			if (mVector.Size() == other.mVector.Size())
 			{
 				result = true;
 				for (size_t i = 0; i < mVector.Size(); i++)
 				{
-					if (*mVector[i] != *rhs.mVector[i])
+					if (*mVector[i] != *other.mVector[i])
 					{
 						result = false;
 						break;
@@ -278,9 +278,9 @@ namespace FIEAGameEngine
 		return result;
 	}
 
-	bool FIEAGameEngine::Scope::operator!=(Scope const & rhs) const
+	bool FIEAGameEngine::Scope::operator!=(Scope const & other) const
 	{
-		return !(*this == rhs);
+		return !(*this == other);
 	}
 
 	string const Scope::FindName(Scope * const searchedScope)
@@ -349,12 +349,12 @@ namespace FIEAGameEngine
 		return "Scope";
 	}
 
-	bool FIEAGameEngine::Scope::Equals(const RTTI * rhs) const
+	bool FIEAGameEngine::Scope::Equals(const RTTI * other) const
 	{
 		bool result = false;
-		if (TypeIdInstance() == rhs->TypeIdInstance())
+		if (TypeIdInstance() == other->TypeIdInstance())
 		{
-			Scope* rhsScope = const_cast<Scope*>(static_cast<const Scope*>(rhs));
+			Scope* rhsScope = const_cast<Scope*>(static_cast<const Scope*>(other));
 			if (mVector.Size() == rhsScope->mVector.Size())
 			{
 				result = true;

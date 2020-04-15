@@ -65,16 +65,16 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// Checks that two Iterators are equal.
 			/// </summary>
-			/// <param name="rhs">Iterator to compare with.</param>
+			/// <param name="other">Iterator to compare with.</param>
 			/// <returns>Whether the Iterators are equal.</returns>
-			bool operator==(Iterator const & rhs) const;
+			bool operator==(Iterator const & other) const;
 
 			/// <summary>
 			/// Checks that two Iterators are not equal.
 			/// </summary>
-			/// <param name="rhs">Iterator to compare with.</param>
+			/// <param name="other">Iterator to compare with.</param>
 			/// <returns>Whether the Iterators are not equal.</returns>
-			bool operator!=(Iterator const & rhs) const;
+			bool operator!=(Iterator const & other) const;
 
 			/// <summary>
 			/// Dereferences the Iterator.
@@ -169,16 +169,16 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// Checks that two const_Iterators are equal.
 			/// </summary>
-			/// <param name="rhs">const_Iterator to compare with.</param>
+			/// <param name="other">const_Iterator to compare with.</param>
 			/// <returns>Whether the const_Iterators are equal.</returns>
-			bool operator==(const_Iterator const & rhs) const;
+			bool operator==(const_Iterator const & other) const;
 
 			/// <summary>
 			/// Checks that two const_Iterators are not equal.
 			/// </summary>
-			/// <param name="rhs">const_Iterator to compare with.</param>
+			/// <param name="other">const_Iterator to compare with.</param>
 			/// <returns>Whether the const_Iterators are not equal.</returns>
-			bool operator!=(const_Iterator const & rhs) const;
+			bool operator!=(const_Iterator const & other) const;
 
 			/// <summary>
 			/// Dereferences the const_Iterator.
@@ -248,16 +248,16 @@ namespace FIEAGameEngine
 		/// Assignment Operator.
 		/// Makes the left hand side of the assignment a deep copy of the right hand side of the assignment. 
 		/// </summary>
-		/// <param name="rhs">The list on the right hand side of the expression we are setting our HashMap equal to.</param>
+		/// <param name="other">The list on the right hand side of the expression we are setting our HashMap equal to.</param>
 		/// <returns>A reference to the HashMap on the left hand side of the operator.</returns>
-		HashMap& operator=(HashMap const & rhs) = default;
+		HashMap& operator=(HashMap const & other) = default;
 
 		/// <summary>
 		/// Move Assignment Operator.
 		/// </summary>
-		/// <param name="rhs">The list on the right hand side of the expression we are setting our HashMap equal to.</param>
+		/// <param name="other">The list on the right hand side of the expression we are setting our HashMap equal to.</param>
 		/// <returns>A reference to the HashMap on the left hand side of the operator.</returns>
-		HashMap& operator=(HashMap && rhs);
+		HashMap& operator=(HashMap && other);
 
 		/// <summary>
 		/// Deletes the hash map.
@@ -356,16 +356,16 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="rhs"></param>
+		/// <param name="other"></param>
 		/// <returns></returns>
-		bool operator==(HashMap const & rhs) const;
+		bool operator==(HashMap const & other) const;
 
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="rhs"></param>
+		/// <param name="other"></param>
 		/// <returns></returns>
-		bool operator!=(HashMap const & rhs) const;
+		bool operator!=(HashMap const & other) const;
 
 		/// <summary>
 		/// Removes the key-data pair stored at the index mapped to by the hashed key. If the key-data pair is not in the HashMap do nothing.

@@ -22,9 +22,9 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Copy assignment
 		/// </summary>
-		/// <param name="rhs"></param>
+		/// <param name="other"></param>
 		/// <returns></returns>
-		Reaction & operator=(Reaction const & rhs) = default;
+		Reaction & operator=(Reaction const & other) = default;
 		
 		/// <summary>
 		/// Move constructor
@@ -35,9 +35,9 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Move assignment
 		/// </summary>
-		/// <param name="rhs"></param>
+		/// <param name="other"></param>
 		/// <returns></returns>
-		Reaction & operator=(Reaction && rhs) = default;
+		Reaction & operator=(Reaction && other) = default;
 		
 		/// /// <summary>
 		/// Destructor

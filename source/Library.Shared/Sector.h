@@ -34,7 +34,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">Sector to assign to.</param>
 		/// <returns>A reference to this.</returns>
-		Sector & operator=(Sector const & rhs) = default;
+		Sector & operator=(Sector const & other) = default;
 
 		/// <summary>
 		/// Default move constructor.
@@ -47,7 +47,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">Sector to move</param>
 		/// <returns>A reference to this.</returns>
-		Sector & operator=(Sector && rhs) = default;
+		Sector & operator=(Sector && other) = default;
 
 		/// <summary>
 		/// Destructor

@@ -145,73 +145,73 @@ namespace FIEAGameEngine
 		/// Datum to datum assignment operator.
 		/// This operation can change the type of a datum as well as whether it is internal or external
 		/// </summary>
-		/// <param name="rhs">Datum to assign left hand side to.</param>
+		/// <param name="other">Datum to assign left hand side to.</param>
 		/// <returns>Datum on the left hand side of the assignment operator.</returns>
-		Datum& operator= (Datum const & rhs);
+		Datum& operator= (Datum const & other);
 
 		/// <summary>
 		/// Preserve the storage setting of a datum while shallow copying in the contents of the right hand side. 
 		/// </summary>
-		/// <param name="rhs">Datum to assign left hand side to.</param>
+		/// <param name="other">Datum to assign left hand side to.</param>
 		/// <returns>Datum on the left hand side of the assignment operator.</returns>
-		Datum& StoragePreservedAssignment(Datum const & rhs);
+		Datum& StoragePreservedAssignment(Datum const & other);
 
 		/// <summary>
 		/// Datum to integer assignment operator.
 		/// Sets datum size to 1 and clears all elements previously stored in datum.
 		/// </summary>
-		/// <param name="rhs">Integer we wish to store in datum.</param>
+		/// <param name="other">Integer we wish to store in datum.</param>
 		/// <returns>Datum on the left hand side of the assignment operator.</returns>
-		Datum& operator= (int const & rhs);
+		Datum& operator= (int const & other);
 
 		/// <summary>
 		/// Datum to float assignment operator.
 		/// Sets datum size to 1 and clears all elements previously stored in datum.
 		/// </summary>
-		/// <param name="rhs">Float we wish to store in datum.</param>
+		/// <param name="other">Float we wish to store in datum.</param>
 		/// <returns>Datum on the left hand side of the assignment operator.</returns>
-		Datum& operator= (float const & rhs);
+		Datum& operator= (float const & other);
 
 		/// <summary>
 		/// Datum to vec4 assignment operator.
 		/// Sets datum size to 1 and clears all elements previously stored in datum.
 		/// </summary>
-		/// <param name="rhs"></param>
+		/// <param name="other"></param>
 		/// <returns>Datum on the left hand side of the assignment operator.</returns>
-		Datum& operator= (glm::vec4 const & rhs);
+		Datum& operator= (glm::vec4 const & other);
 
 		/// <summary>
 		/// Datum to mat4x4 assignment operator.
 		/// Sets datum size to 1 and clears all elements previously stored in datum.
 		/// </summary>
-		/// <param name="rhs"></param>
+		/// <param name="other"></param>
 		/// <returns>Datum on the left hand side of the assignment operator.</returns>
-		Datum& operator= (glm::mat4x4 const & rhs);
+		Datum& operator= (glm::mat4x4 const & other);
 
 	private:
 		/// <summary>
 		/// Datum to Scope* assignment operator.
 		/// Sets datum size to 1 and clears all elements previously stored in datum.
 		/// </summary>
-		/// <param name="rhs"></param>
+		/// <param name="other"></param>
 		/// <returns>Datum on the left hand side of the assignment operator.</returns>
-		Datum& operator= (Scope const & rhs);
+		Datum& operator= (Scope const & other);
 	public:
 		/// <summary>
 		/// Datum to string assignment operator.
 		/// Sets datum size to 1 and clears all elements previously stored in datum.
 		/// </summary>
-		/// <param name="rhs"></param>
+		/// <param name="other"></param>
 		/// <returns>Datum on the left hand side of the assignment operator.</returns>
-		Datum& operator= (std::string const & rhs);
+		Datum& operator= (std::string const & other);
 
 		/// <summary>
 		/// Datum to RTTI* assignment operator.
 		/// Sets datum size to 1 and clears all elements previously stored in datum.
 		/// </summary>
-		/// <param name="rhs"></param>
+		/// <param name="other"></param>
 		/// <returns>Datum on the left hand side of the assignment operator.</returns>
-		Datum& operator= (RTTI * const & rhs);
+		Datum& operator= (RTTI * const & other);
 #pragma endregion
 
 #pragma region IntializerListConstructors
@@ -294,112 +294,112 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Compares a datum to a datum.
 		/// </summary>
-		/// <param name="rhs">Datum to compare to.</param>
+		/// <param name="other">Datum to compare to.</param>
 		/// <returns>Whether the datum and datum are equal.</returns>
-		bool operator== (Datum const & rhs) const;
+		bool operator== (Datum const & other) const;
 
 		/// <summary>
 		/// Compares a datum to an integer.
 		/// Always returns false if datum size is not one.
 		/// </summary>
-		/// <param name="rhs">Integer to compare to.</param>
+		/// <param name="other">Integer to compare to.</param>
 		/// <returns>Whether the datum and int are equal.</returns>
-		bool operator== (int const & rhs) const;
+		bool operator== (int const & other) const;
 
 		/// <summary>
 		/// Compares a datum to a float.
 		/// Always returns false if datum size is not one.
 		/// </summary>
-		/// <param name="rhs">Float to compare to.</param>
+		/// <param name="other">Float to compare to.</param>
 		/// <returns>Whether the datum and float are equal.</returns>
-		bool operator== (float const & rhs) const;
+		bool operator== (float const & other) const;
 
 		/// <summary>
 		/// Compares a datum to a vec4.
 		/// Always returns false if datum size is not one.
 		/// </summary>
-		/// <param name="rhs">Vec4 to compare to.</param>
+		/// <param name="other">Vec4 to compare to.</param>
 		/// <returns>Whether the datum and vec4 are equal.</returns>
-		bool operator== (glm::vec4 const & rhs) const;
+		bool operator== (glm::vec4 const & other) const;
 
 		/// <summary>
 		/// Compares a datum to a mat4x4.
 		/// Always returns false if datum size is not one.
 		/// </summary>
-		/// <param name="rhs">Mat4x4 to compare to.</param>
+		/// <param name="other">Mat4x4 to compare to.</param>
 		/// <returns>Whether the datum and mat4x4 are equal.</returns>
-		bool operator== (glm::mat4x4 const & rhs) const;
+		bool operator== (glm::mat4x4 const & other) const;
 
 		/// <summary>
 		/// Compares a datum to a string.
 		/// Always returns false if datum size is not one.
 		/// </summary>
-		/// <param name="rhs">String to compare to.</param>
+		/// <param name="other">String to compare to.</param>
 		/// <returns>Whether the datum and string are equal.</returns>
-		bool operator== (std::string const & rhs) const;
+		bool operator== (std::string const & other) const;
 
 		/// <summary>
 		/// Compares a datum to an RTTI*.
 		/// Always returns false if datum size is not one.
 		/// </summary>
-		/// <param name="rhs">RTTI* to compare to.</param>
+		/// <param name="other">RTTI* to compare to.</param>
 		/// <returns>Whether the datum and RTTI* are equal.</returns>
-		bool operator== (RTTI * const & rhs) const;
+		bool operator== (RTTI * const & other) const;
 
 		/// <summary>
 		/// Compares a datum to a datum.
 		/// </summary>
-		/// <param name="rhs">Datum to compare to.</param>
+		/// <param name="other">Datum to compare to.</param>
 		/// <returns>Whether the datum and datum are not equal.</returns>
-		bool operator!= (Datum const & rhs) const;
+		bool operator!= (Datum const & other) const;
 
 		/// <summary>
 		/// Compares a datum to an integer.
 		/// Always returns true if datum size is not one.
 		/// </summary>
-		/// <param name="rhs">Integer to compare to.</param>
+		/// <param name="other">Integer to compare to.</param>
 		/// <returns>Whether the datum and int are not equal.</returns>
-		bool operator!= (int const & rhs) const;
+		bool operator!= (int const & other) const;
 
 		/// <summary>
 		/// Compares a datum to a float.
 		/// Always returns true if datum size is not one.
 		/// </summary>
-		/// <param name="rhs">Float to compare to.</param>
+		/// <param name="other">Float to compare to.</param>
 		/// <returns>Whether the datum and float are not equal.</returns>
-		bool operator!= (float const & rhs) const;
+		bool operator!= (float const & other) const;
 
 		/// <summary>
 		/// Compares a datum to a vec4.
 		/// Always returns true if datum size is not one.
 		/// </summary>
-		/// <param name="rhs">Vec4 to compare to.</param>
+		/// <param name="other">Vec4 to compare to.</param>
 		/// <returns>Whether the datum and vec4 are not equal.</returns>
-		bool operator!= (glm::vec4 const & rhs) const;
+		bool operator!= (glm::vec4 const & other) const;
 
 		/// <summary>
 		/// Compares a datum to a mat4x4.
 		/// Always returns true if datum size is not one.
 		/// </summary>
-		/// <param name="rhs">Mat4x4 to compare to.</param>
+		/// <param name="other">Mat4x4 to compare to.</param>
 		/// <returns>Whether the datum and mat4x4 are not equal.</returns>
-		bool operator!= (glm::mat4x4 const & rhs) const;
+		bool operator!= (glm::mat4x4 const & other) const;
 
 		/// <summary>
 		/// Compares a datum to a string.
 		/// Always returns true if datum size is not one.
 		/// </summary>
-		/// <param name="rhs">String to compare to.</param>
+		/// <param name="other">String to compare to.</param>
 		/// <returns>Whether the datum and string are not equal.</returns>
-		bool operator!= (std::string const & rhs) const;
+		bool operator!= (std::string const & other) const;
 
 		/// <summary>
 		/// Compares a datum to an RTTI*.
 		/// Always returns true if datum size is not one.
 		/// </summary>
-		/// <param name="rhs">RTTI* to compare to.</param>
+		/// <param name="other">RTTI* to compare to.</param>
 		/// <returns>Whether the datum and RTTI* are not equal.</returns>
-		bool operator!= (RTTI * const & rhs) const;
+		bool operator!= (RTTI * const & other) const;
 #pragma endregion
 
 #pragma region operator[]

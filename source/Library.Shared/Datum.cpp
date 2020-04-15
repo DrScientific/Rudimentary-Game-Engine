@@ -76,9 +76,9 @@ namespace FIEAGameEngine
 	#pragma endregion
 
 	#pragma region operator=
-	Datum & Datum::operator=(Datum const & rhs)
+	Datum & Datum::operator=(Datum const & other)
 	{
-		if (this != &rhs)
+		if (this != &other)
 		{
 			if (mIsInternal)
 			{
@@ -86,78 +86,78 @@ namespace FIEAGameEngine
 				ShrinkToFit();
 			}
 
-			mType = rhs.mType;
+			mType = other.mType;
 
-			if (rhs.mIsInternal)
+			if (other.mIsInternal)
 			{
 				mIsInternal = true;
 				if (mType != DatumType::Unknown)
 				{
-					Reserve(rhs.mSize);
+					Reserve(other.mSize);
 				}
 				if(mType != DatumType::String)
 				{
-					memcpy(mArray.tVoid, rhs.mArray.tVoid, rhs.mSize * mTypeSizes[static_cast<size_t>(mType)]);
-					mSize = rhs.mSize;
+					memcpy(mArray.tVoid, other.mArray.tVoid, other.mSize * mTypeSizes[static_cast<size_t>(mType)]);
+					mSize = other.mSize;
 				}
 				else
 				{
-					for (size_t i = 0; i < rhs.mSize; i++)
+					for (size_t i = 0; i < other.mSize; i++)
 					{
-						PushBack(rhs.mArray.tString[i]);
+						PushBack(other.mArray.tString[i]);
 					}
 				}
 			}
 			else
 			{
 				mIsInternal = false;
-				mCapacity = rhs.mCapacity;
-				mSize = rhs.mSize;
-				mArray = rhs.mArray;
+				mCapacity = other.mCapacity;
+				mSize = other.mSize;
+				mArray = other.mArray;
 			}
 		}
 		return *this;
 	}
 
-	Datum & Datum::StoragePreservedAssignment(Datum const & rhs)
+	Datum & Datum::StoragePreservedAssignment(Datum const & other)
 	{
-		if (this != &rhs)
+		if (this != &other)
 		{
 			if (mIsInternal)
 			{
 				Clear();
-				Reserve(rhs.mSize);
-				mType = rhs.mType;
+				Reserve(other.mSize);
+				mType = other.mType;
 				if (mType != DatumType::String)
 				{
-					memcpy(mArray.tVoid, rhs.mArray.tVoid, rhs.mSize * mTypeSizes[static_cast<size_t>(mType)]);
-					mSize = rhs.mSize;
+					memcpy(mArray.tVoid, other.mArray.tVoid, other.mSize * mTypeSizes[static_cast<size_t>(mType)]);
+					mSize = other.mSize;
 				}
 				else
 				{
-					for (size_t i = 0; i < rhs.mSize; i++)
+					for (size_t i = 0; i < other.mSize; i++)
 					{
-						PushBack(rhs.mArray.tString[i]);
+						PushBack(other.mArray.tString[i]);
 					}
 				}
 			}
 			else
 			{
-				if (mType != rhs.mType)
+				if (mType != other.mType)
 				{
 					throw exception(storagePreservedAssignmentTypeMismatchExceptionText.c_str());
 				}
-				size_t minSize = std::min(mSize, rhs.mSize);
+				size_t minSize = std::min(mSize, other.mSize);
 				if (mType != DatumType::String)
 				{
-					memcpy(mArray.tVoid, rhs.mArray.tVoid, minSize * mTypeSizes[static_cast<size_t>(mType)]);
-					mSize = rhs.mSize;
+					memcpy(mArray.tVoid, other.mArray.tVoid, minSize * mTypeSizes[static_cast<size_t>(mType)]);
+					mSize = other.mSize;
 				}
 				else
 				{
 					for (size_t i = 0; i < minSize; i++)
 					{
-						Set(rhs.mArray.tString[i], i);
+						Set(other.mArray.tString[i], i);
 					}
 				}
 				
@@ -166,7 +166,7 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	Datum & Datum::operator=(int const & rhs)
+	Datum & Datum::operator=(int const & other)
 	{
 
 		if (mType == DatumType::Unknown || mType == DatumType::Integer)
@@ -181,19 +181,19 @@ namespace FIEAGameEngine
 		{
 			Resize(1);
 			ShrinkToFit();
-			Set(rhs);
+			Set(other);
 		}
 		else
 		{
 			mSize = 1;
 			mCapacity = 1;
-			mArray.tInt[0] = (const_cast<int&>(rhs));
+			mArray.tInt[0] = (const_cast<int&>(other));
 		}
 
 		return *this;
 	}
 
-	Datum & Datum::operator=(float const & rhs)
+	Datum & Datum::operator=(float const & other)
 	{
 		if (mType == DatumType::Unknown || mType == DatumType::Float)
 		{
@@ -207,18 +207,18 @@ namespace FIEAGameEngine
 		{
 			Resize(1);
 			ShrinkToFit();
-			Set(rhs);
+			Set(other);
 		}
 		else
 		{
 			mSize = 1;
 			mCapacity = 1;
-			mArray.tFloat[0] = (const_cast<float&>(rhs));
+			mArray.tFloat[0] = (const_cast<float&>(other));
 		}
 		return *this;
 	}
 
-	Datum & Datum::operator=(vec4 const & rhs)
+	Datum & Datum::operator=(vec4 const & other)
 	{
 		if (mType == DatumType::Unknown || mType == DatumType::Vector4)
 		{
@@ -232,18 +232,18 @@ namespace FIEAGameEngine
 		{
 			Resize(1);
 			ShrinkToFit();
-			Set(rhs);
+			Set(other);
 		}
 		else
 		{
 			mSize = 1;
 			mCapacity = 1;
-			mArray.tVec4[0] = (const_cast<vec4&>(rhs));
+			mArray.tVec4[0] = (const_cast<vec4&>(other));
 		}
 		return *this;
 	}
 
-	Datum & Datum::operator=(mat4x4 const & rhs)
+	Datum & Datum::operator=(mat4x4 const & other)
 	{
 		if (mType == DatumType::Unknown || mType == DatumType::Matrix4x4)
 		{
@@ -257,18 +257,18 @@ namespace FIEAGameEngine
 		{
 			Resize(1);
 			ShrinkToFit();
-			Set(rhs);
+			Set(other);
 		}
 		else
 		{
 			mSize = 1;
 			mCapacity = 1;
-			mArray.tMat4x4[0] = (const_cast<mat4x4&>(rhs));
+			mArray.tMat4x4[0] = (const_cast<mat4x4&>(other));
 		}
 		return *this;
 	}
 
-	Datum & FIEAGameEngine::Datum::operator=(Scope const & rhs)
+	Datum & FIEAGameEngine::Datum::operator=(Scope const & other)
 	{
 		if (mType == DatumType::Unknown || mType == DatumType::Scope)
 		{
@@ -282,7 +282,7 @@ namespace FIEAGameEngine
 		{
 			Resize(1);
 			ShrinkToFit();
-			Set(rhs);
+			Set(other);
 		}
 		else
 		{
@@ -291,7 +291,7 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	Datum & Datum::operator=(string const & rhs)
+	Datum & Datum::operator=(string const & other)
 	{
 		if (mType == DatumType::Unknown || mType == DatumType::String)
 		{
@@ -305,18 +305,18 @@ namespace FIEAGameEngine
 		{
 			Resize(1);
 			ShrinkToFit();
-			Set(rhs);
+			Set(other);
 		}
 		else
 		{
 			mSize = 1;
 			mCapacity = 1;
-			mArray.tString[0] = (const_cast<string&>(rhs));
+			mArray.tString[0] = (const_cast<string&>(other));
 		}
 		return *this;
 	}
 
-	Datum & Datum::operator=(RTTI * const & rhs)
+	Datum & Datum::operator=(RTTI * const & other)
 	{
 		if (mType == DatumType::Unknown || mType == DatumType::RTTIPtr)
 		{
@@ -330,13 +330,13 @@ namespace FIEAGameEngine
 		{
 			Resize(1);
 			ShrinkToFit();
-			Set(rhs);
+			Set(other);
 		}
 		else
 		{
 			mSize = 1;
 			mCapacity = 1;
-			mArray.tRTTIPtr[0] = (const_cast<RTTI*&>(rhs));
+			mArray.tRTTIPtr[0] = (const_cast<RTTI*&>(other));
 		}
 		return *this;
 	}
@@ -435,17 +435,17 @@ namespace FIEAGameEngine
 	#pragma endregion
 
 	#pragma region operator==
-	bool Datum::operator==(Datum const & rhs) const
+	bool Datum::operator==(Datum const & other) const
 	{
 		bool result = false;
-		if (mSize == rhs.mSize && mIsInternal == rhs.mIsInternal && mType == rhs.mType)
+		if (mSize == other.mSize && mIsInternal == other.mIsInternal && mType == other.mType)
 		{
 			if (mType == DatumType::Scope || mType == DatumType::RTTIPtr)
 			{
 				result = true;
 				for (size_t i = 0; i < mSize; i++)
 				{
-					if (!(mArray.tRTTIPtr[i]->Equals(rhs.mArray.tRTTIPtr[i])))
+					if (!(mArray.tRTTIPtr[i]->Equals(other.mArray.tRTTIPtr[i])))
 					{
 						result = false;
 						break;
@@ -457,7 +457,7 @@ namespace FIEAGameEngine
 				result = true;
 				for (size_t i = 0; i < mSize; i++)
 				{
-					if (mArray.tString[i] != rhs.mArray.tString[i])
+					if (mArray.tString[i] != other.mArray.tString[i])
 					{
 						result = false;
 						break;
@@ -466,7 +466,7 @@ namespace FIEAGameEngine
 			}
 			else
 			{
-				result = memcmp(mArray.tVoid, rhs.mArray.tVoid, mSize * mTypeSizes[static_cast<size_t>(mType)]) == 0;
+				result = memcmp(mArray.tVoid, other.mArray.tVoid, mSize * mTypeSizes[static_cast<size_t>(mType)]) == 0;
 			}
 		
 		
@@ -474,52 +474,52 @@ namespace FIEAGameEngine
 		return result;
 	}
 
-	bool Datum::operator==(int const & rhs) const
+	bool Datum::operator==(int const & other) const
 	{
 		if (DatumType::Integer != mType)
 		{
 			return false;
 		}
-		return mSize == 1 && mArray.tInt[0] == rhs;
+		return mSize == 1 && mArray.tInt[0] == other;
 	}
 
-	bool Datum::operator==(float const & rhs) const
+	bool Datum::operator==(float const & other) const
 	{
 		if (DatumType::Float != mType)
 		{
 			return false;
 		}
-		return mSize == 1 && mArray.tFloat[0] == rhs;
+		return mSize == 1 && mArray.tFloat[0] == other;
 	}
 
-	bool Datum::operator==(vec4 const & rhs) const
+	bool Datum::operator==(vec4 const & other) const
 	{
 		if (DatumType::Vector4 != mType)
 		{
 			return false;
 		}
-		return mSize == 1 && mArray.tVec4[0] == rhs;
+		return mSize == 1 && mArray.tVec4[0] == other;
 	}
 
-	bool Datum::operator==(mat4x4 const & rhs) const
+	bool Datum::operator==(mat4x4 const & other) const
 	{
 		if (DatumType::Matrix4x4 != mType)
 		{
 			return false;
 		}
-		return mSize == 1 && mArray.tMat4x4[0] == rhs;
+		return mSize == 1 && mArray.tMat4x4[0] == other;
 	}
 
-	bool Datum::operator==(string const & rhs) const
+	bool Datum::operator==(string const & other) const
 	{
 		if (DatumType::String != mType)
 		{
 			return false;
 		}
-		return mSize == 1 && mArray.tString[0] == rhs;
+		return mSize == 1 && mArray.tString[0] == other;
 	}
 
-	bool Datum::operator==(RTTI * const & rhs) const
+	bool Datum::operator==(RTTI * const & other) const
 	{
 		bool result = false;
 		if (DatumType::RTTIPtr != mType && DatumType::Scope != mType)
@@ -528,9 +528,9 @@ namespace FIEAGameEngine
 		}
 		if (mArray.tRTTIPtr[0] != nullptr)
 		{
-			result = mSize == 1 && mArray.tRTTIPtr[0]->Equals(const_cast<RTTI*>(rhs));
+			result = mSize == 1 && mArray.tRTTIPtr[0]->Equals(const_cast<RTTI*>(other));
 		}
-		else if (rhs == nullptr)
+		else if (other == nullptr)
 		{
 			result = true;
 		}
@@ -539,39 +539,39 @@ namespace FIEAGameEngine
 	#pragma endregion
 
 	#pragma region operator!=
-	bool Datum::operator!=(Datum const & rhs) const
+	bool Datum::operator!=(Datum const & other) const
 	{
-		return !(operator==(rhs));
+		return !(operator==(other));
 	}
 
-	bool Datum::operator!=(int const & rhs) const
+	bool Datum::operator!=(int const & other) const
 	{
-		return !(operator==(rhs));
+		return !(operator==(other));
 	}
 
-	bool Datum::operator!=(float const & rhs) const
+	bool Datum::operator!=(float const & other) const
 	{
-		return !(operator==(rhs));
+		return !(operator==(other));
 	}
 
-	bool Datum::operator!=(vec4 const & rhs) const
+	bool Datum::operator!=(vec4 const & other) const
 	{
-		return !(operator==(rhs));
+		return !(operator==(other));
 	}
 
-	bool Datum::operator!=(mat4x4 const & rhs) const
+	bool Datum::operator!=(mat4x4 const & other) const
 	{
-		return !(operator==(rhs));
+		return !(operator==(other));
 	}
 
-	bool Datum::operator!=(string const & rhs) const
+	bool Datum::operator!=(string const & other) const
 	{
-		return !(operator==(rhs));
+		return !(operator==(other));
 	}
 
-	bool Datum::operator!=(RTTI * const & rhs) const
+	bool Datum::operator!=(RTTI * const & other) const
 	{
-		return !(operator==(rhs));
+		return !(operator==(other));
 	}
 	#pragma endregion
 

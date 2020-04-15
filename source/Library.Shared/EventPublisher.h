@@ -34,16 +34,16 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Assignment Operator.
 		/// </summary>
-		/// <param name="rhs">The event publisher on the right hand side of the expression we are setting our event publisher equal to.</param>
+		/// <param name="other">The event publisher on the right hand side of the expression we are setting our event publisher equal to.</param>
 		/// <returns>A reference to the event publisher on the left hand side of the operator.</returns>
-		EventPublisher& operator=(EventPublisher const & rhs) = default;
+		EventPublisher& operator=(EventPublisher const & other) = default;
 
 		/// <summary>
 		/// Move Assignment operator
 		/// </summary>
-		/// <param name="rhs">The event publisher on the right hand side of the expression we are setting our event publisher equal to.</param>
+		/// <param name="other">The event publisher on the right hand side of the expression we are setting our event publisher equal to.</param>
 		/// <returns>A reference to the event publisher on the left hand side of the operator.</returns>
-		EventPublisher& operator=(EventPublisher && rhs) = default;
+		EventPublisher& operator=(EventPublisher && other) = default;
 
 		/// <summary>
 		/// Virtual Destructor

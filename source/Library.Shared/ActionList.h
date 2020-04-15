@@ -30,7 +30,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">ActionList to assign to</param>
 		/// <returns>Reference this</returns>
-		ActionList & operator=(ActionList const & rhs) = default;
+		ActionList & operator=(ActionList const & other) = default;
 
 		/// <summary>
 		/// Default move constructor 
@@ -43,7 +43,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">ActionList to assign to</param>
 		/// <returns>Reference to this</returns>
-		ActionList & operator=(ActionList && rhs) = default;
+		ActionList & operator=(ActionList && other) = default;
 
 		/// <summary>
 		/// Virtual Destructor

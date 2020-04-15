@@ -99,16 +99,16 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// Checks that two Iterators are equal.
 			/// </summary>
-			/// <param name="rhs">Iterator to compare with.</param>
+			/// <param name="other">Iterator to compare with.</param>
 			/// <returns>Whether the Iterators are equal.</returns>
-			bool operator==(Iterator const & rhs) const;
+			bool operator==(Iterator const & other) const;
 
 			/// <summary>
 			/// Checks that two Iterators are not equal.
 			/// </summary>
-			/// <param name="rhs">Iterator to compare with.</param>
+			/// <param name="other">Iterator to compare with.</param>
 			/// <returns>Whether the Iterators are not equal.</returns>
-			bool operator!=(Iterator const & rhs) const;
+			bool operator!=(Iterator const & other) const;
 
 			/// <summary>
 			/// Dereferences the Iterator.
@@ -186,16 +186,16 @@ namespace FIEAGameEngine
 			/// <summary>
 			/// Checks that two const_Iterators are equal.
 			/// </summary>
-			/// <param name="rhs">const_Iterator to compare with.</param>
+			/// <param name="other">const_Iterator to compare with.</param>
 			/// <returns>Whether the const_Iterators are equal.</returns>
-			bool operator==(const_Iterator const & rhs) const;
+			bool operator==(const_Iterator const & other) const;
 
 			/// <summary>
 			/// Checks that two const_Iterators are not equal.
 			/// </summary>
-			/// <param name="rhs">const_Iterator to compare with.</param>
+			/// <param name="other">const_Iterator to compare with.</param>
 			/// <returns>Whether the const_Iterators are not equal.</returns>
-			bool operator!=(const_Iterator const & rhs) const;
+			bool operator!=(const_Iterator const & other) const;
 
 			/// <summary>
 			/// Dereferences the const_Iterator.
@@ -392,38 +392,38 @@ namespace FIEAGameEngine
 		/// Assignment Operator.
 		/// Makes the left hand side of the assignment a deep copy of the right hand side of the assignment. 
 		/// </summary>
-		/// <param name="rhs">The list on the right hand side of the expression we are setting our list equal to.</param>
+		/// <param name="other">The list on the right hand side of the expression we are setting our list equal to.</param>
 		/// <returns>A reference to the list on the left hand side of the operator.</returns>
-		SList& operator=(SList const & rhs);
+		SList& operator=(SList const & other);
 
 		/// <summary>
 		/// Move Assignment Operator.
 		/// </summary>
-		/// <param name="rhs">The list on the right hand side of the expression we are setting our list equal to.</param>
+		/// <param name="other">The list on the right hand side of the expression we are setting our list equal to.</param>
 		/// <returns>A reference to the list on the left hand side of the operator.</returns>
-		SList& operator=(SList && rhs);
+		SList& operator=(SList && other);
 
 		/// <summary>
 		/// First compares the sizes of the two lists.
 		/// Then compares the data of each node in the left list to the data in each corresponding node in the right list.
 		/// </summary>
-		/// <param name="rhs"> The list on the right hand side of the expression we are comparing to.</param>
+		/// <param name="other"> The list on the right hand side of the expression we are comparing to.</param>
 		/// <returns>
 		/// /// If each node contains the same data as the corresponding node in the other list and the list are the same size true is returned.
 		/// Otherwise returns false.
 		/// </returns>
-		bool operator==(SList const & rhs) const;
+		bool operator==(SList const & other) const;
 
 		/// <summary>
 		/// /// First compares the sizes of the two lists.
 		/// Then compares the data of each node in the left list to the data in each corresponding node in the right list.
 		/// </summary>
-		/// <param name="rhs"> The list on the right hand side of the expression we are comparing to.</param>
+		/// <param name="other"> The list on the right hand side of the expression we are comparing to.</param>
 		/// <returns>
 		/// If each node contains the same data as the corresponding node in the other list and the list are the same size false is returned.
 		/// Otherwise returns true.
 		/// </returns>
-		bool operator!=(SList const & rhs) const;
+		bool operator!=(SList const & other) const;
 
 		/*
 		I know most of this was here last time we did a code review but I still hope to find time to revist at least some of these functions later.

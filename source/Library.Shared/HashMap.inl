@@ -41,15 +41,15 @@ namespace FIEAGameEngine
 
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline bool HashMap<TKey, TData, HashFunctor>::Iterator::operator==(Iterator const & rhs) const
+	inline bool HashMap<TKey, TData, HashFunctor>::Iterator::operator==(Iterator const & other) const
 	{
-		return (mOwner == rhs.mOwner) && (mDataIndex == rhs.mDataIndex) && (mListIterator == rhs.mListIterator);
+		return (mOwner == other.mOwner) && (mDataIndex == other.mDataIndex) && (mListIterator == other.mListIterator);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline bool HashMap<TKey, TData, HashFunctor>::Iterator::operator!=(Iterator const & rhs) const
+	inline bool HashMap<TKey, TData, HashFunctor>::Iterator::operator!=(Iterator const & other) const
 	{
-		return !(*this == rhs);
+		return !(*this == other);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
@@ -134,15 +134,15 @@ namespace FIEAGameEngine
 
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline bool HashMap<TKey, TData, HashFunctor>::const_Iterator::operator==(const_Iterator const & rhs) const
+	inline bool HashMap<TKey, TData, HashFunctor>::const_Iterator::operator==(const_Iterator const & other) const
 	{
-		return (mOwner == rhs.mOwner) && (mDataIndex == rhs.mDataIndex) && (mListIterator == rhs.mListIterator);
+		return (mOwner == other.mOwner) && (mDataIndex == other.mDataIndex) && (mListIterator == other.mListIterator);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline bool HashMap<TKey, TData, HashFunctor>::const_Iterator::operator!=(const_Iterator const & rhs) const
+	inline bool HashMap<TKey, TData, HashFunctor>::const_Iterator::operator!=(const_Iterator const & other) const
 	{
-		return !(*this == rhs);
+		return !(*this == other);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
@@ -210,15 +210,15 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline HashMap<TKey, TData, HashFunctor> & HashMap<TKey, TData, HashFunctor>::operator=(HashMap && rhs)
+	inline HashMap<TKey, TData, HashFunctor> & HashMap<TKey, TData, HashFunctor>::operator=(HashMap && other)
 	{
-		if (this != &rhs)
+		if (this != &other)
 		{
-			mBucketVector = std::move(rhs.mBucketVector);
-			mNumKeyValuePairs = std::move(rhs.mNumKeyValuePairs);
-			mHash = std::move(rhs.mHash);
+			mBucketVector = std::move(other.mBucketVector);
+			mNumKeyValuePairs = std::move(other.mNumKeyValuePairs);
+			mHash = std::move(other.mHash);
 
-			rhs.mNumKeyValuePairs = 0;
+			other.mNumKeyValuePairs = 0;
 		}
 		return *this;
 
@@ -376,10 +376,10 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline bool HashMap<TKey, TData, HashFunctor>::operator==(HashMap const & rhs) const
+	inline bool HashMap<TKey, TData, HashFunctor>::operator==(HashMap const & other) const
 	{
 		bool result = false;
-		if (mNumKeyValuePairs == rhs.mNumKeyValuePairs)
+		if (mNumKeyValuePairs == other.mNumKeyValuePairs)
 		{
 			result = true;
 			for (const_Iterator i = cbegin(); i != cend(); i++)
@@ -395,9 +395,9 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline bool HashMap<TKey, TData, HashFunctor>::operator!=(HashMap const & rhs) const
+	inline bool HashMap<TKey, TData, HashFunctor>::operator!=(HashMap const & other) const
 	{
-		return !(*this == rhs);
+		return !(*this == other);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>

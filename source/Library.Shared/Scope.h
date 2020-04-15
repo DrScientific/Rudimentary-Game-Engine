@@ -51,16 +51,16 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Assignment operator
 		/// </summary>
-		/// <param name="rhs">Scope to copy data from.</param>
-		/// <returns>This scope after copying the rhs.</returns>
-		Scope& operator= (Scope const & rhs);
+		/// <param name="other">Scope to copy data from.</param>
+		/// <returns>This scope after copying the other.</returns>
+		Scope& operator= (Scope const & other);
 
 		/// <summary>
 		/// Move Assignment operator
 		/// </summary>
-		/// <param name="rhs">Scope to move data from.</param>
-		/// <returns>This scope after moving the rhs.</returns>
-		Scope& operator= (Scope && rhs) noexcept;
+		/// <param name="other">Scope to move data from.</param>
+		/// <returns>This scope after moving the other.</returns>
+		Scope& operator= (Scope && other) noexcept;
 
 		/// <summary>
 		/// Returns a pointer to the datum at the given key. If there is nothing at the provided key returns the nullptr.
@@ -159,16 +159,16 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Compares two scopes, comparing each key-datum pair.
 		/// </summary>
-		/// <param name="rhs">Scope to compare with this scope.</param>
+		/// <param name="other">Scope to compare with this scope.</param>
 		/// <returns>Whether the scopes are equal</returns>
-		bool operator==(Scope const & rhs) const;
+		bool operator==(Scope const & other) const;
 
 		/// <summary>
 		/// Compares two scopes, comparing each key-datum pair.
 		/// </summary>
-		/// <param name="rhs">Scope to compare with this scope.</param>
+		/// <param name="other">Scope to compare with this scope.</param>
 		/// <returns>Whether the scopes are not equal</returns>
-		bool operator!=(Scope const & rhs) const;
+		bool operator!=(Scope const & other) const;
 
 		/// <summary>
 		/// Finds the name of the passed in scope pointer. If the passed in scope is not found returns the empty string.
@@ -206,9 +206,9 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Override of RTTI equals.
 		/// </summary>
-		/// <param name="rhs"></param>
+		/// <param name="other"></param>
 		/// <returns></returns>
-		virtual bool Equals(const RTTI* rhs) const override;
+		virtual bool Equals(const RTTI* other) const override;
 
 		/// <summary>
 		/// Removes scope from it's parent and set's the scope's parent pointer to null.

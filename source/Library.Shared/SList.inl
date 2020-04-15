@@ -313,12 +313,12 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline SList<T> & SList<T>::operator=(const SList & rhs)
+	inline SList<T> & SList<T>::operator=(const SList & other)
 	{
-		if (this != &rhs)
+		if (this != &other)
 		{
 			Clear();
-			for (auto& i : rhs)
+			for (auto& i : other)
 			{
 				PushBack(i);
 			}
@@ -327,25 +327,25 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline SList<T> & SList<T>::operator=(SList && rhs)
+	inline SList<T> & SList<T>::operator=(SList && other)
 	{
-		mFront = rhs.mFront;
-		mBack = rhs.mBack;
-		mSize = rhs.mSize;
+		mFront = other.mFront;
+		mBack = other.mBack;
+		mSize = other.mSize;
 		
-		rhs.mFront = nullptr;
-		rhs.mBack = nullptr;
-		rhs.mSize = 0;
+		other.mFront = nullptr;
+		other.mBack = nullptr;
+		other.mSize = 0;
 
 	}
 
 	template<typename T>
-	inline bool SList<T>::operator==(SList const & rhs) const
+	inline bool SList<T>::operator==(SList const & other) const
 	{
-		if (mSize == rhs.mSize)
+		if (mSize == other.mSize)
 		{
-			const_Iterator left = cbegin(), right = rhs.cbegin();
-			for (; left != cend() && right != rhs.cend(); left++, right++)
+			const_Iterator left = cbegin(), right = other.cbegin();
+			for (; left != cend() && right != other.cend(); left++, right++)
 			{
 				if (*left != *right)
 				{
@@ -358,9 +358,9 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline bool SList<T>::operator!=(SList const & rhs) const
+	inline bool SList<T>::operator!=(SList const & other) const
 	{
-		return !(*this == rhs);
+		return !(*this == other);
 	}
 
 	template<typename T>
@@ -388,15 +388,15 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline bool SList<T>::Iterator::operator==(Iterator const & rhs) const
+	inline bool SList<T>::Iterator::operator==(Iterator const & other) const
 	{
-		return (mOwner == rhs.mOwner) && (mNode == rhs.mNode);
+		return (mOwner == other.mOwner) && (mNode == other.mNode);
 	}
 
 	template<typename T>
-	inline bool SList<T>::Iterator::operator!=(Iterator const & rhs) const
+	inline bool SList<T>::Iterator::operator!=(Iterator const & other) const
 	{
-		return !(*this == rhs);
+		return !(*this == other);
 	}
 
 	template<typename T>
@@ -438,15 +438,15 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline bool SList<T>::const_Iterator::operator==(const_Iterator const & rhs) const
+	inline bool SList<T>::const_Iterator::operator==(const_Iterator const & other) const
 	{
-		return (mOwner == rhs.mOwner) && (mNode == rhs.mNode);
+		return (mOwner == other.mOwner) && (mNode == other.mNode);
 	}
 
 	template<typename T>
-	inline bool SList<T>::const_Iterator::operator!=(const_Iterator const & rhs) const
+	inline bool SList<T>::const_Iterator::operator!=(const_Iterator const & other) const
 	{
-		return !(*this == rhs);
+		return !(*this == other);
 	}
 
 	template<typename T>

@@ -43,16 +43,16 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Assignment Operator.
 		/// </summary>
-		/// <param name="rhs">The event on the right hand side of the expression we are setting our event equal to.</param>
+		/// <param name="other">The event on the right hand side of the expression we are setting our event equal to.</param>
 		/// <returns>A reference to the event on the left hand side of the operator.</returns>
-		Event& operator=(Event const & rhs) = default;
+		Event& operator=(Event const & other) = default;
 
 		/// <summary>
 		/// Move Assignment operator
 		/// </summary>
-		/// <param name="rhs">The event on the right hand side of the expression we are setting our event equal to.</param>
+		/// <param name="other">The event on the right hand side of the expression we are setting our event equal to.</param>
 		/// <returns>A reference to the event on the left hand side of the operator.</returns>
-		Event& operator=(Event && rhs) = default;
+		Event& operator=(Event && other) = default;
 
 		/// <summary>
 		/// Virtual Destructor

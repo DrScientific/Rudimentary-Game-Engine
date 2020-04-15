@@ -25,7 +25,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">Action to assign to</param>
 		/// <returns>Reference this</returns>
-		Action & operator=(Action const & rhs) = default;
+		Action & operator=(Action const & other) = default;
 
 		/// <summary>
 		/// Default move constructor 
@@ -38,7 +38,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">Action to assign to</param>
 		/// <returns>Reference to this</returns>
-		Action & operator=(Action && rhs) = default;
+		Action & operator=(Action && other) = default;
 
 		/// <summary>
 		/// Virtual Destructor

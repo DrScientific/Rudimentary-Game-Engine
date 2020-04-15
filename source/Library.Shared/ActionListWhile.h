@@ -25,7 +25,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">ActionListWhile to assign to</param>
 		/// <returns>Reference this</returns>
-		ActionListWhile & operator=(ActionListWhile const & rhs) = default;
+		ActionListWhile & operator=(ActionListWhile const & other) = default;
 
 		/// <summary>
 		/// Default move constructor 
@@ -38,7 +38,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">ActionListWhile to assign to</param>
 		/// <returns>Reference to this</returns>
-		ActionListWhile & operator=(ActionListWhile && rhs) = default;
+		ActionListWhile & operator=(ActionListWhile && other) = default;
 
 		/// <summary>
 		/// Virtual Destructor

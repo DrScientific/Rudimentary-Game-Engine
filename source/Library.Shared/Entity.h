@@ -33,7 +33,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">Entity to assign to</param>
 		/// <returns>Reference this</returns>
-		Entity & operator=(Entity const & rhs) = default;
+		Entity & operator=(Entity const & other) = default;
 
 		/// <summary>
 		/// Default move constructor 
@@ -46,7 +46,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">Entity to assign to</param>
 		/// <returns>Reference to this</returns>
-		Entity & operator=(Entity && rhs) = default;
+		Entity & operator=(Entity && other) = default;
 
 		/// <summary>
 		/// Virtual Destructor

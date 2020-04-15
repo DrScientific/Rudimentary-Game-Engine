@@ -42,9 +42,9 @@ namespace FIEAGameEngine
 			return "RTTI";
 		}
 
-		virtual bool Equals(const RTTI* rhs) const
+		virtual bool Equals(const RTTI* other) const
 		{
-			return this == rhs;
+			return this == other;
 		}
 	};
 

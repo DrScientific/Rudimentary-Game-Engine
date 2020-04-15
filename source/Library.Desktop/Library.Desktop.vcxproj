@@ -158,4 +158,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <ClCompile Update="D:\Google Drive\Graduate Classes\FIEA Classes\Semester 2\Programming 2\FIEAGameEngine\source\Library.Shared\Set.inl">
+      <FileType>Document</FileType>
+    </ClCompile>
+  </ItemGroup>
 </Project>

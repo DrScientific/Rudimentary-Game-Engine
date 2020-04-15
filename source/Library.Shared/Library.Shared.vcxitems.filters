@@ -57,10 +57,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)DestroyAction.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)BinarySearchTree.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)BinaryTreeTraversals.cpp">
-      <Filter>Standard Containers</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Attributed.h" />
@@ -136,13 +132,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DestroyAction.h">
       <Filter>Actions</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)OrderedMap.h">
-      <Filter>Standard Containers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)RedBlackTree.h">
       <Filter>Standard Containers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)BinarySearchTree.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Set.h">
+      <Filter>Standard Containers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Datum.inl" />
@@ -162,10 +157,10 @@
     <None Include="$(MSBuildThisFileDirectory)Event.inl">
       <Filter>Events</Filter>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)OrderedMap.inl">
+    <None Include="$(MSBuildThisFileDirectory)RedBlackTree.inl">
       <Filter>Standard Containers</Filter>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)RedBlackTree.inl">
+    <None Include="$(MSBuildThisFileDirectory)Set.inl">
       <Filter>Standard Containers</Filter>
     </None>
   </ItemGroup>
