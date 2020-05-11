@@ -23,7 +23,7 @@ namespace FIEAGameEngine
 		typedef T value_type;
 
 		/// <summary>
-		/// An iterator that contains an index into a Vector. Any data dereferenced through a Iterator is not const. See const_Iterator.
+		/// An iterator that contains an index into a Vector. Any data dereferenced through a Iterator is not const. See ConstIterator.
 		/// </summary>
 		class Iterator
 		{
@@ -118,14 +118,14 @@ namespace FIEAGameEngine
 			/// </summary>
 			size_t mDataIndex = 0;
 
-			friend class const_Iterator;
+			friend class ConstIterator;
 			friend Vector;
 		};
 
 		/// <summary>
-		/// A const_Iterator that contains an index into a Vector. Any data dereferenced through a const_Iterator is const.
+		/// A ConstIterator that contains an index into a Vector. Any data dereferenced through a ConstIterator is const.
 		/// </summary>
-		class const_Iterator
+		class ConstIterator
 		{
 		public:
 			using size_type = std::size_t;
@@ -136,87 +136,87 @@ namespace FIEAGameEngine
 			using iterator_category = std::forward_iterator_tag;
 
 			/// <summary>
-			/// Default constructor for const_Iterator
+			/// Default constructor for ConstIterator
 			/// </summary>
-			const_Iterator() = default;
+			ConstIterator() = default;
 
 			/// <summary>
-			/// Default copy constructor for const_Iterator
+			/// Default copy constructor for ConstIterator
 			/// </summary>
-			/// <param name="">const_Iterator to copy</param>
-			const_Iterator(const const_Iterator&) = default;
+			/// <param name="">ConstIterator to copy</param>
+			ConstIterator(const ConstIterator&) = default;
 
 			/// <summary>
-			/// Default assignment operator for const_Iterator
+			/// Default assignment operator for ConstIterator
 			/// </summary>
-			const_Iterator& operator= (const const_Iterator&) = default;
+			ConstIterator& operator= (const ConstIterator&) = default;
 
 			/// <summary>
-			/// Default destructor for const_Iterator
+			/// Default destructor for ConstIterator
 			/// </summary>
-			~const_Iterator() = default;
+			~ConstIterator() = default;
 
 			/// <summary>
-			/// Constructs a const_Iterator from an Iterator.
+			/// Constructs a ConstIterator from an Iterator.
 			/// </summary>
-			/// <param name="it">Iterator to create const_Iterator from</param>
-			const_Iterator(const Iterator & it);
+			/// <param name="it">Iterator to create ConstIterator from</param>
+			ConstIterator(const Iterator & it);
 
 			/// <summary>
 			/// Assigns a iterator to a const iterator.
 			/// </summary>
-			const_Iterator& operator= (const Iterator & it);
+			ConstIterator& operator= (const Iterator & it);
 
 
 			/// <summary>
 			/// Preincrement operation. Increments index pointed to by iterator by 1.
 			/// </summary>
 			/// <returns></returns>
-			const_Iterator& operator++();
+			ConstIterator& operator++();
 
 			/// <summary>
 			/// Postincrement operation.  Increments index pointed to by iterator by 1.
 			/// </summary>
-			const_Iterator operator++(int);
+			ConstIterator operator++(int);
 
 			/// <summary>
 			/// Predecrement operation. Decrements index pointed to by iterator by 1
 			/// </summary>
 			/// <returns></returns>
-			const_Iterator& operator--();
+			ConstIterator& operator--();
 
 			/// <summary>
 			/// Postdecrement operation. Decrements index pointed to by iterator by 1
 			/// </summary>
-			const_Iterator operator--(int);
+			ConstIterator operator--(int);
 
 			/// <summary>
 			/// Checks that two const_Iterators are equal.
 			/// </summary>
-			/// <param name="other">const_Iterator to compare with.</param>
+			/// <param name="other">ConstIterator to compare with.</param>
 			/// <returns>Whether the const_Iterators are equal.</returns>
-			bool operator==(const_Iterator const & other) const;
+			bool operator==(ConstIterator const & other) const;
 
 			/// <summary>
 			/// Checks that two const_Iterators are not equal.
 			/// </summary>
-			/// <param name="other">const_Iterator to compare with.</param>
+			/// <param name="other">ConstIterator to compare with.</param>
 			/// <returns>Whether the const_Iterators are not equal.</returns>
-			bool operator!=(const_Iterator const & other) const;
+			bool operator!=(ConstIterator const & other) const;
 
 			/// <summary>
-			/// Dereferences the const_Iterator.
+			/// Dereferences the ConstIterator.
 			/// </summary>
-			/// <returns>The const data pointed to by the const_Iterator.</returns>
+			/// <returns>The const data pointed to by the ConstIterator.</returns>
 			T const & operator*() const;
 
 		private:
 			/// <summary>
-			/// Constructor for const_Iterator taking in a Vector owner and an index.
+			/// Constructor for ConstIterator taking in a Vector owner and an index.
 			/// </summary>
-			/// <param name="owner">List owning the const_Iterator.</param>
-			/// <param name="data">Data pointed to by the const_Iterator.</param>
-			const_Iterator(Vector const & owner, size_t index = 0);
+			/// <param name="owner">List owning the ConstIterator.</param>
+			/// <param name="data">Data pointed to by the ConstIterator.</param>
+			ConstIterator(Vector const & owner, size_t index = 0);
 
 			/// <summary>
 			/// The list that owns the Iterator.
@@ -290,7 +290,7 @@ namespace FIEAGameEngine
 		/// Returns a const_iterator pointing to the first element of the list.
 		/// </summary>
 		/// <returns>const_iterator pointing to the first element of the list.</returns>
-		const_Iterator begin() const;
+		ConstIterator begin() const;
 
 		/// <summary>
 		/// Returns an iterator pointing to element past the last element of the list.
@@ -302,19 +302,19 @@ namespace FIEAGameEngine
 		/// Returns a const_iterator pointing to element past the last element of the list.
 		/// </summary>
 		/// <returns>A const_iterator pointing to element past the last element of the list.</returns>
-		const_Iterator end() const;
+		ConstIterator end() const;
 
 		/// <summary>
 		/// Returns a const_iterator pointing to the first element of the list.
 		/// </summary>
 		/// <returns>const_iterator pointing to the first element of the list.</returns>
-		const_Iterator cbegin() const;
+		ConstIterator cbegin() const;
 
 		/// <summary>
 		/// Returns a const_iterator pointing to element past the last element of the list.
 		/// </summary>
 		/// <returns>A const_iterator pointing to element past the last element of the list.</returns>
-		const_Iterator cend() const;
+		ConstIterator cend() const;
 
 		/// <summary>
 		/// Explicitly calls the destructor on each initialized element in the vector.
@@ -496,7 +496,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="value">The value we are searching for.</param>
 		/// <returns>A const_iterator to the first element in the array with the passed in value.</returns>
-		Vector<T>::const_Iterator Find(T const & value) const;
+		Vector<T>::ConstIterator Find(T const & value) const;
 
 		/// <summary>
 		/// Removes all elements equal to value in the list.

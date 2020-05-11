@@ -24,7 +24,7 @@ namespace FIEAGameEngine
 		using ChainType = SList<PairType>;
 		using BucketType = Vector<ChainType>;
 		/// <summary>
-		/// An iterator that contains an index into a hash map. Any data dereferenced through a Iterator is not const. See const_Iterator.
+		/// An iterator that contains an index into a hash map. Any data dereferenced through a Iterator is not const. See ConstIterator.
 		/// </summary>
 		class Iterator
 		{
@@ -112,93 +112,93 @@ namespace FIEAGameEngine
 			/// </summary>
 			typename ChainType::Iterator mListIterator;
 
-			friend class const_Iterator;
+			friend class ConstIterator;
 			friend HashMap;
 		};
 
 		/// <summary>
-		/// An iterator that contains an index into a hash map. Any data dereferenced through a Iterator is not const. See const_Iterator.
+		/// An iterator that contains an index into a hash map. Any data dereferenced through a Iterator is not const. See ConstIterator.
 		/// </summary>
-		class const_Iterator
+		class ConstIterator
 		{
 		public:
 
 			/// <summary>
-			/// Default constructor for const_Iterator
+			/// Default constructor for ConstIterator
 			/// </summary>
-			const_Iterator() = default;
+			ConstIterator() = default;
 
 			/// <summary>
-			/// Default copy constructor for const_Iterator
+			/// Default copy constructor for ConstIterator
 			/// </summary>
-			/// <param name="">const_Iterator to copy</param>
-			const_Iterator(const const_Iterator&) = default;
+			/// <param name="">ConstIterator to copy</param>
+			ConstIterator(const ConstIterator&) = default;
 
 			/// <summary>
-			/// Default assignment operator for const_Iterator
+			/// Default assignment operator for ConstIterator
 			/// </summary>
-			const_Iterator& operator= (const const_Iterator&) = default;
+			ConstIterator& operator= (const ConstIterator&) = default;
 
 			/// <summary>
-			/// Default destructor for const_Iterator
+			/// Default destructor for ConstIterator
 			/// </summary>
-			~const_Iterator() = default;
+			~ConstIterator() = default;
 
 			/// <summary>
-			/// Constructs a const_Iterator from an Iterator.
+			/// Constructs a ConstIterator from an Iterator.
 			/// </summary>
-			/// <param name="it">Iterator to create const_Iterator from</param>
-			const_Iterator(Iterator const & it);
+			/// <param name="it">Iterator to create ConstIterator from</param>
+			ConstIterator(Iterator const & it);
 
 			/// <summary>
-			/// Assigns an const_Iterator to an Iterator assignment operator for const_Iterator
+			/// Assigns an ConstIterator to an Iterator assignment operator for ConstIterator
 			/// </summary>
-			const_Iterator& operator= (const Iterator& it);
+			ConstIterator& operator= (const Iterator& it);
 
 			/// <summary>
 			/// Preincrement operation. Increments index pointed to by iterator by 1.
 			/// </summary>
 			/// <returns></returns>
-			const_Iterator& operator++();
+			ConstIterator& operator++();
 
 			/// <summary>
 			/// Postincrement operation.  Increments index pointed to by iterator by 1.
 			/// </summary>
-			const_Iterator operator++(int);
+			ConstIterator operator++(int);
 
 			/// <summary>
 			/// Checks that two const_Iterators are equal.
 			/// </summary>
-			/// <param name="other">const_Iterator to compare with.</param>
+			/// <param name="other">ConstIterator to compare with.</param>
 			/// <returns>Whether the const_Iterators are equal.</returns>
-			bool operator==(const_Iterator const & other) const;
+			bool operator==(ConstIterator const & other) const;
 
 			/// <summary>
 			/// Checks that two const_Iterators are not equal.
 			/// </summary>
-			/// <param name="other">const_Iterator to compare with.</param>
+			/// <param name="other">ConstIterator to compare with.</param>
 			/// <returns>Whether the const_Iterators are not equal.</returns>
-			bool operator!=(const_Iterator const & other) const;
+			bool operator!=(ConstIterator const & other) const;
 
 			/// <summary>
-			/// Dereferences the const_Iterator.
+			/// Dereferences the ConstIterator.
 			/// </summary>
-			/// <returns>The const data pointed to by the const_Iterator.</returns>
+			/// <returns>The const data pointed to by the ConstIterator.</returns>
 			PairType const & operator*() const;
 
 			/// <summary>
-			/// Returns the address of the dereferenced const_Iterator.
+			/// Returns the address of the dereferenced ConstIterator.
 			/// </summary>
-			/// <returns>The address of the data pointed to by the const_Iterator.</returns>
+			/// <returns>The address of the data pointed to by the ConstIterator.</returns>
 			PairType const * operator->() const;
 
 		private:
 			/// <summary>
-			/// Constructor for const_Iterator taking in a list owner and data.
+			/// Constructor for ConstIterator taking in a list owner and data.
 			/// </summary>
-			/// <param name="owner">List owning the const_Iterator.</param>
-			/// <param name="data">Data pointed to by the const_Iterator.</param>
-			const_Iterator(HashMap const & owner, size_t index = 0, typename ChainType::const_Iterator listIt = owner.mBucketVector[index].cbegin());
+			/// <param name="owner">List owning the ConstIterator.</param>
+			/// <param name="data">Data pointed to by the ConstIterator.</param>
+			ConstIterator(HashMap const & owner, size_t index = 0, typename ChainType::ConstIterator listIt = owner.mBucketVector[index].cbegin());
 
 			/// <summary>
 			/// The list that owns the Iterator.
@@ -211,9 +211,9 @@ namespace FIEAGameEngine
 			size_t mDataIndex = 0;
 
 			/// <summary>
-			/// An SList const_Iterator pointing to a specific element in a chain in a bucket.
+			/// An SList ConstIterator pointing to a specific element in a chain in a bucket.
 			/// </summary>
-			typename ChainType::const_Iterator mListIterator;
+			typename ChainType::ConstIterator mListIterator;
 
 			friend HashMap;
 		};
@@ -276,7 +276,7 @@ namespace FIEAGameEngine
 		/// Note the HashMap is unordered.
 		/// /// </summary>
 		/// <returns>const_iterator pointing to the first element of the HashMap.</returns>
-		const_Iterator begin() const;
+		ConstIterator begin() const;
 
 		/// <summary>
 		/// Returns an iterator pointing to element past the last element of the HashMap. This is out of bounds of the HashMap and will throw an exception if dereferenced.
@@ -288,20 +288,20 @@ namespace FIEAGameEngine
 		/// Returns a const_iterator pointing to element past the last element of the HashMap. This is out of bounds of the HashMap and will throw an exception if dereferenced.
 		/// </summary>
 		/// <returns>A const_iterator pointing to element past the last element of the HashMap.</returns>
-		const_Iterator end() const;
+		ConstIterator end() const;
 
 		/// <summary>
 		/// Returns a const_iterator pointing to the first element of the HashMap THAT HAS BEEN INITIALIZED.
 		/// Note the HashMap is unordered.
 		/// /// </summary>
 		/// <returns>const_iterator pointing to the first element of the HashMap.</returns>
-		const_Iterator cbegin() const;
+		ConstIterator cbegin() const;
 
 		/// <summary>
 		/// Returns a const_iterator pointing to element past the last element of the HashMap. This is out of bounds of the HashMap and will throw an exception if dereferenced.
 		/// </summary>
 		/// <returns>A const_iterator pointing to element past the last element of the HashMap.</returns>
-		const_Iterator cend() const;
+		ConstIterator cend() const;
 
 		/// <summary>
 		/// Returns an Iterator to the data at the corresponding key if it exists. Otherwise returns an Iterator with a null owner.
@@ -311,11 +311,11 @@ namespace FIEAGameEngine
 		Iterator Find(TKey const & key);
 
 		/// <summary>
-		/// Returns a const_Iterator to the data at the corresponding key if it exists. Otherwise returns a const_Iterator with a null owner.
+		/// Returns a ConstIterator to the data at the corresponding key if it exists. Otherwise returns a ConstIterator with a null owner.
 		/// </summary>
 		/// <param name="key">The key to search the HashMap for.</param>
-		/// <returns>An const_terator to the data at the corresponding key if it exists. Otherwise returns an const_Iterator with a null owner.</returns>
-		const_Iterator Find(TKey const & key) const;
+		/// <returns>An const_terator to the data at the corresponding key if it exists. Otherwise returns an ConstIterator with a null owner.</returns>
+		ConstIterator Find(TKey const & key) const;
 
 		/// <summary>
 		/// Inserts the pair at the index mapped to by the hashed key. If the pair already exists then an Iterator to the pair is returned.

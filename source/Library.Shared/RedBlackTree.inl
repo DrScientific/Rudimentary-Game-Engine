@@ -2,38 +2,38 @@
 
 namespace FIEAGameEngine
 {
-	template<typename TKey, typename LessThanFunctor>
-	inline RedBlackTree<TKey, LessThanFunctor>::RedBlackNode::RedBlackNode(TKey const& key, RedBlackNode* parent, RedBlackNode* left, RedBlackNode* right) :mKey(key), mParent(parent), mLeft(left), mRight(right)
+	template <typename TreeTraits>
+	inline RedBlackTree<TreeTraits>::RedBlackNode::RedBlackNode(ValueType const& value, RedBlackNode* parent, RedBlackNode* left, RedBlackNode* right) :mValue(value), mParent(parent), mLeft(left), mRight(right)
 	{
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline RedBlackTree<TKey, LessThanFunctor>::RedBlackNode::RedBlackNode(RedBlackNode const& other) : mKey(other.mKey), mColor(other.mColor)
+	template <typename TreeTraits>
+	inline RedBlackTree<TreeTraits>::RedBlackNode::RedBlackNode(RedBlackNode const& other) : mValue(other.mValue), mColor(other.mColor)
 	{
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline RedBlackTree<TKey, LessThanFunctor>::RedBlackNode::RedBlackNode(RedBlackNode* parent, RedBlackNode* left, RedBlackNode* right, RedBlackNode const& other) : RedBlackNode(other)
+	template <typename TreeTraits>
+	inline RedBlackTree<TreeTraits>::RedBlackNode::RedBlackNode(RedBlackNode* parent, RedBlackNode* left, RedBlackNode* right, RedBlackNode const& other) : RedBlackNode(other)
 	{
 		mParent = parent;
 		mLeft = left;
 		mRight = right;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline bool RedBlackTree<TKey, LessThanFunctor>::RedBlackNode::operator==(RedBlackNode const& other) const
+	template <typename TreeTraits>
+	inline bool RedBlackTree<TreeTraits>::RedBlackNode::operator==(RedBlackNode const& other) const
 	{
-		return mKey == other.mKey;
+		return mValue == other.mValue;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline bool RedBlackTree<TKey, LessThanFunctor>::RedBlackNode::operator!=(RedBlackNode const& other) const
+	template <typename TreeTraits>
+	inline bool RedBlackTree<TreeTraits>::RedBlackNode::operator!=(RedBlackNode const& other) const
 	{
 		return !operator==(other);
 	}
 	
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::RedBlackNode* RedBlackTree<TKey, LessThanFunctor>::RedBlackNode::GetSibling() const
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::RedBlackNode* RedBlackTree<TreeTraits>::RedBlackNode::GetSibling() const
 	{
 		if (!mParent)
 		{
@@ -50,37 +50,37 @@ namespace FIEAGameEngine
 	}
 
 
-	template<typename TKey, typename LessThanFunctor>
-	inline bool RedBlackTree<TKey, LessThanFunctor>::RedBlackNode::IsLeftChild()const
+	template <typename TreeTraits>
+	inline bool RedBlackTree<TreeTraits>::RedBlackNode::IsLeftChild()const
 	{
 		return mParent && mParent->mLeft == this;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline bool RedBlackTree<TKey, LessThanFunctor>::RedBlackNode::IsRightChild() const
+	template <typename TreeTraits>
+	inline bool RedBlackTree<TreeTraits>::RedBlackNode::IsRightChild() const
 	{
 		return !IsLeftChild();
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline bool RedBlackTree<TKey, LessThanFunctor>::RedBlackNode::HasRedChild() const
+	template <typename TreeTraits>
+	inline bool RedBlackTree<TreeTraits>::RedBlackNode::HasRedChild() const
 	{
 		return (mLeft && mLeft->mColor == Color::Red) || (mRight && mRight->mColor == Color::Red);
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline bool RedBlackTree<TKey, LessThanFunctor>::RedBlackNode::HasRedSibling() const
+	template <typename TreeTraits>
+	inline bool RedBlackTree<TreeTraits>::RedBlackNode::HasRedSibling() const
 	{
 		return (mParent && ((mParent->mLeft == this && mParent->mRight && mParent->mRight->mColor == Color::Red) || (mParent->mRight == this && mParent->mLeft && mParent->mLeft->mColor == Color::Red)));
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline RedBlackTree<TKey, LessThanFunctor>::Iterator::Iterator(RedBlackTree const& owner, RedBlackNode* node) : mOwner(&owner), mNode(node)
+	template <typename TreeTraits>
+	inline RedBlackTree<TreeTraits>::TreeIterator::TreeIterator(RedBlackTree const& owner, RedBlackNode* node) : mOwner(&owner), mNode(node)
 	{
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::Iterator& RedBlackTree<TKey, LessThanFunctor>::Iterator::operator++()
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::TreeIterator& RedBlackTree<TreeTraits>::TreeIterator::operator++()
 	{
 		if (!mNode)
 		{
@@ -103,16 +103,16 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::Iterator RedBlackTree<TKey, LessThanFunctor>::Iterator::operator++(int)
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::TreeIterator RedBlackTree<TreeTraits>::TreeIterator::operator++(int)
 	{
 		Iterator iteratorBeforeIncrement(*this);
 		operator++();
 		return iteratorBeforeIncrement;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::Iterator& RedBlackTree<TKey, LessThanFunctor>::Iterator::operator--()
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::TreeIterator& RedBlackTree<TreeTraits>::TreeIterator::operator--()
 	{
 		if (mNode == mOwner->FindMin(mOwner->mRoot))
 		{
@@ -139,28 +139,28 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::Iterator RedBlackTree<TKey, LessThanFunctor>::Iterator::operator--(int)
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::TreeIterator RedBlackTree<TreeTraits>::TreeIterator::operator--(int)
 	{
 		Iterator iteratorBeforeDecrement(*this);
 		operator--();
 		return iteratorBeforeDecrement;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename bool RedBlackTree<TKey, LessThanFunctor>::Iterator::operator==(Iterator const& other) const
+	template <typename TreeTraits>
+	inline bool RedBlackTree<TreeTraits>::TreeIterator::operator==(TreeIterator const& other) const
 	{
 		return (!mNode && !other.mNode) || ((mNode && other.mNode) && (*mNode == *(other.mNode)) && (mOwner == other.mOwner));
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename bool RedBlackTree<TKey, LessThanFunctor>::Iterator::operator!=(Iterator const& other) const
+	template <typename TreeTraits>
+	inline bool RedBlackTree<TreeTraits>::TreeIterator::operator!=(TreeIterator const& other) const
 	{
 		return !operator==(other);
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename TKey const& RedBlackTree<TKey, LessThanFunctor>::Iterator::operator*() const
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::ValueType& RedBlackTree<TreeTraits>::TreeIterator::operator*()
 	{
 		if (mOwner == nullptr)
 		{
@@ -170,11 +170,110 @@ namespace FIEAGameEngine
 		{
 			throw std::exception(attemptToIteratarePastLastElementException.c_str());
 		}
-		return mNode->mKey;
+		return mNode->mValue;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline RedBlackTree<TKey, LessThanFunctor>::RedBlackTree(std::initializer_list<TKey> iList)
+	template<typename TreeTraits>
+	inline RedBlackTree<TreeTraits>::TreeConstIterator::TreeConstIterator(RedBlackTree const& owner, RedBlackNode* node) : mOwner(&owner), mNode(node)
+	{
+	}
+
+	template<typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::TreeConstIterator& RedBlackTree<TreeTraits>::TreeConstIterator::operator++()
+	{
+		if (!mNode)
+		{
+			throw std::exception(attemptToIteratarePastLastElementException.c_str());
+		}
+		else if (mNode->mRight)
+		{
+			mNode = mOwner->FindMin(mNode->mRight);
+		}
+		else
+		{
+			RedBlackNode* parent = mNode->mParent;
+			while (parent && mNode == parent->mRight)
+			{
+				mNode = parent;
+				parent = parent->mParent;
+			}
+			mNode = parent;
+		}
+		return *this;
+	}
+
+	template<typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::TreeConstIterator RedBlackTree<TreeTraits>::TreeConstIterator::operator++(int)
+	{
+		ConstIterator iteratorBeforeIncrement(*this);
+		operator++();
+		return iteratorBeforeIncrement;
+	}
+
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::TreeConstIterator& RedBlackTree<TreeTraits>::TreeConstIterator::operator--()
+	{
+		if (mNode == mOwner->FindMin(mOwner->mRoot))
+		{
+			throw std::exception(attemptToIteratareBeforeFirstElementException.c_str());
+		}
+		else if (!mNode)
+		{
+			mNode = mOwner->FindMax(mOwner->mRoot);
+		}
+		else if (mNode->mLeft)
+		{
+			mNode = mOwner->FindMax(mNode->mLeft);
+		}
+		else
+		{
+			RedBlackNode* parent = mNode->mParent;
+			while (parent && mNode == parent->mLeft)
+			{
+				mNode = parent;
+				parent = parent->mParent;
+			}
+			mNode = parent;
+		}
+		return *this;
+	}
+
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::TreeConstIterator RedBlackTree<TreeTraits>::TreeConstIterator::operator--(int)
+	{
+		TreeConstIterator iteratorBeforeDecrement(*this);
+		operator--();
+		return iteratorBeforeDecrement;
+	}
+
+	template <typename TreeTraits>
+	inline bool RedBlackTree<TreeTraits>::TreeConstIterator::operator==(TreeConstIterator const& other) const
+	{
+		return (!mNode && !other.mNode) || ((mNode && other.mNode) && (*mNode == *(other.mNode)) && (mOwner == other.mOwner));
+	}
+
+	template <typename TreeTraits>
+	inline bool RedBlackTree<TreeTraits>::TreeConstIterator::operator!=(TreeConstIterator const& other) const
+	{
+		return !operator==(other);
+	}
+
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::ValueType& RedBlackTree<TreeTraits>::TreeConstIterator::operator*()
+	{
+		if (mOwner == nullptr)
+		{
+			throw std::exception(ownerIsNullException.c_str());
+		}
+		if (*this == const_cast<RedBlackTree*>(mOwner)->end())
+		{
+			throw std::exception(attemptToIteratarePastLastElementException.c_str());
+		}
+		return mNode->mValue;
+	}
+
+	template <typename TreeTraits>
+	inline RedBlackTree<TreeTraits>::RedBlackTree(std::initializer_list<ValueType> iList)
 	{
 		for (auto element : iList)
 		{
@@ -182,28 +281,28 @@ namespace FIEAGameEngine
 		}
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline RedBlackTree<TKey, LessThanFunctor>::RedBlackTree(RedBlackTree const& other)
+	template <typename TreeTraits>
+	inline RedBlackTree<TreeTraits>::RedBlackTree(RedBlackTree const& other)
 	{
 		*this = other;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline RedBlackTree<TKey, LessThanFunctor>::RedBlackTree(RedBlackTree && other)
+	template <typename TreeTraits>
+	inline RedBlackTree<TreeTraits>::RedBlackTree(RedBlackTree && other)
 	{
 		*this = other;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline RedBlackTree<TKey, LessThanFunctor>& RedBlackTree<TKey, LessThanFunctor>::operator=(RedBlackTree const& other)
+	template <typename TreeTraits>
+	inline RedBlackTree<TreeTraits>& RedBlackTree<TreeTraits>::operator=(RedBlackTree const& other)
 	{
 		Clear();
-		mRoot = CopySubtree<RedBlackNode>(nullptr, other.mRoot);
+		mRoot = CopySubtree(nullptr, other.mRoot);
 		return *this;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline RedBlackTree<TKey, LessThanFunctor>& RedBlackTree<TKey, LessThanFunctor>::operator=(RedBlackTree && other)
+	template <typename TreeTraits>
+	inline RedBlackTree<TreeTraits>& RedBlackTree<TreeTraits>::operator=(RedBlackTree && other)
 	{
 		Clear();
 		mRoot = other.mRoot;
@@ -211,14 +310,14 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline RedBlackTree<TKey, LessThanFunctor>::~RedBlackTree()
+	template <typename TreeTraits>
+	inline RedBlackTree<TreeTraits>::~RedBlackTree()
 	{
 		Clear();
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline bool RedBlackTree<TKey, LessThanFunctor>::operator==(RedBlackTree const& other) const
+	template <typename TreeTraits>
+	inline bool RedBlackTree<TreeTraits>::operator==(RedBlackTree const& other) const
 	{
 		bool bAreEqual = false;
 		if (Size() == other.Size())
@@ -235,139 +334,139 @@ namespace FIEAGameEngine
 		return bAreEqual;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline bool RedBlackTree<TKey, LessThanFunctor>::operator!=(RedBlackTree const& other) const
+	template <typename TreeTraits>
+	inline bool RedBlackTree<TreeTraits>::operator!=(RedBlackTree const& other) const
 	{
 		return !operator==(other);
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::Iterator RedBlackTree<TKey, LessThanFunctor>::begin()
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::Iterator RedBlackTree<TreeTraits>::begin()
 	{
 		return Iterator(*this, FindMin(mRoot));
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::const_Iterator RedBlackTree<TKey, LessThanFunctor>::begin() const
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::ConstIterator RedBlackTree<TreeTraits>::begin() const
 	{
 		return cbegin();
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::Iterator RedBlackTree<TKey, LessThanFunctor>::end()
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::Iterator RedBlackTree<TreeTraits>::end()
 	{
 		return Iterator(*this, nullptr);
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::const_Iterator RedBlackTree<TKey, LessThanFunctor>::end() const
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::ConstIterator RedBlackTree<TreeTraits>::end() const
 	{
 		return cend();
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::const_Iterator RedBlackTree<TKey, LessThanFunctor>::cbegin() const
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::ConstIterator RedBlackTree<TreeTraits>::cbegin() const
 	{
-		return const_Iterator(*this, FindMin(mRoot));
+		return ConstIterator(*this, FindMin(mRoot));
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::const_Iterator RedBlackTree<TKey, LessThanFunctor>::cend() const
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::ConstIterator RedBlackTree<TreeTraits>::cend() const
 	{
-		return const_Iterator(*this, nullptr);
+		return ConstIterator(*this, nullptr);
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::Iterator RedBlackTree<TKey, LessThanFunctor>::Find(TKey const& key)
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::Iterator RedBlackTree<TreeTraits>::Find(ValueType const& value)
 	{
-		return Iterator(*this, Search(mRoot, key));
+		return Iterator(*this, Search(mRoot, value));
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::const_Iterator RedBlackTree<TKey, LessThanFunctor>::Find(TKey const& key) const
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::ConstIterator RedBlackTree<TreeTraits>::Find(ValueType const& value) const
 	{
-		return const_Iterator(*this, Search(mRoot,key));
+		return ConstIterator(*this, Search(mRoot,value));
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::Iterator RedBlackTree<TKey, LessThanFunctor>::LowerBound(TKey const& key)
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::Iterator RedBlackTree<TreeTraits>::LowerBound(ValueType const& value)
 	{
-		return Iterator(*this, LowerBound(mRoot, key));
+		return Iterator(*this, LowerBound(mRoot, value));
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::const_Iterator RedBlackTree<TKey, LessThanFunctor>::LowerBound(TKey const& key) const
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::ConstIterator RedBlackTree<TreeTraits>::LowerBound(ValueType const& value) const
 	{
-		return const_Iterator(*this, LowerBound(mRoot, key));
+		return ConstIterator(*this, LowerBound(mRoot, value));
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::Iterator RedBlackTree<TKey, LessThanFunctor>::UpperBound(TKey const& key)
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::Iterator RedBlackTree<TreeTraits>::UpperBound(ValueType const& value)
 	{
-		return Iterator(*this, UpperBound(mRoot, key));
+		return Iterator(*this, UpperBound(mRoot, value));
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::const_Iterator RedBlackTree<TKey, LessThanFunctor>::UpperBound(TKey const& key) const
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::ConstIterator RedBlackTree<TreeTraits>::UpperBound(ValueType const& value) const
 	{
-		return const_Iterator(*this, UpperBound(mRoot, key));
+		return ConstIterator(*this, UpperBound(mRoot, value));
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline std::pair<typename RedBlackTree<TKey, LessThanFunctor>::Iterator, typename RedBlackTree<TKey, LessThanFunctor>::Iterator> RedBlackTree<TKey, LessThanFunctor>::EqualRange(TKey const& key)
+	template <typename TreeTraits>
+	inline std::pair<typename RedBlackTree<TreeTraits>::Iterator, typename RedBlackTree<TreeTraits>::Iterator> RedBlackTree<TreeTraits>::EqualRange(ValueType const& value)
 	{
-		return std::pair<Iterator, Iterator>(Iterator(*this, LowerBound(mRoot, key), Iterator(*this, UpperBound(mRoot, key))));
+		return std::pair<Iterator, Iterator>(Iterator(*this, LowerBound(mRoot, value), Iterator(*this, UpperBound(mRoot, value))));
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline std::pair<typename RedBlackTree<TKey, LessThanFunctor>::const_Iterator, typename RedBlackTree<TKey, LessThanFunctor>::const_Iterator> RedBlackTree<TKey, LessThanFunctor>::EqualRange(TKey const& key) const
+	template <typename TreeTraits>
+	inline std::pair<typename RedBlackTree<TreeTraits>::ConstIterator, typename RedBlackTree<TreeTraits>::ConstIterator> RedBlackTree<TreeTraits>::EqualRange(ValueType const& value) const
 	{
-		return std::pair<const_Iterator, const_Iterator>(const_Iterator(*this, LowerBound(mRoot, key), const_Iterator(*this, UpperBound(mRoot, key))));
+		return std::pair<ConstIterator, ConstIterator>(ConstIterator(*this, LowerBound(mRoot, value), ConstIterator(*this, UpperBound(mRoot, value))));
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline void RedBlackTree<TKey, LessThanFunctor>::Remove(TKey const& key)
+	template <typename TreeTraits>
+	inline void RedBlackTree<TreeTraits>::Remove(ValueType const& value)
 	{
-		Remove(mRoot, key);
+		Remove(mRoot, value);
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline void RedBlackTree<TKey, LessThanFunctor>::Swap(RedBlackTree& other)
+	template <typename TreeTraits>
+	inline void RedBlackTree<TreeTraits>::Swap(RedBlackTree& other)
 	{
 		RedBlackNode* oldRoot = mRoot;
 		mRoot = other.mRoot;
 		other.mRoot = oldRoot;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline size_t RedBlackTree<TKey, LessThanFunctor>::Size() const
+	template <typename TreeTraits>
+	inline size_t RedBlackTree<TreeTraits>::Size() const
 	{
 		return Size(mRoot);
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline bool RedBlackTree<TKey, LessThanFunctor>::IsEmpty() const
+	template <typename TreeTraits>
+	inline bool RedBlackTree<TreeTraits>::IsEmpty() const
 	{
 		return mRoot;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline void RedBlackTree<TKey, LessThanFunctor>::Clear()
+	template <typename TreeTraits>
+	inline void RedBlackTree<TreeTraits>::Clear()
 	{
 		DeleteSubtree(mRoot);
 		mRoot = nullptr;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline LessThanFunctor RedBlackTree<TKey, LessThanFunctor>::GetKeyComparison() const
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::KeyCompare RedBlackTree<TreeTraits>::GetKeyComparison() const
 	{
-		return lessThan;
+		return keyCompare;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline std::pair<typename RedBlackTree<TKey, LessThanFunctor>::Iterator, bool> RedBlackTree<TKey, LessThanFunctor>::Insert(TKey const& key)
+	template <typename TreeTraits>
+	inline std::pair<typename RedBlackTree<TreeTraits>::Iterator, bool> RedBlackTree<TreeTraits>::Insert(ValueType const& value)
 	{
-		std::pair<RedBlackNode*, bool> insertResult = Insert<RedBlackNode>(mRoot, key);
+		std::pair<RedBlackNode*, bool> insertResult = Insert(mRoot, value);
 		if (insertResult.second)
 		{
 			InsertFixUp(insertResult.first);
@@ -375,59 +474,58 @@ namespace FIEAGameEngine
 		return std::pair<Iterator, bool>(Iterator(*this, insertResult.first), insertResult.second);
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::RedBlackNode* RedBlackTree<TKey, LessThanFunctor>::Search(RedBlackNode* subtreeRoot, TKey const& key) const
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::RedBlackNode* RedBlackTree<TreeTraits>::Search(RedBlackNode* subtreeRoot, ValueType const& value) const
 	{
 		if (subtreeRoot)
 		{
-			if (lessThan(key, subtreeRoot->mKey))
+			if (keyCompare(TreeTraits::ExtractKey(value), TreeTraits::ExtractKey(subtreeRoot->mValue)))
 			{
-				subtreeRoot = Search(subtreeRoot->mLeft, key);
+				subtreeRoot = Search(subtreeRoot->mLeft, value);
 			}
-			else if (lessThan(subtreeRoot->mKey, key))
+			else if (keyCompare(TreeTraits::ExtractKey(subtreeRoot->mValue), TreeTraits::ExtractKey(value)))
 			{
-				subtreeRoot = Search(subtreeRoot->mRight, key);
+				subtreeRoot = Search(subtreeRoot->mRight, value);
 			}
 		}
 		return subtreeRoot;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::RedBlackNode* RedBlackTree<TKey, LessThanFunctor>::LowerBound(RedBlackNode* subtreeRoot, TKey const& key) const
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::RedBlackNode* RedBlackTree<TreeTraits>::LowerBound(RedBlackNode* subtreeRoot, ValueType const& value) const
 	{
 		if (subtreeRoot)
 		{
-			if (!lessThan(key, subtreeRoot->mKey))
+			if (!keyCompare(TreeTraits::ExtractKey(value), TreeTraits::ExtractKey(subtreeRoot->mValue)))
 			{
-				subtreeRoot = Search(subtreeRoot->mLeft, key);
+				subtreeRoot = Search(subtreeRoot->mLeft, value);
 			}
 		}
 		return subtreeRoot;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::RedBlackNode* RedBlackTree<TKey, LessThanFunctor>::UpperBound(RedBlackNode* subtreeRoot, TKey const& key) const
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::RedBlackNode* RedBlackTree<TreeTraits>::UpperBound(RedBlackNode* subtreeRoot, ValueType const& value) const
 	{
 		if (subtreeRoot)
 		{
-			if (lessThan(subtreeRoot->mKey, key))
+			if (keyCompare(TreeTraits::ExtractKey(subtreeRoot->mValue), TreeTraits::ExtractKey(value)))
 			{
-				subtreeRoot = Search(subtreeRoot->mRight, key);
+				subtreeRoot = Search(subtreeRoot->mRight, value);
 			}
 		}
 		return subtreeRoot;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	template<typename NodeType>
-	inline std::pair<NodeType*, bool> RedBlackTree<TKey, LessThanFunctor>::Insert(RedBlackNode* subtreeRoot, TKey const& key)
+	template <typename TreeTraits>
+	inline std::pair<typename RedBlackTree<TreeTraits>::RedBlackNode*, bool> RedBlackTree<TreeTraits>::Insert(RedBlackNode* subtreeRoot, ValueType const& value)
 	{
 		std::pair<RedBlackNode*, bool> insertionResult(nullptr, false);
 		if (subtreeRoot)
 		{
-			if (lessThan(key, subtreeRoot->mKey))
+			if (keyCompare(TreeTraits::ExtractKey(value), TreeTraits::ExtractKey(subtreeRoot->mValue)))
 			{
-				insertionResult = Insert<NodeType>(subtreeRoot->mLeft, key);
+				insertionResult = Insert(subtreeRoot->mLeft, value);
 				if (!subtreeRoot->mLeft)
 				{
 					subtreeRoot->mLeft = insertionResult.first;
@@ -437,13 +535,13 @@ namespace FIEAGameEngine
 					insertionResult.first->mParent = subtreeRoot;
 				}
 			}
-			else if (!lessThan(subtreeRoot->mKey, key))
+			else if (!keyCompare(TreeTraits::ExtractKey(subtreeRoot->mValue), TreeTraits::ExtractKey(value)))
 			{
-				insertionResult = { static_cast<NodeType*>(subtreeRoot), false };
+				insertionResult = {subtreeRoot, false };
 			}
 			else
 			{
-				insertionResult = Insert<NodeType>(subtreeRoot->mRight, key);
+				insertionResult = Insert(subtreeRoot->mRight, value);
 				if (!subtreeRoot->mRight)
 				{
 					subtreeRoot->mRight = insertionResult.first;
@@ -456,19 +554,18 @@ namespace FIEAGameEngine
 		}
 		else if(mRoot)
 		{
-			//TODO: Perhaps create a virtual function that creates nodes of the appropriate type (not templated). This would allow for construction of val data when the node is constructed for node that stor more than just a key.
-			insertionResult = { new NodeType(key), true };
+			insertionResult = { new RedBlackNode(value), true };
 		}
 		else
 		{
-			mRoot = new NodeType(key);
-			insertionResult = { static_cast<NodeType*>(mRoot), true };
+			mRoot = new RedBlackNode(value);
+			insertionResult = { mRoot, true };
 		}
 		return insertionResult;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline void RedBlackTree<TKey, LessThanFunctor>::InsertFixUp(RedBlackNode* node)
+	template <typename TreeTraits>
+	inline void RedBlackTree<TreeTraits>::InsertFixUp(RedBlackNode* node)
 	{
 		RedBlackNode* currentNode = node;
 		while (currentNode != mRoot && currentNode->mColor == Color::Red && currentNode->mParent->mColor == Color::Red)
@@ -537,10 +634,10 @@ namespace FIEAGameEngine
 		mRoot->mColor = Color::Black;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline void RedBlackTree<TKey, LessThanFunctor>::Remove(RedBlackNode* subtreeRoot, TKey const& key)
+	template <typename TreeTraits>
+	inline void RedBlackTree<TreeTraits>::Remove(RedBlackNode* subtreeRoot, ValueType const& value)
 	{
-		RedBlackNode* nodeToDataSwap = Search(subtreeRoot, key);
+		RedBlackNode* nodeToDataSwap = Search(subtreeRoot, value);
 		if (nodeToDataSwap)
 		{
 			RedBlackNode* nodeToDelete = nodeToDataSwap;
@@ -554,7 +651,7 @@ namespace FIEAGameEngine
 			}
 			if (nodeToDelete != mRoot)
 			{
-				*const_cast<TKey*>(&nodeToDataSwap->mKey) = std::move(nodeToDelete->mKey);
+				nodeToDataSwap->mValue = std::move(nodeToDelete->mValue);
 
 				RedBlackNode* parentOfDeletedNode = nodeToDelete->mParent;
 
@@ -699,8 +796,8 @@ namespace FIEAGameEngine
 		}
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline size_t RedBlackTree<TKey, LessThanFunctor>::Size(RedBlackNode* subtreeRoot) const
+	template <typename TreeTraits>
+	inline size_t RedBlackTree<TreeTraits>::Size(RedBlackNode* subtreeRoot) const
 	{
 		if (subtreeRoot == nullptr)
 		{
@@ -710,8 +807,8 @@ namespace FIEAGameEngine
 		return 1 + Size(subtreeRoot->mLeft) + Size(subtreeRoot->mRight);
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::RedBlackNode* RedBlackTree<TKey, LessThanFunctor>::FindMin(RedBlackNode* subtreeRoot) const
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::RedBlackNode* RedBlackTree<TreeTraits>::FindMin(RedBlackNode* subtreeRoot) const
 	{
 		if (subtreeRoot)
 		{
@@ -723,8 +820,8 @@ namespace FIEAGameEngine
 		return subtreeRoot;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::RedBlackNode* RedBlackTree<TKey, LessThanFunctor>::FindMax(RedBlackNode* subtreeRoot) const
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::RedBlackNode* RedBlackTree<TreeTraits>::FindMax(RedBlackNode* subtreeRoot) const
 	{
 		if (subtreeRoot)
 		{
@@ -736,8 +833,8 @@ namespace FIEAGameEngine
 		return subtreeRoot;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::RedBlackNode* RedBlackTree<TKey, LessThanFunctor>::RotateRight(RedBlackNode* node)
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::RedBlackNode* RedBlackTree<TreeTraits>::RotateRight(RedBlackNode* node)
 	{
 		RedBlackNode* newParent = node->mLeft;
 		node->mLeft = newParent->mRight;
@@ -767,8 +864,8 @@ namespace FIEAGameEngine
 		return newParent;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline typename RedBlackTree<TKey, LessThanFunctor>::RedBlackNode* RedBlackTree<TKey, LessThanFunctor>::RotateLeft(RedBlackNode* node)
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::RedBlackNode* RedBlackTree<TreeTraits>::RotateLeft(RedBlackNode* node)
 	{
 		RedBlackNode* newParent = node->mRight;
 		node->mRight = newParent->mLeft;
@@ -798,20 +895,19 @@ namespace FIEAGameEngine
 		return newParent;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	template<typename NodeType>
-	inline NodeType* RedBlackTree<TKey, LessThanFunctor>::CopySubtree(NodeType* subtreeRoot, NodeType* otherSubtreeRoot)
+	template <typename TreeTraits>
+	inline typename RedBlackTree<TreeTraits>::RedBlackNode* RedBlackTree<TreeTraits>::CopySubtree(RedBlackNode* subtreeRoot, RedBlackNode* otherSubtreeRoot)
 	{
 		if (otherSubtreeRoot)
 		{
-			NodeType* nodeAddress = static_cast<NodeType*>(malloc(sizeof(NodeType)));
-			return new (nodeAddress) NodeType(subtreeRoot, CopySubtree(nodeAddress, otherSubtreeRoot->mLeft), CopySubtree(nodeAddress, otherSubtreeRoot->mRight), *otherSubtreeRoot);
+			RedBlackNode* nodeAddress = static_cast<RedBlackNode*>(malloc(sizeof(RedBlackNode)));
+			return new (nodeAddress) RedBlackNode(subtreeRoot, CopySubtree(nodeAddress, otherSubtreeRoot->mLeft), CopySubtree(nodeAddress, otherSubtreeRoot->mRight), *otherSubtreeRoot);
 		}
 		return nullptr;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline void RedBlackTree<TKey, LessThanFunctor>::DeleteSubtree(RedBlackNode* node)
+	template <typename TreeTraits>
+	inline void RedBlackTree<TreeTraits>::DeleteSubtree(RedBlackNode* node)
 	{
 		if (node)
 		{
@@ -821,8 +917,8 @@ namespace FIEAGameEngine
 		}
 	}
 #if defined(UNIT_TEST)
-	template<typename TKey, typename LessThanFunctor>
-	inline bool RedBlackTree<TKey, LessThanFunctor>::VerifyRedBlackTree()
+	template <typename TreeTraits>
+	inline bool RedBlackTree<TreeTraits>::VerifyRedBlackTree()
 	{
 		int treeBlackHeight = FindBlackHeight();
 
@@ -831,8 +927,8 @@ namespace FIEAGameEngine
 		return VerifyNode(mRoot, treeBlackHeight, currentBlackHeight);
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline int RedBlackTree<TKey, LessThanFunctor>::FindBlackHeight()
+	template <typename TreeTraits>
+	inline int RedBlackTree<TreeTraits>::FindBlackHeight()
 	{
 		int blackHeight = 0;
 		RedBlackNode* currentNode = mRoot;
@@ -848,8 +944,8 @@ namespace FIEAGameEngine
 		return blackHeight + 1;
 	}
 
-	template<typename TKey, typename LessThanFunctor>
-	inline bool RedBlackTree<TKey, LessThanFunctor>::VerifyNode(RedBlackTree<TKey, LessThanFunctor>::RedBlackNode* node, int const& treeBlackHeight, int& currentBlackHeight)
+	template <typename TreeTraits>
+	inline bool RedBlackTree<TreeTraits>::VerifyNode(RedBlackTree<TreeTraits>::RedBlackNode* node, int const& treeBlackHeight, int& currentBlackHeight)
 	{
 		if (node)
 		{
@@ -860,12 +956,12 @@ namespace FIEAGameEngine
 			}
 
 			//Verify the left child is less than this node.
-			if (node->mLeft && (node->mKey <= node->mLeft->mKey))
+			if (node->mLeft && (node->mValue <= node->mLeft->mValue))
 			{
 				return false;
 			}
 			//Verify the right child is greater than this node.
-			if (node->mRight && (node->mKey >= node->mRight->mKey))
+			if (node->mRight && (node->mValue >= node->mRight->mValue))
 			{
 				return false;
 			}

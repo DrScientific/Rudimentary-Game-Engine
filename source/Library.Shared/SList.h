@@ -58,7 +58,7 @@ namespace FIEAGameEngine
 	public:
 
 		/// <summary>
-		/// An iterator that points to member nodes of SList. Any data dereferenced through a Iterator is not const. See const_Iterator.
+		/// An iterator that points to member nodes of SList. Any data dereferenced through a Iterator is not const. See ConstIterator.
 		/// </summary>
 		class Iterator
 		{
@@ -134,82 +134,82 @@ namespace FIEAGameEngine
 			/// </summary>
 			Node * mNode = nullptr;
 
-			friend class const_Iterator;
+			friend class ConstIterator;
 			friend class SList<T>;
 		};
 
 		/// <summary>
-		/// A const_Iterator that points to member nodes of SList. Any data dereferenced through a const_Iterator is const.
+		/// A ConstIterator that points to member nodes of SList. Any data dereferenced through a ConstIterator is const.
 		/// </summary>
-		class const_Iterator
+		class ConstIterator
 		{
 		public:
 
 			/// <summary>
-			/// Default constructor for const_Iterator
+			/// Default constructor for ConstIterator
 			/// </summary>
-			const_Iterator() = default;
+			ConstIterator() = default;
 
 			/// <summary>
-			/// Default copy constructor for const_Iterator
+			/// Default copy constructor for ConstIterator
 			/// </summary>
-			/// <param name="">const_Iterator to copy</param>
-			const_Iterator(const const_Iterator&) = default;
+			/// <param name="">ConstIterator to copy</param>
+			ConstIterator(const ConstIterator&) = default;
 
 			/// <summary>
-			/// Default assignment operator for const_Iterator
+			/// Default assignment operator for ConstIterator
 			/// </summary>
-			const_Iterator& operator= (const const_Iterator&) = default;
+			ConstIterator& operator= (const ConstIterator&) = default;
 
 			/// <summary>
-			/// Default destructor for const_Iterator
+			/// Default destructor for ConstIterator
 			/// </summary>
-			~const_Iterator() = default;
+			~ConstIterator() = default;
 
 			/// <summary>
-			/// Constructs a const_Iterator from an Iterator.
+			/// Constructs a ConstIterator from an Iterator.
 			/// </summary>
-			/// <param name="it">Iterator to create const_Iterator from</param>
-			const_Iterator(const Iterator & it);
+			/// <param name="it">Iterator to create ConstIterator from</param>
+			ConstIterator(const Iterator & it);
 
 			/// <summary>
 			/// Preincrement operation
 			/// </summary>
 			/// <returns></returns>
-			const_Iterator& operator++();
+			ConstIterator& operator++();
 
 			/// <summary>
 			/// Postincrement operation
 			/// </summary>
-			const_Iterator operator++(int);
+			ConstIterator operator++(int);
 
 			/// <summary>
 			/// Checks that two const_Iterators are equal.
 			/// </summary>
-			/// <param name="other">const_Iterator to compare with.</param>
+			/// <param name="other">ConstIterator to compare with.</param>
 			/// <returns>Whether the const_Iterators are equal.</returns>
-			bool operator==(const_Iterator const & other) const;
+			bool operator==(ConstIterator const & other) const;
 
 			/// <summary>
 			/// Checks that two const_Iterators are not equal.
 			/// </summary>
-			/// <param name="other">const_Iterator to compare with.</param>
+			/// <param name="other">ConstIterator to compare with.</param>
 			/// <returns>Whether the const_Iterators are not equal.</returns>
-			bool operator!=(const_Iterator const & other) const;
+			bool operator!=(ConstIterator const & other) const;
 
 			/// <summary>
-			/// Dereferences the const_Iterator.
+			/// Dereferences the ConstIterator.
 			/// </summary>
-			/// <returns>The const data pointed to by the const_Iterator.</returns>
+			/// <returns>The const data pointed to by the ConstIterator.</returns>
 			T const & operator*() const;
 
 		private:
 			/// <summary>
-			/// Constructor for const_Iterator taking in a list owner and a node.
+			/// Constructor for ConstIterator taking in a list owner and a node.
 			/// </summary>
-			/// <param name="owner">List owning the const_Iterator.</param>
-			/// <param name="node">Node pointed to by the const_Iterator.</param>
-			const_Iterator(const SList& owner, Node* node = nullptr);
+			/// <param name="owner">List owning the ConstIterator.</param>
+			/// <param name="node">Node pointed to by the ConstIterator.</param>
+			ConstIterator(const SList& owner, Node* node = nullptr);
 
 			/// <summary>
 			/// The list that owns the Iterator.
@@ -266,10 +266,10 @@ namespace FIEAGameEngine
 
 
 		/// <summary>
-		/// Gets const_Iterator pointing to first element in list.
+		/// Gets ConstIterator pointing to first element in list.
 		/// </summary>
-		/// <returns>A const_Iterator to the first element in the list.</returns>
-		const_Iterator cbegin() const;
+		/// <returns>A ConstIterator to the first element in the list.</returns>
+		ConstIterator cbegin() const;
 
 		/// <summary>
 		/// Gets Iterator pointing to nullptr.
@@ -278,10 +278,10 @@ namespace FIEAGameEngine
 		Iterator end() const;
 
 		/// <summary>
-		/// Gets const_Iterator pointing to nullptr.
+		/// Gets ConstIterator pointing to nullptr.
 		/// </summary>
-		/// <returns>A const_Iterator to the element past the last element</returns>
-		const_Iterator cend() const;
+		/// <returns>A ConstIterator to the element past the last element</returns>
+		ConstIterator cend() const;
 
 		/// <summary>
 		/// Puts a new node containing the passed in value at the front of the list.
@@ -374,7 +374,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="value">Value to search for</param>
 		/// <returns>Iterator to first node storing the searched for value.</returns>
-		SList<T>::const_Iterator Find(T const & value) const;
+		SList<T>::ConstIterator Find(T const & value) const;
 
 		/// <summary>
 		/// Removes the first node with the passed in value.
@@ -488,7 +488,7 @@ namespace FIEAGameEngine
 		inline static const std::string iteratorFromOtherListExceptionText = "Iterator provided is from another list.\n";
 
 		friend class Iterator;
-		friend class const_Iterator;
+		friend class ConstIterator;
 	};
 }
 

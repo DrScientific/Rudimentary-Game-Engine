@@ -5,6 +5,10 @@
 #include <algorithm>
 #include <random>
 #include <chrono>
+#include <set>
+#include <map>
+
+#define _DEBUG_FUNCTIONAL_MACHINERY = 1
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
@@ -46,16 +50,33 @@ namespace UnitTestLibraryDesktop
 			}
 #endif
 		}
+		
+		TEST_METHOD(StdSetTest)
+		{
+			//How is set's keys nonconst but they're always returned as const?
+			std::set<int> set = { 1,2,3,4,5,6,7,8,9 };
+			int const& ref = (*(set.find(6)));
+			ref;
+		}
+		
+		TEST_METHOD(StdMapTest)
+		{
+			//How is set's keys nonconst but they're always returned as const?
+			std::map<int, int> map = { {1,1},{2,2},{3,3},{4,4},{5,5},{6,6} };
+			auto& ref = (*(map.find(4)));
+			ref;
+		}
+
 		TEST_METHOD(SetConstructorTest)
 		{
 			Set<int> set;
 		}
-
+		
 		TEST_METHOD(SetInitializerListConstructorTest)
 		{
 			Set<int> set{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
 		}
-
+		
 		TEST_METHOD(SetIteratorIncrementTest)
 		{
 			Set<int> set{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
@@ -77,7 +98,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(set.Find(-1) == set.end());
 			Assert::IsTrue(set.Find(16) == set.end());
 		}
-
+		
 		TEST_METHOD(SetInsertTest)
 		{
 			for (int currentIteration = 0; currentIteration < testIterations; currentIteration++)
@@ -310,7 +331,7 @@ namespace UnitTestLibraryDesktop
 				Assert::IsTrue(setCopy != set);
 			}
 		}
-
+		
 	private:
 		
 		static _CrtMemState sStartMemState;

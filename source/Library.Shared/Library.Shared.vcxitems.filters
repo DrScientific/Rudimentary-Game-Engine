@@ -138,6 +138,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Set.h">
       <Filter>Standard Containers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TemplateLogic.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Datum.inl" />

@@ -92,7 +92,7 @@ namespace FIEAGameEngine
 			throw exception(scopeCannotHaveEmptyKeyExceptionText.c_str());
 		}
 		Datum * result = nullptr;
-		DatumMap::const_Iterator searchedPairIt = mHashMap.Find(key);
+		DatumMap::ConstIterator searchedPairIt = mHashMap.Find(key);
 		if (searchedPairIt != mHashMap.end())
 		{
 			result = const_cast<Datum*>(&((*searchedPairIt).second));
@@ -107,7 +107,7 @@ namespace FIEAGameEngine
 			throw exception(scopeCannotHaveEmptyKeyExceptionText.c_str());
 		}
 		Datum const * result = nullptr;
-		DatumMap::const_Iterator searchedPairIt = mHashMap.Find(key);
+		DatumMap::ConstIterator searchedPairIt = mHashMap.Find(key);
 		if (searchedPairIt != mHashMap.end())
 		{
 			result = &((*searchedPairIt).second);

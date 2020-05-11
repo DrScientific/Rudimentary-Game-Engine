@@ -87,21 +87,21 @@ namespace FIEAGameEngine
 
 	}
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline HashMap<TKey, TData, HashFunctor>::const_Iterator::const_Iterator(Iterator const & it) :
-		mOwner(it.mOwner), mDataIndex(it.mDataIndex), mListIterator(typename ChainType::const_Iterator(it.mListIterator))
+	inline HashMap<TKey, TData, HashFunctor>::ConstIterator::ConstIterator(Iterator const & it) :
+		mOwner(it.mOwner), mDataIndex(it.mDataIndex), mListIterator(typename ChainType::ConstIterator(it.mListIterator))
 	{
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::const_Iterator & HashMap<TKey, TData, HashFunctor>::const_Iterator::operator=(const Iterator & it)
+	inline typename HashMap<TKey, TData, HashFunctor>::ConstIterator & HashMap<TKey, TData, HashFunctor>::ConstIterator::operator=(const Iterator & it)
 	{
 		mOwner = it.mOwner;
 		mDataIndex = it.mDataIndex;
-		mListIterator = typename ChainType::const_Iterator(it.mListIterator);
+		mListIterator = typename ChainType::ConstIterator(it.mListIterator);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::const_Iterator & HashMap<TKey, TData, HashFunctor>::const_Iterator::operator++()
+	inline typename HashMap<TKey, TData, HashFunctor>::ConstIterator & HashMap<TKey, TData, HashFunctor>::ConstIterator::operator++()
 	{
 		if (mOwner == nullptr)
 		{
@@ -115,7 +115,7 @@ namespace FIEAGameEngine
 			if (mDataIndex >= mOwner->mBucketVector.Size())
 			{
 				mDataIndex = mOwner->mBucketVector.Size();
-				mListIterator = typename ChainType::const_Iterator();
+				mListIterator = typename ChainType::ConstIterator();
 				break;
 			}
 			mListIterator = mOwner->mBucketVector[mDataIndex].cbegin();
@@ -125,28 +125,28 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::const_Iterator HashMap<TKey, TData, HashFunctor>::const_Iterator::operator++(int)
+	inline typename HashMap<TKey, TData, HashFunctor>::ConstIterator HashMap<TKey, TData, HashFunctor>::ConstIterator::operator++(int)
 	{
-		const_Iterator iteratorBeforeIncrement = *this;
+		ConstIterator iteratorBeforeIncrement = *this;
 		operator++();
 		return iteratorBeforeIncrement;
 	}
 
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline bool HashMap<TKey, TData, HashFunctor>::const_Iterator::operator==(const_Iterator const & other) const
+	inline bool HashMap<TKey, TData, HashFunctor>::ConstIterator::operator==(ConstIterator const & other) const
 	{
 		return (mOwner == other.mOwner) && (mDataIndex == other.mDataIndex) && (mListIterator == other.mListIterator);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline bool HashMap<TKey, TData, HashFunctor>::const_Iterator::operator!=(const_Iterator const & other) const
+	inline bool HashMap<TKey, TData, HashFunctor>::ConstIterator::operator!=(ConstIterator const & other) const
 	{
 		return !(*this == other);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::PairType const & HashMap<TKey, TData, HashFunctor>::const_Iterator::operator*() const
+	inline typename HashMap<TKey, TData, HashFunctor>::PairType const & HashMap<TKey, TData, HashFunctor>::ConstIterator::operator*() const
 	{
 		if (mOwner == nullptr)
 		{
@@ -160,7 +160,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::PairType const * HashMap<TKey, TData, HashFunctor>::const_Iterator::operator->() const
+	inline typename HashMap<TKey, TData, HashFunctor>::PairType const * HashMap<TKey, TData, HashFunctor>::ConstIterator::operator->() const
 	{
 		if (mOwner == nullptr)
 		{
@@ -174,7 +174,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline HashMap<TKey, TData, HashFunctor>::const_Iterator::const_Iterator(HashMap const & owner, size_t index, typename ChainType::const_Iterator listIt) :
+	inline HashMap<TKey, TData, HashFunctor>::ConstIterator::ConstIterator(HashMap const & owner, size_t index, typename ChainType::ConstIterator listIt) :
 		mOwner(&owner), mDataIndex(index), mListIterator(listIt)
 	{
 
@@ -240,10 +240,10 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::const_Iterator HashMap<TKey, TData, HashFunctor>::begin() const
+	inline typename HashMap<TKey, TData, HashFunctor>::ConstIterator HashMap<TKey, TData, HashFunctor>::begin() const
 	{
 		Iterator it = const_cast<HashMap*>(this)->begin();
-		return const_Iterator(it);
+		return ConstIterator(it);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
@@ -253,24 +253,24 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::const_Iterator HashMap<TKey, TData, HashFunctor>::end() const
+	inline typename HashMap<TKey, TData, HashFunctor>::ConstIterator HashMap<TKey, TData, HashFunctor>::end() const
 	{
 		Iterator it = const_cast<HashMap*>(this)->end();
-		return const_Iterator(it);
+		return ConstIterator(it);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::const_Iterator HashMap<TKey, TData, HashFunctor>::cbegin() const
+	inline typename HashMap<TKey, TData, HashFunctor>::ConstIterator HashMap<TKey, TData, HashFunctor>::cbegin() const
 	{
 		Iterator it = const_cast<HashMap*>(this)->begin();
-		return const_Iterator(it);
+		return ConstIterator(it);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::const_Iterator HashMap<TKey, TData, HashFunctor>::cend() const
+	inline typename HashMap<TKey, TData, HashFunctor>::ConstIterator HashMap<TKey, TData, HashFunctor>::cend() const
 	{
 		Iterator it = const_cast<HashMap*>(this)->end();
-		return const_Iterator(it);
+		return ConstIterator(it);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
@@ -290,15 +290,15 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::const_Iterator HashMap<TKey, TData, HashFunctor>::Find(TKey const & key) const
+	inline typename HashMap<TKey, TData, HashFunctor>::ConstIterator HashMap<TKey, TData, HashFunctor>::Find(TKey const & key) const
 	{
-		const_Iterator foundIt = end();
+		ConstIterator foundIt = end();
 		size_t hashedBucket = HashKey(key);
-		for (typename ChainType::const_Iterator listIt = mBucketVector[hashedBucket].cbegin(); listIt != mBucketVector[hashedBucket].cend(); listIt++)
+		for (typename ChainType::ConstIterator listIt = mBucketVector[hashedBucket].cbegin(); listIt != mBucketVector[hashedBucket].cend(); listIt++)
 		{
 			if ((*listIt).first == key)
 			{
-				foundIt = const_Iterator(*this, hashedBucket, listIt);
+				foundIt = ConstIterator(*this, hashedBucket, listIt);
 				break;
 			}
 		}
@@ -356,13 +356,13 @@ namespace FIEAGameEngine
 	inline TData const & HashMap<TKey, TData, HashFunctor>::At(TKey const & key) const
 	{
 
-		const_Iterator foundIt = end();
+		ConstIterator foundIt = end();
 		size_t hashedBucket = HashKey(key);
 		for (typename ChainType::Iterator listIt = mBucketVector[hashedBucket].begin(); listIt != mBucketVector[hashedBucket].end(); listIt++)
 		{
 			if ((*listIt).first == key)
 			{
-				foundIt = const_Iterator(*this, hashedBucket, listIt);
+				foundIt = ConstIterator(*this, hashedBucket, listIt);
 				break;
 			}
 		}
@@ -382,7 +382,7 @@ namespace FIEAGameEngine
 		if (mNumKeyValuePairs == other.mNumKeyValuePairs)
 		{
 			result = true;
-			for (const_Iterator i = cbegin(); i != cend(); i++)
+			for (ConstIterator i = cbegin(); i != cend(); i++)
 			{
 				if ((*i) != *(Find((*i).first)))
 				{
@@ -456,7 +456,7 @@ namespace FIEAGameEngine
 	{
 		std::pair<bool, TData*> result = std::pair<bool, TData*>(false, nullptr);
 
-		const_Iterator foundIt = Find(key);
+		ConstIterator foundIt = Find(key);
 		if (foundIt != cend())
 		{
 			result.first = true;

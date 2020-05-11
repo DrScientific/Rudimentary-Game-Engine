@@ -47,6 +47,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Set.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Stack.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TemplateLogic.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TypeManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Vector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)World.h" />

@@ -2,12 +2,27 @@
 #include <string>
 #include <exception>
 #include <initializer_list>
+#include "TemplateLogic.h"
 
 namespace FIEAGameEngine
 {
-	template <typename TKey, typename LessThanFunctor = std::less<TKey>>
+	template <typename TreeTraits>
 	class RedBlackTree
 	{
+	public:
+
+		class TreeIterator;
+		class TreeConstIterator;
+
+		using ValueType = typename TreeTraits::ValueType;
+		using KeyType = typename TreeTraits::KeyType;
+
+		using ValueCompare = typename TreeTraits::ValueCompare;
+		using KeyCompare = typename TreeTraits::KeyCompare;
+
+		using Iterator = ConditionalType<AreSameClass<KeyType, ValueType>, TreeConstIterator, TreeIterator>;
+		using ConstIterator = TreeConstIterator;
+		
 	private:
 		enum class Color : unsigned char
 		{
@@ -18,7 +33,7 @@ namespace FIEAGameEngine
 	protected:
 		struct RedBlackNode
 		{
-			explicit RedBlackNode(TKey const& key, RedBlackNode* parent = nullptr, RedBlackNode* left = nullptr, RedBlackNode* right = nullptr);
+			explicit RedBlackNode(ValueType const& key, RedBlackNode* parent = nullptr, RedBlackNode* left = nullptr, RedBlackNode* right = nullptr);
 			explicit RedBlackNode(RedBlackNode const& other);
 			explicit RedBlackNode(RedBlackNode* parent, RedBlackNode* left, RedBlackNode* right, RedBlackNode const& other);
 			
@@ -35,59 +50,92 @@ namespace FIEAGameEngine
 			RedBlackNode* mParent = nullptr;
 			RedBlackNode* mLeft = nullptr;
 			RedBlackNode* mRight = nullptr;
-			TKey const mKey;
+			ValueType mValue;
 			Color mColor = Color::Red;
 		};
 	public:
-		class Iterator
+		class TreeIterator
 		{
 		public:
 
-			Iterator(Iterator const&) = default;
+			TreeIterator(TreeIterator const&) = default;
 
-			Iterator(Iterator &&) = default;
+			TreeIterator(TreeIterator &&) = default;
 
-			Iterator& operator= (Iterator const&) = default;
+			TreeIterator& operator= (TreeIterator const&) = default;
 
-			Iterator& operator= (Iterator&&) = default;
+			TreeIterator& operator= (TreeIterator&&) = default;
 
-			~Iterator() = default;
+			~TreeIterator() = default;
 
-			Iterator& operator++();
+			TreeIterator& operator++();
 
-			Iterator operator++(int);
+			TreeIterator operator++(int);
 
-			Iterator& operator--();
+			TreeIterator& operator--();
 
-			Iterator operator--(int);
+			TreeIterator operator--(int);
 
-			bool operator==(Iterator const& other) const;
+			bool operator==(TreeIterator const& other) const;
 
-			bool operator!=(Iterator const& other) const;
+			bool operator!=(TreeIterator const& other) const;
 
-			TKey const& operator*() const;
+			ValueType& operator*();
 
 		private:
 
-			explicit Iterator(RedBlackTree const& owner, RedBlackNode* node = nullptr);
+			explicit TreeIterator(RedBlackTree const& owner, RedBlackNode* node = nullptr);
 			const RedBlackTree* mOwner = nullptr;
 			RedBlackNode* mNode = nullptr;
 
-			friend class const_Iterator;
-			friend class RedBlackTree<TKey, LessThanFunctor>;
+			friend class TreeConstIterator;
+			friend class RedBlackTree<TreeTraits>;
 		};
-		
-	public:
-		//const_Iterator and Iterator are the same in a red black tree. Once key is put in it should not be altered.
-		using const_Iterator = Iterator;
 
+	public:
+		class TreeConstIterator
+		{
+		public:
+			TreeConstIterator(TreeConstIterator const&) = default;
+
+			TreeConstIterator(TreeConstIterator&&) = default;
+
+			TreeConstIterator& operator= (TreeConstIterator const&) = default;
+
+			TreeConstIterator& operator= (TreeConstIterator&&) = default;
+
+			~TreeConstIterator() = default;
+
+			TreeConstIterator& operator++();
+
+			TreeConstIterator operator++(int);
+
+			TreeConstIterator& operator--();
+
+			TreeConstIterator operator--(int);
+
+			bool operator==(TreeConstIterator const& other) const;
+
+			bool operator!=(TreeConstIterator const& other) const;
+
+			ValueType& operator*();
+
+		private:
+			explicit TreeConstIterator(RedBlackTree const& owner, RedBlackNode* node = nullptr);
+			const RedBlackTree* mOwner = nullptr;
+			RedBlackNode* mNode = nullptr;
+
+			friend class TreeIterator;
+			friend class RedBlackTree<TreeTraits>;
+		};
+	public:
 		RedBlackTree() = default;
 		
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="iList"></param>
-		RedBlackTree(std::initializer_list<TKey> iList);
+		RedBlackTree(std::initializer_list<ValueType> iList);
 		
 		/// <summary>
 		/// 
@@ -144,7 +192,7 @@ namespace FIEAGameEngine
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		const_Iterator begin() const;
+		ConstIterator begin() const;
 
 		/// <summary>
 		/// 
@@ -156,40 +204,40 @@ namespace FIEAGameEngine
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		const_Iterator end() const;
+		ConstIterator end() const;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		const_Iterator cbegin() const;
+		ConstIterator cbegin() const;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		const_Iterator cend() const;
+		ConstIterator cend() const;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		std::pair<Iterator, bool> Insert(TKey const& key);
+		std::pair<Iterator, bool> Insert(ValueType const& key);
 		
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		Iterator Find(TKey const& key);
+		Iterator Find(ValueType const& key);
 		
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		const_Iterator Find(TKey const& key) const;
+		ConstIterator Find(ValueType const& key) const;
 
 		/// <summary>
 		/// TODO: Test
@@ -197,48 +245,48 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		Iterator LowerBound(TKey const& key);
+		Iterator LowerBound(ValueType const& key);
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		const_Iterator LowerBound(TKey const& key) const;
+		ConstIterator LowerBound(ValueType const& key) const;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		Iterator UpperBound(TKey const& key);
+		Iterator UpperBound(ValueType const& key);
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		const_Iterator UpperBound(TKey const& key) const;
+		ConstIterator UpperBound(ValueType const& key) const;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		std::pair<Iterator, Iterator> EqualRange(TKey const& key);
+		std::pair<Iterator, Iterator> EqualRange(ValueType const& key);
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		std::pair <const_Iterator, const_Iterator> EqualRange(TKey const& key) const;
+		std::pair <ConstIterator, ConstIterator> EqualRange(ValueType const& key) const;
 		
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="key"></param>
-		void Remove(TKey const& key);
+		void Remove(ValueType const& key);
 
 		/// <summary>
 		/// 
@@ -267,7 +315,7 @@ namespace FIEAGameEngine
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		LessThanFunctor GetKeyComparison() const;
+		KeyCompare GetKeyComparison() const;
 	protected:
 
 		/// <summary>
@@ -276,11 +324,11 @@ namespace FIEAGameEngine
 		/// <param name="subtreeRoot"></param>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		RedBlackNode* Search(RedBlackNode* subtreeRoot, TKey const& key) const;
+		RedBlackNode* Search(RedBlackNode* subtreeRoot, ValueType const& key) const;
 
-		RedBlackNode* LowerBound(RedBlackNode* subtreeRoot, TKey const& key) const;
+		RedBlackNode* LowerBound(RedBlackNode* subtreeRoot, ValueType const& key) const;
 
-		RedBlackNode* UpperBound(RedBlackNode* subtreeRoot, TKey const& key) const;
+		RedBlackNode* UpperBound(RedBlackNode* subtreeRoot, ValueType const& key) const;
 		
 		/// <summary>
 		/// 
@@ -288,7 +336,7 @@ namespace FIEAGameEngine
 		/// <param name="subtreeRoot"></param>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		template<typename NodeType> std::pair<NodeType*, bool> Insert(RedBlackNode* subtreeRoot, TKey const& key);
+		std::pair<RedBlackNode*, bool> Insert(RedBlackNode* subtreeRoot, ValueType const& key);
 		
 		/// <summary>
 		/// 
@@ -301,7 +349,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="subtreeRoot"></param>
 		/// <param name="key"></param>
-		void Remove(RedBlackNode* subtreeRoot, TKey const& key);
+		void Remove(RedBlackNode* subtreeRoot, ValueType const& key);
 		
 		/// <summary>
 		/// 
@@ -348,7 +396,7 @@ namespace FIEAGameEngine
 		/// <param name="subtreeRoot"></param>
 		/// <param name="otherSubtreeRoot"></param>
 		/// <returns></returns>
-		template<typename NodeType> NodeType* CopySubtree(NodeType * subtreeRoot, NodeType * otherSubtreeRoot);
+		RedBlackNode* CopySubtree(RedBlackNode* subtreeRoot, RedBlackNode* otherSubtreeRoot);
 		void DeleteSubtree(RedBlackNode* node);
 
 		/// <summary>
@@ -359,7 +407,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// 
 		/// </summary>
-		static inline const LessThanFunctor lessThan;
+		static inline const KeyCompare keyCompare;
 
 		inline static const std::string attemptToIteratarePastLastElementException = "Attempted to increment an iterator past end of the red black tree.\n";
 
@@ -391,7 +439,6 @@ namespace FIEAGameEngine
 		bool VerifyNode(RedBlackNode* node, int const& treeBlackHeight, int& currentBlackHeight);
 #endif
 	};
-	
 }
 
 #include "RedBlackTree.inl"

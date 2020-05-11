@@ -64,9 +64,9 @@ namespace UnitTestLibraryDesktop
 
 			HashMapCharFoo::Iterator charFooBeginning = charFooHashMap.begin();
 			HashMapCharFoo::Iterator ending = charFooHashMap.end();
-			HashMapCharFoo::const_Iterator charFooCBeginning = charFooHashMap.cbegin();
-			HashMapCharFoo::const_Iterator charFooCBeginningAssignment = charFooBeginning;
-			HashMapCharFoo::const_Iterator charFooCEnding = charFooHashMap.cend();
+			HashMapCharFoo::ConstIterator charFooCBeginning = charFooHashMap.cbegin();
+			HashMapCharFoo::ConstIterator charFooCBeginningAssignment = charFooBeginning;
+			HashMapCharFoo::ConstIterator charFooCEnding = charFooHashMap.cend();
 
 			Assert::IsTrue(charFooBeginning == ending);
 			Assert::IsTrue(charFooCBeginning == charFooCEnding);
@@ -95,8 +95,8 @@ namespace UnitTestLibraryDesktop
 
 			HashMapFooString::Iterator fooStringBeginning = fooStringHashMap.begin();
 			HashMapFooString::Iterator fooStringEnding = fooStringHashMap.end();
-			HashMapFooString::const_Iterator fooStringCBeginning = fooStringHashMap.cbegin();
-			HashMapFooString::const_Iterator fooStringCEnding = fooStringHashMap.cend();
+			HashMapFooString::ConstIterator fooStringCBeginning = fooStringHashMap.cbegin();
+			HashMapFooString::ConstIterator fooStringCEnding = fooStringHashMap.cend();
 
 			auto fooStringDereferenceEndException = [&fooStringHashMap] { *fooStringHashMap.end(); };
 			auto fooStringArrowOperatorEndException = [&fooStringHashMap] { fooStringHashMap.end()->first; };
@@ -120,8 +120,8 @@ namespace UnitTestLibraryDesktop
 
 			HashMapString2::Iterator string2Beginning = string2HashMap.begin();
 			HashMapString2::Iterator string2Ending = string2HashMap.end();
-			HashMapString2::const_Iterator string2CBeginning = string2HashMap.cbegin();
-			HashMapString2::const_Iterator string2CEnding = string2HashMap.cend();
+			HashMapString2::ConstIterator string2CBeginning = string2HashMap.cbegin();
+			HashMapString2::ConstIterator string2CEnding = string2HashMap.cend();
 			
 			auto string2DereferenceEndException = [&string2HashMap] { *string2HashMap.end(); };
 			auto string2ArrowOperatorEndException = [&string2HashMap] { string2HashMap.end()->first; };

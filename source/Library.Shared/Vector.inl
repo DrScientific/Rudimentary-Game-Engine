@@ -74,14 +74,14 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline Vector<T>::const_Iterator::const_Iterator(const Iterator & it) :
+	inline Vector<T>::ConstIterator::ConstIterator(const Iterator & it) :
 		mOwner(it.mOwner), mDataIndex(it.mDataIndex)
 	{
 
 	}
 
 	template<typename T>
-	inline typename Vector<T>::const_Iterator & Vector<T>::const_Iterator::operator=(const Iterator & it)
+	inline typename Vector<T>::ConstIterator & Vector<T>::ConstIterator::operator=(const Iterator & it)
 	{
 		if (this != &it)
 		{
@@ -91,7 +91,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-		inline Vector<T>::const_Iterator & Vector<T>::const_Iterator::operator++()
+		inline Vector<T>::ConstIterator & Vector<T>::ConstIterator::operator++()
 	{
 		if (mDataIndex >= mOwner->mSize)
 		{
@@ -102,15 +102,15 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline typename Vector<T>::const_Iterator Vector<T>::const_Iterator::operator++(int)
+	inline typename Vector<T>::ConstIterator Vector<T>::ConstIterator::operator++(int)
 	{
-		const_Iterator iteratorBeforeIncrement = *this;
+		ConstIterator iteratorBeforeIncrement = *this;
 		operator++();
 		return iteratorBeforeIncrement;
 	}
 
 	template<typename T> typename
-		inline Vector<T>::const_Iterator & Vector<T>::const_Iterator::operator--()
+		inline Vector<T>::ConstIterator & Vector<T>::ConstIterator::operator--()
 	{
 		if (mDataIndex <= 0)
 		{
@@ -121,7 +121,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-		inline Vector<T>::const_Iterator Vector<T>::const_Iterator::operator--(int)
+		inline Vector<T>::ConstIterator Vector<T>::ConstIterator::operator--(int)
 	{
 		Iterator iteratorBeforeIncrement = *this;
 		operator--();
@@ -129,19 +129,19 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline bool Vector<T>::const_Iterator::operator==(const_Iterator const & other) const
+	inline bool Vector<T>::ConstIterator::operator==(ConstIterator const & other) const
 	{
 		return (mOwner == other.mOwner) && (mDataIndex == other.mDataIndex);
 	}
 
 	template<typename T>
-	inline bool Vector<T>::const_Iterator::operator!=(const_Iterator const & other) const
+	inline bool Vector<T>::ConstIterator::operator!=(ConstIterator const & other) const
 	{
 		return !(*this == other);
 	}
 
 	template<typename T>
-	inline T const & Vector<T>::const_Iterator::operator*() const
+	inline T const & Vector<T>::ConstIterator::operator*() const
 	{
 		if (mDataIndex >= mOwner->mSize)
 		{
@@ -151,7 +151,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline Vector<T>::const_Iterator::const_Iterator(const Vector& owner, size_t index) :
+	inline Vector<T>::ConstIterator::ConstIterator(const Vector& owner, size_t index) :
 		mOwner(&owner), mDataIndex(index)
 	{
 
@@ -240,9 +240,9 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-		inline Vector<T>::const_Iterator Vector<T>::begin() const
+		inline Vector<T>::ConstIterator Vector<T>::begin() const
 	{
-		return const_Iterator(*this, 0);
+		return ConstIterator(*this, 0);
 	}
 
 	template<typename T> typename
@@ -252,21 +252,21 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-		inline Vector<T>::const_Iterator Vector<T>::end() const
+		inline Vector<T>::ConstIterator Vector<T>::end() const
 	{
-		return const_Iterator(*this, mSize);
+		return ConstIterator(*this, mSize);
 	}
 
 	template<typename T> typename
-		inline Vector<T>::const_Iterator Vector<T>::cbegin() const
+		inline Vector<T>::ConstIterator Vector<T>::cbegin() const
 	{
-		return const_Iterator(*this, 0);
+		return ConstIterator(*this, 0);
 	}
 
 	template<typename T> typename
-		inline Vector<T>::const_Iterator Vector<T>::cend() const
+		inline Vector<T>::ConstIterator Vector<T>::cend() const
 	{
-		return const_Iterator(*this, mSize);
+		return ConstIterator(*this, mSize);
 	}
 
 	template<typename T>
@@ -599,10 +599,10 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-		inline Vector<T>::const_Iterator Vector<T>::Find(T const & value) const
+		inline Vector<T>::ConstIterator Vector<T>::Find(T const & value) const
 	{
 		Iterator it = const_cast<Vector&>(*this).Find(value);
-		return const_Iterator(it);
+		return ConstIterator(it);
 	}
 
 	template<typename T>
