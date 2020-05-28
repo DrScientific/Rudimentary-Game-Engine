@@ -5,14 +5,14 @@
 namespace FIEAGameEngine
 {
 	template<typename AbstractProductT>
-	HashMap<std::string const, Factory<AbstractProductT> const * > Factory<AbstractProductT>::sFactoryTable;
+	HashMap<std::string const, Factory<AbstractProductT> const* > Factory<AbstractProductT>::sFactoryTable;
 
 	
 	template<typename AbstractProductT>
-	inline Factory<AbstractProductT> const * Factory<AbstractProductT>::Find(std::string const & className)
+	inline Factory<AbstractProductT> const* Factory<AbstractProductT>::Find(std::string const& className)
 	{
-		Factory<AbstractProductT> const * foundPtr = nullptr;
-		typename HashMap<std::string const, Factory<AbstractProductT> const * >::Iterator foundIt = sFactoryTable.Find(className);
+		Factory<AbstractProductT> const* foundPtr = nullptr;
+		typename HashMap<std::string const, Factory<AbstractProductT> const* >::Iterator foundIt = sFactoryTable.Find(className);
 		if (foundIt != sFactoryTable.end())
 		{
 			foundPtr = (*foundIt).second;
@@ -21,9 +21,9 @@ namespace FIEAGameEngine
 	}
 
 	template<typename AbstractProductT>
-	inline gsl::owner<AbstractProductT*> Factory<AbstractProductT>::Create(std::string const & className)
+	inline gsl::owner<AbstractProductT*> Factory<AbstractProductT>::Create(std::string const& className)
 	{
-		Factory<AbstractProductT> const * foundPtr = nullptr;
+		Factory<AbstractProductT> const* foundPtr = nullptr;
 		AbstractProductT * newProduct = nullptr;
 		
 		foundPtr = Find(className);

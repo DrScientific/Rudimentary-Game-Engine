@@ -54,12 +54,12 @@ namespace FIEAGameEngine
 		return *(rootScope.get());
 	}
 
-	Scope const & ScopeJsonParseHelper::ScopeSharedData::GetScope() const
+	Scope const& ScopeJsonParseHelper::ScopeSharedData::GetScope() const
 	{
 		return *(rootScope.get());
 	}
 
-	bool ScopeJsonParseHelper::StartHandler(JsonParseMaster::SharedData  * const sharedData, string const & key, Json::Value const & jsonValue, bool const & isArrayElement, size_t const & index)
+	bool ScopeJsonParseHelper::StartHandler(JsonParseMaster::SharedData  * const sharedData, string const& key, Json::Value const& jsonValue, bool const& isArrayElement, size_t const& index)
 	{
 		ScopeJsonParseHelper::ScopeSharedData * scopeSharedData = sharedData->As< ScopeJsonParseHelper::ScopeSharedData>();
 
@@ -176,7 +176,7 @@ namespace FIEAGameEngine
 		return result;
 	}
 
-	bool ScopeJsonParseHelper::EndHandler(JsonParseMaster::SharedData * const sharedData, std::string const & key)
+	bool ScopeJsonParseHelper::EndHandler(JsonParseMaster::SharedData * const sharedData, std::string const& key)
 	{
 		if (sharedData->As< ScopeJsonParseHelper::ScopeSharedData>() == nullptr)
 		{

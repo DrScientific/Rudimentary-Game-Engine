@@ -19,11 +19,11 @@ namespace UnitTests
 		Event<Foo>::Unsubscribe(*this);
 	}
 
-	void FooSubscriber::Notify(EventPublisher const & publisher)
+	void FooSubscriber::Notify(EventPublisher const& publisher)
 	{
 		lock_guard<mutex> lock(mMutex);
 		assert(publisher.Is(Event<Foo>::TypeIdClass()));
-		Event<Foo> const * fooEvent = static_cast<Event<Foo> const *>(&publisher);
+		Event<Foo> const* fooEvent = static_cast<Event<Foo> const*>(&publisher);
 		mData = fooEvent->GetMessage().Data();
 	}
 

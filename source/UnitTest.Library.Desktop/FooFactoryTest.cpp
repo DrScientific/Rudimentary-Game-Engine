@@ -76,7 +76,7 @@ namespace UnitTestLibraryDesktop
 
 		TEST_METHOD(FactoryFindTest)
 		{
-			Factory<RTTI> const * factory = Factory<RTTI>::Find("Foo");
+			Factory<RTTI> const* factory = Factory<RTTI>::Find("Foo");
 
 			Assert::IsNull(factory);
 

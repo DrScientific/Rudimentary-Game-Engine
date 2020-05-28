@@ -13,20 +13,20 @@ namespace FIEAGameEngine
 		/// Default destroy action constructor
 		/// </summary>
 		/// <param name="name">Name of the destroy action</param>
-		DestroyAction(std::string const & name = std::string());
+		DestroyAction(std::string const& name = std::string());
 
 		/// <summary>
 		/// Default copy constructor
 		/// </summary>
 		/// <param name="other">DestroyAction to copy</param>
-		DestroyAction(DestroyAction const & other) = default;
+		DestroyAction(DestroyAction const& other) = default;
 
 		/// <summary>
 		/// Default assignment operator
 		/// </summary>
 		/// <param name="other">DestroyAction to assign to</param>
 		/// <returns>Reference this</returns>
-		DestroyAction & operator=(DestroyAction const & other) = default;
+		DestroyAction & operator=(DestroyAction const& other) = default;
 
 		/// <summary>
 		/// Default move constructor 

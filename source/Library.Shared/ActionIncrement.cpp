@@ -6,7 +6,7 @@ namespace FIEAGameEngine
 {
 	RTTI_DEFINITIONS(ActionIncrement);
 
-	ActionIncrement::ActionIncrement(std::string const & name) : Action(ActionIncrement::TypeIdClass(), name)
+	ActionIncrement::ActionIncrement(std::string const& name) : Action(ActionIncrement::TypeIdClass(), name)
 	{
 
 	}

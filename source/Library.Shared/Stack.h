@@ -9,13 +9,13 @@ namespace FIEAGameEngine
 	{
 	public:
 		
-		void Push(T const & value);
+		void Push(T const& value);
 
 		void Pop();
 
 		T& Top();
 
-		T const & Top() const;
+		T const& Top() const;
 
 		std::size_t Size() const;
 		

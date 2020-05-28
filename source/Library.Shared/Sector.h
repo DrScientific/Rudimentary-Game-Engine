@@ -21,20 +21,20 @@ namespace FIEAGameEngine
 		/// Default sector constructor.
 		/// </summary>
 		/// <param name="name">Name of sector.</param>
-		Sector(std::string const & name = std::string());
+		Sector(std::string const& name = std::string());
 
 		/// <summary>
 		/// Default copy constructor.
 		/// </summary>
 		/// <param name="sector">Sector to copy.</param>
-		Sector(Sector const & other) = default;
+		Sector(Sector const& other) = default;
 
 		/// <summary>
 		/// Default assignment operator.
 		/// </summary>
 		/// <param name="other">Sector to assign to.</param>
 		/// <returns>A reference to this.</returns>
-		Sector & operator=(Sector const & other) = default;
+		Sector & operator=(Sector const& other) = default;
 
 		/// <summary>
 		/// Default move constructor.
@@ -59,7 +59,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="child">Scope to adopt.</param>
 		/// <param name="newChildKey">Key to place the newly adopted scope at.</param>
-		virtual void Adopt(Scope & child, std::string const & newChildKey) override;
+		virtual void Adopt(Scope & child, std::string const& newChildKey) override;
 
 		/// <summary>
 		/// Returns the name of the sector.
@@ -71,13 +71,13 @@ namespace FIEAGameEngine
 		/// Sets the name of the sector.
 		/// </summary>
 		/// <param name="name">The new name of the sector.</param>
-		void SetName(std::string const & name);
+		void SetName(std::string const& name);
 
 		/// <summary>
 		/// Get the world containing this sector.
 		/// </summary>
 		/// <returns>The world containing this sector.</returns>
-		World const * GetWorld() const;
+		World const* GetWorld() const;
 
 		/// <summary>
 		/// Moves the sector to a new world.
@@ -94,7 +94,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// 
 		/// </summary>
-		void SetIsAwake(bool const & awake);
+		void SetIsAwake(bool const& awake);
 
 		/// <summary>
 		/// Sets whether the entity is awake.
@@ -114,7 +114,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Returns a datum containing all entities contained by this sector.
 		/// </summary>
-		Datum const & Entities() const;
+		Datum const& Entities() const;
 
 		/// <summary>
 		/// Creates a new entity and inserts it into this sector's Entities attribute.

@@ -165,13 +165,13 @@ namespace FIEAGameEngine
 		}
 	}
 
-	bool JsonParseMaster::Parse(std::string const & jsonString)
+	bool JsonParseMaster::Parse(std::string const& jsonString)
 	{
 		istringstream intermediateStream(jsonString);
 		return Parse(intermediateStream);
 	}
 
-	bool JsonParseMaster::ParseFromFile(std::string const & jsonFile)
+	bool JsonParseMaster::ParseFromFile(std::string const& jsonFile)
 	{
 		mCurrentFileBeingParsed = jsonFile;
 		fstream intermediateStream(jsonFile);
@@ -189,7 +189,7 @@ namespace FIEAGameEngine
 		return ParseMembers(jsonValue, false, 0);
 	}
 
-	std::string const & JsonParseMaster::GetFileName() const
+	std::string const& JsonParseMaster::GetFileName() const
 	{
 		return mCurrentFileBeingParsed;
 	}
@@ -204,13 +204,13 @@ namespace FIEAGameEngine
 		mSharedData = &sharedData;
 	}
 
-	bool JsonParseMaster::ParseMembers(Json::Value const & jsonValue, bool const & isArrayElement, size_t const & index)
+	bool JsonParseMaster::ParseMembers(Json::Value const& jsonValue, bool const& isArrayElement, size_t const& index)
 	{
 		if (jsonValue.size() != 0)
 		{
 			std::vector<string> memberNames = jsonValue.getMemberNames();
 
-			for (auto const & i : memberNames)
+			for (auto const& i : memberNames)
 			{
 				if (!Parse(i, jsonValue[i], isArrayElement, index))
 				{
@@ -222,13 +222,13 @@ namespace FIEAGameEngine
 		return true;
 	}
 
-	bool JsonParseMaster::Parse(std::string const & key, Json::Value const & value, bool const & isArrayElement, size_t const & index)
+	bool JsonParseMaster::Parse(std::string const& key, Json::Value const& value, bool const& isArrayElement, size_t const& index)
 	{
 		bool result = false;
 		if (value.isObject())
 		{
 			mSharedData->IncrementDepth();
-			for (auto const & pair : mParseHandlers)
+			for (auto const& pair : mParseHandlers)
 			{
 				IJsonParseHelper* handler = pair.second;
 				if (handler->StartHandler(mSharedData, key, value, isArrayElement, index))
@@ -247,7 +247,7 @@ namespace FIEAGameEngine
 		{
 			result = true;
 			size_t i = 0;
-			for (auto const & element : value)
+			for (auto const& element : value)
 			{
 				if (element.isObject())
 				{
@@ -265,7 +265,7 @@ namespace FIEAGameEngine
 		else
 		{
 			mSharedData->IncrementDepth();
-			for (auto const & pair : mParseHandlers)
+			for (auto const& pair : mParseHandlers)
 			{
 				IJsonParseHelper* handler = pair.second;
 				if (handler->StartHandler(mSharedData, key, value, isArrayElement, index))

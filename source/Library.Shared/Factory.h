@@ -34,14 +34,14 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="className">Name of the class we want the factory of.</param>
 		/// <returns>A pointer to the concerete factory th</returns>
-		static Factory<AbstractProductT> const * Find(std::string const & className);
+		static Factory<AbstractProductT> const* Find(std::string const& className);
 		
 		/// <summary>
 		/// Static method which returns a pointer to a newly created object of type className, if a concrete factory of that type exists. Otherwise returns nullptr.
 		/// </summary>
 		/// <param name="className">The class name of the object type we wish to instantiate.</param>
 		/// <returns>A pointer to a newly created object of type className, if a concrete factory of that type exists. Otherwise returns nullptr.</returns>
-		static gsl::owner<AbstractProductT*> Create(std::string const & className);
+		static gsl::owner<AbstractProductT*> Create(std::string const& className);
 
 	protected:
 		/// <summary>
@@ -67,7 +67,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Static hash map of concrete factories that have been created. A factory's key is the class name of the productes it creates.
 		/// </summary>
-		static HashMap<std::string const, Factory<AbstractProductT> const * > sFactoryTable;
+		static HashMap<std::string const, Factory<AbstractProductT> const* > sFactoryTable;
 
 		/// <summary>
 		/// Communicats the cause of a Cannot Create Duplicate Factory exception to the user.

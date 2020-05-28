@@ -20,20 +20,20 @@ namespace FIEAGameEngine
 		/// Default entity constructor
 		/// </summary>
 		/// <param name="sector">Parent of entity</param>
-		Entity(std::string const & name = std::string());
+		Entity(std::string const& name = std::string());
 
 		/// <summary>
 		/// Default copy constructor
 		/// </summary>
 		/// <param name="other">Entity to copy</param>
-		Entity(Entity const & other) = default;
+		Entity(Entity const& other) = default;
 
 		/// <summary>
 		/// Default assignment operator
 		/// </summary>
 		/// <param name="other">Entity to assign to</param>
 		/// <returns>Reference this</returns>
-		Entity & operator=(Entity const & other) = default;
+		Entity & operator=(Entity const& other) = default;
 
 		/// <summary>
 		/// Default move constructor 
@@ -58,7 +58,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="child">Scope to adopt.</param>
 		/// <param name="newChildKey">Key to place the newly adopted scope at.</param>
-		virtual void Adopt(Scope & child, std::string const & newChildKey) override;
+		virtual void Adopt(Scope & child, std::string const& newChildKey) override;
 
 		/// <summary>
 		/// Returns the name of the entity
@@ -70,13 +70,13 @@ namespace FIEAGameEngine
 		/// Sets the name field of the entity
 		/// </summary>
 		/// /// <param name="name">The new name of the entity.</param>
-		void SetName(std::string const & name);
+		void SetName(std::string const& name);
 
 		/// <summary>
 		/// Get the sector containing this entity.
 		/// </summary>
 		/// <returns>The sector containing this entity.</returns>
-		Sector const * GetSector() const;
+		Sector const* GetSector() const;
 
 		/// <summary>
 		/// Moves the entity to a new sector
@@ -93,7 +93,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Sets whether the entity is awake.
 		/// </summary>
-		void SetIsAwake(bool const & awake);
+		void SetIsAwake(bool const& awake);
 
 		/// <summary>
 		/// Wakes the entity.
@@ -113,7 +113,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Returns a datum containing all actions contained by this entity.
 		/// </summary>
-		Datum const & Actions() const;
+		Datum const& Actions() const;
 
 		/// <summary>
 		/// Creates a new action and inserts it into this entity's Actions attribute.
@@ -168,7 +168,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="typeId">Type ID of the entity</param>
 		/// <param name="name">Name of the entity</param>
-		Entity(RTTI::IdType typeId, std::string const & name);
+		Entity(RTTI::IdType typeId, std::string const& name);
 
 	private:
 		/// <summary>

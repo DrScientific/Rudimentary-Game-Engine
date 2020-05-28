@@ -5,7 +5,7 @@ namespace FIEAGameEngine
 {
 	RTTI_DEFINITIONS(CreateAction);
 
-	CreateAction::CreateAction(std::string const & name) : Action(CreateAction::TypeIdClass(), name)
+	CreateAction::CreateAction(std::string const& name) : Action(CreateAction::TypeIdClass(), name)
 	{
 
 	}

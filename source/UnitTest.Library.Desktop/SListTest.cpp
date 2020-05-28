@@ -610,6 +610,30 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(fooList.Size() == 8);
 			Assert::IsTrue(fooList.Find(iar) == (++(++(++(fooList.begin())))));
 		}
+		TEST_METHOD(TestReverse)
+		{
+			int a = 0, b = 1, c = 2, d = 3, e = 4, f = 5, g = 6, h = 7;
+			SList <int> empty;
+			empty.Reverse();
+			SList <int> intListOdd = { a,b,c,d,e,f,g };
+			SList <int> reversedIntListOdd = { g,f,e,d,c,b,a };
+
+			Assert::IsTrue(intListOdd != reversedIntListOdd);
+			intListOdd.Reverse();
+			Assert::IsTrue(intListOdd == reversedIntListOdd);
+			reversedIntListOdd.Reverse();
+			Assert::IsTrue(intListOdd != reversedIntListOdd);
+
+			SList <int> intListEven = { a,b,c,d,e,f,g,h };
+			SList <int> reversedIntListEven = { h,g,f,e,d,c,b,a };
+
+			Assert::IsTrue(intListEven != reversedIntListEven);
+			intListEven.Reverse();
+			Assert::IsTrue(intListEven == reversedIntListEven);
+			reversedIntListEven.Reverse();
+			Assert::IsTrue(intListEven != reversedIntListEven);
+
+		}
 	private:
 		static _CrtMemState sStartMemState;
 	};

@@ -42,7 +42,7 @@ namespace FIEAGameEngine
 		/// Returns the subtype of the Event Message Attributed.
 		/// </summary>
 		/// <returns>The subtype of the Event Message Attributed.</returns>
-		std::string const & Subtype() const;
+		std::string const& Subtype() const;
 
 		/// <summary>
 		/// Returns the signatures of event message attributed.

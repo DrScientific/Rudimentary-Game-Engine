@@ -36,7 +36,7 @@ namespace FIEAGameEngine
 		/// <param name="eventToQueue">The event to queue.</param>
 		/// <param name="currentTime">The time the event was queued.</param>
 		/// <param name="delay">The delay from the time the event is queued to when the event should be published.</param>
-		void Enqueue(std::shared_ptr<EventPublisher> eventToQueue, GameTime const & currentTime, std::chrono::milliseconds delay = std::chrono::milliseconds(0));
+		void Enqueue(std::shared_ptr<EventPublisher> eventToQueue, GameTime const& currentTime, std::chrono::milliseconds delay = std::chrono::milliseconds(0));
 
 		/// <summary>
 		/// Delivers the passed in event.

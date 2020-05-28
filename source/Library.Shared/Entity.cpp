@@ -11,7 +11,7 @@ namespace FIEAGameEngine
 {
 	RTTI_DEFINITIONS(Entity)
 
-	Entity::Entity(std::string const & name) : Entity(Entity::TypeIdClass(), name)
+	Entity::Entity(std::string const& name) : Entity(Entity::TypeIdClass(), name)
 	{
 
 	}
@@ -21,13 +21,13 @@ namespace FIEAGameEngine
 
 	}
 
-	Entity::Entity(RTTI::IdType typeId, string const & name) : Attributed(typeId), mName(name)
+	Entity::Entity(RTTI::IdType typeId, string const& name) : Attributed(typeId), mName(name)
 	{
 		assert(mVector[mActionsIndex]->first == mActionsKey);
 		mName = name;
 	}
 
-	void Entity::Adopt(Scope & child, std::string const & newChildKey)
+	void Entity::Adopt(Scope & child, std::string const& newChildKey)
 	{
 		if (newChildKey == mActionsKey && !child.Is(Action::TypeIdClass()))
 		{
@@ -41,12 +41,12 @@ namespace FIEAGameEngine
 		return mName;
 	}
 
-	void Entity::SetName(string const & name)
+	void Entity::SetName(string const& name)
 	{
 		mName = name;
 	}
 
-	Sector const * Entity::GetSector() const
+	Sector const* Entity::GetSector() const
 	{
 		Sector * sectorPtr = nullptr;
 		if (mParent != nullptr)
@@ -73,7 +73,7 @@ namespace FIEAGameEngine
 		return mIsAwake ? true : false;
 	}
 
-	void Entity::SetIsAwake(bool const & awake)
+	void Entity::SetIsAwake(bool const& awake)
 	{
 		awake ? mIsAwake = 1 : mIsAwake = 0;
 	}
@@ -93,7 +93,7 @@ namespace FIEAGameEngine
 		return operator[](mActionsIndex);
 	}
 
-	Datum const & Entity::Actions() const
+	Datum const& Entity::Actions() const
 	{
 		return operator[](mActionsIndex);
 	}

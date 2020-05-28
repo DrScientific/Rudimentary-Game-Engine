@@ -58,13 +58,30 @@ namespace UnitTestLibraryDesktop
 			int const& ref = (*(set.find(6)));
 			ref;
 		}
+
+		TEST_METHOD(StdMultisetTest)
+		{
+			std::multiset<int> multiset = { 1,2,3,4,5,6,6,7,8,9 };
+			int const& ref = (*(multiset.find(6)));
+			ref;
+			auto range = (multiset.equal_range(6));
+			range;
+		}
 		
 		TEST_METHOD(StdMapTest)
 		{
-			//How is set's keys nonconst but they're always returned as const?
 			std::map<int, int> map = { {1,1},{2,2},{3,3},{4,4},{5,5},{6,6} };
 			auto& ref = (*(map.find(4)));
 			ref;
+		}
+
+		TEST_METHOD(StdMultimapTest)
+		{
+			std::multimap<int, int> multimap = { {1,1},{2,2},{3,3},{4,4},{4,4},{4,5},{5,5},{6,6} };
+			auto& ref = (*(multimap.find(4)));
+			ref;
+			auto range = (multimap.equal_range(4));
+			range;
 		}
 
 		TEST_METHOD(SetConstructorTest)
@@ -118,6 +135,7 @@ namespace UnitTestLibraryDesktop
 				for (int element : insertOrder)
 				{
 					set.Insert(element);
+					set.Insert(element);
 					currentSize++;
 					Assert::IsTrue(currentSize == set.Size());
 					Assert::IsTrue(set.VerifyRedBlackTree());
@@ -151,6 +169,7 @@ namespace UnitTestLibraryDesktop
 				for (int element : insertOrder)
 				{
 					set.Insert(element);
+					set.Insert(element);
 					currentSize++;
 				}
 
@@ -159,6 +178,7 @@ namespace UnitTestLibraryDesktop
 				currentSize = treeSize;
 				for (int element : removeOrder)
 				{
+					set.Remove(element);
 					set.Remove(element);
 					currentSize--;
 					Assert::IsTrue(currentSize == set.Size());

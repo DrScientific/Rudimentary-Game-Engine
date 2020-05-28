@@ -10,6 +10,6 @@ namespace UnitTests
 	public:
 		AsyncSubscriberListTestSubscriber();
 		~AsyncSubscriberListTestSubscriber();
-		virtual void Notify(class FIEAGameEngine::EventPublisher const & publisher);
+		virtual void Notify(class FIEAGameEngine::EventPublisher const& publisher);
 	};
 }

@@ -12,20 +12,20 @@ namespace FIEAGameEngine
 		/// Default action list while constructor
 		/// </summary>
 		/// <param name="name">Name of the action list</param>
-		ActionListWhile(std::string const & name = std::string());
+		ActionListWhile(std::string const& name = std::string());
 
 		/// <summary>
 		/// Default copy constructor
 		/// </summary>
 		/// <param name="other">ActionListWhile to copy</param>
-		ActionListWhile(ActionListWhile const & other) = default;
+		ActionListWhile(ActionListWhile const& other) = default;
 
 		/// <summary>
 		/// Default assignment operator
 		/// </summary>
 		/// <param name="other">ActionListWhile to assign to</param>
 		/// <returns>Reference this</returns>
-		ActionListWhile & operator=(ActionListWhile const & other) = default;
+		ActionListWhile & operator=(ActionListWhile const& other) = default;
 
 		/// <summary>
 		/// Default move constructor 

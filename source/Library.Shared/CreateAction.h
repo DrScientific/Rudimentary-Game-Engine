@@ -13,20 +13,20 @@ namespace FIEAGameEngine
 		/// Default create action constructor
 		/// </summary>
 		/// <param name="name">Name of the create action</param>
-		CreateAction(std::string const & name = std::string());
+		CreateAction(std::string const& name = std::string());
 
 		/// <summary>
 		/// Default copy constructor
 		/// </summary>
 		/// <param name="other">CreateAction to copy</param>
-		CreateAction(CreateAction const & other) = default;
+		CreateAction(CreateAction const& other) = default;
 
 		/// <summary>
 		/// Default assignment operator
 		/// </summary>
 		/// <param name="other">CreateAction to assign to</param>
 		/// <returns>Reference this</returns>
-		CreateAction & operator=(CreateAction const & other) = default;
+		CreateAction & operator=(CreateAction const& other) = default;
 
 		/// <summary>
 		/// Default move constructor 

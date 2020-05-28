@@ -14,20 +14,20 @@ namespace FIEAGameEngine
 		/// Default Action Increment constructor
 		/// </summary>
 		/// <param name="name">Name of the action list</param>
-		ActionIncrement(std::string const & name = std::string());
+		ActionIncrement(std::string const& name = std::string());
 
 		/// <summary>
 		/// Default copy constructor
 		/// </summary>
 		/// <param name="other">ActionIncrement to copy</param>
-		ActionIncrement(ActionIncrement const & other) = default;
+		ActionIncrement(ActionIncrement const& other) = default;
 
 		/// <summary>
 		/// Default assignment operator
 		/// </summary>
 		/// <param name="other">ActionIncrement to assign to</param>
 		/// <returns>Reference this</returns>
-		ActionIncrement & operator=(ActionIncrement const & other) = default;
+		ActionIncrement & operator=(ActionIncrement const& other) = default;
 
 		/// <summary>
 		/// Default move constructor 

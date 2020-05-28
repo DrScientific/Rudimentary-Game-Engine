@@ -24,6 +24,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Datum.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DefaultHashFunctor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DestroyAction.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Entity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Event.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)EventMessageAttributed.h" />
@@ -36,6 +37,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)HashMap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IJsonParseHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JsonParseMaster.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrderedMap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Reaction.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactionAttributed.h" />
@@ -73,9 +75,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameTime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)IJsonParseHelper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JsonParseMaster.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Reaction.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ReactionAttributed.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scope.cpp" />
@@ -87,9 +87,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Datum.inl" />
+    <None Include="$(MSBuildThisFileDirectory)DList.inl" />
     <None Include="$(MSBuildThisFileDirectory)Event.inl" />
     <None Include="$(MSBuildThisFileDirectory)Factory.inl" />
     <None Include="$(MSBuildThisFileDirectory)HashMap.inl" />
+    <None Include="$(MSBuildThisFileDirectory)OrderedMap.inl" />
     <None Include="$(MSBuildThisFileDirectory)RedBlackTree.inl" />
     <None Include="$(MSBuildThisFileDirectory)Set.inl" />
     <None Include="$(MSBuildThisFileDirectory)SList.inl" />

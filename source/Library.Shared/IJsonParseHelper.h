@@ -34,7 +34,7 @@ namespace FIEAGameEngine
 		/// <param name="jsonValue">The Json value</param>
 		/// <param name="isArray">Whether the key value pair is in an array</param>
 		/// <returns>Whether the key value pair was successfully parsed.</returns>
-		virtual bool StartHandler(JsonParseMaster::SharedData  * const sharedData, std::string const & key, Json::Value const & jsonValue, bool const & isArray, size_t const & index) = 0;
+		virtual bool StartHandler(JsonParseMaster::SharedData  * const sharedData, std::string const& key, Json::Value const& jsonValue, bool const& isArray, size_t const& index) = 0;
 
 		/// <summary>
 		/// Pure virtual function that ends a handler by determining if we successfully parse the data.
@@ -42,7 +42,7 @@ namespace FIEAGameEngine
 		/// <param name="sharedData">The parse master's shared data. If the parse was successful we will alter this data.</param>
 		/// <param name="key">The Json key</param>
 		/// <returns>Whether the key value pair was successfully parsed.</returns>
-		virtual bool EndHandler(JsonParseMaster::SharedData * const sharedData, std::string const & key) = 0;
+		virtual bool EndHandler(JsonParseMaster::SharedData * const sharedData, std::string const& key) = 0;
 
 		/// <summary>
 		/// Parse Helper's Virtual Constructor

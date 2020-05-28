@@ -14,13 +14,13 @@ namespace FIEAGameEngine
 {
 #pragma region Get
 	template<typename T>
-	inline T Datum::Get(size_t const &) const
+	inline T Datum::Get(size_t const&) const
 	{
 		throw std::exception(unsupportedDataTypeExceptionText.c_str());
 	}
 
 	template<>
-	inline int Datum::Get<int>(size_t const & index) const
+	inline int Datum::Get<int>(size_t const& index) const
 	{
 		if (index >= mSize)
 		{
@@ -34,7 +34,7 @@ namespace FIEAGameEngine
 	}
 
 	template<>
-	inline float Datum::Get<float>(size_t const & index) const
+	inline float Datum::Get<float>(size_t const& index) const
 	{
 		if (index >= mSize)
 		{
@@ -48,7 +48,7 @@ namespace FIEAGameEngine
 	}
 
 	template<>
-	inline glm::vec4 Datum::Get<glm::vec4>(size_t const & index) const
+	inline glm::vec4 Datum::Get<glm::vec4>(size_t const& index) const
 	{
 		if (index >= mSize)
 		{
@@ -62,7 +62,7 @@ namespace FIEAGameEngine
 	}
 
 	template<>
-	inline glm::mat4x4 Datum::Get<glm::mat4x4>(size_t const & index) const
+	inline glm::mat4x4 Datum::Get<glm::mat4x4>(size_t const& index) const
 	{
 		if (index >= mSize)
 		{
@@ -76,7 +76,7 @@ namespace FIEAGameEngine
 	}
 
 	template<>
-	inline Scope* Datum::Get<Scope*>(size_t const & index) const
+	inline Scope* Datum::Get<Scope*>(size_t const& index) const
 	{
 		if (index >= mSize)
 		{
@@ -90,7 +90,7 @@ namespace FIEAGameEngine
 	}
 
 	template<>
-	inline std::string Datum::Get<std::string>(size_t const & index) const
+	inline std::string Datum::Get<std::string>(size_t const& index) const
 	{
 		if (index >= mSize)
 		{
@@ -104,7 +104,7 @@ namespace FIEAGameEngine
 	}
 
 	template<>
-	inline RTTI* Datum::Get<RTTI*>(size_t const & index) const
+	inline RTTI* Datum::Get<RTTI*>(size_t const& index) const
 	{
 		if (index >= mSize)
 		{

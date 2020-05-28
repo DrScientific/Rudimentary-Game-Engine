@@ -29,7 +29,7 @@ namespace FIEAGameEngine
 		mStartHandlerCount = 0;
 		mEndHandlerCount = 0;
 	}
-	bool IDepthTestParseHelper::StartHandler(JsonParseMaster::SharedData  * const sharedData, std::string const &, Json::Value const & , bool const & , size_t const &)
+	bool IDepthTestParseHelper::StartHandler(JsonParseMaster::SharedData  * const sharedData, std::string const&, Json::Value const& , bool const& , size_t const&)
 	{
 		IDepthTestParseHelper::SharedData* depthSharedData = sharedData->As<IDepthTestParseHelper::SharedData>();
 		if (depthSharedData == nullptr)
@@ -41,7 +41,7 @@ namespace FIEAGameEngine
 
 		return true;
 	}
-	bool IDepthTestParseHelper::EndHandler(JsonParseMaster::SharedData * const sharedData, std::string const & key)
+	bool IDepthTestParseHelper::EndHandler(JsonParseMaster::SharedData * const sharedData, std::string const& key)
 	{
 		key;
 

@@ -28,7 +28,7 @@ namespace FIEAGameEngine
 		IJsonParseHelper::Initialize();
 	}
 	
-	bool IIntegerJsonParseHelper::StartHandler(JsonParseMaster::SharedData  * const sharedData, std::string const & key, Json::Value const & jsonValue, bool const & isArray, size_t const & index)
+	bool IIntegerJsonParseHelper::StartHandler(JsonParseMaster::SharedData  * const sharedData, std::string const& key, Json::Value const& jsonValue, bool const& isArray, size_t const& index)
 	{
 		index;
 		isArray;
@@ -41,7 +41,7 @@ namespace FIEAGameEngine
 
 		return true;
 	}
-	bool IIntegerJsonParseHelper::EndHandler(JsonParseMaster::SharedData * const sharedData, std::string const & key)
+	bool IIntegerJsonParseHelper::EndHandler(JsonParseMaster::SharedData * const sharedData, std::string const& key)
 	{
 		key;
 		sharedData->As< IIntegerJsonParseHelper::SharedData>()->parsedInt = tempInt;

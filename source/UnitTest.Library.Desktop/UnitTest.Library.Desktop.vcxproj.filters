@@ -28,6 +28,7 @@
     <ClCompile Include="AsyncSubscriberListTestSubscriber.cpp" />
     <ClCompile Include="AsyncEventQueueTestSubscriber.cpp" />
     <ClCompile Include="SetTest.cpp" />
+    <ClCompile Include="OrderedMapTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

@@ -16,12 +16,12 @@ namespace FIEAGameEngine
 		mState.mWorld = this;
 	}
 
-	World::World(string const & name, GameTime * time, EventQueue * eventQueue) : World(time, eventQueue)
+	World::World(string const& name, GameTime * time, EventQueue * eventQueue) : World(time, eventQueue)
 	{
 		mName = name;
 	}
 
-	void World::Adopt(Scope & child, string const & newChildKey)
+	void World::Adopt(Scope & child, string const& newChildKey)
 	{
 		if (newChildKey == mSectorsKey && !child.Is(Sector::TypeIdClass()))
 		{
@@ -35,7 +35,7 @@ namespace FIEAGameEngine
 		return mName;
 	}
 
-	void World::SetName(string const & name)
+	void World::SetName(string const& name)
 	{
 		mName = name;
 	}
@@ -45,12 +45,12 @@ namespace FIEAGameEngine
 		return operator[](mSectorsIndex);
 	}
 
-	Datum const & World::Sectors() const
+	Datum const& World::Sectors() const
 	{
 		return operator[](mSectorsIndex);
 	}
 
-	Sector & World::CreateSector(string const & name)
+	Sector & World::CreateSector(string const& name)
 	{
 		Sector* newSector = new Sector();
 		newSector->SetWorld(this);

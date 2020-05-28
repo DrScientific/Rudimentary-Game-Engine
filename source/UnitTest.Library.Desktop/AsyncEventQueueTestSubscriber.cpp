@@ -20,11 +20,11 @@ namespace UnitTests
 		Event<EventQueue*>::Unsubscribe(*this);
 	}
 
-	void AsyncEventQueueTestSubscriber::Notify(FIEAGameEngine::EventPublisher const & publisher)
+	void AsyncEventQueueTestSubscriber::Notify(FIEAGameEngine::EventPublisher const& publisher)
 	{
 		assert(publisher.Is(Event<EventQueue*>::TypeIdClass()));
 		
-		EventQueue * queue = static_cast<Event<EventQueue*> const &>(publisher).GetMessage();
+		EventQueue * queue = static_cast<Event<EventQueue*> const&>(publisher).GetMessage();
 		std::shared_ptr<Event<EventQueue*>> newEvent = std::make_shared<Event<EventQueue*>>(queue);
 		queue->Enqueue(newEvent, GameTime());
 		Microsoft::VisualStudio::CppUnitTestFramework::Logger::WriteMessage(to_string(queue->Size()).c_str());

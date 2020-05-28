@@ -45,13 +45,13 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline bool Vector<T>::Iterator::operator==(Iterator const & other) const
+	inline bool Vector<T>::Iterator::operator==(Iterator const& other) const
 	{
 		return (mOwner == other.mOwner) && (mDataIndex == other.mDataIndex);
 	}
 
 	template<typename T>
-	inline bool Vector<T>::Iterator::operator!=(Iterator const & other) const
+	inline bool Vector<T>::Iterator::operator!=(Iterator const& other) const
 	{
 		return !(*this == other);
 	}
@@ -129,19 +129,19 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline bool Vector<T>::ConstIterator::operator==(ConstIterator const & other) const
+	inline bool Vector<T>::ConstIterator::operator==(ConstIterator const& other) const
 	{
 		return (mOwner == other.mOwner) && (mDataIndex == other.mDataIndex);
 	}
 
 	template<typename T>
-	inline bool Vector<T>::ConstIterator::operator!=(ConstIterator const & other) const
+	inline bool Vector<T>::ConstIterator::operator!=(ConstIterator const& other) const
 	{
 		return !(*this == other);
 	}
 
 	template<typename T>
-	inline T const & Vector<T>::ConstIterator::operator*() const
+	inline T const& Vector<T>::ConstIterator::operator*() const
 	{
 		if (mDataIndex >= mOwner->mSize)
 		{
@@ -164,7 +164,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline Vector<T>::Vector(Vector const & other)
+	inline Vector<T>::Vector(Vector const& other)
 	{
 		*this = other;
 	}
@@ -179,7 +179,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline Vector<T> & Vector<T>::operator=(Vector const & other)
+	inline Vector<T> & Vector<T>::operator=(Vector const& other)
 	{
 		if (this != &other)
 		{
@@ -320,7 +320,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline T& Vector<T>::operator[](size_t const & index)
+	inline T& Vector<T>::operator[](size_t const& index)
 	{
 		if (index >= mSize)
 		{
@@ -333,7 +333,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline T const & Vector<T>::operator[](size_t const & index) const
+	inline T const& Vector<T>::operator[](size_t const& index) const
 	{
 		if (index >= mSize)
 		{
@@ -346,7 +346,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline Vector<T> Vector<T>::operator+(Vector<T> const & other)
+	inline Vector<T> Vector<T>::operator+(Vector<T> const& other)
 	{
 		Vector<T> sum = *this;
 		for (auto element : other)
@@ -410,7 +410,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline T & Vector<T>::At(size_t const & index)
+	inline T & Vector<T>::At(size_t const& index)
 	{
 		if (index >= mSize)
 		{
@@ -423,7 +423,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline T const & Vector<T>::At(size_t const & index) const
+	inline T const& Vector<T>::At(size_t const& index) const
 	{
 		if (index >= mSize)
 		{
@@ -454,7 +454,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline bool Vector<T>::operator==(Vector<T> const & other) const
+	inline bool Vector<T>::operator==(Vector<T> const& other) const
 	{
 		//return std::equal(begin(), end(), other.begin(), other.end());
 
@@ -474,7 +474,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline bool Vector<T>::operator!=(Vector<T> const & other) const
+	inline bool Vector<T>::operator!=(Vector<T> const& other) const
 	{
 		return !(*this == other);
 	}
@@ -493,7 +493,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline T const & Vector<T>::Front() const
+	inline T const& Vector<T>::Front() const
 	{
 		if (mSize == 0)
 		{
@@ -519,7 +519,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline T const & Vector<T>::Back() const
+	inline T const& Vector<T>::Back() const
 	{
 		if (mSize == 0)
 		{
@@ -532,7 +532,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline void Vector<T>::PushBack(T const & value)
+	inline void Vector<T>::PushBack(T const& value)
 	{
 		if (mSize == mCapacity)
 		{
@@ -547,7 +547,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline void Vector<T>::PushBack(T const && value)
+	inline void Vector<T>::PushBack(T const&& value)
 	{
 		if (mSize == mCapacity)
 		{
@@ -562,7 +562,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline void Vector<T>::push_back(T const & value)
+	inline void Vector<T>::push_back(T const& value)
 	{
 		PushBack(value);
 	}
@@ -584,7 +584,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-		inline Vector<T>::Iterator Vector<T>::Find(T const & value)
+		inline Vector<T>::Iterator Vector<T>::Find(T const& value)
 	{
 		Iterator it = begin();
 
@@ -599,14 +599,14 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-		inline Vector<T>::ConstIterator Vector<T>::Find(T const & value) const
+		inline Vector<T>::ConstIterator Vector<T>::Find(T const& value) const
 	{
 		Iterator it = const_cast<Vector&>(*this).Find(value);
 		return ConstIterator(it);
 	}
 
 	template<typename T>
-	inline void Vector<T>::Remove(T const & value)
+	inline void Vector<T>::Remove(T const& value)
 	{
 		for (size_t i = 0; i < mSize; i++)
 		{
@@ -621,7 +621,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline void Vector<T>::Remove(Iterator const & iteratorToRemove)
+	inline void Vector<T>::Remove(Iterator const& iteratorToRemove)
 	{
 		if (iteratorToRemove.mOwner != this)
 		{
@@ -649,7 +649,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline void Vector<T>::Remove(Iterator const & start, Iterator const & finish)
+	inline void Vector<T>::Remove(Iterator const& start, Iterator const& finish)
 	{
 		if (start.mOwner != this || finish.mOwner != this)
 		{
@@ -665,6 +665,43 @@ namespace FIEAGameEngine
 			mSize -= (finish.mDataIndex - start.mDataIndex);
 		}
 	}
+
+	template <typename T>
+	void Vector<T>::Swap(Iterator const& element1, Iterator const& element2)
+	{
+		if (element1 == end() || element2 == end())
+		{
+			throw std::exception(cannotSwapEndExceptionText.c_str());
+		}
+		T buffer = std::move(*element1);
+		*element1 = std::move(*element2);
+		*element2 = std::move(buffer);
+	}
+
+	template <typename T>
+	void Vector<T>::Shuffle()
+	{
+		for (size_t  i = 0; i < Size(); i++)
+		{
+			size_t randIndex = rand() % Size();
+			T buffer = std::move(mArray[i]);
+			mArray[i] = std::move(mArray[randIndex]);
+			mArray[randIndex] = std::move(buffer);
+		}
+	}
+
+	template <typename T>
+	void Vector<T>::Reverse()
+	{
+		for (size_t i = 0; i < Size()/2; i++)
+		{
+			size_t mirroredIndex = Size() - 1 - i;
+			T buffer = std::move(mArray[i]);
+			mArray[i] = std::move(mArray[mirroredIndex]);
+			mArray[mirroredIndex] = std::move(buffer);
+		}
+	}
+
 	template<typename T>
 	inline void Vector<T>::ShrinkToFit()
 	{

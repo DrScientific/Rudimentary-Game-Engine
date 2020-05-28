@@ -22,14 +22,14 @@ namespace FIEAGameEngine
 		/// 
 		/// </summary>
 		/// <param name="other"></param>
-		ReactionAttributed(ReactionAttributed const & other);
+		ReactionAttributed(ReactionAttributed const& other);
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="other"></param>
 		/// <returns></returns>
-		ReactionAttributed & operator=(ReactionAttributed const & other);
+		ReactionAttributed & operator=(ReactionAttributed const& other);
 
 		/// <summary>
 		/// 
@@ -59,7 +59,7 @@ namespace FIEAGameEngine
 		/// 
 		/// </summary>
 		/// <param name="publisher"></param>
-		virtual void Notify(class FIEAGameEngine::EventPublisher const & publisher) override;
+		virtual void Notify(class FIEAGameEngine::EventPublisher const& publisher) override;
 
 		/// <summary>
 		/// Returns the signatures of reaction attributed.

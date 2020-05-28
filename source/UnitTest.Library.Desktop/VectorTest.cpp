@@ -68,7 +68,6 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(constFooVector[1] == car);
 			Assert::IsTrue(*(--(fooVector.cend())) == dar);
 			Assert::IsTrue(constFooVector[2] == dar);
-			
 		}
 
 		TEST_METHOD(IteratorsExceptions)
@@ -317,6 +316,79 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(foo2Vector.Front() == bar);
 			Assert::IsTrue(foo2Vector.Back() == far);
 		}
+		TEST_METHOD(TestSwap)
+		{
+			Foo bar(0), car(1), dar(2), ear(3), far(4), gar(5);
+			Vector <Foo> fooVector = { bar,car,dar,ear,far };
+
+			Vector<Foo>::Iterator firstElement = fooVector.begin();
+			Vector<Foo>::Iterator fourthElement = ++++++fooVector.begin();
+
+			Assert::IsTrue(*firstElement == bar);
+			Assert::IsTrue(*firstElement != ear);
+			Assert::IsTrue(*fourthElement != bar);
+			Assert::IsTrue(*fourthElement == ear);
+
+			Assert::IsTrue(fooVector[0] == bar);
+			Assert::IsTrue(fooVector[0] != ear);
+			Assert::IsTrue(fooVector[3] != bar);
+			Assert::IsTrue(fooVector[3] == ear);
+
+			fooVector.Swap(firstElement, fourthElement);
+
+			Assert::IsTrue(*firstElement != bar);
+			Assert::IsTrue(*firstElement == ear);
+			Assert::IsTrue(*fourthElement == bar);
+			Assert::IsTrue(*fourthElement != ear);
+
+			Assert::IsTrue(fooVector[0] != bar);
+			Assert::IsTrue(fooVector[0] == ear);
+			Assert::IsTrue(fooVector[3] == bar);
+			Assert::IsTrue(fooVector[3] != ear);
+
+			fooVector.Swap(firstElement, fourthElement);
+
+			Assert::IsTrue(*firstElement == bar);
+			Assert::IsTrue(*firstElement != ear);
+			Assert::IsTrue(*fourthElement != bar);
+			Assert::IsTrue(*fourthElement == ear);
+
+			Assert::IsTrue(fooVector[0] == bar);
+			Assert::IsTrue(fooVector[0] != ear);
+			Assert::IsTrue(fooVector[3] != bar);
+			Assert::IsTrue(fooVector[3] == ear);
+
+			Vector<Foo>::Iterator alsoFirstElement = fooVector.begin();
+
+			Assert::IsTrue(*firstElement == bar);
+			Assert::IsTrue(*alsoFirstElement == bar);
+			Assert::IsTrue(*firstElement == *alsoFirstElement);
+
+			fooVector.Swap(firstElement, alsoFirstElement);
+
+			auto cannotSwapEndException = [&fooVector] { auto begin = fooVector.begin(); auto end = fooVector.end();  fooVector.Swap(begin, end); };
+			Assert::ExpectException<std::exception>(cannotSwapEndException);
+		}
+		TEST_METHOD(TestReverse)
+		{
+			Foo a = 0, b = 1, c = 2, d = 3, e = 4, f = 5, g = 6, h = 7;
+			Vector <Foo> fooVectorOdd = { a,b,c,d,e,f,g }, fooVectorOddReversed = { g,f,e,d,c,b,a };
+
+			Assert::IsTrue(fooVectorOdd != fooVectorOddReversed);
+			fooVectorOdd.Reverse();
+			Assert::IsTrue(fooVectorOdd == fooVectorOddReversed);
+			fooVectorOddReversed.Reverse();
+			Assert::IsTrue(fooVectorOdd != fooVectorOddReversed);
+			
+			Vector <Foo> fooVectorEven = { a,b,c,d,e,f,g,h }, fooVectorEvenReversed = { h,g,f,e,d,c,b,a };
+
+			Assert::IsTrue(fooVectorEven != fooVectorEvenReversed);
+			fooVectorEven.Reverse();
+			Assert::IsTrue(fooVectorEven == fooVectorEvenReversed);
+			fooVectorEvenReversed.Reverse();
+			Assert::IsTrue(fooVectorEven != fooVectorEvenReversed);
+		}
+
 	private:
 		static _CrtMemState sStartMemState;
 	};

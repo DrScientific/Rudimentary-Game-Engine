@@ -17,12 +17,12 @@ namespace FIEAGameEngine
 		Event<EventMessageAttributed>::Subscribe(*this);
 	}
 
-	ReactionAttributed::ReactionAttributed(ReactionAttributed const & other) : Reaction(ReactionAttributed::TypeIdClass(), other.mName), mSubtype(other.mSubtype), mWorld(other.mWorld)
+	ReactionAttributed::ReactionAttributed(ReactionAttributed const& other) : Reaction(ReactionAttributed::TypeIdClass(), other.mName), mSubtype(other.mSubtype), mWorld(other.mWorld)
 	{
 		Event<EventMessageAttributed>::Subscribe(*this);
 	}
 
-	ReactionAttributed & ReactionAttributed::operator=(ReactionAttributed const & other)
+	ReactionAttributed & ReactionAttributed::operator=(ReactionAttributed const& other)
 	{
 		Event<EventMessageAttributed>::Unsubscribe(*this);
 		mName = other.mName;
@@ -58,13 +58,13 @@ namespace FIEAGameEngine
 		return new ReactionAttributed(*this);
 	}
 
-	void ReactionAttributed::Notify(FIEAGameEngine::EventPublisher const & publisher)
+	void ReactionAttributed::Notify(FIEAGameEngine::EventPublisher const& publisher)
 	{
 		lock_guard<mutex> lock(mMutex);
 		assert(publisher.Is(Event<EventMessageAttributed>::TypeIdClass()));
-		Event<EventMessageAttributed> const * attributedEvent = static_cast<Event<EventMessageAttributed> const *>(&publisher);
+		Event<EventMessageAttributed> const* attributedEvent = static_cast<Event<EventMessageAttributed> const*>(&publisher);
 
-		EventMessageAttributed const & message = attributedEvent->GetMessage();
+		EventMessageAttributed const& message = attributedEvent->GetMessage();
 
 		if (message.Subtype() == mSubtype)
 		{

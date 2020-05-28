@@ -17,20 +17,20 @@ namespace FIEAGameEngine
 		/// Default action list constructor
 		/// </summary>
 		/// <param name="name">Name of the action list</param>
-		ActionList(std::string const & name = std::string());
+		ActionList(std::string const& name = std::string());
 
 		/// <summary>
 		/// Default copy constructor
 		/// </summary>
 		/// <param name="other">ActionList to copy</param>
-		ActionList(ActionList const & other) = default;
+		ActionList(ActionList const& other) = default;
 
 		/// <summary>
 		/// Default assignment operator
 		/// </summary>
 		/// <param name="other">ActionList to assign to</param>
 		/// <returns>Reference this</returns>
-		ActionList & operator=(ActionList const & other) = default;
+		ActionList & operator=(ActionList const& other) = default;
 
 		/// <summary>
 		/// Default move constructor 
@@ -55,7 +55,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="child">Scope to adopt.</param>
 		/// <param name="newChildKey">Key to place the newly adopted scope at.</param>
-		virtual void Adopt(Scope & child, std::string const & newChildKey) override;
+		virtual void Adopt(Scope & child, std::string const& newChildKey) override;
 
 		/// <summary>
 		/// Returns a datum containing all actions contained by this action list.
@@ -65,7 +65,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Returns a datum containing all actions contained by this action list.
 		/// </summary>
-		Datum const & Actions() const;
+		Datum const& Actions() const;
 
 		/// <summary>
 		/// Creates a new action and inserts it into this action list's Actions attribute.
@@ -114,7 +114,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="typeId">RTTI type ID of the function</param>
 		/// <param name="name">Name of the Action List</param>
-		ActionList(ActionList::IdType typeId, std::string const & name);
+		ActionList(ActionList::IdType typeId, std::string const& name);
 
 		inline static const std::string nonActionInActionsText = "Only Action objects can be added to the Actions field.\n";
 	};

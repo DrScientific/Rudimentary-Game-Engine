@@ -10,7 +10,7 @@ using namespace std;
 namespace FIEAGameEngine
 {
 
-	void EventQueue::Enqueue(std::shared_ptr<EventPublisher> eventToQueue, GameTime const & currentTime, std::chrono::milliseconds delay)
+	void EventQueue::Enqueue(std::shared_ptr<EventPublisher> eventToQueue, GameTime const& currentTime, std::chrono::milliseconds delay)
 	{
 		lock_guard<recursive_mutex> lock(mMutex);
 		eventToQueue->SetTime(currentTime.CurrentTime(), delay);

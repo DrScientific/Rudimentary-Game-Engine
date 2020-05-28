@@ -96,7 +96,7 @@ namespace FIEAGameEngine
 		/// <param name="sharedData">A pointer to the parse master's shared data.</param>
 		explicit JsonParseMaster(SharedData & sharedData);
 
-		JsonParseMaster(JsonParseMaster const &) = delete;
+		JsonParseMaster(JsonParseMaster const&) = delete;
 
 		/// <summary>
 		/// Move constructor
@@ -109,7 +109,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		virtual ~JsonParseMaster();
 
-		JsonParseMaster& operator=(JsonParseMaster const & other) = delete;
+		JsonParseMaster& operator=(JsonParseMaster const& other) = delete;
 
 		/// <summary>
 		/// Move assignment operator
@@ -146,14 +146,14 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="jsonString">The string to parse</param>
 		/// <returns>Whether the parse was successful</returns>
-		bool Parse(std::string const & jsonString);
+		bool Parse(std::string const& jsonString);
 
 		/// <summary>
 		/// Attempt to parse a file.
 		/// </summary>
 		/// <param name="jsonFile">The path to the file we want to parse.</param>
 		/// <returns>Whether the parse was successful</returns>
-		bool ParseFromFile(std::string const & jsonFile);
+		bool ParseFromFile(std::string const& jsonFile);
 
 		/// <summary>
 		/// Attempt to parse an istream
@@ -166,7 +166,7 @@ namespace FIEAGameEngine
 		/// Returns the name of the current file we are parsing.
 		/// </summary>
 		/// <returns>Returns the name of the current file we are parsing.</returns>
-		std::string const & GetFileName() const;
+		std::string const& GetFileName() const;
 
 		/// <summary>
 		/// Returns a pointer to the shared data owned by this parse master.
@@ -178,7 +178,7 @@ namespace FIEAGameEngine
 		/// Returns a pointer to the shared data owned by this parse master.
 		/// </summary>
 		/// <returns>Returns a pointer to the shared data owned by this parse master.</returns>
-		SharedData const * GetSharedData() const;
+		SharedData const* GetSharedData() const;
 
 		/// <summary>
 		/// Sets a new shared data for this parse master.
@@ -195,7 +195,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="jsonValue">The Json::Value to parse.</param>
 		/// <returns>Whether the members of the Json::Value were successfully parsed.</returns>
-		bool ParseMembers(Json::Value const & jsonValue, bool const & isArrayElement = false, size_t const & index = 0);
+		bool ParseMembers(Json::Value const& jsonValue, bool const& isArrayElement = false, size_t const& index = 0);
 
 		/// <summary>
 		/// Parses a string-key Json::Value-value pair.
@@ -205,7 +205,7 @@ namespace FIEAGameEngine
 		/// <param name="isInArray">Whether the key value pair is in an array.</param>
 		/// <param name="index">The current index we are parsing.</param>
 		/// <returns>Whether the key-value pair was successfully parsed.</returns>
-		bool Parse(std::string const & key, Json::Value const & value, bool const & isInArray, size_t const & index);
+		bool Parse(std::string const& key, Json::Value const& value, bool const& isInArray, size_t const& index);
 
 		/// <summary>
 		/// Vector of parse handlers employed by the parse master.

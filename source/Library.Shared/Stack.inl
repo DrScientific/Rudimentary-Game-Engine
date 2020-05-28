@@ -3,7 +3,7 @@
 namespace FIEAGameEngine
 {
 	template<typename T>
-	inline void Stack<T>::Push(T const & value)
+	inline void Stack<T>::Push(T const& value)
 	{
 		mList.PushFront(value);
 	}
@@ -21,7 +21,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline T const & Stack<T>::Top() const
+	inline T const& Stack<T>::Top() const
 	{
 		return mList.Front();
 	}

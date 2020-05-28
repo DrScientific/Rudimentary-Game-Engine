@@ -17,10 +17,10 @@ namespace UnitTests
 		Event<Foo>::Unsubscribe(*this);
 	}
 
-	void FooEntity::Notify(FIEAGameEngine::EventPublisher const & publisher)
+	void FooEntity::Notify(FIEAGameEngine::EventPublisher const& publisher)
 	{
 		assert(publisher.Is(Event<Foo>::TypeIdClass()));
-		Event<Foo> const * fooEvent = static_cast<Event<Foo> const *>(&publisher);
+		Event<Foo> const* fooEvent = static_cast<Event<Foo> const*>(&publisher);
 		mData = fooEvent->GetMessage().Data();
 	}
 }

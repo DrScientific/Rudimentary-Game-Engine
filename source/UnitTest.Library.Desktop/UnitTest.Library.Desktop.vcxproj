@@ -203,6 +203,7 @@ xcopy /E/Y "$(ProjectDir)Content" "$(OutDir)Content"</Command>
     <ClCompile Include="HashMapTest.cpp" />
     <ClCompile Include="IDepthTestParseHelper.cpp" />
     <ClCompile Include="IIntegerJsonParseHelper.cpp" />
+    <ClCompile Include="OrderedMapTest.cpp" />
     <ClCompile Include="ParsingTest.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

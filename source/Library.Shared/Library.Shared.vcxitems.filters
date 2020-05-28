@@ -8,7 +8,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)EventMessageAttributed.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)IJsonParseHelper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JsonParseMaster.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scope.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ScopeJsonParseHelper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Sector.cpp" />
@@ -57,6 +56,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)DestroyAction.cpp">
       <Filter>Actions</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Attributed.h" />
@@ -139,6 +139,12 @@
       <Filter>Standard Containers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TemplateLogic.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DList.h">
+      <Filter>Standard Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrderedMap.h">
+      <Filter>Standard Containers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Datum.inl" />
@@ -162,6 +168,12 @@
       <Filter>Standard Containers</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Set.inl">
+      <Filter>Standard Containers</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)DList.inl">
+      <Filter>Standard Containers</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)OrderedMap.inl">
       <Filter>Standard Containers</Filter>
     </None>
   </ItemGroup>

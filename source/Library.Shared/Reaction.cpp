@@ -5,7 +5,7 @@ namespace FIEAGameEngine
 {
 	RTTI_DEFINITIONS(Reaction)
 
-	Reaction::Reaction(RTTI::IdType typeId, std::string const & name) : ActionList(typeId, name)
+	Reaction::Reaction(RTTI::IdType typeId, std::string const& name) : ActionList(typeId, name)
 	{
 	}
 }

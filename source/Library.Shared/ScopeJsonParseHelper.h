@@ -102,7 +102,7 @@ namespace FIEAGameEngine
 			/// Returns a reference to the scope pointed to by the shared pointer.
 			/// </summary>
 			/// <returns></returns>
-			Scope const & GetScope() const;
+			Scope const& GetScope() const;
 
 		private:
 
@@ -125,7 +125,7 @@ namespace FIEAGameEngine
 		/// <param name="jsonValue">The Json value</param>
 		/// <param name="isArray">Whether the key value pair is in an array</param>
 		/// <returns>Whether the key value pair was successfully parsed.</returns>
-		virtual bool StartHandler(JsonParseMaster::SharedData  * const sharedData, std::string const & key, Json::Value const & jsonValue, bool const & isArray, size_t const & index) override;
+		virtual bool StartHandler(JsonParseMaster::SharedData  * const sharedData, std::string const& key, Json::Value const& jsonValue, bool const& isArray, size_t const& index) override;
 
 		/// <summary>
 		/// Returns true if the ScopeJsonParseHelper correctly parsed a particular key value pair.
@@ -133,7 +133,7 @@ namespace FIEAGameEngine
 		/// <param name="sharedData">The parse master's shared data. If the parse was successful we will alter this data.</param>
 		/// <param name="key">The Json key</param>
 		/// <returns>Whether the key value pair was successfully parsed.</returns>
-		virtual bool EndHandler(JsonParseMaster::SharedData * const sharedData, std::string const & key) override;
+		virtual bool EndHandler(JsonParseMaster::SharedData * const sharedData, std::string const& key) override;
 
 		/// <summary>
 		/// ScopeJsonParseHelper's Virtual Constructor

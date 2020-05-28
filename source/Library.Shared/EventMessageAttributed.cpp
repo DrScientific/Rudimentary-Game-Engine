@@ -29,7 +29,7 @@ namespace FIEAGameEngine
 		return new EventMessageAttributed(*this);
 	}
 	
-	std::string const & EventMessageAttributed::Subtype() const
+	std::string const& EventMessageAttributed::Subtype() const
 	{
 		return mSubtype;
 	}

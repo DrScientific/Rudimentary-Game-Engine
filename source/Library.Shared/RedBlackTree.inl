@@ -323,10 +323,10 @@ namespace FIEAGameEngine
 		if (Size() == other.Size())
 		{
 			bAreEqual = true;
-			Iterator thisIt = begin();
-			Iterator rhsIt = other.begin();
+			ConstIterator thisIt = cbegin();
+			ConstIterator rhsIt = other.cbegin();
 
-			while (bAreEqual && thisIt != end())
+			while (bAreEqual && thisIt != cend())
 			{
 				bAreEqual = (*(thisIt++.mNode) == *(rhsIt++.mNode));
 			}
@@ -377,55 +377,55 @@ namespace FIEAGameEngine
 	}
 
 	template <typename TreeTraits>
-	inline typename RedBlackTree<TreeTraits>::Iterator RedBlackTree<TreeTraits>::Find(ValueType const& value)
+	inline typename RedBlackTree<TreeTraits>::Iterator RedBlackTree<TreeTraits>::Find(KeyType const& value)
 	{
 		return Iterator(*this, Search(mRoot, value));
 	}
 
 	template <typename TreeTraits>
-	inline typename RedBlackTree<TreeTraits>::ConstIterator RedBlackTree<TreeTraits>::Find(ValueType const& value) const
+	inline typename RedBlackTree<TreeTraits>::ConstIterator RedBlackTree<TreeTraits>::Find(KeyType const& value) const
 	{
 		return ConstIterator(*this, Search(mRoot,value));
 	}
 
 	template <typename TreeTraits>
-	inline typename RedBlackTree<TreeTraits>::Iterator RedBlackTree<TreeTraits>::LowerBound(ValueType const& value)
+	inline typename RedBlackTree<TreeTraits>::Iterator RedBlackTree<TreeTraits>::LowerBound(KeyType const& value)
 	{
 		return Iterator(*this, LowerBound(mRoot, value));
 	}
 
 	template <typename TreeTraits>
-	inline typename RedBlackTree<TreeTraits>::ConstIterator RedBlackTree<TreeTraits>::LowerBound(ValueType const& value) const
+	inline typename RedBlackTree<TreeTraits>::ConstIterator RedBlackTree<TreeTraits>::LowerBound(KeyType const& value) const
 	{
 		return ConstIterator(*this, LowerBound(mRoot, value));
 	}
 
 	template <typename TreeTraits>
-	inline typename RedBlackTree<TreeTraits>::Iterator RedBlackTree<TreeTraits>::UpperBound(ValueType const& value)
+	inline typename RedBlackTree<TreeTraits>::Iterator RedBlackTree<TreeTraits>::UpperBound(KeyType const& value)
 	{
 		return Iterator(*this, UpperBound(mRoot, value));
 	}
 
 	template <typename TreeTraits>
-	inline typename RedBlackTree<TreeTraits>::ConstIterator RedBlackTree<TreeTraits>::UpperBound(ValueType const& value) const
+	inline typename RedBlackTree<TreeTraits>::ConstIterator RedBlackTree<TreeTraits>::UpperBound(KeyType const& value) const
 	{
 		return ConstIterator(*this, UpperBound(mRoot, value));
 	}
 
 	template <typename TreeTraits>
-	inline std::pair<typename RedBlackTree<TreeTraits>::Iterator, typename RedBlackTree<TreeTraits>::Iterator> RedBlackTree<TreeTraits>::EqualRange(ValueType const& value)
+	inline std::pair<typename RedBlackTree<TreeTraits>::Iterator, typename RedBlackTree<TreeTraits>::Iterator> RedBlackTree<TreeTraits>::EqualRange(KeyType const& value)
 	{
 		return std::pair<Iterator, Iterator>(Iterator(*this, LowerBound(mRoot, value), Iterator(*this, UpperBound(mRoot, value))));
 	}
 
 	template <typename TreeTraits>
-	inline std::pair<typename RedBlackTree<TreeTraits>::ConstIterator, typename RedBlackTree<TreeTraits>::ConstIterator> RedBlackTree<TreeTraits>::EqualRange(ValueType const& value) const
+	inline std::pair<typename RedBlackTree<TreeTraits>::ConstIterator, typename RedBlackTree<TreeTraits>::ConstIterator> RedBlackTree<TreeTraits>::EqualRange(KeyType const& value) const
 	{
 		return std::pair<ConstIterator, ConstIterator>(ConstIterator(*this, LowerBound(mRoot, value), ConstIterator(*this, UpperBound(mRoot, value))));
 	}
 
 	template <typename TreeTraits>
-	inline void RedBlackTree<TreeTraits>::Remove(ValueType const& value)
+	inline void RedBlackTree<TreeTraits>::Remove(KeyType const& value)
 	{
 		Remove(mRoot, value);
 	}
@@ -475,15 +475,15 @@ namespace FIEAGameEngine
 	}
 
 	template <typename TreeTraits>
-	inline typename RedBlackTree<TreeTraits>::RedBlackNode* RedBlackTree<TreeTraits>::Search(RedBlackNode* subtreeRoot, ValueType const& value) const
+	inline typename RedBlackTree<TreeTraits>::RedBlackNode* RedBlackTree<TreeTraits>::Search(RedBlackNode* subtreeRoot, KeyType const& value) const
 	{
 		if (subtreeRoot)
 		{
-			if (keyCompare(TreeTraits::ExtractKey(value), TreeTraits::ExtractKey(subtreeRoot->mValue)))
+			if (keyCompare(value, TreeTraits::ExtractKey(subtreeRoot->mValue)))
 			{
 				subtreeRoot = Search(subtreeRoot->mLeft, value);
 			}
-			else if (keyCompare(TreeTraits::ExtractKey(subtreeRoot->mValue), TreeTraits::ExtractKey(value)))
+			else if (keyCompare(TreeTraits::ExtractKey(subtreeRoot->mValue), value))
 			{
 				subtreeRoot = Search(subtreeRoot->mRight, value);
 			}
@@ -492,7 +492,7 @@ namespace FIEAGameEngine
 	}
 
 	template <typename TreeTraits>
-	inline typename RedBlackTree<TreeTraits>::RedBlackNode* RedBlackTree<TreeTraits>::LowerBound(RedBlackNode* subtreeRoot, ValueType const& value) const
+	inline typename RedBlackTree<TreeTraits>::RedBlackNode* RedBlackTree<TreeTraits>::LowerBound(RedBlackNode* subtreeRoot, KeyType const& value) const
 	{
 		if (subtreeRoot)
 		{
@@ -505,7 +505,7 @@ namespace FIEAGameEngine
 	}
 
 	template <typename TreeTraits>
-	inline typename RedBlackTree<TreeTraits>::RedBlackNode* RedBlackTree<TreeTraits>::UpperBound(RedBlackNode* subtreeRoot, ValueType const& value) const
+	inline typename RedBlackTree<TreeTraits>::RedBlackNode* RedBlackTree<TreeTraits>::UpperBound(RedBlackNode* subtreeRoot, KeyType const& value) const
 	{
 		if (subtreeRoot)
 		{
@@ -635,7 +635,7 @@ namespace FIEAGameEngine
 	}
 
 	template <typename TreeTraits>
-	inline void RedBlackTree<TreeTraits>::Remove(RedBlackNode* subtreeRoot, ValueType const& value)
+	inline void RedBlackTree<TreeTraits>::Remove(RedBlackNode* subtreeRoot, KeyType const& value)
 	{
 		RedBlackNode* nodeToDataSwap = Search(subtreeRoot, value);
 		if (nodeToDataSwap)
@@ -651,10 +651,9 @@ namespace FIEAGameEngine
 			}
 			if (nodeToDelete != mRoot)
 			{
-				nodeToDataSwap->mValue = std::move(nodeToDelete->mValue);
+				memmove(&nodeToDataSwap->mValue, &nodeToDelete->mValue, sizeof(ValueType));
 
 				RedBlackNode* parentOfDeletedNode = nodeToDelete->mParent;
-
 		
 				RedBlackNode* childOfDeletedNode = nullptr;
 				if (nodeToDelete->mLeft)

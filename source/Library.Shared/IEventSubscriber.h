@@ -24,7 +24,7 @@ namespace FIEAGameEngine
 		/// Virtual Notify method. Defines what a subscriber does when an event occurs.
 		/// </summary>
 		/// <param name="publisher">A constant reference to the event that was just delivered to the subscriber.</param>
-		virtual void Notify(class EventPublisher const & publisher) = 0;
+		virtual void Notify(class EventPublisher const& publisher) = 0;
 
 	protected:
 		/// <summary>

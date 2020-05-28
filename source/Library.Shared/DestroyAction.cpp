@@ -9,7 +9,7 @@ namespace FIEAGameEngine
 {
 	RTTI_DEFINITIONS(DestroyAction);
 
-	DestroyAction::DestroyAction(std::string const & name) : Action(DestroyAction::TypeIdClass(), name)
+	DestroyAction::DestroyAction(std::string const& name) : Action(DestroyAction::TypeIdClass(), name)
 	{
 
 	}

@@ -20,7 +20,7 @@ namespace UnitTests
 		Event<Foo>::Unsubscribe(*this);
 	}
 
-	void AsyncSubscriberListTestSubscriber::Notify(FIEAGameEngine::EventPublisher const &)
+	void AsyncSubscriberListTestSubscriber::Notify(FIEAGameEngine::EventPublisher const&)
 	{
 		if (rand() % 10 == 0)
 		{

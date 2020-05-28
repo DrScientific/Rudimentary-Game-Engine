@@ -18,14 +18,14 @@ namespace FIEAGameEngine
 		/// Default copy constructor
 		/// </summary>
 		/// <param name="other">Action to copy</param>
-		Action(Action const & other) = default;
+		Action(Action const& other) = default;
 
 		/// <summary>
 		/// Default assignment operator
 		/// </summary>
 		/// <param name="other">Action to assign to</param>
 		/// <returns>Reference this</returns>
-		Action & operator=(Action const & other) = default;
+		Action & operator=(Action const& other) = default;
 
 		/// <summary>
 		/// Default move constructor 
@@ -49,7 +49,7 @@ namespace FIEAGameEngine
 		/// Returns the name of the action
 		/// </summary>
 		/// <returns>The name of the action</returns>
-		std::string const & Name() const;
+		std::string const& Name() const;
 
 
 		/// <summary>
@@ -62,7 +62,7 @@ namespace FIEAGameEngine
 		/// Sets the name field of the action
 		/// </summary>
 		/// <param name="name">The new name of the action.</param>
-		void SetName(std::string const & name);
+		void SetName(std::string const& name);
 
 		/// <summary>
 		/// Set the new state as to whether the action should only be called every update.
@@ -99,7 +99,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="typeId">RTTI type ID of derived action.</param>
 		/// <param name="name">Name of the action.</param>
-		Action(RTTI::IdType typeId, std::string const & name = std::string());
+		Action(RTTI::IdType typeId, std::string const& name = std::string());
 
 		/// <summary>
 		/// The name of the action.

@@ -17,14 +17,14 @@ namespace FIEAGameEngine
 		/// Copy constructor
 		/// </summary>
 		/// <param name="other"></param>
-		Reaction(Reaction const & other) = default;
+		Reaction(Reaction const& other) = default;
 		
 		/// <summary>
 		/// Copy assignment
 		/// </summary>
 		/// <param name="other"></param>
 		/// <returns></returns>
-		Reaction & operator=(Reaction const & other) = default;
+		Reaction & operator=(Reaction const& other) = default;
 		
 		/// <summary>
 		/// Move constructor
@@ -57,7 +57,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="typeId">RTTI type ID of derived action.</param>
 		/// <param name="name">Name of the action.</param>
-		Reaction(RTTI::IdType typeId, std::string const & name = std::string());
+		Reaction(RTTI::IdType typeId, std::string const& name = std::string());
 	};
 
 	

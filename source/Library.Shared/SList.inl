@@ -9,20 +9,127 @@
 namespace FIEAGameEngine
 {
 	template<typename T>
+	inline SList<T>::Node::Node(T const& data, Node* next)
+		: mData(data), mNext(next)
+	{
+	}
+
+	template<typename T>
+	inline SList<T>::Iterator::Iterator(const SList& owner, Node* node) :
+		mOwner(&owner), mNode(node)
+	{
+
+	}
+
+	template<typename T> typename
+		inline SList<T>::Iterator& SList<T>::Iterator::operator++()
+	{
+		if (mNode != nullptr && mOwner != nullptr)
+		{
+			mNode = mNode->mNext;
+		}
+		return *this;
+	}
+
+	template<typename T> typename
+		inline SList<T>::Iterator SList<T>::Iterator::operator++(int)
+	{
+		Iterator iteratorBeforeIncrement = *this;
+		operator++();
+		return iteratorBeforeIncrement;
+	}
+
+	template<typename T>
+	inline bool SList<T>::Iterator::operator==(Iterator const& other) const
+	{
+		return (mOwner == other.mOwner) && (mNode == other.mNode);
+	}
+
+	template<typename T>
+	inline bool SList<T>::Iterator::operator!=(Iterator const& other) const
+	{
+		return !(*this == other);
+	}
+
+	template<typename T>
+	inline T& SList<T>::Iterator::operator*() const
+	{
+		return mNode->mData;
+	}
+
+	template<typename T>
+	inline SList<T>::ConstIterator::ConstIterator(const SList& owner, Node* node) :
+		mOwner(&owner), mNode(node)
+	{
+
+	}
+
+	template<typename T>
+	inline SList<T>::ConstIterator::ConstIterator(const Iterator& it)
+	{
+		mNode = it.mNode;
+		mOwner = it.mOwner;
+	}
+
+	template<typename T> typename
+		inline SList<T>::ConstIterator& SList<T>::ConstIterator::operator++()
+	{
+		if (mNode != nullptr && mOwner != nullptr)
+		{
+			mNode = mNode->mNext;
+		}
+		return *this;
+	}
+
+	template<typename T> typename
+		inline SList<T>::ConstIterator SList<T>::ConstIterator::operator++(int)
+	{
+		ConstIterator iteratorBeforeIncrement = *this;
+		mNode = mNode->mNext;
+		return iteratorBeforeIncrement;
+	}
+
+	template<typename T>
+	inline bool SList<T>::ConstIterator::operator==(ConstIterator const& other) const
+	{
+		return (mOwner == other.mOwner) && (mNode == other.mNode);
+	}
+
+	template<typename T>
+	inline bool SList<T>::ConstIterator::operator!=(ConstIterator const& other) const
+	{
+		return !(*this == other);
+	}
+
+	template<typename T>
+	inline T const& SList<T>::ConstIterator::operator*() const
+	{
+		return mNode->mData;
+	}
+
+	template<typename T>
 	inline SList<T>::SList()
 	{
 
 	}
 
 	template<typename T>
-	inline SList<T>::SList(SList const & other)
+	inline SList<T>::SList(std::initializer_list<T> iList)
+	{
+		for (auto& i : iList)
+		{
+			PushBack(i);
+		}
+	}
+
+	template<typename T>
+	inline SList<T>::SList(SList const& other)
 	{
 		*this = other;
 	}
 
 	template<typename T>
-	inline SList<T>::SList(SList && other) :
-		mFront(std::move(other.mFront)), mBack(std::move(other.mBack)), mSize(other.mSize)
+	inline SList<T>::SList(SList && other) : mFront(std::move(other.mFront)), mBack(std::move(other.mBack)), mSize(other.mSize)
 	{
 		other.mFront = nullptr;
 		other.mBack = nullptr;
@@ -30,18 +137,60 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline SList<T>::SList(std::initializer_list<T> iList)
+	inline SList<T>& SList<T>::operator=(const SList& other)
 	{
-		for (auto& i: iList)
+		if (this != &other)
 		{
-			PushBack(i);
+			Clear();
+			for (auto& i : other)
+			{
+				PushBack(i);
+			}
 		}
+		return *this;
+	}
+
+	template<typename T>
+	inline SList<T>& SList<T>::operator=(SList&& other)
+	{
+		mFront = other.mFront;
+		mBack = other.mBack;
+		mSize = other.mSize;
+
+		other.mFront = nullptr;
+		other.mBack = nullptr;
+		other.mSize = 0;
+
 	}
 
 	template<typename T>
 	inline SList<T>::~SList()
 	{
 		Clear();
+	}
+
+	template<typename T>
+	inline bool SList<T>::operator==(SList const& other) const
+	{
+		if (mSize == other.mSize)
+		{
+			ConstIterator left = cbegin(), right = other.cbegin();
+			for (; left != cend() && right != other.cend(); left++, right++)
+			{
+				if (*left != *right)
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	template<typename T>
+	inline bool SList<T>::operator!=(SList const& other) const
+	{
+		return !(*this == other);
 	}
 
 	template<typename T> typename
@@ -69,7 +218,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-	inline SList<T>::Iterator SList<T>::PushFront(T const & value)
+	inline SList<T>::Iterator SList<T>::PushFront(T const& value)
 	{
 		Node * newFront = new Node(value);
 		newFront->mNext = mFront;
@@ -110,7 +259,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-	inline SList<T>::Iterator SList<T>::PushBack(T const & value)
+	inline SList<T>::Iterator SList<T>::PushBack(T const& value)
 	{
 		Node* newBack = new Node(value);
 
@@ -225,7 +374,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-	inline SList<T>::Iterator SList<T>::InsertAfter(Iterator const & it, T const & value)
+	inline SList<T>::Iterator SList<T>::InsertAfter(Iterator const& it, T const& value)
 	{
 		if (it.mOwner != this)
 		{
@@ -246,7 +395,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-	inline SList<T>::Iterator SList<T>::Find(T const & value)
+	inline SList<T>::Iterator SList<T>::Find(T const& value)
 	{
 		Iterator indexFound = end();
 		SList<T>::Iterator it = begin();
@@ -261,7 +410,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T> typename
-	inline SList<T>::ConstIterator SList<T>::Find(T const & value) const
+	inline SList<T>::ConstIterator SList<T>::Find(T const& value) const
 	{
 		ConstIterator indexFound = cend();
 		SList<T>::ConstIterator it = cbegin();
@@ -276,14 +425,14 @@ namespace FIEAGameEngine
 	}
 
 	template<typename T>
-	inline void SList<T>::Remove(T const & value)
+	inline void SList<T>::Remove(T const& value)
 	{
 		Iterator foundIt = Find(value);
 		Remove(foundIt);
 	}
 
 	template<typename T>
-	inline void SList<T>::Remove(Iterator const & it)
+	inline void SList<T>::Remove(Iterator const& it)
 	{
 		if (it.mOwner != this)
 		{
@@ -312,153 +461,21 @@ namespace FIEAGameEngine
 		}
 	}
 
-	template<typename T>
-	inline SList<T> & SList<T>::operator=(const SList & other)
+	template <typename T>
+	void SList<T>::Reverse()
 	{
-		if (this != &other)
+		Node* previous = nullptr;
+		Node* current = mFront;
+		Node* next;
+		while (current != nullptr)
 		{
-			Clear();
-			for (auto& i : other)
-			{
-				PushBack(i);
-			}
+			next = current->mNext;
+			current->mNext = previous;
+			previous = current;
+			current = next;
 		}
-		return *this;
-	}
-
-	template<typename T>
-	inline SList<T> & SList<T>::operator=(SList && other)
-	{
-		mFront = other.mFront;
-		mBack = other.mBack;
-		mSize = other.mSize;
-		
-		other.mFront = nullptr;
-		other.mBack = nullptr;
-		other.mSize = 0;
-
-	}
-
-	template<typename T>
-	inline bool SList<T>::operator==(SList const & other) const
-	{
-		if (mSize == other.mSize)
-		{
-			ConstIterator left = cbegin(), right = other.cbegin();
-			for (; left != cend() && right != other.cend(); left++, right++)
-			{
-				if (*left != *right)
-				{
-					return false;
-				}
-			}
-			return true;
-		}
-		return false;
-	}
-
-	template<typename T>
-	inline bool SList<T>::operator!=(SList const & other) const
-	{
-		return !(*this == other);
-	}
-
-	template<typename T>
-	inline SList<T>::Node::Node(T const & data, Node * next)
-		: mData(data), mNext(next)
-	{
-	}
-
-	template<typename T> typename
-	inline SList<T>::Iterator & SList<T>::Iterator::operator++()
-	{
-		if (mNode != nullptr && mOwner != nullptr)
-		{
-			mNode = mNode->mNext;
-		}
-		return *this;
-	}
-
-	template<typename T> typename
-	inline SList<T>::Iterator SList<T>::Iterator::operator++(int)
-	{
-		Iterator iteratorBeforeIncrement = *this;
-		operator++();
-		return iteratorBeforeIncrement;
-	}
-
-	template<typename T>
-	inline bool SList<T>::Iterator::operator==(Iterator const & other) const
-	{
-		return (mOwner == other.mOwner) && (mNode == other.mNode);
-	}
-
-	template<typename T>
-	inline bool SList<T>::Iterator::operator!=(Iterator const & other) const
-	{
-		return !(*this == other);
-	}
-
-	template<typename T>
-	inline T& SList<T>::Iterator::operator*() const
-	{
-		return mNode->mData;
-	}
-
-	template<typename T>
-	inline SList<T>::Iterator::Iterator(const SList& owner, Node * node) :
-		mOwner(&owner), mNode(node)
-	{
-
-	}
-
-	template<typename T>
-	inline SList<T>::ConstIterator::ConstIterator(const Iterator & it)
-	{
-		mNode = it.mNode;
-		mOwner = it.mOwner;
-	}
-
-	template<typename T> typename
-	inline SList<T>::ConstIterator & SList<T>::ConstIterator::operator++()
-	{
-		if (mNode != nullptr && mOwner != nullptr)
-		{
-			mNode = mNode->mNext;
-		}
-		return *this;
-	}
-
-	template<typename T> typename
-	inline SList<T>::ConstIterator SList<T>::ConstIterator::operator++(int)
-	{
-		ConstIterator iteratorBeforeIncrement = *this;
-		mNode = mNode->mNext;
-		return iteratorBeforeIncrement;
-	}
-
-	template<typename T>
-	inline bool SList<T>::ConstIterator::operator==(ConstIterator const & other) const
-	{
-		return (mOwner == other.mOwner) && (mNode == other.mNode);
-	}
-
-	template<typename T>
-	inline bool SList<T>::ConstIterator::operator!=(ConstIterator const & other) const
-	{
-		return !(*this == other);
-	}
-
-	template<typename T>
-	inline T const & SList<T>::ConstIterator::operator*() const
-	{
-		return mNode->mData;
-	}
-
-	template<typename T>
-	inline SList<T>::ConstIterator::ConstIterator(const SList& owner, Node * node) :
-		mOwner(&owner), mNode(node)
-	{
-
+		Node* oldFront = mFront;
+		mFront = mBack;
+		mBack = oldFront;
 	}
 }

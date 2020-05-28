@@ -22,7 +22,7 @@ namespace FIEAGameEngine
 		/// World Constructor.
 		/// </summary>
 		/// <param name="time">GameTime of the world to be used by world state.</param>
-		explicit World(std::string const & name, GameTime * time = nullptr, EventQueue * eventQueue = nullptr);
+		explicit World(std::string const& name, GameTime * time = nullptr, EventQueue * eventQueue = nullptr);
 		
 		/// <summary>
 		/// Destructor.
@@ -34,7 +34,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="child">Scope to adopt.</param>
 		/// <param name="newChildKey">Key to place the newly adopted scope at.</param>
-		virtual void Adopt(Scope & child, std::string const & newChildKey) override;
+		virtual void Adopt(Scope & child, std::string const& newChildKey) override;
 
 		/// <summary>
 		/// Returns the name of the world.
@@ -46,7 +46,7 @@ namespace FIEAGameEngine
 		/// Sets the name of the world.
 		/// </summary>
 		/// <param name="name">The new name of the world.</param>
-		void SetName(std::string const & name);
+		void SetName(std::string const& name);
 
 		/// <summary>
 		/// Returns the sectors contained by this world.
@@ -58,7 +58,7 @@ namespace FIEAGameEngine
 		/// Returns the sectors contained by this world.
 		/// </summary>
 		/// <returns>The sectors contained by this world.</returns>
-		Datum const & Sectors() const;
+		Datum const& Sectors() const;
 
 		/// <summary>
 		/// Creates a new sector and inserts it into this world's Sectors attribute.
@@ -71,7 +71,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="name">The name of the news sector</param>
 		/// <returns>A reference to the newly created sector.</returns>
-		Sector & CreateSector(std::string const & name);
+		Sector & CreateSector(std::string const& name);
 
 		/// <summary>
 		/// Calls the update call of the actions contained by the world.

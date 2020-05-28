@@ -9,9 +9,9 @@ namespace FIEAGameEngine
 	template <typename T>
 	struct DefaultHashFunctor
 	{
-		size_t operator() (T const & key) const
+		size_t operator() (T const& key) const
 		{
-			uint8_t const * byteArray = reinterpret_cast<uint8_t const *>(&key);
+			uint8_t const* byteArray = reinterpret_cast<uint8_t const*>(&key);
 			return AdditiveHash(byteArray, sizeof(T));
 		}
 	};
@@ -19,9 +19,9 @@ namespace FIEAGameEngine
 	template<>
 	struct DefaultHashFunctor<std::string>
 	{
-		size_t operator() (std::string const & key) const
+		size_t operator() (std::string const& key) const
 		{
-			uint8_t const * byteArray = reinterpret_cast<uint8_t const *>(key.c_str());
+			uint8_t const* byteArray = reinterpret_cast<uint8_t const*>(key.c_str());
 			return AdditiveHash(byteArray,key.size());
 		}
 	};
@@ -29,9 +29,9 @@ namespace FIEAGameEngine
 	template<>
 	struct DefaultHashFunctor<const std::string>
 	{
-		size_t operator() (std::string const & key) const
+		size_t operator() (std::string const& key) const
 		{
-			uint8_t const * byteArray = reinterpret_cast<uint8_t const *>(key.c_str());
+			uint8_t const* byteArray = reinterpret_cast<uint8_t const*>(key.c_str());
 			return AdditiveHash(byteArray,key.size());
 		}
 	};
@@ -39,9 +39,9 @@ namespace FIEAGameEngine
 	template<>
 	struct DefaultHashFunctor<char*>
 	{
-		size_t operator() (char* const & key) const
+		size_t operator() (char* const& key) const
 		{
-			uint8_t const * byteArray = reinterpret_cast<uint8_t const *>(key);
+			uint8_t const* byteArray = reinterpret_cast<uint8_t const*>(key);
 			return AdditiveHash(byteArray, strlen(key));
 		}
 	};
@@ -49,9 +49,9 @@ namespace FIEAGameEngine
 	template<>
 	struct DefaultHashFunctor<const char*>
 	{
-		size_t operator() (char* const & key) const
+		size_t operator() (char* const& key) const
 		{
-			uint8_t const * byteArray = reinterpret_cast<uint8_t const *>(key);
+			uint8_t const* byteArray = reinterpret_cast<uint8_t const*>(key);
 			return AdditiveHash(byteArray, strlen(key));
 		}
 	};

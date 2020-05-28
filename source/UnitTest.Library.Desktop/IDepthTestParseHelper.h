@@ -61,9 +61,9 @@ namespace FIEAGameEngine
 
 		virtual void Initialize() override;
 
-		virtual bool StartHandler(JsonParseMaster::SharedData  * const sharedData, std::string const & key, Json::Value const & jsonValue, bool const & isArray, size_t const & index);
+		virtual bool StartHandler(JsonParseMaster::SharedData  * const sharedData, std::string const& key, Json::Value const& jsonValue, bool const& isArray, size_t const& index);
 
-		virtual bool EndHandler(JsonParseMaster::SharedData * const sharedData, std::string const & key)  override;
+		virtual bool EndHandler(JsonParseMaster::SharedData * const sharedData, std::string const& key)  override;
 
 	private:
 

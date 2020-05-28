@@ -12,7 +12,7 @@ namespace FIEAGameEngine
 	RTTI_DEFINITIONS(ActionEvent)
 
 
-	ActionEvent::ActionEvent(std::string const & name, int const & delay) : Action(ActionEvent::TypeIdClass(), name), mDelay(delay)
+	ActionEvent::ActionEvent(std::string const& name, int const& delay) : Action(ActionEvent::TypeIdClass(), name), mDelay(delay)
 	{
 	}
 

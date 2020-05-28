@@ -22,7 +22,7 @@ namespace FIEAGameEngine
 		/// Copy constructor.
 		/// </summary>
 		/// <param name="other">The event publisher we are creating a copy of.</param>
-		EventPublisher(EventPublisher const & other) = default;
+		EventPublisher(EventPublisher const& other) = default;
 
 		/// <summary>
 		/// Move constructor.
@@ -36,7 +36,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">The event publisher on the right hand side of the expression we are setting our event publisher equal to.</param>
 		/// <returns>A reference to the event publisher on the left hand side of the operator.</returns>
-		EventPublisher& operator=(EventPublisher const & other) = default;
+		EventPublisher& operator=(EventPublisher const& other) = default;
 
 		/// <summary>
 		/// Move Assignment operator

@@ -22,6 +22,8 @@ namespace FIEAGameEngine
 
 		using Iterator = ConditionalType<AreSameClass<KeyType, ValueType>, TreeConstIterator, TreeIterator>;
 		using ConstIterator = TreeConstIterator;
+
+		static constexpr bool bIsMulti = TreeTraits::bIsMulti;
 		
 	private:
 		enum class Color : unsigned char
@@ -230,14 +232,14 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		Iterator Find(ValueType const& key);
+		Iterator Find(KeyType const& key);
 		
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		ConstIterator Find(ValueType const& key) const;
+		ConstIterator Find(KeyType const& key) const;
 
 		/// <summary>
 		/// TODO: Test
@@ -245,48 +247,48 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		Iterator LowerBound(ValueType const& key);
+		Iterator LowerBound(KeyType const& key);
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		ConstIterator LowerBound(ValueType const& key) const;
+		ConstIterator LowerBound(KeyType const& key) const;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		Iterator UpperBound(ValueType const& key);
+		Iterator UpperBound(KeyType const& key);
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		ConstIterator UpperBound(ValueType const& key) const;
+		ConstIterator UpperBound(KeyType const& key) const;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		std::pair<Iterator, Iterator> EqualRange(ValueType const& key);
+		std::pair<Iterator, Iterator> EqualRange(KeyType const& key);
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		std::pair <ConstIterator, ConstIterator> EqualRange(ValueType const& key) const;
+		std::pair <ConstIterator, ConstIterator> EqualRange(KeyType const& key) const;
 		
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="key"></param>
-		void Remove(ValueType const& key);
+		void Remove(KeyType const& key);
 
 		/// <summary>
 		/// 
@@ -324,11 +326,11 @@ namespace FIEAGameEngine
 		/// <param name="subtreeRoot"></param>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		RedBlackNode* Search(RedBlackNode* subtreeRoot, ValueType const& key) const;
+		RedBlackNode* Search(RedBlackNode* subtreeRoot, KeyType const& key) const;
 
-		RedBlackNode* LowerBound(RedBlackNode* subtreeRoot, ValueType const& key) const;
+		RedBlackNode* LowerBound(RedBlackNode* subtreeRoot, KeyType const& key) const;
 
-		RedBlackNode* UpperBound(RedBlackNode* subtreeRoot, ValueType const& key) const;
+		RedBlackNode* UpperBound(RedBlackNode* subtreeRoot, KeyType const& key) const;
 		
 		/// <summary>
 		/// 
@@ -349,7 +351,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="subtreeRoot"></param>
 		/// <param name="key"></param>
-		void Remove(RedBlackNode* subtreeRoot, ValueType const& key);
+		void Remove(RedBlackNode* subtreeRoot, KeyType const& key);
 		
 		/// <summary>
 		/// 

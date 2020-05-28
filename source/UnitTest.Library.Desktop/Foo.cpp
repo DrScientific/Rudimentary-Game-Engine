@@ -46,7 +46,7 @@ namespace UnitTests
 		return !operator==(rhs);
 	}
 
-	bool Foo::Equals(RTTI const * rhs) const
+	bool Foo::Equals(RTTI const* rhs) const
 	{
 		Foo* other = rhs->As<Foo>();
 		return (other != nullptr ? *this == *other : false);

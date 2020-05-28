@@ -8,17 +8,17 @@ namespace FIEAGameEngine
 {
 	RTTI_DEFINITIONS(ActionList)
 
-	ActionList::ActionList(std::string const & name) : Action(ActionList::TypeIdClass(), name)
+	ActionList::ActionList(std::string const& name) : Action(ActionList::TypeIdClass(), name)
 	{
 
 	}
 
-	ActionList::ActionList(RTTI::IdType typeId, string const & name) : Action(typeId, name)
+	ActionList::ActionList(RTTI::IdType typeId, string const& name) : Action(typeId, name)
 	{
 
 	}
 
-	void ActionList::Adopt(Scope & child, std::string const & newChildKey)
+	void ActionList::Adopt(Scope & child, std::string const& newChildKey)
 	{
 		if (newChildKey == mActionsKey && !child.Is(Action::TypeIdClass()))
 		{
@@ -32,7 +32,7 @@ namespace FIEAGameEngine
 		return operator[](mActionsIndex);
 	}
 
-	Datum const & ActionList::Actions() const
+	Datum const& ActionList::Actions() const
 	{
 		return operator[](mActionsIndex);
 	}

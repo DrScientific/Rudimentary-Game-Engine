@@ -20,19 +20,19 @@ namespace FIEAGameEngine
 		/// Concrete Event Constructor
 		/// </summary>
 		/// <param name="message">The payload of the event.</param>
-		Event(T const & message);
+		Event(T const& message);
 
 		/// <summary>
 		/// Concrete Event Move Constructor
 		/// </summary>
 		/// <param name="message">The payload of the event.</param>
-		Event(T const && message = T());
+		Event(T const&& message = T());
 
 		/// <summary>
 		/// Copy constructor.
 		/// </summary>
 		/// <param name="other">The event we are creating a copy of.</param>
-		Event(Event const & other) = default;
+		Event(Event const& other) = default;
 
 		/// <summary>
 		/// Move constructor.
@@ -45,7 +45,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">The event on the right hand side of the expression we are setting our event equal to.</param>
 		/// <returns>A reference to the event on the left hand side of the operator.</returns>
-		Event& operator=(Event const & other) = default;
+		Event& operator=(Event const& other) = default;
 
 		/// <summary>
 		/// Move Assignment operator
@@ -86,7 +86,7 @@ namespace FIEAGameEngine
 		/// Returns the message stored by the event.
 		/// </summary>
 		/// <returns></returns>
-		T const & GetMessage() const;
+		T const& GetMessage() const;
 
 		/// <summary>
 		/// RTTI to string override. Returns "Event".

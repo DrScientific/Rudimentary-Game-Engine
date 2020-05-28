@@ -11,12 +11,12 @@ namespace FIEAGameEngine
 	RTTI_DEFINITIONS(Sector)
 
 
-	Sector::Sector(string const & name) : Attributed(Sector::TypeIdClass())
+	Sector::Sector(string const& name) : Attributed(Sector::TypeIdClass())
 	{
 		mName = name;
 	}
 
-	void Sector::Adopt(Scope & child, std::string const & newChildKey)
+	void Sector::Adopt(Scope & child, std::string const& newChildKey)
 	{
 		if (newChildKey == mEntitiesKey && !child.Is(Entity::TypeIdClass()))
 		{
@@ -30,12 +30,12 @@ namespace FIEAGameEngine
 		return mName;
 	}
 
-	void Sector::SetName(std::string const & name)
+	void Sector::SetName(std::string const& name)
 	{
 		mName = name;
 	}
 
-	World const * Sector::GetWorld() const
+	World const* Sector::GetWorld() const
 	{
 		World * worldPtr = nullptr;
 		if (mParent != nullptr)
@@ -62,7 +62,7 @@ namespace FIEAGameEngine
 		return mIsAwake ? true : false;
 	}
 
-	void Sector::SetIsAwake(bool const & awake)
+	void Sector::SetIsAwake(bool const& awake)
 	{
 		awake ? mIsAwake = 1 : mIsAwake = 0;
 	}
@@ -82,7 +82,7 @@ namespace FIEAGameEngine
 		return operator[](mEntitiesIndex);
 	}
 
-	Datum const & Sector::Entities() const
+	Datum const& Sector::Entities() const
 	{
 		return operator[](mEntitiesIndex);
 	}

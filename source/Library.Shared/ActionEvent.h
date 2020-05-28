@@ -21,7 +21,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="name">Action Event Name</param>
 		/// <param name="delay">Action Event </param>
-		ActionEvent(std::string const & name = std::string(), int const & delay = 0);
+		ActionEvent(std::string const& name = std::string(), int const& delay = 0);
 		
 		/// <summary>
 		/// Destructor

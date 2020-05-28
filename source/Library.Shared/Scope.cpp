@@ -14,13 +14,13 @@ namespace FIEAGameEngine
 	RTTI_DEFINITIONS(Scope);
 
 
-	Scope::Scope(Scope* const parent, size_t const & hashMapSize) :
+	Scope::Scope(Scope* const parent, size_t const& hashMapSize) :
 		mHashMap(hashMapSize), mParent(parent)
 	{
 
 	}
 
-	FIEAGameEngine::Scope::Scope(Scope const & other)
+	FIEAGameEngine::Scope::Scope(Scope const& other)
 	{
 		*this = other;
 	}
@@ -37,7 +37,7 @@ namespace FIEAGameEngine
 		Clear();
 	}
 
-	Scope & FIEAGameEngine::Scope::operator=(Scope const & other)
+	Scope & FIEAGameEngine::Scope::operator=(Scope const& other)
 	{
 		if (this != &other)
 		{
@@ -85,7 +85,7 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	Datum * Scope::Find(string const & key)
+	Datum * Scope::Find(string const& key)
 	{
 		if (!key.size())
 		{
@@ -100,13 +100,13 @@ namespace FIEAGameEngine
 		return result;
 	}
 
-	Datum const * Scope::Find(string const & key) const
+	Datum const* Scope::Find(string const& key) const
 	{
 		if (!key.size())
 		{
 			throw exception(scopeCannotHaveEmptyKeyExceptionText.c_str());
 		}
-		Datum const * result = nullptr;
+		Datum const* result = nullptr;
 		DatumMap::ConstIterator searchedPairIt = mHashMap.Find(key);
 		if (searchedPairIt != mHashMap.end())
 		{
@@ -115,7 +115,7 @@ namespace FIEAGameEngine
 		return result;
 	}
 
-	Datum * Scope::Search(string const & key, Scope ** scopeAddress)
+	Datum * Scope::Search(string const& key, Scope ** scopeAddress)
 	{
 		if (!key.size())
 		{
@@ -140,7 +140,7 @@ namespace FIEAGameEngine
 		return result;
 	}
 
-	Datum const * Scope::Search(string const& key, Scope const** scopeAddress) const
+	Datum const* Scope::Search(string const& key, Scope const** scopeAddress) const
 	{
 		if (!key.size())
 		{
@@ -165,7 +165,7 @@ namespace FIEAGameEngine
 		return result;
 	}
 
-	Scope * Scope::NameSearch(string const & name, string const & tableName)
+	Scope * Scope::NameSearch(string const& name, string const& tableName)
 	{
 		Scope* scopeToStartSearchFrom = this;
 		Scope** scopeNameFoundIn = &scopeToStartSearchFrom;
@@ -188,7 +188,7 @@ namespace FIEAGameEngine
 		return nullptr;
 	}
 
-	Datum & Scope::Append(string const & key)
+	Datum & Scope::Append(string const& key)
 	{
 		if (!key.size())
 		{
@@ -202,14 +202,14 @@ namespace FIEAGameEngine
 		return keyIterator->second;
 	}
 
-	Scope & Scope::AppendScope(string const & key)
+	Scope & Scope::AppendScope(string const& key)
 	{
 		Datum* appendedDatum = &Append(key);
 		appendedDatum->SetType(Datum::DatumType::Scope);
 		return *(appendedDatum->PushBack(*(new Scope(this))));
 	}
 
-	void FIEAGameEngine::Scope::Adopt(Scope & childToAdopt, string const & newChildKey)
+	void FIEAGameEngine::Scope::Adopt(Scope & childToAdopt, string const& newChildKey)
 	{
 		if (this != &childToAdopt)
 		{
@@ -232,7 +232,7 @@ namespace FIEAGameEngine
 		return mParent;
 	}
 
-	Datum & Scope::operator[](string const & key)
+	Datum & Scope::operator[](string const& key)
 	{
 		return Append(key);
 	}
@@ -246,7 +246,7 @@ namespace FIEAGameEngine
 		return mVector[index]->second;
 	}
 
-	Datum const & Scope::operator[](size_t const index) const
+	Datum const& Scope::operator[](size_t const index) const
 	{
 		if (index >= mVector.Size())
 		{
@@ -255,7 +255,7 @@ namespace FIEAGameEngine
 		return mVector[index]->second;
 	}
 
-	bool FIEAGameEngine::Scope::operator==(Scope const & other) const
+	bool FIEAGameEngine::Scope::operator==(Scope const& other) const
 	{
 		bool result = true;
 		if(this != &other)
@@ -278,7 +278,7 @@ namespace FIEAGameEngine
 		return result;
 	}
 
-	bool FIEAGameEngine::Scope::operator!=(Scope const & other) const
+	bool FIEAGameEngine::Scope::operator!=(Scope const& other) const
 	{
 		return !(*this == other);
 	}
@@ -303,7 +303,7 @@ namespace FIEAGameEngine
 		return "";
 	}
 
-	bool FIEAGameEngine::Scope::HasAncestor(Scope const & scope) const
+	bool FIEAGameEngine::Scope::HasAncestor(Scope const& scope) const
 	{
 		bool result = false;
 		if (mParent == &scope)
@@ -317,7 +317,7 @@ namespace FIEAGameEngine
 		return result;
 	}
 
-	pair<Datum*, size_t> FIEAGameEngine::Scope::FindNestedScope(Scope const & searchedScope)
+	pair<Datum*, size_t> FIEAGameEngine::Scope::FindNestedScope(Scope const& searchedScope)
 	{
 		if (searchedScope.mParent == this)
 		{

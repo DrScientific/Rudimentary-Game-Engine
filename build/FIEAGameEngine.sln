@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.168
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Library.Shared", "..\source\Library.Shared\Library.Shared.vcxitems", "{EAE1354A-BDE4-4DFC-A68D-822FCD305CB2}"
 EndProject
@@ -19,6 +19,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game.OpenGL.Desktop", "..\source\Game.OpenGL.Desktop\Game.OpenGL.Desktop.vcxproj", "{7190E1A4-7E21-4D77-90CD-53AD989FCE71}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game.Shared", "..\source\Game.Shared\Game.Shared.vcxitems", "{91F6CFFC-FF0D-41E9-8780-F0C1273ED3C8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameEngine", "GameEngine", "{492772DE-F388-4CAB-A888-D1FCA411CE41}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -70,6 +72,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EAE1354A-BDE4-4DFC-A68D-822FCD305CB2} = {492772DE-F388-4CAB-A888-D1FCA411CE41}
+		{A94509E8-B84D-48B2-9EB1-D5D737A35F27} = {492772DE-F388-4CAB-A888-D1FCA411CE41}
+		{9DDE27F4-7D32-469A-AEED-C0A89BD4D6A6} = {492772DE-F388-4CAB-A888-D1FCA411CE41}
+		{B8D89E54-E1BB-4312-BAC2-70FC5E9F181C} = {492772DE-F388-4CAB-A888-D1FCA411CE41}
+		{7190E1A4-7E21-4D77-90CD-53AD989FCE71} = {492772DE-F388-4CAB-A888-D1FCA411CE41}
+		{91F6CFFC-FF0D-41E9-8780-F0C1273ED3C8} = {492772DE-F388-4CAB-A888-D1FCA411CE41}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {344F280D-85D1-4D5F-AE0B-02B5DAE9EC36}

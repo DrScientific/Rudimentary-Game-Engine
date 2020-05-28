@@ -48,13 +48,13 @@ namespace FIEAGameEngine
 		/// Attributed copy constructor
 		/// </summary>
 		/// <param name="other">Object we wish to construct a copy from.</param>
-		Attributed(Attributed const & other);
+		Attributed(Attributed const& other);
 
 		/// <summary>
 		/// Assignment operator
 		/// </summary>
 		/// <returns>Object we are setting this equal to.</returns>
-		Attributed & operator=(Attributed const & other);
+		Attributed & operator=(Attributed const& other);
 
 		/// <summary>
 		/// Attributed move constructor
@@ -80,28 +80,28 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="name">Key to search scope for.</param>
 		/// <returns>Whether the given key is in the attributed object.</returns>
-		bool IsAttribute(std::string const & name) const;
+		bool IsAttribute(std::string const& name) const;
 
 		/// <summary>
 		/// Returns whether a given key (string) is a prescribed attribute of the attributed object.
 		/// </summary>
 		/// <param name="name">Key to search scope for.</param>
 		/// <returns>Whether the given key is in the prescibed attributes of the attributed object.</returns>
-		bool IsPrescribedAttribute(std::string const & name) const;
+		bool IsPrescribedAttribute(std::string const& name) const;
 
 		/// <summary>
 		/// Returns whether a given key (string) is an auxiliary attribute of the attributed object.
 		/// </summary>
 		/// <param name="name">Key to search scope for.</param>
 		/// <returns>Whether the given key is in the auxiliary attributes of the attributed object.</returns>
-		bool IsAuxiliaryAttribute(std::string const & name) const;
+		bool IsAuxiliaryAttribute(std::string const& name) const;
 
 		/// <summary>
 		/// Append a default constructed datum to the attributed object at the given key (string).
 		/// </summary>
 		/// <param name="name">Key to place new datum at.</param>
 		/// <returns>A reference to the newly constructed datum at the given key.</returns>
-		Datum & AppendAuxiliaryAttribute(std::string const & name);
+		Datum & AppendAuxiliaryAttribute(std::string const& name);
 
 
 		/// <summary>
@@ -110,13 +110,13 @@ namespace FIEAGameEngine
 		/// <param name="name">Key to place new datum at.</param>
 		/// <param name="value">The datum we wish to place a copy of at the given key.</param>
 		/// <returns>A reference to the newly constructed datum at the given key.</returns>
-		Datum & AppendAuxiliaryAttribute(std::string const & name, Datum const & value);
+		Datum & AppendAuxiliaryAttribute(std::string const& name, Datum const& value);
 
 		/// <summary>
 		/// Returns all attributes of the attributed object.
 		/// </summary>
 		/// <returns>A vector of pointers to each key datum pair in the attributes of the attributed object.</returns>
-		Vector<PairType*> const & Attributes();
+		Vector<PairType*> const& Attributes();
 
 		/// <summary>
 		/// Returns all prescribed attributes of the attributed object.

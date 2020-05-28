@@ -39,7 +39,7 @@ namespace FIEAGameEngine
 			/// Default copy constructor for Iterator
 			/// </summary>
 			/// <param name="">Iterator to copy</param>
-			Iterator(Iterator const &) = default;
+			Iterator(Iterator const&) = default;
 
 			/// <summary>
 			/// Default assignment operator for Iterator
@@ -67,14 +67,14 @@ namespace FIEAGameEngine
 			/// </summary>
 			/// <param name="other">Iterator to compare with.</param>
 			/// <returns>Whether the Iterators are equal.</returns>
-			bool operator==(Iterator const & other) const;
+			bool operator==(Iterator const& other) const;
 
 			/// <summary>
 			/// Checks that two Iterators are not equal.
 			/// </summary>
 			/// <param name="other">Iterator to compare with.</param>
 			/// <returns>Whether the Iterators are not equal.</returns>
-			bool operator!=(Iterator const & other) const;
+			bool operator!=(Iterator const& other) const;
 
 			/// <summary>
 			/// Dereferences the Iterator.
@@ -95,7 +95,7 @@ namespace FIEAGameEngine
 			/// </summary>
 			/// <param name="owner">List owning the cIterator.</param>
 			/// <param name="index">Index in array iterator will point to.</param>
-			Iterator(HashMap const & owner, size_t index = 0, typename ChainType::Iterator listIt = owner.mBucketVector[index].begin());
+			Iterator(HashMap const& owner, size_t index = 0, typename ChainType::Iterator listIt = owner.mBucketVector[index].begin());
 
 			/// <summary>
 			/// The list that owns the Iterator.
@@ -148,7 +148,7 @@ namespace FIEAGameEngine
 			/// Constructs a ConstIterator from an Iterator.
 			/// </summary>
 			/// <param name="it">Iterator to create ConstIterator from</param>
-			ConstIterator(Iterator const & it);
+			ConstIterator(Iterator const& it);
 
 			/// <summary>
 			/// Assigns an ConstIterator to an Iterator assignment operator for ConstIterator
@@ -171,26 +171,26 @@ namespace FIEAGameEngine
 			/// </summary>
 			/// <param name="other">ConstIterator to compare with.</param>
 			/// <returns>Whether the const_Iterators are equal.</returns>
-			bool operator==(ConstIterator const & other) const;
+			bool operator==(ConstIterator const& other) const;
 
 			/// <summary>
 			/// Checks that two const_Iterators are not equal.
 			/// </summary>
 			/// <param name="other">ConstIterator to compare with.</param>
 			/// <returns>Whether the const_Iterators are not equal.</returns>
-			bool operator!=(ConstIterator const & other) const;
+			bool operator!=(ConstIterator const& other) const;
 
 			/// <summary>
 			/// Dereferences the ConstIterator.
 			/// </summary>
 			/// <returns>The const data pointed to by the ConstIterator.</returns>
-			PairType const & operator*() const;
+			PairType const& operator*() const;
 
 			/// <summary>
 			/// Returns the address of the dereferenced ConstIterator.
 			/// </summary>
 			/// <returns>The address of the data pointed to by the ConstIterator.</returns>
-			PairType const * operator->() const;
+			PairType const* operator->() const;
 
 		private:
 			/// <summary>
@@ -198,7 +198,7 @@ namespace FIEAGameEngine
 			/// </summary>
 			/// <param name="owner">List owning the ConstIterator.</param>
 			/// <param name="data">Data pointed to by the ConstIterator.</param>
-			ConstIterator(HashMap const & owner, size_t index = 0, typename ChainType::ConstIterator listIt = owner.mBucketVector[index].cbegin());
+			ConstIterator(HashMap const& owner, size_t index = 0, typename ChainType::ConstIterator listIt = owner.mBucketVector[index].cbegin());
 
 			/// <summary>
 			/// The list that owns the Iterator.
@@ -221,7 +221,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
-		explicit HashMap(size_t const & numBuckets = 256);
+		explicit HashMap(size_t const& numBuckets = 256);
 
 		/// <summary>
 		/// Initializer list constructor.
@@ -236,7 +236,7 @@ namespace FIEAGameEngine
 		/// Calls the assignment operator in order to deep copy the other list.
 		/// </summary>
 		/// <param name="other">The HashMap we are creating a deep copy of.</param>
-		HashMap(HashMap const & other) = default;
+		HashMap(HashMap const& other) = default;
 
 		/// <summary>
 		/// Move constructor.
@@ -250,7 +250,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">The list on the right hand side of the expression we are setting our HashMap equal to.</param>
 		/// <returns>A reference to the HashMap on the left hand side of the operator.</returns>
-		HashMap& operator=(HashMap const & other) = default;
+		HashMap& operator=(HashMap const& other) = default;
 
 		/// <summary>
 		/// Move Assignment Operator.
@@ -308,21 +308,21 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="key">The key to search the HashMap for.</param>
 		/// <returns>An Iterator to the data at the corresponding key if it exists. Otherwise returns an Iterator with a null owner.</returns>
-		Iterator Find(TKey const & key);
+		Iterator Find(TKey const& key);
 
 		/// <summary>
 		/// Returns a ConstIterator to the data at the corresponding key if it exists. Otherwise returns a ConstIterator with a null owner.
 		/// </summary>
 		/// <param name="key">The key to search the HashMap for.</param>
 		/// <returns>An const_terator to the data at the corresponding key if it exists. Otherwise returns an ConstIterator with a null owner.</returns>
-		ConstIterator Find(TKey const & key) const;
+		ConstIterator Find(TKey const& key) const;
 
 		/// <summary>
 		/// Inserts the pair at the index mapped to by the hashed key. If the pair already exists then an Iterator to the pair is returned.
 		/// </summary>
 		/// <param name="keyDataPair">A key-data pair which will hash key to find an empty index and store the key-data pair at that location. </param>
 		/// <returns>An Iterator to the inserted key-data pair.</returns>
-		std::pair <bool, Iterator> Insert(PairType const & keyDataPair);
+		std::pair <bool, Iterator> Insert(PairType const& keyDataPair);
 
 		/// <summary>
 		/// Inserts the pair at the index mapped to by the hashed key. If the pair already exists then an Iterator to the pair is returned.
@@ -330,48 +330,48 @@ namespace FIEAGameEngine
 		/// <param name="key">A key which will be hashed to find an empty index and store the key-data pair at that location.</param>
 		/// <param name="data">Data to store at the hashed key index.</param>
 		/// <returns>An Iterator to the inserted key-data pair.</returns>
-		std::pair <bool, Iterator>  Insert(TKey const & key, TData const & data);
+		std::pair <bool, Iterator>  Insert(TKey const& key, TData const& data);
 
 		/// <summary>
 		/// Returns the data stored in the key-data pair stored in the HashMap at the passed in key. If no key-data pair exists inserts a key-data pair into the HashMap where the key is th passed in key and the data is the default constructor of the data type.
 		/// </summary>
 		/// <param name="key">The key to search the HashMap for.</param>
 		/// <returns>The data stored in the key-data pair stored in the HashMap at the passed in key. If no key-data pair exists inserts a key-data pair into the HashMap where the key is th passed in key and the data is the default constructor of the data type.</returns>
-		TData & operator[] (TKey const & key);
+		TData & operator[] (TKey const& key);
 
 		/// <summary>
 		/// Returns the data stored in the key-data pair stored in the HashMap at the passed in key. If no key-data pair throw an exception
 		/// </summary>
 		/// <param name="key">The key to search the HashMap for.</param>
 		/// <returns>The data stored in the key-data pair stored in the HashMap at the passed in key. If no key-data pair throw an exception</returns>
-		TData & At(TKey const & key);
+		TData & At(TKey const& key);
 
 		/// <summary>
 		/// Returns a const reference to data stored in the key-data pair stored in the HashMap at the passed in key. If no key-data pair throw an exception
 		/// </summary>
 		/// <param name="key">The key to search the HashMap for.</param>
 		/// <returns>A const reference to data stored in the key-data pair stored in the HashMap at the passed in key. If no key-data pair throw an exception</returns>
-		TData const & At(TKey const & key) const;
+		TData const& At(TKey const& key) const;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="other"></param>
 		/// <returns></returns>
-		bool operator==(HashMap const & other) const;
+		bool operator==(HashMap const& other) const;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="other"></param>
 		/// <returns></returns>
-		bool operator!=(HashMap const & other) const;
+		bool operator!=(HashMap const& other) const;
 
 		/// <summary>
 		/// Removes the key-data pair stored at the index mapped to by the hashed key. If the key-data pair is not in the HashMap do nothing.
 		/// </summary>
 		/// <param name="key">The key to search the HashMap for.</param>
-		void Remove(TKey const & key);
+		void Remove(TKey const& key);
 
 		/// <summary>
 		/// Removes any vlaues in any buckets
@@ -402,7 +402,7 @@ namespace FIEAGameEngine
 		/// <param name="key">The key we are searching for within the HashMap.</param>
 		/// <param name="data">Out param of value at key.</param>
 		/// <returns>True if the key is in the HashMap and false otherwise.</returns>
-		std::pair<bool, TData*> ContainsKey(TKey const & key) const;
+		std::pair<bool, TData*> ContainsKey(TKey const& key) const;
 
 
 	private:
@@ -428,7 +428,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		size_t HashKey(TKey const & key) const;
+		size_t HashKey(TKey const& key) const;
 
 		/// <summary>
 		/// 

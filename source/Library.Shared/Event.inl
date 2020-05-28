@@ -15,13 +15,13 @@ namespace FIEAGameEngine
 	RTTI_DEFINITIONS(Event<T>);
 
 	template<typename T>
-	inline Event<T>::Event(T const & message) : EventPublisher(&mSubscribers, &mMutex), mMessage(message)
+	inline Event<T>::Event(T const& message) : EventPublisher(&mSubscribers, &mMutex), mMessage(message)
 	{
 
 	}
 
 	template<typename T>
-	inline Event<T>::Event(T const && message) : EventPublisher(&mSubscribers, &mMutex), mMessage(message)
+	inline Event<T>::Event(T const&& message) : EventPublisher(&mSubscribers, &mMutex), mMessage(message)
 	{
 	}
 
@@ -56,7 +56,7 @@ namespace FIEAGameEngine
 	
 
 	template<typename T>
-	inline T const & Event<T>::GetMessage() const
+	inline T const& Event<T>::GetMessage() const
 	{
 		lock_guard<recursive_mutex> lock(mMutex);
 		return mMessage;

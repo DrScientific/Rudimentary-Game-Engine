@@ -12,19 +12,19 @@ namespace FIEAGameEngine
 	{
 	public:
 		TypeManager() = delete;
-		TypeManager(TypeManager const &) = delete;
+		TypeManager(TypeManager const&) = delete;
 		TypeManager(TypeManager &&) = delete;
 		TypeManager& operator=(TypeManager const&) = delete;
 		TypeManager operator=(TypeManager &&) = delete;
 		~TypeManager() = default;
 
-		static void RegisterType(RTTI::IdType id, Vector <Attributed::Signature> const & signatures, RTTI::IdType parentId);
+		static void RegisterType(RTTI::IdType id, Vector <Attributed::Signature> const& signatures, RTTI::IdType parentId);
 		static void RegisterType(RTTI::IdType id, Vector <Attributed::Signature> && signatures, RTTI::IdType parentId);
 		static void UnregisterType(RTTI::IdType id);
 		static Vector<Attributed::Signature> GetSignatures(RTTI::IdType id);
 		
 		//See comment above SignaturesMap at end of file.
-		//static Vector<Attributed::Signature> const & GetSignatures(RTTI::IdType id);
+		//static Vector<Attributed::Signature> const& GetSignatures(RTTI::IdType id);
 
 		static size_t GetSignatureCount(RTTI::IdType id);
 		static std::pair<bool, RTTI::IdType> FindParentId(RTTI::IdType id);
@@ -38,7 +38,7 @@ namespace FIEAGameEngine
 
 		struct TypeRegistryEntry final
 		{
-			TypeRegistryEntry(Vector<Attributed::Signature> const & signatures, RTTI::IdType parentId);
+			TypeRegistryEntry(Vector<Attributed::Signature> const& signatures, RTTI::IdType parentId);
 			TypeRegistryEntry(Vector<Attributed::Signature>&& signatures, RTTI::IdType parentId);
 
 			Vector<Attributed::Signature> const Signatures;

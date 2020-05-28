@@ -7,7 +7,7 @@ namespace FIEAGameEngine
 {
 	RTTI_DEFINITIONS(ActionListWhile);
 
-	ActionListWhile::ActionListWhile(std::string const & name) : ActionList(ActionListWhile::TypeIdClass(), name)
+	ActionListWhile::ActionListWhile(std::string const& name) : ActionList(ActionListWhile::TypeIdClass(), name)
 	{
 	}
 

@@ -45,7 +45,7 @@ namespace FIEAGameEngine
 			/// Default copy constructor for Iterator
 			/// </summary>
 			/// <param name="">Iterator to copy</param>
-			Iterator(Iterator const &) = default;
+			Iterator(Iterator const&) = default;
 
 			/// <summary>
 			/// Default assignment operator for Iterator
@@ -84,14 +84,14 @@ namespace FIEAGameEngine
 			/// </summary>
 			/// <param name="other">Iterator to compare with.</param>
 			/// <returns>Whether the Iterators are equal.</returns>
-			bool operator==(Iterator const & other) const;
+			bool operator==(Iterator const& other) const;
 
 			/// <summary>
 			/// Checks that two Iterators are not equal.
 			/// </summary>
 			/// <param name="other">Iterator to compare with.</param>
 			/// <returns>Whether the Iterators are not equal.</returns>
-			bool operator!=(Iterator const & other) const;
+			bool operator!=(Iterator const& other) const;
 
 			/// <summary>
 			/// Dereferences the Iterator.
@@ -106,12 +106,12 @@ namespace FIEAGameEngine
 			/// </summary>
 			/// <param name="owner">List owning the cIterator.</param>
 			/// <param name="index">Index in array iterator will point to.</param>
-			Iterator(Vector const & owner, size_t index = 0);
+			Iterator(Vector const& owner, size_t index = 0);
 
 			/// <summary>
 			/// The list that owns the Iterator.
 			/// </summary>
-			Vector const * mOwner = nullptr;
+			Vector const* mOwner = nullptr;
 
 			/// <summary>
 			/// Index relative to start of array where value is stored.
@@ -195,20 +195,20 @@ namespace FIEAGameEngine
 			/// </summary>
 			/// <param name="other">ConstIterator to compare with.</param>
 			/// <returns>Whether the const_Iterators are equal.</returns>
-			bool operator==(ConstIterator const & other) const;
+			bool operator==(ConstIterator const& other) const;
 
 			/// <summary>
 			/// Checks that two const_Iterators are not equal.
 			/// </summary>
 			/// <param name="other">ConstIterator to compare with.</param>
 			/// <returns>Whether the const_Iterators are not equal.</returns>
-			bool operator!=(ConstIterator const & other) const;
+			bool operator!=(ConstIterator const& other) const;
 
 			/// <summary>
 			/// Dereferences the ConstIterator.
 			/// </summary>
 			/// <returns>The const data pointed to by the ConstIterator.</returns>
-			T const & operator*() const;
+			T const& operator*() const;
 
 		private:
 			/// <summary>
@@ -216,12 +216,12 @@ namespace FIEAGameEngine
 			/// </summary>
 			/// <param name="owner">List owning the ConstIterator.</param>
 			/// <param name="data">Data pointed to by the ConstIterator.</param>
-			ConstIterator(Vector const & owner, size_t index = 0);
+			ConstIterator(Vector const& owner, size_t index = 0);
 
 			/// <summary>
 			/// The list that owns the Iterator.
 			/// </summary>
-			Vector const * mOwner = nullptr;
+			Vector const* mOwner = nullptr;
 
 			/// <summary>
 			/// Index relative to start of array where value is stored.
@@ -242,7 +242,7 @@ namespace FIEAGameEngine
 		/// Calls the assignment operator in order to deep copy the other list.
 		/// </summary>
 		/// <param name="other">The list we are creating a deep copy of.</param>
-		Vector(Vector const & other);
+		Vector(Vector const& other);
 
 		/// <summary>
 		/// Move constructor.
@@ -257,7 +257,7 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">The list on the right hand side of the expression we are setting our list equal to.</param>
 		/// <returns>A reference to the list on the left hand side of the operator.</returns>
-		Vector& operator=(Vector const & other);
+		Vector& operator=(Vector const& other);
 
 		/// <summary>
 		/// Move Assignment operator
@@ -339,28 +339,28 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="index">Index where the data we want to access is located.</param>
 		/// <returns>Data stored at the specified index.</returns>
-		T& operator[](size_t const & index);
+		T& operator[](size_t const& index);
 
 		/// <summary>
 		/// Access the data stored at the given index. Works exactly like the [] operator in an array. Data accessed this way cannot be mutated
 		/// </summary>
 		/// <param name="index">Index where the data we want to access is located.</param>
 		/// <returns>Data stored at the specified index.</returns>
-		T const & operator[](size_t const & index) const;
+		T const& operator[](size_t const& index) const;
 
 		/// <summary>
 		/// Returns a new vector that is this vector appeneded to the other vector.
 		/// </summary>
 		/// <param name="other">The vector to append to this vector.</param>
 		/// <returns>A new vector that is this vector appeneded to the other vector..</returns>
-		Vector<T> operator+(Vector<T> const & other);
+		Vector<T> operator+(Vector<T> const& other);
 
 		/// <summary>
 		/// Returns a new vector that is this vector appeneded to the other vector.
 		/// </summary>
 		/// <param name="other">The vector to append to this vector.</param>
 		/// <returns>A new vector that is this vector appeneded to the other vector..</returns>
-		Vector<T> const operator+(Vector<T> const & other) const;
+		Vector<T> const operator+(Vector<T> const& other) const;
 
 		/// <summary>
 		/// Appends the elements of the other vector to this vector.vector that is this vector appeneded to the other vector.
@@ -395,14 +395,14 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="index">Index where the data we want to access is located.</param>
 		/// <returns>Data stored at the specified index.</returns>
-		T& At(size_t const & index);
+		T& At(size_t const& index);
 
 		/// <summary>
 		/// Access the data stored at the given index. Data accessed this way cannot be mutated
 		/// </summary>
 		/// <param name="index">Index where the data we want to access is located.</param>
 		/// <returns>Data stored at the specified index.</returns>
-		T const & At(size_t const & index) const;
+		T const& At(size_t const& index) const;
 
 		/// <summary>
 		/// Returns the capacity of the vector.
@@ -427,14 +427,14 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other">Vector to compare with.</param>
 		/// <returns>Whether the vectors are equal.</returns>
-		bool operator==(Vector<T> const & other) const;
+		bool operator==(Vector<T> const& other) const;
 
 		/// <summary>
 		/// Checks that two vectors are equal.
 		/// </summary>
 		/// <param name="other">Vector to compare with.</param>
 		/// <returns>Whether the vectors are equal.</returns>
-		bool operator!=(Vector<T> const & other) const;
+		bool operator!=(Vector<T> const& other) const;
 
 		/// <summary>
 		/// Returns the value of the front element of the vector.
@@ -446,7 +446,7 @@ namespace FIEAGameEngine
 		/// Returns the value of the front element of the vector.
 		/// </summary>
 		/// <returns>The value of the front element of the vector.</returns>
-		T const & Front() const;
+		T const& Front() const;
 
 		/// <summary>
 		/// Returns the value of the last element of the vector.
@@ -458,25 +458,25 @@ namespace FIEAGameEngine
 		/// Returns the value of the last element of the vector.
 		/// </summary>
 		/// <returns>The value of the last element of the vector.</returns>
-		T const & Back() const;
+		T const& Back() const;
 
 		/// <summary>
 		/// Places the specified value at the back of the vector, resizing if necessary.
 		/// </summary>
 		/// <param name="value">Value to place at the back of the list.</param>
-		void PushBack(T const & value);
+		void PushBack(T const& value);
 
 		/// <summary>
 		/// Places the specified value at the back of the vector, resizing if necessary.
 		/// </summary>
 		/// <param name="value">Value to place at the back of the list.</param>
-		void PushBack(T const && value);
+		void PushBack(T const&& value);
 
 		/// <summary>
 		/// Places the specified value at the back of the vector, resizing if necessary. Wrapper of PushBack() so back inserter can be used.
 		/// </summary>
 		/// <param name="value">Value to place at the back of the list.</param>
-		void push_back(T const & value);
+		void push_back(T const& value);
 
 		/// <summary>
 		/// Removes the last element of the vector fromt the vector
@@ -489,26 +489,26 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="value">The value we are searching for.</param>
 		/// <returns>An iterator to the first element in the array with the passed in value.</returns>
-		Vector<T>::Iterator Find(T const & value);
+		Vector<T>::Iterator Find(T const& value);
 
 		/// <summary>
 		/// Returns a const_iterator to the first element in the array with the passed in value.
 		/// </summary>
 		/// <param name="value">The value we are searching for.</param>
 		/// <returns>A const_iterator to the first element in the array with the passed in value.</returns>
-		Vector<T>::ConstIterator Find(T const & value) const;
+		Vector<T>::ConstIterator Find(T const& value) const;
 
 		/// <summary>
 		/// Removes all elements equal to value in the list.
 		/// </summary>
 		/// <param name="value">Value to remove.</param>
-		void Remove(T const & value);
+		void Remove(T const& value);
 
 		/// <summary>
 		/// Removes the element at the passed in iterator.
 		/// </summary>
 		/// <param name="iteratorToRemove">Iterator pointing to the element to remove.</param>
-		void Remove(Iterator const & iteratorToRemove);
+		void Remove(Iterator const& iteratorToRemove);
 
 		/// <summary>
 		/// Removes all elements equal to value in the list.
@@ -521,10 +521,27 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="start">Iterator pointing to the first element to remove.</param>
 		/// <param name="finish">Iterator pointing to the element before the last element to remove.</param>
-		void Remove(Iterator const & start, Iterator const & finish);
+		void Remove(Iterator const& start, Iterator const& finish);
 
 		/// <summary>
-		/// 
+		/// Swaps the values pointed to by two iterators in the vector.
+		/// </summary>
+		/// <param name="element1">An iterator pointing to the first element to swap.</param>
+		/// <param name="element2">An iterator pointing to the second element to swap.</param>
+		void Swap(Iterator const& element1, Iterator const& element2);
+
+		/// <summary>
+		/// Randomizes the order of the Vector.
+		/// </summary>
+		void Shuffle();
+
+		/// <summary>
+		/// Reverses the Vector.
+		/// </summary>
+		void Reverse();
+
+		/// <summary>
+		/// Shrinks the capacity of the vector to the current size of the vector.
 		/// </summary>
 		void ShrinkToFit();
 
@@ -568,6 +585,11 @@ namespace FIEAGameEngine
 		///  Communicates the cause of an iterator from other list exception to the user.
 		/// </summary>
 		inline static const std::string iteratorFromOtherListExceptionText = "Iterator provided is from another list.\n";
+
+		/// <summary>
+		///  Communicates the cause of a cannot swap end exception to the user.
+		/// </summary>
+		inline static const std::string cannotSwapEndExceptionText = "Cannot swap end Iterator.\n";
 	};
 }
 

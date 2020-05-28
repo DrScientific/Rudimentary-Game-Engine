@@ -8,12 +8,12 @@ namespace FIEAGameEngine
 {
 	RTTI_DEFINITIONS(Action)
 
-	Action::Action(RTTI::IdType typeId, std::string const & name) : Attributed(typeId), mName(name)
+	Action::Action(RTTI::IdType typeId, std::string const& name) : Attributed(typeId), mName(name)
 	{
 
 	}
 
-	std::string const & Action::Name() const
+	std::string const& Action::Name() const
 	{
 		return mName;
 	}
@@ -23,7 +23,7 @@ namespace FIEAGameEngine
 		return mIsContinuous;
 	}
 
-	void Action::SetName(std::string const & name)
+	void Action::SetName(std::string const& name)
 	{
 		mName = name;
 	}

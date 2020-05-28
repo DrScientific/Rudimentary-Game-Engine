@@ -34,49 +34,49 @@ namespace FIEAGameEngine
 
 
 	#pragma region Constructor
-	Datum::Datum(Datum const & other)
+	Datum::Datum(Datum const& other)
 	{
 		*this = other;
 	}
 
-	Datum::Datum(int const & other)
+	Datum::Datum(int const& other)
 	{
 		PushBack(other);
 	}
 
-	Datum::Datum(float const & other)
+	Datum::Datum(float const& other)
 	{
 		PushBack(other);
 	}
 
-	Datum::Datum(vec4 const & other)
+	Datum::Datum(vec4 const& other)
 	{
 		PushBack(other);
 	}
 
-	Datum::Datum(mat4x4 const & other)
+	Datum::Datum(mat4x4 const& other)
 	{
 		PushBack(other);
 	}
 
-	FIEAGameEngine::Datum::Datum(Scope const & other)
+	FIEAGameEngine::Datum::Datum(Scope const& other)
 	{
 		PushBack(other);
 	}
 
-	Datum::Datum(string const & other)
+	Datum::Datum(string const& other)
 	{
 		PushBack(other);
 	}
 
-	Datum::Datum(RTTI * const & other)
+	Datum::Datum(RTTI * const& other)
 	{
 		PushBack(other);
 	}
 	#pragma endregion
 
 	#pragma region operator=
-	Datum & Datum::operator=(Datum const & other)
+	Datum & Datum::operator=(Datum const& other)
 	{
 		if (this != &other)
 		{
@@ -119,7 +119,7 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	Datum & Datum::StoragePreservedAssignment(Datum const & other)
+	Datum & Datum::StoragePreservedAssignment(Datum const& other)
 	{
 		if (this != &other)
 		{
@@ -166,7 +166,7 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	Datum & Datum::operator=(int const & other)
+	Datum & Datum::operator=(int const& other)
 	{
 
 		if (mType == DatumType::Unknown || mType == DatumType::Integer)
@@ -193,7 +193,7 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	Datum & Datum::operator=(float const & other)
+	Datum & Datum::operator=(float const& other)
 	{
 		if (mType == DatumType::Unknown || mType == DatumType::Float)
 		{
@@ -218,7 +218,7 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	Datum & Datum::operator=(vec4 const & other)
+	Datum & Datum::operator=(vec4 const& other)
 	{
 		if (mType == DatumType::Unknown || mType == DatumType::Vector4)
 		{
@@ -243,7 +243,7 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	Datum & Datum::operator=(mat4x4 const & other)
+	Datum & Datum::operator=(mat4x4 const& other)
 	{
 		if (mType == DatumType::Unknown || mType == DatumType::Matrix4x4)
 		{
@@ -268,7 +268,7 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	Datum & FIEAGameEngine::Datum::operator=(Scope const & other)
+	Datum & FIEAGameEngine::Datum::operator=(Scope const& other)
 	{
 		if (mType == DatumType::Unknown || mType == DatumType::Scope)
 		{
@@ -291,7 +291,7 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	Datum & Datum::operator=(string const & other)
+	Datum & Datum::operator=(string const& other)
 	{
 		if (mType == DatumType::Unknown || mType == DatumType::String)
 		{
@@ -316,7 +316,7 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	Datum & Datum::operator=(RTTI * const & other)
+	Datum & Datum::operator=(RTTI * const& other)
 	{
 		if (mType == DatumType::Unknown || mType == DatumType::RTTIPtr)
 		{
@@ -343,7 +343,7 @@ namespace FIEAGameEngine
 	#pragma endregion
 
 	#pragma region InitializerList
-	Datum::Datum(initializer_list<int> const & iList)
+	Datum::Datum(initializer_list<int> const& iList)
 	{
 		SetType(DatumType::Integer);
 		for (auto const& i : iList)
@@ -352,7 +352,7 @@ namespace FIEAGameEngine
 		}
 	}
 
-	Datum::Datum(initializer_list<float> const & iList)
+	Datum::Datum(initializer_list<float> const& iList)
 	{
 		SetType(DatumType::Float);
 		for (auto const& i : iList)
@@ -361,7 +361,7 @@ namespace FIEAGameEngine
 		}
 	}
 
-	Datum::Datum(initializer_list<vec4> const & iList)
+	Datum::Datum(initializer_list<vec4> const& iList)
 	{
 		SetType(DatumType::Vector4);
 		for (auto const& i : iList)
@@ -370,7 +370,7 @@ namespace FIEAGameEngine
 		}
 	}
 
-	Datum::Datum(initializer_list<mat4x4> const & iList)
+	Datum::Datum(initializer_list<mat4x4> const& iList)
 	{
 		SetType(DatumType::Matrix4x4);
 		for (auto const& i : iList)
@@ -379,7 +379,7 @@ namespace FIEAGameEngine
 		}
 	}
 
-	Datum::Datum(initializer_list<string> const & iList)
+	Datum::Datum(initializer_list<string> const& iList)
 	{
 		SetType(DatumType::String);
 		for (auto const& i : iList)
@@ -388,7 +388,7 @@ namespace FIEAGameEngine
 		}
 	}
 
-	Datum::Datum(initializer_list<RTTI*> const & iList)
+	Datum::Datum(initializer_list<RTTI*> const& iList)
 	{
 		SetType(DatumType::RTTIPtr);
 		for (auto const& i : iList)
@@ -435,7 +435,7 @@ namespace FIEAGameEngine
 	#pragma endregion
 
 	#pragma region operator==
-	bool Datum::operator==(Datum const & other) const
+	bool Datum::operator==(Datum const& other) const
 	{
 		bool result = false;
 		if (mSize == other.mSize && mIsInternal == other.mIsInternal && mType == other.mType)
@@ -474,7 +474,7 @@ namespace FIEAGameEngine
 		return result;
 	}
 
-	bool Datum::operator==(int const & other) const
+	bool Datum::operator==(int const& other) const
 	{
 		if (DatumType::Integer != mType)
 		{
@@ -483,7 +483,7 @@ namespace FIEAGameEngine
 		return mSize == 1 && mArray.tInt[0] == other;
 	}
 
-	bool Datum::operator==(float const & other) const
+	bool Datum::operator==(float const& other) const
 	{
 		if (DatumType::Float != mType)
 		{
@@ -492,7 +492,7 @@ namespace FIEAGameEngine
 		return mSize == 1 && mArray.tFloat[0] == other;
 	}
 
-	bool Datum::operator==(vec4 const & other) const
+	bool Datum::operator==(vec4 const& other) const
 	{
 		if (DatumType::Vector4 != mType)
 		{
@@ -501,7 +501,7 @@ namespace FIEAGameEngine
 		return mSize == 1 && mArray.tVec4[0] == other;
 	}
 
-	bool Datum::operator==(mat4x4 const & other) const
+	bool Datum::operator==(mat4x4 const& other) const
 	{
 		if (DatumType::Matrix4x4 != mType)
 		{
@@ -510,7 +510,7 @@ namespace FIEAGameEngine
 		return mSize == 1 && mArray.tMat4x4[0] == other;
 	}
 
-	bool Datum::operator==(string const & other) const
+	bool Datum::operator==(string const& other) const
 	{
 		if (DatumType::String != mType)
 		{
@@ -519,7 +519,7 @@ namespace FIEAGameEngine
 		return mSize == 1 && mArray.tString[0] == other;
 	}
 
-	bool Datum::operator==(RTTI * const & other) const
+	bool Datum::operator==(RTTI * const& other) const
 	{
 		bool result = false;
 		if (DatumType::RTTIPtr != mType && DatumType::Scope != mType)
@@ -539,37 +539,37 @@ namespace FIEAGameEngine
 	#pragma endregion
 
 	#pragma region operator!=
-	bool Datum::operator!=(Datum const & other) const
+	bool Datum::operator!=(Datum const& other) const
 	{
 		return !(operator==(other));
 	}
 
-	bool Datum::operator!=(int const & other) const
+	bool Datum::operator!=(int const& other) const
 	{
 		return !(operator==(other));
 	}
 
-	bool Datum::operator!=(float const & other) const
+	bool Datum::operator!=(float const& other) const
 	{
 		return !(operator==(other));
 	}
 
-	bool Datum::operator!=(vec4 const & other) const
+	bool Datum::operator!=(vec4 const& other) const
 	{
 		return !(operator==(other));
 	}
 
-	bool Datum::operator!=(mat4x4 const & other) const
+	bool Datum::operator!=(mat4x4 const& other) const
 	{
 		return !(operator==(other));
 	}
 
-	bool Datum::operator!=(string const & other) const
+	bool Datum::operator!=(string const& other) const
 	{
 		return !(operator==(other));
 	}
 
-	bool Datum::operator!=(RTTI * const & other) const
+	bool Datum::operator!=(RTTI * const& other) const
 	{
 		return !(operator==(other));
 	}
@@ -719,7 +719,7 @@ namespace FIEAGameEngine
 	#pragma endregion
 
 	#pragma region SetStorage
-	void Datum::SetStorage(int * const & data, size_t const & size)
+	void Datum::SetStorage(int * const& data, size_t const& size)
 	{
 		if (data == nullptr || size <= 0)
 		{
@@ -743,7 +743,7 @@ namespace FIEAGameEngine
 		mSize = mCapacity = size;
 	}
 
-	void Datum::SetStorage(float * const & data, size_t const & size)
+	void Datum::SetStorage(float * const& data, size_t const& size)
 	{
 		if (data == nullptr || size <= 0)
 		{
@@ -767,7 +767,7 @@ namespace FIEAGameEngine
 		mSize = mCapacity = size;
 	}
 
-	void Datum::SetStorage(vec4 * const & data, size_t const & size)
+	void Datum::SetStorage(vec4 * const& data, size_t const& size)
 	{
 		if (data == nullptr || size <= 0)
 		{
@@ -791,7 +791,7 @@ namespace FIEAGameEngine
 		mSize = mCapacity = size;
 	}
 
-	void Datum::SetStorage(mat4x4 * const & data, size_t const & size)
+	void Datum::SetStorage(mat4x4 * const& data, size_t const& size)
 	{
 		if (data == nullptr || size <= 0)
 		{
@@ -815,7 +815,7 @@ namespace FIEAGameEngine
 		mSize = mCapacity = size;
 	}
 
-	void Datum::SetStorage(string * const & data, size_t const & size)
+	void Datum::SetStorage(string * const& data, size_t const& size)
 	{
 		if (data == nullptr || size <= 0)
 		{
@@ -839,7 +839,7 @@ namespace FIEAGameEngine
 		mSize = mCapacity = size;
 	}
 
-	void Datum::SetStorage(RTTI ** const & data, size_t const & size)
+	void Datum::SetStorage(RTTI ** const& data, size_t const& size)
 	{
 		if (data == nullptr || size <= 0)
 		{
@@ -872,7 +872,7 @@ namespace FIEAGameEngine
 	#pragma endregion
 
 	#pragma region Set
-	void Datum::Set(int const & value, size_t const & index)
+	void Datum::Set(int const& value, size_t const& index)
 	{
 		if (DatumType::Integer != mType)
 		{
@@ -881,7 +881,7 @@ namespace FIEAGameEngine
 		mArray.tInt[index] = value;
 	}
 
-	void Datum::Set(float const & value, size_t const & index)
+	void Datum::Set(float const& value, size_t const& index)
 	{
 		if (DatumType::Float != mType)
 		{
@@ -890,7 +890,7 @@ namespace FIEAGameEngine
 		mArray.tFloat[index] = value;
 	}
 
-	void Datum::Set(vec4 const & value, size_t const & index)
+	void Datum::Set(vec4 const& value, size_t const& index)
 	{
 		if (DatumType::Vector4 != mType)
 		{
@@ -899,7 +899,7 @@ namespace FIEAGameEngine
 		mArray.tVec4[index] = value;
 	}
 
-	void Datum::Set(mat4x4 const & value, size_t const & index)
+	void Datum::Set(mat4x4 const& value, size_t const& index)
 	{
 		if (DatumType::Matrix4x4 != mType)
 		{
@@ -908,7 +908,7 @@ namespace FIEAGameEngine
 		mArray.tMat4x4[index] = value;
 	}
 
-	void FIEAGameEngine::Datum::Set(Scope const & value, size_t const & index)
+	void FIEAGameEngine::Datum::Set(Scope const& value, size_t const& index)
 	{
 		if (DatumType::Scope != mType)
 		{
@@ -917,7 +917,7 @@ namespace FIEAGameEngine
 		mArray.tScope[index] = const_cast<Scope*>(&value);
 	}
 
-	void Datum::Set(string const & value, size_t const & index)
+	void Datum::Set(string const& value, size_t const& index)
 	{
 		if (DatumType::String != mType)
 		{
@@ -927,7 +927,7 @@ namespace FIEAGameEngine
 		mArray.tString[index] = value;
 	}
 
-	void Datum::Set(RTTI * const & value, size_t const & index)
+	void Datum::Set(RTTI * const& value, size_t const& index)
 	{
 		if (DatumType::RTTIPtr != mType)
 		{
@@ -938,7 +938,7 @@ namespace FIEAGameEngine
 	#pragma endregion
 
 	#pragma region SetFromString
-	void Datum::SetFromString(string const & value, size_t const & index)
+	void Datum::SetFromString(string const& value, size_t const& index)
 	{
 		switch (mType)
 		{
@@ -971,7 +971,7 @@ namespace FIEAGameEngine
 	#pragma endregion
 
 #pragma region PushBackFromString
-	void Datum::PushBackFromString(string const & value)
+	void Datum::PushBackFromString(string const& value)
 	{
 		switch (mType)
 		{
@@ -1004,7 +1004,7 @@ namespace FIEAGameEngine
 #pragma endregion
 
 	#pragma region ToString
-	string Datum::ToString(size_t const & index) const
+	string Datum::ToString(size_t const& index) const
 	{
 		string result = "";
 		switch (mType)
@@ -1039,7 +1039,7 @@ namespace FIEAGameEngine
 	#pragma endregion
 
 	#pragma region PushBack
-	int & Datum::PushBack(int const & value)
+	int & Datum::PushBack(int const& value)
 	{
 		//External memory check done in templated function.
 		if (mType == DatumType::Unknown)
@@ -1056,7 +1056,7 @@ namespace FIEAGameEngine
 		}
 	}
 
-	float & Datum::PushBack(float const & value)
+	float & Datum::PushBack(float const& value)
 	{
 		//External memory check done in templated function.
 		if (mType == DatumType::Unknown)
@@ -1073,7 +1073,7 @@ namespace FIEAGameEngine
 		}
 	}
 
-	vec4 & Datum::PushBack(vec4 const & value)
+	vec4 & Datum::PushBack(vec4 const& value)
 	{
 		//External memory check done in templated function.
 		if (mType == DatumType::Unknown)
@@ -1090,7 +1090,7 @@ namespace FIEAGameEngine
 		}
 	}
 
-	mat4x4 & Datum::PushBack(mat4x4 const & value)
+	mat4x4 & Datum::PushBack(mat4x4 const& value)
 	{
 		//External memory check done in templated function.
 		if (mType == DatumType::Unknown)
@@ -1107,7 +1107,7 @@ namespace FIEAGameEngine
 		}
 	}
 
-	Scope * & FIEAGameEngine::Datum::PushBack(Scope const & value)
+	Scope * & FIEAGameEngine::Datum::PushBack(Scope const& value)
 	{
 		//External memory check done in templated function.
 		if (mType == DatumType::Unknown)
@@ -1124,7 +1124,7 @@ namespace FIEAGameEngine
 		}
 	}
 
-	string & Datum::PushBack(string const & value)
+	string & Datum::PushBack(string const& value)
 	{
 		//External memory check done in templated function.
 		if (mType == DatumType::Unknown)
@@ -1142,7 +1142,7 @@ namespace FIEAGameEngine
 	}
 
 
-	RTTI * & Datum::PushBack(RTTI * const & value)
+	RTTI * & Datum::PushBack(RTTI * const& value)
 	{
 		//External memory check done in templated function.
 		if (mType == DatumType::Unknown)
@@ -1195,38 +1195,38 @@ namespace FIEAGameEngine
 	#pragma endregion
 
 	#pragma region Remove
-	void Datum::Remove(int const & value)
+	void Datum::Remove(int const& value)
 	{
 		//External memory check done in templated function.
 		RemoveTemplated(mArray.tInt, value);
 	}
 
 
-	void Datum::Remove(float const & value)
+	void Datum::Remove(float const& value)
 	{
 		//External memory check done in templated function.
 		RemoveTemplated(mArray.tFloat, value);
 	}
 
-	void Datum::Remove(vec4 const & value)
+	void Datum::Remove(vec4 const& value)
 	{
 		//External memory check done in templated function.
 		RemoveTemplated(mArray.tVec4, value);
 	}
 
-	void Datum::Remove(mat4x4 const & value)
+	void Datum::Remove(mat4x4 const& value)
 	{
 		//External memory check done in templated function.
 		RemoveTemplated(mArray.tMat4x4, value);
 	}
 
-	void Datum::Remove(string const & value)
+	void Datum::Remove(string const& value)
 	{
 		//External memory check done in templated function.
 		RemoveTemplated(mArray.tString, value);
 	}
 
-	void Datum::Remove(RTTI* const & value)
+	void Datum::Remove(RTTI* const& value)
 	{
 		//External memory check done in templated function.
 		RemoveTemplated(mArray.tRTTIPtr, value);
@@ -1234,7 +1234,7 @@ namespace FIEAGameEngine
 	#pragma endregion
 
 	#pragma region RemoveAt
-	void Datum::RemoveAt(size_t const & index)
+	void Datum::RemoveAt(size_t const& index)
 	{
 		//External memory check done in templated function.
 		switch (mType)
@@ -1268,7 +1268,7 @@ namespace FIEAGameEngine
 	#pragma endregion
 
 	#pragma region RemoveRange
-	void Datum::RemoveRange(size_t const & start, size_t const & finish)
+	void Datum::RemoveRange(size_t const& start, size_t const& finish)
 	{
 		//External memory check done in templated function.
 		switch (mType)
@@ -1302,7 +1302,7 @@ namespace FIEAGameEngine
 	#pragma endregion
 
 	#pragma region Find
-	std::pair<bool, int*>  Datum::Find(int const & searchedValue) const
+	std::pair<bool, int*>  Datum::Find(int const& searchedValue) const
 	{
 		if (DatumType::Integer != mType)
 		{
@@ -1318,7 +1318,7 @@ namespace FIEAGameEngine
 		return std::pair<bool, int*>(false, nullptr);
 	}
 
-	std::pair<bool, float*> Datum::Find(float const & searchedValue) const
+	std::pair<bool, float*> Datum::Find(float const& searchedValue) const
 	{
 		if (DatumType::Float != mType)
 		{
@@ -1334,7 +1334,7 @@ namespace FIEAGameEngine
 		return std::pair<bool, float*>(false, nullptr);
 	}
 
-	std::pair<bool, vec4*> Datum::Find(vec4 const & searchedValue) const
+	std::pair<bool, vec4*> Datum::Find(vec4 const& searchedValue) const
 	{
 		if (DatumType::Vector4 != mType)
 		{
@@ -1350,7 +1350,7 @@ namespace FIEAGameEngine
 		return std::pair<bool, vec4*>(false, nullptr);
 	}
 
-	std::pair<bool, mat4x4*> Datum::Find(mat4x4 const & searchedValue) const
+	std::pair<bool, mat4x4*> Datum::Find(mat4x4 const& searchedValue) const
 	{
 		if (DatumType::Matrix4x4 != mType)
 		{
@@ -1366,7 +1366,7 @@ namespace FIEAGameEngine
 		return std::pair<bool, mat4x4*>(false, nullptr);
 	}
 
-	std::pair<bool, Scope**> FIEAGameEngine::Datum::Find(Scope const & searchedValue) const
+	std::pair<bool, Scope**> FIEAGameEngine::Datum::Find(Scope const& searchedValue) const
 	{
 		if (DatumType::Scope != mType)
 		{
@@ -1382,7 +1382,7 @@ namespace FIEAGameEngine
 		return std::pair<bool, Scope**>(false, nullptr);
 	}
 
-	std::pair<bool, string*> Datum::Find(string const & searchedValue) const
+	std::pair<bool, string*> Datum::Find(string const& searchedValue) const
 	{
 		if (DatumType::String != mType)
 		{
@@ -1398,7 +1398,7 @@ namespace FIEAGameEngine
 		return std::pair<bool, string*>(false, nullptr);
 	}
 
-	std::pair<bool, RTTI**> Datum::Find(RTTI * const & searchedValue) const
+	std::pair<bool, RTTI**> Datum::Find(RTTI * const& searchedValue) const
 	{
 		if (DatumType::RTTIPtr != mType)
 		{
@@ -1413,7 +1413,7 @@ namespace FIEAGameEngine
 		}
 		return std::pair<bool, RTTI**>(false, nullptr);
 	}
-	void Datum::SetStorage(void * const & data, size_t const & size)
+	void Datum::SetStorage(void * const& data, size_t const& size)
 	{
 		if (data == nullptr || size <= 0)
 		{
@@ -1436,7 +1436,7 @@ namespace FIEAGameEngine
 
 	#pragma region ResizeTemplated
 	template<typename T>
-	inline void Datum::ResizeTemplated(T * const & templatedPtr, size_t const & newSize)
+	inline void Datum::ResizeTemplated(T * const& templatedPtr, size_t const& newSize)
 	{
 		if (mIsInternal)
 		{
@@ -1476,7 +1476,7 @@ namespace FIEAGameEngine
 
 	#pragma region Clear
 	template<typename T>
-	inline void Datum::ClearTemplated(T * const & templatedPtr)
+	inline void Datum::ClearTemplated(T * const& templatedPtr)
 	{
 		if (mIsInternal)
 		{
@@ -1495,25 +1495,25 @@ namespace FIEAGameEngine
 
 	#pragma region SetFromStringTemplated
 	template<typename T>
-	void Datum::SetFromStringTemplated(string const &, size_t const &)
+	void Datum::SetFromStringTemplated(string const&, size_t const&)
 	{
 		throw exception(unsupportedDataTypeExceptionText.c_str());
 	}
 
 	template<>
-	void Datum::SetFromStringTemplated<int>(string const & value, size_t const & index)
+	void Datum::SetFromStringTemplated<int>(string const& value, size_t const& index)
 	{
 		Set(stoi(value), index);
 	}
 
 	template<>
-	void Datum::SetFromStringTemplated<float>(string const & value, size_t const & index)
+	void Datum::SetFromStringTemplated<float>(string const& value, size_t const& index)
 	{
 		Set(stof(value), index);
 	}
 
 	template<>
-	void Datum::SetFromStringTemplated<vec4>(string const & value, size_t const & index)
+	void Datum::SetFromStringTemplated<vec4>(string const& value, size_t const& index)
 	{
 		vec4 readInVec;
 		sscanf_s(value.c_str(), "vec4(%f, %f, %f, %f)", &readInVec[0], &readInVec[1], &readInVec[2], &readInVec[3]);
@@ -1521,7 +1521,7 @@ namespace FIEAGameEngine
 	}
 
 	template<>
-	void Datum::SetFromStringTemplated<mat4x4>(string const & value, size_t const & index)
+	void Datum::SetFromStringTemplated<mat4x4>(string const& value, size_t const& index)
 	{
 		mat4x4 readInMat;
 		sscanf_s(value.c_str(), "mat4x4((%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f))",
@@ -1533,13 +1533,13 @@ namespace FIEAGameEngine
 	}
 
 	template<>
-	void Datum::SetFromStringTemplated<string>(string const & value, size_t const & index)
+	void Datum::SetFromStringTemplated<string>(string const& value, size_t const& index)
 	{
 		Set(value, index);
 	}
 
 	template<>
-	void Datum::SetFromStringTemplated<RTTI*>(string const &, size_t const &)
+	void Datum::SetFromStringTemplated<RTTI*>(string const&, size_t const&)
 	{
 		throw exception(unsupportedDataTypeExceptionText.c_str());
 	}
@@ -1547,25 +1547,25 @@ namespace FIEAGameEngine
 
 #pragma region PushBackFromStringTemplated
 	template<typename T>
-	void Datum::PushBackFromStringTemplated(string const &)
+	void Datum::PushBackFromStringTemplated(string const&)
 	{
 		throw exception(unsupportedDataTypeExceptionText.c_str());
 	}
 
 	template<>
-	void Datum::PushBackFromStringTemplated<int>(string const & value)
+	void Datum::PushBackFromStringTemplated<int>(string const& value)
 	{
 		PushBack(stoi(value));
 	}
 
 	template<>
-	void Datum::PushBackFromStringTemplated<float>(string const & value)
+	void Datum::PushBackFromStringTemplated<float>(string const& value)
 	{
 		PushBack(stof(value));
 	}
 
 	template<>
-	void Datum::PushBackFromStringTemplated<vec4>(string const & value)
+	void Datum::PushBackFromStringTemplated<vec4>(string const& value)
 	{
 		vec4 readInVec;
 		sscanf_s(value.c_str(), "vec4(%f, %f, %f, %f)", &readInVec[0], &readInVec[1], &readInVec[2], &readInVec[3]);
@@ -1573,7 +1573,7 @@ namespace FIEAGameEngine
 	}
 
 	template<>
-	void Datum::PushBackFromStringTemplated<mat4x4>(string const & value)
+	void Datum::PushBackFromStringTemplated<mat4x4>(string const& value)
 	{
 		mat4x4 readInMat;
 		sscanf_s(value.c_str(), "mat4x4((%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f), (%f, %f, %f, %f))",
@@ -1585,13 +1585,13 @@ namespace FIEAGameEngine
 	}
 
 	template<>
-	void Datum::PushBackFromStringTemplated<string>(string const & value)
+	void Datum::PushBackFromStringTemplated<string>(string const& value)
 	{
 		PushBack(value);
 	}
 
 	template<>
-	void Datum::PushBackFromStringTemplated<RTTI*>(string const &)
+	void Datum::PushBackFromStringTemplated<RTTI*>(string const&)
 	{
 		throw exception(unsupportedDataTypeExceptionText.c_str());
 	}
@@ -1599,43 +1599,43 @@ namespace FIEAGameEngine
 
 	#pragma region ToStringTemplated
 	template<typename T>
-	string Datum::ToStringTemplated(T * const &, size_t const &) const
+	string Datum::ToStringTemplated(T * const&, size_t const&) const
 	{
 		throw exception(unsupportedDataTypeExceptionText.c_str());
 	}
 
 	template<>
-	string Datum::ToStringTemplated(int * const & templatedPtr, size_t const & index) const
+	string Datum::ToStringTemplated(int * const& templatedPtr, size_t const& index) const
 	{
 		return std::to_string(templatedPtr[index]);
 	}
 
 	template<>
-	string Datum::ToStringTemplated(float * const & templatedPtr, size_t const & index) const
+	string Datum::ToStringTemplated(float * const& templatedPtr, size_t const& index) const
 	{
 		return std::to_string(templatedPtr[index]);
 	}
 
 	template<>
-	string Datum::ToStringTemplated(vec4 * const & templatedPtr, size_t const & index) const
+	string Datum::ToStringTemplated(vec4 * const& templatedPtr, size_t const& index) const
 	{
 		return glm::to_string(templatedPtr[index]);
 	}
 
 	template<>
-	string Datum::ToStringTemplated(mat4x4 * const & templatedPtr, size_t const & index) const
+	string Datum::ToStringTemplated(mat4x4 * const& templatedPtr, size_t const& index) const
 	{
 		return glm::to_string(templatedPtr[index]);
 	}
 
 	template<>
-	string Datum::ToStringTemplated(string * const & templatedPtr, size_t const & index) const
+	string Datum::ToStringTemplated(string * const& templatedPtr, size_t const& index) const
 	{
 		return templatedPtr[index];
 	}
 
 	template<>
-	string Datum::ToStringTemplated(RTTI ** const & templatedPtr, size_t const & index) const
+	string Datum::ToStringTemplated(RTTI ** const& templatedPtr, size_t const& index) const
 	{
 		return (templatedPtr[index] != nullptr ? templatedPtr[index]->ToString() : "nullptr");
 	}
@@ -1643,7 +1643,7 @@ namespace FIEAGameEngine
 
 	#pragma region PushBackTemplated
 	template<typename T>
-	inline T & Datum::PushBackTemplated(T * const & templatedPtr, T const & value)
+	inline T & Datum::PushBackTemplated(T * const& templatedPtr, T const& value)
 	{
 		if (mIsInternal)
 		{
@@ -1667,7 +1667,7 @@ namespace FIEAGameEngine
 
 	#pragma region PopBack
 	template<typename T>
-	inline void Datum::PopBackTemplated(T * const & templatedPtr)
+	inline void Datum::PopBackTemplated(T * const& templatedPtr)
 	{
 		if (mIsInternal)
 		{
@@ -1685,7 +1685,7 @@ namespace FIEAGameEngine
 
 	#pragma region RemoveTemplated
 	template<typename T>
-	void Datum::RemoveTemplated(T * const & templatedPtr, T const & value)
+	void Datum::RemoveTemplated(T * const& templatedPtr, T const& value)
 	{
 		if (mType != DatumType::Unknown)
 		{
@@ -1716,7 +1716,7 @@ namespace FIEAGameEngine
 
 	#pragma region RemoveAtTemplated
 	template<typename T>
-	void Datum::RemoveAtTemplated(T * const & templatedPtr, size_t const & index)
+	void Datum::RemoveAtTemplated(T * const& templatedPtr, size_t const& index)
 	{
 		if (mIsInternal)
 		{
@@ -1740,7 +1740,7 @@ namespace FIEAGameEngine
 
 	#pragma region RemoveRangeTemplated
 	template<typename T>
-	void Datum::RemoveRangeTemplated(T * const & templatedPtr, size_t const & start, size_t const & finish)
+	void Datum::RemoveRangeTemplated(T * const& templatedPtr, size_t const& start, size_t const& finish)
 	{
 		if (mIsInternal)
 		{

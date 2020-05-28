@@ -20,7 +20,7 @@ namespace FIEAGameEngine
 		Populate(id);
 	}
 
-	Attributed::Attributed(Attributed const & other)
+	Attributed::Attributed(Attributed const& other)
 	{
 		*this = other;
 	}
@@ -31,7 +31,7 @@ namespace FIEAGameEngine
 		UpdateExternalStorage(other.TypeIdInstance());
 	}
 
-	Attributed & Attributed::operator=(Attributed const & other)
+	Attributed & Attributed::operator=(Attributed const& other)
 	{
 		if (this != &other)
 		{
@@ -48,12 +48,12 @@ namespace FIEAGameEngine
 		return *this;
 	}
 
-	bool Attributed::IsAttribute(string const & name) const
+	bool Attributed::IsAttribute(string const& name) const
 	{
 		return mHashMap.ContainsKey(name).first;
 	}
 
-	bool Attributed::IsPrescribedAttribute(string const & name) const
+	bool Attributed::IsPrescribedAttribute(string const& name) const
 	{
 		bool result = false;
 		if (IsAttribute(name))
@@ -70,7 +70,7 @@ namespace FIEAGameEngine
 		return result;
 	}
 
-	bool Attributed::IsAuxiliaryAttribute(string const & name) const
+	bool Attributed::IsAuxiliaryAttribute(string const& name) const
 	{
 		bool result = false;
 		if (mHashMap.ContainsKey(name).first && !IsPrescribedAttribute(name))
@@ -80,7 +80,7 @@ namespace FIEAGameEngine
 		return result;
 	}
 
-	Datum & Attributed::AppendAuxiliaryAttribute(string const & name)
+	Datum & Attributed::AppendAuxiliaryAttribute(string const& name)
 	{
 		Datum * appendedDatum = nullptr;
 		if (IsPrescribedAttribute(name))
@@ -92,7 +92,7 @@ namespace FIEAGameEngine
 		return *appendedDatum;
 	}
 
-	Datum & Attributed::AppendAuxiliaryAttribute(string const & name, Datum const & value)
+	Datum & Attributed::AppendAuxiliaryAttribute(string const& name, Datum const& value)
 	{
 		Datum * appendedDatum = nullptr;
 		if (IsPrescribedAttribute(name))
@@ -109,7 +109,7 @@ namespace FIEAGameEngine
 		return *appendedDatum;
 	}
 
-	Vector<Scope::PairType*> const & Attributed::Attributes()
+	Vector<Scope::PairType*> const& Attributed::Attributes()
 	{
 		return mVector;
 	}
@@ -154,10 +154,10 @@ namespace FIEAGameEngine
 	void Attributed::Populate(IdType id)
 	{
 		(*this)["this"] = this;
-		Vector<Signature> const & attributes = TypeManager::GetSignatures(id);
+		Vector<Signature> const& attributes = TypeManager::GetSignatures(id);
 		for (size_t i = 0; i < attributes.Size(); i++)
 		{
-			Signature const & currentSignature = attributes[i];
+			Signature const& currentSignature = attributes[i];
 			Datum & element = Append(currentSignature.mName);
 			element.SetType(currentSignature.mType);
 			if (currentSignature.mType != Datum::DatumType::Scope)
@@ -178,7 +178,7 @@ namespace FIEAGameEngine
 	void Attributed::UpdateExternalStorage(IdType id)
 	{
 		(*this)["this"] = this;
-		Vector<Signature> const & attributes = TypeManager::GetSignatures(id);
+		Vector<Signature> const& attributes = TypeManager::GetSignatures(id);
 		for (size_t i = 0; i < attributes.Size(); i++)
 		{
 			Signature currentSignature = attributes[i];
