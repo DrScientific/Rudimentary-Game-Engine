@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Vector.h"
-#include "HashMap.h"
+#include "UnorderedMap.h"
 #include "Datum.h"
 #include "RTTI.h"
 #include "gsl/gsl"
@@ -21,15 +21,15 @@ namespace FIEAGameEngine
 		
 
 		using PairType = std::pair<std::string const, Datum>;
-		using DatumMap = HashMap<std::string const, Datum>;
+		using DatumMap = UnorderedMap<std::string const, Datum>;
 		using DatumVector = Vector<PairType*>;
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="parent">Pointer to the parent of the newly constructed scope.</param>
-		/// <param name="hashMapSize">Size of the HashMap our scope will contain.</param>
-		explicit Scope(Scope* const parent = nullptr, size_t const& hashMapSize = 20);
+		/// <param name="unorderedMapSize">Size of the UnorderedMap our scope will contain.</param>
+		explicit Scope(Scope* const parent = nullptr, size_t const& unorderedMapSize = 20);
 
 		/// <summary>
 		/// Copy constructor
@@ -244,7 +244,7 @@ namespace FIEAGameEngine
 
 		DatumVector mVector;
 
-		DatumMap mHashMap;
+		DatumMap mUnorderedMap;
 
 		Scope* mParent = nullptr;
 #pragma endregion

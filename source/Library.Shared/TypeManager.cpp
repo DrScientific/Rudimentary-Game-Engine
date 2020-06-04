@@ -6,7 +6,7 @@ using namespace std;
 using namespace FIEAGameEngine;
 
 TypeManager::TypeRegistryType TypeManager::TypeRegistryMap;
-//HashMap<RTTI::IdType const, Vector<Attributed::Signature>> TypeManager::SignaturesMap;
+//UnorderedMap<RTTI::IdType const, Vector<Attributed::Signature>> TypeManager::SignaturesMap;
 
 
 void FIEAGameEngine::TypeManager::RegisterType(RTTI::IdType id, Vector<Attributed::Signature> const& signatures, RTTI::IdType parentId)
@@ -37,8 +37,8 @@ Vector<Attributed::Signature> FIEAGameEngine::TypeManager::GetSignatures(RTTI::I
 	}
 	return signatures;
 	
-	//This method would cache all constructed signature vectors in a hashmap so we don't have to looke it up everytime, but because this dynamically allocates memory for a static object
-	//CRTDBG returns a false positive on memory leaks. Because of this I've chosen to
+	//This method would cache all constructed signature vectors in a unordered map so we don't have to looke it up everytime, but because this dynamically allocates memory for a static object
+	//CRTDBG returns a false positive on memory leaks. Because of this I've chosen to omit this function and just do the lookup every time.
 	/*std::pair<bool, Vector<Attributed::Signature>*> foundSignatures = SignaturesMap.ContainsKey(id);
 	if (foundSignatures.first)
 	{

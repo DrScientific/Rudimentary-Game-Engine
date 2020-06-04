@@ -5,14 +5,14 @@
 namespace FIEAGameEngine
 {
 	template<typename AbstractProductT>
-	HashMap<std::string const, Factory<AbstractProductT> const* > Factory<AbstractProductT>::sFactoryTable;
+	UnorderedMap<std::string const, Factory<AbstractProductT> const* > Factory<AbstractProductT>::sFactoryTable;
 
 	
 	template<typename AbstractProductT>
 	inline Factory<AbstractProductT> const* Factory<AbstractProductT>::Find(std::string const& className)
 	{
 		Factory<AbstractProductT> const* foundPtr = nullptr;
-		typename HashMap<std::string const, Factory<AbstractProductT> const* >::Iterator foundIt = sFactoryTable.Find(className);
+		typename UnorderedMap<std::string const, Factory<AbstractProductT> const* >::Iterator foundIt = sFactoryTable.Find(className);
 		if (foundIt != sFactoryTable.end())
 		{
 			foundPtr = (*foundIt).second;

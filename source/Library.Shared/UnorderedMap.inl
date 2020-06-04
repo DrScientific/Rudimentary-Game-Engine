@@ -1,14 +1,14 @@
 /// <summary>
-/// The inline file containing the definition of each hash map function declared in HashMap.h.
+/// The inline file containing the definition of each unordered  map function declared in UnorderedMap.h.
 /// </summary>
 
-#include "HashMap.h"
+#include "UnorderedMap.h"
 
 
 namespace FIEAGameEngine
 {
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::Iterator & HashMap<TKey, TData, HashFunctor>::Iterator::operator++()
+	inline typename UnorderedMap<TKey, TData, HashFunctor>::Iterator & UnorderedMap<TKey, TData, HashFunctor>::Iterator::operator++()
 	{
 		if (mOwner == nullptr)
 		{
@@ -32,7 +32,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::Iterator HashMap<TKey, TData, HashFunctor>::Iterator::operator++(int)
+	inline typename UnorderedMap<TKey, TData, HashFunctor>::Iterator UnorderedMap<TKey, TData, HashFunctor>::Iterator::operator++(int)
 	{
 		Iterator iteratorBeforeIncrement = *this;
 		operator++();
@@ -41,25 +41,25 @@ namespace FIEAGameEngine
 
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline bool HashMap<TKey, TData, HashFunctor>::Iterator::operator==(Iterator const& other) const
+	inline bool UnorderedMap<TKey, TData, HashFunctor>::Iterator::operator==(Iterator const& other) const
 	{
 		return (mOwner == other.mOwner) && (mDataIndex == other.mDataIndex) && (mListIterator == other.mListIterator);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline bool HashMap<TKey, TData, HashFunctor>::Iterator::operator!=(Iterator const& other) const
+	inline bool UnorderedMap<TKey, TData, HashFunctor>::Iterator::operator!=(Iterator const& other) const
 	{
 		return !(*this == other);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::PairType & HashMap<TKey, TData, HashFunctor>::Iterator::operator*() const
+	inline typename UnorderedMap<TKey, TData, HashFunctor>::PairType & UnorderedMap<TKey, TData, HashFunctor>::Iterator::operator*() const
 	{
 		if (mOwner == nullptr)
 		{
 			throw std::exception(ownerIsNullException.c_str());
 		}
-		if (*this == const_cast<HashMap*>(mOwner)->end())
+		if (*this == const_cast<UnorderedMap*>(mOwner)->end())
 		{
 			throw std::exception(attemptToIteratePastLastElementException.c_str());
 		}
@@ -67,13 +67,13 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::PairType * HashMap<TKey, TData, HashFunctor>::Iterator::operator->() const
+	inline typename UnorderedMap<TKey, TData, HashFunctor>::PairType * UnorderedMap<TKey, TData, HashFunctor>::Iterator::operator->() const
 	{
 		if (mOwner == nullptr)
 		{
 			throw std::exception(ownerIsNullException.c_str());
 		}
-		if (*this == const_cast<HashMap*>(mOwner)->end())
+		if (*this == const_cast<UnorderedMap*>(mOwner)->end())
 		{
 			throw std::exception(attemptToIteratePastLastElementException.c_str());
 		}
@@ -81,19 +81,19 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline HashMap<TKey, TData, HashFunctor>::Iterator::Iterator(HashMap const& owner, size_t index, typename ChainType::Iterator listIt) :
+	inline UnorderedMap<TKey, TData, HashFunctor>::Iterator::Iterator(UnorderedMap const& owner, size_t index, typename ChainType::Iterator listIt) :
 		mOwner(&owner), mDataIndex(index), mListIterator(listIt)
 	{
 
 	}
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline HashMap<TKey, TData, HashFunctor>::ConstIterator::ConstIterator(Iterator const& it) :
+	inline UnorderedMap<TKey, TData, HashFunctor>::ConstIterator::ConstIterator(Iterator const& it) :
 		mOwner(it.mOwner), mDataIndex(it.mDataIndex), mListIterator(typename ChainType::ConstIterator(it.mListIterator))
 	{
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::ConstIterator & HashMap<TKey, TData, HashFunctor>::ConstIterator::operator=(const Iterator & it)
+	inline typename UnorderedMap<TKey, TData, HashFunctor>::ConstIterator & UnorderedMap<TKey, TData, HashFunctor>::ConstIterator::operator=(const Iterator & it)
 	{
 		mOwner = it.mOwner;
 		mDataIndex = it.mDataIndex;
@@ -101,7 +101,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::ConstIterator & HashMap<TKey, TData, HashFunctor>::ConstIterator::operator++()
+	inline typename UnorderedMap<TKey, TData, HashFunctor>::ConstIterator & UnorderedMap<TKey, TData, HashFunctor>::ConstIterator::operator++()
 	{
 		if (mOwner == nullptr)
 		{
@@ -125,7 +125,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::ConstIterator HashMap<TKey, TData, HashFunctor>::ConstIterator::operator++(int)
+	inline typename UnorderedMap<TKey, TData, HashFunctor>::ConstIterator UnorderedMap<TKey, TData, HashFunctor>::ConstIterator::operator++(int)
 	{
 		ConstIterator iteratorBeforeIncrement = *this;
 		operator++();
@@ -134,19 +134,19 @@ namespace FIEAGameEngine
 
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline bool HashMap<TKey, TData, HashFunctor>::ConstIterator::operator==(ConstIterator const& other) const
+	inline bool UnorderedMap<TKey, TData, HashFunctor>::ConstIterator::operator==(ConstIterator const& other) const
 	{
 		return (mOwner == other.mOwner) && (mDataIndex == other.mDataIndex) && (mListIterator == other.mListIterator);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline bool HashMap<TKey, TData, HashFunctor>::ConstIterator::operator!=(ConstIterator const& other) const
+	inline bool UnorderedMap<TKey, TData, HashFunctor>::ConstIterator::operator!=(ConstIterator const& other) const
 	{
 		return !(*this == other);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::PairType const& HashMap<TKey, TData, HashFunctor>::ConstIterator::operator*() const
+	inline typename UnorderedMap<TKey, TData, HashFunctor>::PairType const& UnorderedMap<TKey, TData, HashFunctor>::ConstIterator::operator*() const
 	{
 		if (mOwner == nullptr)
 		{
@@ -160,7 +160,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::PairType const* HashMap<TKey, TData, HashFunctor>::ConstIterator::operator->() const
+	inline typename UnorderedMap<TKey, TData, HashFunctor>::PairType const* UnorderedMap<TKey, TData, HashFunctor>::ConstIterator::operator->() const
 	{
 		if (mOwner == nullptr)
 		{
@@ -174,25 +174,25 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline HashMap<TKey, TData, HashFunctor>::ConstIterator::ConstIterator(HashMap const& owner, size_t index, typename ChainType::ConstIterator listIt) :
+	inline UnorderedMap<TKey, TData, HashFunctor>::ConstIterator::ConstIterator(UnorderedMap const& owner, size_t index, typename ChainType::ConstIterator listIt) :
 		mOwner(&owner), mDataIndex(index), mListIterator(listIt)
 	{
 
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline HashMap<TKey, TData, HashFunctor>::HashMap(size_t const& numBuckets) :
+	inline UnorderedMap<TKey, TData, HashFunctor>::UnorderedMap(size_t const& numBuckets) :
 		mBucketVector(numBuckets)
 	{
 		if (numBuckets == 0)
 		{
-			throw std::exception(hashMapMustHaveSizeGreaterThanZeroException.c_str());
+			throw std::exception(unorderedMapMustHaveSizeGreaterThanZeroException.c_str());
 		}
 		mBucketVector.Resize(numBuckets);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline HashMap<TKey, TData, HashFunctor>::HashMap(std::initializer_list<PairType> iList) :
+	inline UnorderedMap<TKey, TData, HashFunctor>::UnorderedMap(std::initializer_list<PairType> iList) :
 		mBucketVector(iList.size())
 	{
 		mBucketVector.Resize(iList.size());
@@ -203,14 +203,14 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline HashMap<TKey, TData, HashFunctor>::HashMap(HashMap && other) :
+	inline UnorderedMap<TKey, TData, HashFunctor>::UnorderedMap(UnorderedMap && other) :
 		mBucketVector(std::move(other.mBucketVector)), mNumKeyValuePairs(other.mNumKeyValuePairs)
 	{
 		other.mNumKeyValuePairs = 0;
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline HashMap<TKey, TData, HashFunctor> & HashMap<TKey, TData, HashFunctor>::operator=(HashMap && other)
+	inline UnorderedMap<TKey, TData, HashFunctor> & UnorderedMap<TKey, TData, HashFunctor>::operator=(UnorderedMap && other)
 	{
 		if (this != &other)
 		{
@@ -225,56 +225,56 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::Iterator HashMap<TKey, TData, HashFunctor>::begin()
+	inline typename UnorderedMap<TKey, TData, HashFunctor>::Iterator UnorderedMap<TKey, TData, HashFunctor>::begin()
 	{
-		Iterator firstElementInHashMap = end();
+		Iterator firstElementInUnorderedMap = end();
 		for (size_t i = 0; i < mBucketVector.Size(); i++)
 		{
 			if (!mBucketVector[i].IsEmpty())
 			{
-				firstElementInHashMap = Iterator(*this, i, mBucketVector[i].begin());
+				firstElementInUnorderedMap = Iterator(*this, i, mBucketVector[i].begin());
 				break;
 			}
 		}
-		return firstElementInHashMap;
+		return firstElementInUnorderedMap;
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::ConstIterator HashMap<TKey, TData, HashFunctor>::begin() const
+	inline typename UnorderedMap<TKey, TData, HashFunctor>::ConstIterator UnorderedMap<TKey, TData, HashFunctor>::begin() const
 	{
-		Iterator it = const_cast<HashMap*>(this)->begin();
+		Iterator it = const_cast<UnorderedMap*>(this)->begin();
 		return ConstIterator(it);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::Iterator HashMap<TKey, TData, HashFunctor>::end()
+	inline typename UnorderedMap<TKey, TData, HashFunctor>::Iterator UnorderedMap<TKey, TData, HashFunctor>::end()
 	{
 		return Iterator(*this, mBucketVector.Size(), typename ChainType::Iterator());
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::ConstIterator HashMap<TKey, TData, HashFunctor>::end() const
+	inline typename UnorderedMap<TKey, TData, HashFunctor>::ConstIterator UnorderedMap<TKey, TData, HashFunctor>::end() const
 	{
-		Iterator it = const_cast<HashMap*>(this)->end();
+		Iterator it = const_cast<UnorderedMap*>(this)->end();
 		return ConstIterator(it);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::ConstIterator HashMap<TKey, TData, HashFunctor>::cbegin() const
+	inline typename UnorderedMap<TKey, TData, HashFunctor>::ConstIterator UnorderedMap<TKey, TData, HashFunctor>::cbegin() const
 	{
-		Iterator it = const_cast<HashMap*>(this)->begin();
+		Iterator it = const_cast<UnorderedMap*>(this)->begin();
 		return ConstIterator(it);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::ConstIterator HashMap<TKey, TData, HashFunctor>::cend() const
+	inline typename UnorderedMap<TKey, TData, HashFunctor>::ConstIterator UnorderedMap<TKey, TData, HashFunctor>::cend() const
 	{
-		Iterator it = const_cast<HashMap*>(this)->end();
+		Iterator it = const_cast<UnorderedMap*>(this)->end();
 		return ConstIterator(it);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::Iterator HashMap<TKey, TData, HashFunctor>::Find(TKey const& key)
+	inline typename UnorderedMap<TKey, TData, HashFunctor>::Iterator UnorderedMap<TKey, TData, HashFunctor>::Find(TKey const& key)
 	{
 		Iterator foundIt = end();
 		size_t hashedBucket = HashKey(key);
@@ -290,7 +290,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline typename HashMap<TKey, TData, HashFunctor>::ConstIterator HashMap<TKey, TData, HashFunctor>::Find(TKey const& key) const
+	inline typename UnorderedMap<TKey, TData, HashFunctor>::ConstIterator UnorderedMap<TKey, TData, HashFunctor>::Find(TKey const& key) const
 	{
 		ConstIterator foundIt = end();
 		size_t hashedBucket = HashKey(key);
@@ -306,7 +306,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline std::pair<bool, typename HashMap<TKey, TData, HashFunctor>::Iterator> HashMap<TKey, TData, HashFunctor>::Insert(PairType const& keyDataPair)
+	inline std::pair<bool, typename UnorderedMap<TKey, TData, HashFunctor>::Iterator> UnorderedMap<TKey, TData, HashFunctor>::Insert(PairType const& keyDataPair)
 	{
 		Iterator foundIt = end();
 		bool alreadyInMap = true;
@@ -332,20 +332,20 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline std::pair<bool, typename HashMap<TKey, TData, HashFunctor>::Iterator> HashMap<TKey, TData, HashFunctor>::Insert(TKey const& key, TData const& data)
+	inline std::pair<bool, typename UnorderedMap<TKey, TData, HashFunctor>::Iterator> UnorderedMap<TKey, TData, HashFunctor>::Insert(TKey const& key, TData const& data)
 	{
 		PairType keyDataPair(key, data);
 		return Insert(keyDataPair);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline TData & HashMap<TKey, TData, HashFunctor>::operator[](TKey const& key)
+	inline TData & UnorderedMap<TKey, TData, HashFunctor>::operator[](TKey const& key)
 	{
 		return Insert(key, TData()).second->second;
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline TData & HashMap<TKey, TData, HashFunctor>::At(TKey const& key)
+	inline TData & UnorderedMap<TKey, TData, HashFunctor>::At(TKey const& key)
 	{
 
 		Iterator foundIt = Find(key);
@@ -353,7 +353,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline TData const& HashMap<TKey, TData, HashFunctor>::At(TKey const& key) const
+	inline TData const& UnorderedMap<TKey, TData, HashFunctor>::At(TKey const& key) const
 	{
 
 		ConstIterator foundIt = end();
@@ -369,14 +369,14 @@ namespace FIEAGameEngine
 
 		if (foundIt == end())
 		{
-			throw std::exception(keyNotInHashMapException.c_str());
+			throw std::exception(keyNotInUnorderedMapException.c_str());
 		}
 
 		return foundIt->second;
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline bool HashMap<TKey, TData, HashFunctor>::operator==(HashMap const& other) const
+	inline bool UnorderedMap<TKey, TData, HashFunctor>::operator==(UnorderedMap const& other) const
 	{
 		bool result = false;
 		if (mNumKeyValuePairs == other.mNumKeyValuePairs)
@@ -395,13 +395,13 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline bool HashMap<TKey, TData, HashFunctor>::operator!=(HashMap const& other) const
+	inline bool UnorderedMap<TKey, TData, HashFunctor>::operator!=(UnorderedMap const& other) const
 	{
 		return !(*this == other);
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline void HashMap<TKey, TData, HashFunctor>::Remove(TKey const& key)
+	inline void UnorderedMap<TKey, TData, HashFunctor>::Remove(TKey const& key)
 	{
 		Iterator foundIt = end();
 		size_t hashedBucket = HashKey(key);
@@ -417,7 +417,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline void HashMap<TKey, TData, HashFunctor>::Clear()
+	inline void UnorderedMap<TKey, TData, HashFunctor>::Clear()
 	{
 		for (size_t i = 0; i != mBucketVector.Size(); i++)
 		{
@@ -427,21 +427,21 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline size_t HashMap<TKey, TData, HashFunctor>::Size() const
+	inline size_t UnorderedMap<TKey, TData, HashFunctor>::Size() const
 	{
 		return mNumKeyValuePairs;
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline double HashMap<TKey, TData, HashFunctor>::LoadFactor() const
+	inline double UnorderedMap<TKey, TData, HashFunctor>::LoadFactor() const
 	{
 		return (mNumKeyValuePairs / 1.0*mBucketVector.Size());
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline void HashMap<TKey, TData, HashFunctor>::Resize(size_t numBuckets)
+	inline void UnorderedMap<TKey, TData, HashFunctor>::Resize(size_t numBuckets)
 	{
-		HashMap map(numBuckets);
+		UnorderedMap map(numBuckets);
 
 		for (const auto& item : *this)
 		{
@@ -452,7 +452,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline std::pair<bool, TData*> HashMap<TKey, TData, HashFunctor>::ContainsKey(TKey const& key) const
+	inline std::pair<bool, TData*> UnorderedMap<TKey, TData, HashFunctor>::ContainsKey(TKey const& key) const
 	{
 		std::pair<bool, TData*> result = std::pair<bool, TData*>(false, nullptr);
 
@@ -466,7 +466,7 @@ namespace FIEAGameEngine
 	}
 
 	template<typename TKey, typename TData, typename HashFunctor>
-	inline size_t HashMap<TKey, TData, HashFunctor>::HashKey(TKey const& key) const
+	inline size_t UnorderedMap<TKey, TData, HashFunctor>::HashKey(TKey const& key) const
 	{
 		return mHash(key) % mBucketVector.Size();
 	}

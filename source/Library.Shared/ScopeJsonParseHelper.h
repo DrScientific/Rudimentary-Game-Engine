@@ -3,7 +3,7 @@
 #include <memory>
 #include "Stack.h"
 #include "Datum.h"
-#include "HashMap.h"
+#include "UnorderedMap.h"
 
 namespace FIEAGameEngine
 {
@@ -150,9 +150,9 @@ namespace FIEAGameEngine
 		Stack<StackFrame> stack;
 
 		/// <summary>
-		/// Static constant hashmap used to convert strings to datum types.
+		/// Static constant unordered map used to convert strings to datum types.
 		/// </summary>
-		static HashMap<std::string const, Datum::DatumType> const stringToTypeMap;
+		static UnorderedMap<std::string const, Datum::DatumType> const stringToTypeMap;
 
 		/// <summary>
 		/// 

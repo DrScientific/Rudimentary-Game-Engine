@@ -50,7 +50,7 @@ namespace FIEAGameEngine
 
 	bool Attributed::IsAttribute(string const& name) const
 	{
-		return mHashMap.ContainsKey(name).first;
+		return mUnorderedMap.ContainsKey(name).first;
 	}
 
 	bool Attributed::IsPrescribedAttribute(string const& name) const
@@ -73,7 +73,7 @@ namespace FIEAGameEngine
 	bool Attributed::IsAuxiliaryAttribute(string const& name) const
 	{
 		bool result = false;
-		if (mHashMap.ContainsKey(name).first && !IsPrescribedAttribute(name))
+		if (mUnorderedMap.ContainsKey(name).first && !IsPrescribedAttribute(name))
 		{
 			result = true;
 		}

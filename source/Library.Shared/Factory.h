@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "HashMap.h"
+#include "UnorderedMap.h"
 #include <gsl/gsl>
 #include <assert.h>
 
@@ -8,7 +8,7 @@ namespace FIEAGameEngine
 {
 	/// <summary>
 	/// The Factory class serves two roles, that of an abstract factory from which all factories derive, as well as the role of a singleton factory manager class.
-	/// It constains a static hashmap of all concrete factories that can produce objects of types derived from the Factory's templated type.
+	/// It constains a static unordered map of all concrete factories that can produce objects of types derived from the Factory's templated type.
 	/// </summary>
 	template <class AbstractProductT> class Factory
 	{
@@ -45,15 +45,15 @@ namespace FIEAGameEngine
 
 	protected:
 		/// <summary>
-		/// Adds a concrete factory to the static hash map of factories where it's key is the name of the products it produces.
+		/// Adds a concrete factory to the static unorederd map of factories where it's key is the name of the products it produces.
 		/// </summary>
-		/// <param name="pFactory">A reference to the factory we are adding to the static hash map.</param>
+		/// <param name="pFactory">A reference to the factory we are adding to the static unordered map.</param>
 		static void Add(Factory<AbstractProductT> & pFactory);
 
 		/// <summary>
-		/// Removes a concrete factory from the static hash map of factories.
+		/// Removes a concrete factory from the static unordered map of factories.
 		/// </summary>
-		/// <param name="pFactory">A reference to the factory we are removing from the static hash map.</param>
+		/// <param name="pFactory">A reference to the factory we are removing from the static unordered map.</param>
 		static void Remove(Factory<AbstractProductT> & pFactory);
 
 	private:
@@ -65,9 +65,9 @@ namespace FIEAGameEngine
 		virtual gsl::owner<AbstractProductT*> Create() const = 0;
 
 		/// <summary>
-		/// Static hash map of concrete factories that have been created. A factory's key is the class name of the productes it creates.
+		/// Static unordered map of concrete factories that have been created. A factory's key is the class name of the productes it creates.
 		/// </summary>
-		static HashMap<std::string const, Factory<AbstractProductT> const* > sFactoryTable;
+		static UnorderedMap<std::string const, Factory<AbstractProductT> const* > sFactoryTable;
 
 		/// <summary>
 		/// Communicats the cause of a Cannot Create Duplicate Factory exception to the user.

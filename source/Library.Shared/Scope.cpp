@@ -14,8 +14,8 @@ namespace FIEAGameEngine
 	RTTI_DEFINITIONS(Scope);
 
 
-	Scope::Scope(Scope* const parent, size_t const& hashMapSize) :
-		mHashMap(hashMapSize), mParent(parent)
+	Scope::Scope(Scope* const parent, size_t const& unorderedMapSize) :
+		mUnorderedMap(unorderedMapSize), mParent(parent)
 	{
 
 	}
@@ -26,7 +26,7 @@ namespace FIEAGameEngine
 	}
 
 	FIEAGameEngine::Scope::Scope(Scope && other) noexcept :
-		mHashMap(move(other.mHashMap)), mVector(move(other.mVector)), mParent(other.mParent)
+		mUnorderedMap(move(other.mUnorderedMap)), mVector(move(other.mVector)), mParent(other.mParent)
 	{
 		Reparent(other);
 		other.mParent = nullptr;
@@ -75,7 +75,7 @@ namespace FIEAGameEngine
 		if (this != &other)
 		{
 			_Clear(false);
-			mHashMap = move(other.mHashMap);
+			mUnorderedMap = move(other.mUnorderedMap);
 			mVector = move(other.mVector);
 			mParent = other.mParent;
 
@@ -92,8 +92,8 @@ namespace FIEAGameEngine
 			throw exception(scopeCannotHaveEmptyKeyExceptionText.c_str());
 		}
 		Datum * result = nullptr;
-		DatumMap::ConstIterator searchedPairIt = mHashMap.Find(key);
-		if (searchedPairIt != mHashMap.end())
+		DatumMap::ConstIterator searchedPairIt = mUnorderedMap.Find(key);
+		if (searchedPairIt != mUnorderedMap.end())
 		{
 			result = const_cast<Datum*>(&((*searchedPairIt).second));
 		}
@@ -107,8 +107,8 @@ namespace FIEAGameEngine
 			throw exception(scopeCannotHaveEmptyKeyExceptionText.c_str());
 		}
 		Datum const* result = nullptr;
-		DatumMap::ConstIterator searchedPairIt = mHashMap.Find(key);
-		if (searchedPairIt != mHashMap.end())
+		DatumMap::ConstIterator searchedPairIt = mUnorderedMap.Find(key);
+		if (searchedPairIt != mUnorderedMap.end())
 		{
 			result = &((*searchedPairIt).second);
 		}
@@ -194,7 +194,7 @@ namespace FIEAGameEngine
 		{
 			throw exception(scopeCannotHaveEmptyKeyExceptionText.c_str());
 		}
-		auto[wasKeyFound, keyIterator] = mHashMap.Insert(key, Datum());
+		auto[wasKeyFound, keyIterator] = mUnorderedMap.Insert(key, Datum());
 		if (!wasKeyFound)
 		{
 			mVector.PushBack(&(*keyIterator));
@@ -260,7 +260,7 @@ namespace FIEAGameEngine
 		bool result = true;
 		if(this != &other)
 		{
-			//Should do less comparisons than simply comparing hashmaps although that is a valid, easier to read option.
+			//Should do less comparisons than simply comparing unordered maps although that is a valid, easier to read option.
 			result = false;
 			if (mVector.Size() == other.mVector.Size())
 			{
@@ -401,7 +401,7 @@ namespace FIEAGameEngine
 			}
 		}
 		mVector.Clear();
-		mHashMap.Clear();
+		mUnorderedMap.Clear();
 	}
 
 	void FIEAGameEngine::Scope::Reparent(Scope & oldParent)

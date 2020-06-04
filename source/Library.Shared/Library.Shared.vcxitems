@@ -34,7 +34,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Factory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameClock.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameTime.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)HashMap.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UnorderedMap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IJsonParseHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JsonParseMaster.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)OrderedMap.h" />
@@ -94,7 +94,7 @@
     <None Include="$(MSBuildThisFileDirectory)DList.inl" />
     <None Include="$(MSBuildThisFileDirectory)Event.inl" />
     <None Include="$(MSBuildThisFileDirectory)Factory.inl" />
-    <None Include="$(MSBuildThisFileDirectory)HashMap.inl" />
+    <None Include="$(MSBuildThisFileDirectory)UnorderedMap.inl" />
     <None Include="$(MSBuildThisFileDirectory)OrderedMap.inl" />
     <None Include="$(MSBuildThisFileDirectory)OrderedMultiMap.inl" />
     <None Include="$(MSBuildThisFileDirectory)OrderedMultiSet.inl" />

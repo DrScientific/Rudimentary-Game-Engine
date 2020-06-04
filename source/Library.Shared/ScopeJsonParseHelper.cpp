@@ -14,7 +14,7 @@ namespace FIEAGameEngine
 	RTTI_DEFINITIONS(ScopeJsonParseHelper);
 	RTTI_DEFINITIONS(ScopeJsonParseHelper::ScopeSharedData);
 
-	HashMap<string const, Datum::DatumType> const ScopeJsonParseHelper::stringToTypeMap = {
+	UnorderedMap<string const, Datum::DatumType> const ScopeJsonParseHelper::stringToTypeMap = {
 		{"integer", Datum::DatumType::Integer}, {"Integer", Datum::DatumType::Integer},
 		{"float", Datum::DatumType::Float}, {"Float", Datum::DatumType::Float},
 		{"vector", Datum::DatumType::Vector4}, {"Vector", Datum::DatumType::Vector4}, {"vec4", Datum::DatumType::Vector4}, {"Vec4", Datum::DatumType::Vector4},

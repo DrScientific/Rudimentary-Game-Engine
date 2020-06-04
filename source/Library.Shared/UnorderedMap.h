@@ -1,7 +1,7 @@
 #pragma once
 
 /// <summary>
-/// The file containing all of the declarations of the hash map class.
+/// The file containing all of the declarations of the unordered map class.
 /// </summary>
 
 #include <string>
@@ -17,14 +17,14 @@ namespace FIEAGameEngine
 	/// 
 	/// </summary>
 	template <typename TKey, typename TData, typename HashFunctor = DefaultHashFunctor<TKey>>
-	class HashMap final
+	class UnorderedMap final
 	{
 	public:
 		using PairType = std::pair<TKey const, TData>;
 		using ChainType = SList<PairType>;
 		using BucketType = Vector<ChainType>;
 		/// <summary>
-		/// An iterator that contains an index into a hash map. Any data dereferenced through a Iterator is not const. See ConstIterator.
+		/// An iterator that contains an index into a unordered map. Any data dereferenced through a Iterator is not const. See ConstIterator.
 		/// </summary>
 		class Iterator
 		{
@@ -91,16 +91,16 @@ namespace FIEAGameEngine
 
 		private:
 			/// <summary>
-			/// Constructor for Iterator taking in a HashMap owner and data.
+			/// Constructor for Iterator taking in a UnorderedMap owner and data.
 			/// </summary>
 			/// <param name="owner">List owning the cIterator.</param>
 			/// <param name="index">Index in array iterator will point to.</param>
-			Iterator(HashMap const& owner, size_t index = 0, typename ChainType::Iterator listIt = owner.mBucketVector[index].begin());
+			Iterator(UnorderedMap const& owner, size_t index = 0, typename ChainType::Iterator listIt = owner.mBucketVector[index].begin());
 
 			/// <summary>
 			/// The list that owns the Iterator.
 			/// </summary>
-			const HashMap* mOwner = nullptr;
+			const UnorderedMap* mOwner = nullptr;
 
 			/// <summary>
 			/// Index relative to start of array where value is stored.
@@ -113,11 +113,11 @@ namespace FIEAGameEngine
 			typename ChainType::Iterator mListIterator;
 
 			friend class ConstIterator;
-			friend HashMap;
+			friend UnorderedMap;
 		};
 
 		/// <summary>
-		/// An iterator that contains an index into a hash map. Any data dereferenced through a Iterator is not const. See ConstIterator.
+		/// An iterator that contains an index into a unordered map. Any data dereferenced through a Iterator is not const. See ConstIterator.
 		/// </summary>
 		class ConstIterator
 		{
@@ -198,12 +198,12 @@ namespace FIEAGameEngine
 			/// </summary>
 			/// <param name="owner">List owning the ConstIterator.</param>
 			/// <param name="data">Data pointed to by the ConstIterator.</param>
-			ConstIterator(HashMap const& owner, size_t index = 0, typename ChainType::ConstIterator listIt = owner.mBucketVector[index].cbegin());
+			ConstIterator(UnorderedMap const& owner, size_t index = 0, typename ChainType::ConstIterator listIt = owner.mBucketVector[index].cbegin());
 
 			/// <summary>
 			/// The list that owns the Iterator.
 			/// </summary>
-			const HashMap* mOwner = nullptr;
+			const UnorderedMap* mOwner = nullptr;
 
 			/// <summary>
 			/// Index relative to start of array where value is stored.
@@ -215,13 +215,13 @@ namespace FIEAGameEngine
 			/// </summary>
 			typename ChainType::ConstIterator mListIterator;
 
-			friend HashMap;
+			friend UnorderedMap;
 		};
 
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
-		explicit HashMap(size_t const& numBuckets = 256);
+		explicit UnorderedMap(size_t const& numBuckets = 256);
 
 		/// <summary>
 		/// Initializer list constructor.
@@ -229,91 +229,91 @@ namespace FIEAGameEngine
 		/// This will result in an Vector where the left most element is the front of the list, and the right most element is the back of the list.
 		/// </summary>
 		/// <param name="iList">The initializer list we are creating a list from.</param>
-		HashMap(std::initializer_list<PairType> iList);
+		UnorderedMap(std::initializer_list<PairType> iList);
 
 		/// <summary>
 		/// Copy constructor.
 		/// Calls the assignment operator in order to deep copy the other list.
 		/// </summary>
-		/// <param name="other">The HashMap we are creating a deep copy of.</param>
-		HashMap(HashMap const& other) = default;
+		/// <param name="other">The UnorderedMap we are creating a deep copy of.</param>
+		UnorderedMap(UnorderedMap const& other) = default;
 
 		/// <summary>
 		/// Move constructor.
 		/// </summary>
-		/// <param name="other">The HashMap we are moving.</param>
-		HashMap(HashMap && other);
+		/// <param name="other">The UnorderedMap we are moving.</param>
+		UnorderedMap(UnorderedMap && other);
 
 		/// <summary>
 		/// Assignment Operator.
 		/// Makes the left hand side of the assignment a deep copy of the right hand side of the assignment. 
 		/// </summary>
-		/// <param name="other">The list on the right hand side of the expression we are setting our HashMap equal to.</param>
-		/// <returns>A reference to the HashMap on the left hand side of the operator.</returns>
-		HashMap& operator=(HashMap const& other) = default;
+		/// <param name="other">The list on the right hand side of the expression we are setting our UnorderedMap equal to.</param>
+		/// <returns>A reference to the UnorderedMap on the left hand side of the operator.</returns>
+		UnorderedMap& operator=(UnorderedMap const& other) = default;
 
 		/// <summary>
 		/// Move Assignment Operator.
 		/// </summary>
-		/// <param name="other">The list on the right hand side of the expression we are setting our HashMap equal to.</param>
-		/// <returns>A reference to the HashMap on the left hand side of the operator.</returns>
-		HashMap& operator=(HashMap && other);
+		/// <param name="other">The list on the right hand side of the expression we are setting our UnorderedMap equal to.</param>
+		/// <returns>A reference to the UnorderedMap on the left hand side of the operator.</returns>
+		UnorderedMap& operator=(UnorderedMap && other);
 
 		/// <summary>
-		/// Deletes the hash map.
+		/// Deletes the unordered map.
 		/// </summary>
-		~HashMap() = default;
+		~UnorderedMap() = default;
 
 		/// <summary>
-		/// Returns an iterator pointing to the first element of the HashMap THAT HAS BEEN INITIALIZED.
-		/// Note the HashMap is unordered.
+		/// Returns an iterator pointing to the first element of the UnorderedMap THAT HAS BEEN INITIALIZED.
+		/// Note the UnorderedMap is unordered.
 		/// </summary>
-		/// <returns>Iterator pointing to the first element of the HashMap.</returns>
+		/// <returns>Iterator pointing to the first element of the UnorderedMap.</returns>
 		Iterator begin();
 
 		/// <summary>
-		/// Returns a const_iterator pointing to the first element of the HashMap THAT HAS BEEN INITIALIZED.
-		/// Note the HashMap is unordered.
+		/// Returns a const_iterator pointing to the first element of the UnorderedMap THAT HAS BEEN INITIALIZED.
+		/// Note the UnorderedMap is unordered.
 		/// /// </summary>
-		/// <returns>const_iterator pointing to the first element of the HashMap.</returns>
+		/// <returns>const_iterator pointing to the first element of the UnorderedMap.</returns>
 		ConstIterator begin() const;
 
 		/// <summary>
-		/// Returns an iterator pointing to element past the last element of the HashMap. This is out of bounds of the HashMap and will throw an exception if dereferenced.
+		/// Returns an iterator pointing to element past the last element of the UnorderedMap. This is out of bounds of the UnorderedMap and will throw an exception if dereferenced.
 		/// </summary>
-		/// <returns>An iterator pointing to element past the last element of the HashMap</returns>
+		/// <returns>An iterator pointing to element past the last element of the UnorderedMap</returns>
 		Iterator end();
 
 		/// <summary>
-		/// Returns a const_iterator pointing to element past the last element of the HashMap. This is out of bounds of the HashMap and will throw an exception if dereferenced.
+		/// Returns a const_iterator pointing to element past the last element of the UnorderedMap. This is out of bounds of the UnorderedMap and will throw an exception if dereferenced.
 		/// </summary>
-		/// <returns>A const_iterator pointing to element past the last element of the HashMap.</returns>
+		/// <returns>A const_iterator pointing to element past the last element of the UnorderedMap.</returns>
 		ConstIterator end() const;
 
 		/// <summary>
-		/// Returns a const_iterator pointing to the first element of the HashMap THAT HAS BEEN INITIALIZED.
-		/// Note the HashMap is unordered.
+		/// Returns a const_iterator pointing to the first element of the UnorderedMap THAT HAS BEEN INITIALIZED.
+		/// Note the UnorderedMap is unordered.
 		/// /// </summary>
-		/// <returns>const_iterator pointing to the first element of the HashMap.</returns>
+		/// <returns>const_iterator pointing to the first element of the UnorderedMap.</returns>
 		ConstIterator cbegin() const;
 
 		/// <summary>
-		/// Returns a const_iterator pointing to element past the last element of the HashMap. This is out of bounds of the HashMap and will throw an exception if dereferenced.
+		/// Returns a const_iterator pointing to element past the last element of the UnorderedMap. This is out of bounds of the UnorderedMap and will throw an exception if dereferenced.
 		/// </summary>
-		/// <returns>A const_iterator pointing to element past the last element of the HashMap.</returns>
+		/// <returns>A const_iterator pointing to element past the last element of the UnorderedMap.</returns>
 		ConstIterator cend() const;
 
 		/// <summary>
 		/// Returns an Iterator to the data at the corresponding key if it exists. Otherwise returns an Iterator with a null owner.
 		/// </summary>
-		/// <param name="key">The key to search the HashMap for.</param>
+		/// <param name="key">The key to search the UnorderedMap for.</param>
 		/// <returns>An Iterator to the data at the corresponding key if it exists. Otherwise returns an Iterator with a null owner.</returns>
 		Iterator Find(TKey const& key);
 
 		/// <summary>
 		/// Returns a ConstIterator to the data at the corresponding key if it exists. Otherwise returns a ConstIterator with a null owner.
 		/// </summary>
-		/// <param name="key">The key to search the HashMap for.</param>
+		/// <param name="key">The key to search the UnorderedMap for.</param>
 		/// <returns>An const_terator to the data at the corresponding key if it exists. Otherwise returns an ConstIterator with a null owner.</returns>
 		ConstIterator Find(TKey const& key) const;
 
@@ -333,24 +333,24 @@ namespace FIEAGameEngine
 		std::pair <bool, Iterator>  Insert(TKey const& key, TData const& data);
 
 		/// <summary>
-		/// Returns the data stored in the key-data pair stored in the HashMap at the passed in key. If no key-data pair exists inserts a key-data pair into the HashMap where the key is th passed in key and the data is the default constructor of the data type.
+		/// Returns the data stored in the key-data pair stored in the UnorderedMap at the passed in key. If no key-data pair exists inserts a key-data pair into the UnorderedMap where the key is th passed in key and the data is the default constructor of the data type.
 		/// </summary>
-		/// <param name="key">The key to search the HashMap for.</param>
-		/// <returns>The data stored in the key-data pair stored in the HashMap at the passed in key. If no key-data pair exists inserts a key-data pair into the HashMap where the key is th passed in key and the data is the default constructor of the data type.</returns>
+		/// <param name="key">The key to search the UnorderedMap for.</param>
+		/// <returns>The data stored in the key-data pair stored in the UnorderedMap at the passed in key. If no key-data pair exists inserts a key-data pair into the UnorderedMap where the key is th passed in key and the data is the default constructor of the data type.</returns>
 		TData & operator[] (TKey const& key);
 
 		/// <summary>
-		/// Returns the data stored in the key-data pair stored in the HashMap at the passed in key. If no key-data pair throw an exception
+		/// Returns the data stored in the key-data pair stored in the UnorderedMap at the passed in key. If no key-data pair throw an exception
 		/// </summary>
-		/// <param name="key">The key to search the HashMap for.</param>
-		/// <returns>The data stored in the key-data pair stored in the HashMap at the passed in key. If no key-data pair throw an exception</returns>
+		/// <param name="key">The key to search the UnorderedMap for.</param>
+		/// <returns>The data stored in the key-data pair stored in the UnorderedMap at the passed in key. If no key-data pair throw an exception</returns>
 		TData & At(TKey const& key);
 
 		/// <summary>
-		/// Returns a const reference to data stored in the key-data pair stored in the HashMap at the passed in key. If no key-data pair throw an exception
+		/// Returns a const reference to data stored in the key-data pair stored in the UnorderedMap at the passed in key. If no key-data pair throw an exception
 		/// </summary>
-		/// <param name="key">The key to search the HashMap for.</param>
-		/// <returns>A const reference to data stored in the key-data pair stored in the HashMap at the passed in key. If no key-data pair throw an exception</returns>
+		/// <param name="key">The key to search the UnorderedMap for.</param>
+		/// <returns>A const reference to data stored in the key-data pair stored in the UnorderedMap at the passed in key. If no key-data pair throw an exception</returns>
 		TData const& At(TKey const& key) const;
 
 		/// <summary>
@@ -358,19 +358,19 @@ namespace FIEAGameEngine
 		/// </summary>
 		/// <param name="other"></param>
 		/// <returns></returns>
-		bool operator==(HashMap const& other) const;
+		bool operator==(UnorderedMap const& other) const;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="other"></param>
 		/// <returns></returns>
-		bool operator!=(HashMap const& other) const;
+		bool operator!=(UnorderedMap const& other) const;
 
 		/// <summary>
-		/// Removes the key-data pair stored at the index mapped to by the hashed key. If the key-data pair is not in the HashMap do nothing.
+		/// Removes the key-data pair stored at the index mapped to by the hashed key. If the key-data pair is not in the UnorderedMap do nothing.
 		/// </summary>
-		/// <param name="key">The key to search the HashMap for.</param>
+		/// <param name="key">The key to search the UnorderedMap for.</param>
 		void Remove(TKey const& key);
 
 		/// <summary>
@@ -379,9 +379,9 @@ namespace FIEAGameEngine
 		void Clear();
 
 		/// <summary>
-		/// Returns the number of elements populating the HashMap.
+		/// Returns the number of elements populating the UnorderedMap.
 		/// </summary>
-		/// <returns>The number of elements populating the HashMap.</returns>
+		/// <returns>The number of elements populating the UnorderedMap.</returns>
 		size_t Size() const;
 
 		/// <summary>
@@ -391,17 +391,17 @@ namespace FIEAGameEngine
 		double LoadFactor() const;
 
 		/// <summary>
-		/// Resizes the hash map to a new number of buckets. Remaps all values when called.
+		/// Resizes the unordered map to a new number of buckets. Remaps all values when called.
 		/// </summary>
 		/// <param name="numBuckets">New number of buckets</param>
 		void Resize(size_t numBuckets);
 
 		/// <summary>
-		/// Returns true if the key is in the HashMap and false otherwise Returns data at key as out parameter if it exists.
+		/// Returns true if the key is in the UnorderedMap and false otherwise Returns data at key as out parameter if it exists.
 		/// </summary>
-		/// <param name="key">The key we are searching for within the HashMap.</param>
+		/// <param name="key">The key we are searching for within the UnorderedMap.</param>
 		/// <param name="data">Out param of value at key.</param>
-		/// <returns>True if the key is in the HashMap and false otherwise.</returns>
+		/// <returns>True if the key is in the UnorderedMap and false otherwise.</returns>
 		std::pair<bool, TData*> ContainsKey(TKey const& key) const;
 
 
@@ -433,17 +433,17 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// 
 		/// </summary>
-		inline static const std::string attemptToIteratePastLastElementException = "Attempted to increment an iterator past end of the hash map.\n";
+		inline static const std::string attemptToIteratePastLastElementException = "Attempted to increment an iterator past end of the unordered map.\n";
 
 		/// <summary>
 		/// 
 		/// </summary>
-		inline static const std::string keyNotInHashMapException = "Key searched for was not found in hash map.\n";
+		inline static const std::string keyNotInUnorderedMapException = "Key searched for was not found in unordered map.\n";
 
 		/// <summary>
 		/// 
 		/// </summary>
-		inline static const std::string hashMapMustHaveSizeGreaterThanZeroException = "Hash map must have bucket size greater than 0.\n";
+		inline static const std::string unorderedMapMustHaveSizeGreaterThanZeroException = "Unordered map must have bucket size greater than 0.\n";
 
 		/// <summary>
 		/// 
@@ -454,4 +454,4 @@ namespace FIEAGameEngine
 
 
 };
-#include "HashMap.inl"
+#include "UnorderedMap.inl"

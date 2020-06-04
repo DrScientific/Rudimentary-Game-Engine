@@ -1,5 +1,5 @@
 #pragma once
-#include "HashMap.h"
+#include "UnorderedMap.h"
 #include "Attributed.h"
 #include "Stack.h"
 
@@ -45,12 +45,12 @@ namespace FIEAGameEngine
 			RTTI::IdType const ParentId;
 		};
 
-		using TypeRegistryType = HashMap<RTTI::IdType const, TypeRegistryEntry const>;
+		using TypeRegistryType = UnorderedMap<RTTI::IdType const, TypeRegistryEntry const>;
 		static TypeRegistryType TypeRegistryMap;
 		
 		//It would be nice to use this as a cache for signatures retrieved from the type registry map, but that dynamically allocates static memory which returns a false positive for
 		//memory leaks in CRTDBG
-		//static HashMap<RTTI::IdType const, Vector<Attributed::Signature>> SignaturesMap;
+		//static UnorderedMap<RTTI::IdType const, Vector<Attributed::Signature>> SignaturesMap;
 	};
 
 }
