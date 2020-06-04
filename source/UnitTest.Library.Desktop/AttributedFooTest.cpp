@@ -216,12 +216,12 @@ namespace UnitTestLibraryDesktop
 			foo.Clear();
 			Assert::AreEqual(originalSize, foo.Size());
 		}
-		TEST_METHOD(TestConstructor)
+		TEST_METHOD(ConstructorTest)
 		{
 			AttributedFoo a;
 		}
 
-		TEST_METHOD(TestAttributedMoveConstructor)
+		TEST_METHOD(AttributedMoveConstructorTest)
 		{
 			AttributedFoo foo;
 			AttributedFoo anotherAttributedFoo = std::move(foo);
@@ -248,7 +248,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(anotherAttributedFoo.ExternalString == anotherAttributedFoo["ExternalString"].Get<string>());
 		}
 
-		TEST_METHOD(TestAssignmentOperator)
+		TEST_METHOD(AssignmentOperatorTest)
 		{
 			AttributedFoo foo;
 			AttributedFoo anotherAttributedFoo;
@@ -276,7 +276,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(anotherAttributedFoo.ExternalString == anotherAttributedFoo["ExternalString"].Get<string>());
 		}
 
-		TEST_METHOD(TestAttributedMoveAssignment)
+		TEST_METHOD(AttributedMoveAssignmentTest)
 		{
 			AttributedFoo foo;
 			AttributedFoo anotherAttributedFoo;
@@ -305,7 +305,7 @@ namespace UnitTestLibraryDesktop
 
 		}
 
-		TEST_METHOD(TestIsAttribute)
+		TEST_METHOD(IsAttributeTest)
 		{
 			AttributedFoo a;
 
@@ -325,7 +325,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(TestIsPrescribedAttribute)
+		TEST_METHOD(IsPrescribedAttributeTest)
 		{
 			AttributedFoo a;
 
@@ -349,7 +349,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(TestIsAuxiliaryAttribute)
+		TEST_METHOD(IsAuxiliaryAttributeTest)
 		{
 			AttributedFoo a;
 
@@ -373,7 +373,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(TestAttributes)
+		TEST_METHOD(AttributesTest)
 		{
 			AttributedFoo a;
 
@@ -397,7 +397,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(TestPrescribedAttributes)
+		TEST_METHOD(PrescribedAttributesTest)
 		{
 			AttributedFoo a;
 
@@ -424,7 +424,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(TestRepopulate)
+		TEST_METHOD(RepopulateTest)
 		{
 			AttributedFoo foo;
 			size_t originalSize = foo.Size();
@@ -435,7 +435,7 @@ namespace UnitTestLibraryDesktop
 			Assert::AreEqual(originalSize, foo.Size());
 		}
 
-		TEST_METHOD(TestAppendAuxiliaryAttributesAndAuxiliaryAttributes)
+		TEST_METHOD(AppendAuxiliaryAttributesAndAuxiliaryAttributesTest)
 		{
 			AttributedFoo a;
 

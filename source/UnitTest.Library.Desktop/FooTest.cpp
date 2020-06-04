@@ -35,7 +35,7 @@ namespace UnitTestLibraryDesktop
 #endif
 		}
 
-		TEST_METHOD(TestConstructor)
+		TEST_METHOD(ConstructorTest)
 		{
 			Foo a;
 			Assert::AreEqual(0, a.Data());
@@ -45,7 +45,7 @@ namespace UnitTestLibraryDesktop
 			Assert::AreEqual(data, b.Data());
 			
 		}
-		TEST_METHOD(TestAssignmentOperator)
+		TEST_METHOD(AssignmentOperatorTest)
 		{
 			Foo a;
 			Assert::AreEqual(0, a.Data());
@@ -60,7 +60,7 @@ namespace UnitTestLibraryDesktop
 			Assert::AreEqual(a.Data(), b.Data());
 		}
 
-		TEST_METHOD(TestEquivalenceOperators)
+		TEST_METHOD(EquivalenceOperatorsTest)
 		{
 			Foo a;
 			Assert::AreEqual(0, a.Data());

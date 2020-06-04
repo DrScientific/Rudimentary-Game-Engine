@@ -48,14 +48,14 @@ namespace UnitTestLibraryDesktop
 #endif
 		}
 
-		TEST_METHOD(OrderedSetConstructorTest)
+		TEST_METHOD(ConstructorTest)
 		{
 			OrderedSet<Foo> orderedSet;
 			Assert::IsTrue(orderedSet.Size() == 0);
 			Assert::IsTrue(orderedSet.IsEmpty());
 		}
 
-		TEST_METHOD(OrderedSetInitializerListConstructorTest)
+		TEST_METHOD(InitializerListConstructorTest)
 		{
 			OrderedSet<Foo> orderedSet
 			{ 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3,
@@ -69,7 +69,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(orderedSet.VerifySize());
 		}
 
-		TEST_METHOD(OrderedSetIteratorIncrementTest)
+		TEST_METHOD(IteratorIncrementTest)
 		{
 			OrderedSet<Foo> orderedSet;
 			for (int i = 0; i < uniqueTreeElements; i++)
@@ -86,7 +86,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedSetFindAndContainsTest)
+		TEST_METHOD(FindAndContainsTest)
 		{
 			OrderedSet<Foo> orderedSet;
 			Assert::IsTrue(orderedSet.Find(0) == orderedSet.end());
@@ -109,7 +109,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedSetLowerBoundTest)
+		TEST_METHOD(LowerBoundTest)
 		{
 			OrderedSet<Foo> orderedSet;
 			Assert::IsTrue(orderedSet.LowerBound(0) == orderedSet.end());
@@ -133,7 +133,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(allElementsLower == orderedSet.end());
 		}
 
-		TEST_METHOD(OrderedSetUpperBoundTest)
+		TEST_METHOD(UpperBoundTest)
 		{
 			OrderedSet<Foo> orderedSet;
 			Assert::IsTrue(orderedSet.UpperBound(0) == orderedSet.end());
@@ -154,7 +154,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(allElementsLower == orderedSet.end());
 		}
 
-		TEST_METHOD(OrderedSetCountTest)
+		TEST_METHOD(CountTest)
 		{
 			OrderedSet<Foo> orderedSet;
 			Assert::IsTrue(orderedSet.Count(0) == 0);
@@ -193,7 +193,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedSetInsertTest)
+		TEST_METHOD(InsertTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -224,7 +224,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedSetRemoveByValueTest)
+		TEST_METHOD(RemoveByValueTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -262,7 +262,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedSetRemoveByIteratorTest)
+		TEST_METHOD(RemoveByIteratorTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -301,7 +301,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedSetCopyConstructorAndAssignmentOperatorTest)
+		TEST_METHOD(CopyConstructorAndAssignmentOperatorTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -333,7 +333,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedSetMoveConstructorAndMoveAssignmentOperatorTest)
+		TEST_METHOD(MoveConstructorAndMoveAssignmentOperatorTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -362,7 +362,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedSetSwapTest)
+		TEST_METHOD(SwapTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -405,7 +405,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedSetComparisonOperatorsTest)
+		TEST_METHOD(ComparisonOperatorsTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{

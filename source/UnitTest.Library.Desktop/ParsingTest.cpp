@@ -60,7 +60,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(master.TypeName() == "JsonParseMaster");
 		}
 
-		TEST_METHOD(TestSimpleDeserialization)
+		TEST_METHOD(SimpleDeserializationTest)
 		{
 			stringstream inputStream;
 			inputStream << R"({ "Health": { "type": "integer", "value" : 100 }})"s;
@@ -72,7 +72,7 @@ namespace UnitTestLibraryDesktop
 			Logger::WriteMessage(root["Health"]["value"].toStyledString().c_str());
 		}
 
-		TEST_METHOD(TestIntegerJsonParser)
+		TEST_METHOD(IntegerJsonParserTest)
 		{
 			IIntegerJsonParseHelper::SharedData sharedInt;
 			sharedInt.Initialize();
@@ -91,7 +91,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(master.GetSharedData()->As<IIntegerJsonParseHelper::SharedData>()->parsedInt == 100);
 		}
 
-		TEST_METHOD(TestClone)
+		TEST_METHOD(CloneTest)
 		{
 			IIntegerJsonParseHelper::SharedData sharedInt;
 			sharedInt.Initialize();
@@ -118,7 +118,7 @@ namespace UnitTestLibraryDesktop
 			delete clonedMaster;
 		}
 
-		TEST_METHOD(TestMoveAssignment)
+		TEST_METHOD(MoveAssignmentTest)
 		{
 			IIntegerJsonParseHelper::SharedData sharedInt;
 			sharedInt.Initialize();
@@ -140,7 +140,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(movedMaster.GetSharedData()->As<IIntegerJsonParseHelper::SharedData>()->parsedInt == 100);
 		}
 
-		TEST_METHOD(TestMoveConstructor)
+		TEST_METHOD(MoveConstructorTest)
 		{
 			IIntegerJsonParseHelper::SharedData sharedInt;
 			sharedInt.Initialize();
@@ -158,7 +158,7 @@ namespace UnitTestLibraryDesktop
 		}
 
 
-		TEST_METHOD(TestFileParsing)
+		TEST_METHOD(FileParsingTest)
 		{
 			string const fileName = "Content/TestFile.json";
 			string const inputString = R"({ "integer" : 100 })"s;
@@ -187,7 +187,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(master.GetSharedData()->As<IIntegerJsonParseHelper::SharedData>()->parsedInt == 100);
 		}
 
-		TEST_METHOD(TestParseIfStream)
+		TEST_METHOD(ParseIfStreamTest)
 		{
 			string const fileName = "Content/TestFile.json";
 			string const inputString = R"({ "integer" : 100 })"s;
@@ -224,7 +224,7 @@ namespace UnitTestLibraryDesktop
 			fileStream.close();
 		}
 
-		TEST_METHOD(TestRemoveHelper)
+		TEST_METHOD(RemoveHelperTest)
 		{
 			IIntegerJsonParseHelper::SharedData sharedInt;
 			sharedInt.Initialize();
@@ -243,7 +243,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsFalse(master.Parse(R"({ "integer" : 100 })"s));
 		}
 
-		TEST_METHOD(TestDepthParser)
+		TEST_METHOD(DepthParserTest)
 		{
 			IDepthTestParseHelper::SharedData sharedDepth;
 			sharedDepth.Initialize();
@@ -264,7 +264,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue( maxDepth == 4);
 		}
 
-		TEST_METHOD(TestDepthParserClone)
+		TEST_METHOD(DepthParserCloneTest)
 		{
 			IDepthTestParseHelper::SharedData sharedDepth;
 			sharedDepth.Initialize();
@@ -298,7 +298,7 @@ namespace UnitTestLibraryDesktop
 		}
 
 
-		TEST_METHOD(TestScopeParser)
+		TEST_METHOD(ScopeParserTest)
 		{
 			shared_ptr sharedScope = make_shared<Scope>();
 			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
@@ -329,7 +329,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(ourScope["H"].Front<mat4x4>() == mat4x4(1, 1, 1, 1 , 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4));
 		}
 
-		TEST_METHOD(TestNestedScopeParser)
+		TEST_METHOD(NestedScopeParserTest)
 		{
 			shared_ptr sharedScope = make_shared<Scope>();
 			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
@@ -410,7 +410,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(rathianScope["Rotation"] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f));
 		}
 
-		TEST_METHOD(TestNestedScopeCloneParser)
+		TEST_METHOD(NestedScopeCloneParserTest)
 		{
 			shared_ptr sharedScope = make_shared<Scope>();
 			ScopeJsonParseHelper::ScopeSharedData sharedData(sharedScope);
@@ -500,7 +500,7 @@ namespace UnitTestLibraryDesktop
 			delete clonedMaster;
 		}
 
-		TEST_METHOD(TestArrayScopeParser)
+		TEST_METHOD(ArrayScopeParserTest)
 		{
 			//Changed grammar and now this test is no longer parsable.
 			//Functionality is tested in WorldSectorEntityTest.cpp, have not had time to come back and rebuild the json file parsed here.
@@ -584,7 +584,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(rathianScope["Rotation"] == mat4x4(1.0f, 1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f));*/
 		}
 
-		TEST_METHOD(TestArrayScopeCloneParser)
+		TEST_METHOD(ArrayScopeCloneParserTest)
 		{
 			//Changed grammar and now this test is no longer parsable.
 			//Functionality is tested in WorldSectorEntityTest.cpp, have not had time to come back and rebuild the json file parsed here.
@@ -678,7 +678,7 @@ namespace UnitTestLibraryDesktop
 			delete clonedMaster;*/
 		}
 
-		TEST_METHOD(TestAttributedFooParse)
+		TEST_METHOD(AttributedFooParseTest)
 		{
 			//Changed grammar and now this test is no longer parsable.
 			//Functionality is tested in WorldSectorEntityTest.cpp, have not had time to come back and rebuild the json file parsed here.
@@ -754,7 +754,7 @@ namespace UnitTestLibraryDesktop
 		}
 
 		
-		TEST_METHOD(TestAttributedCloneParse)
+		TEST_METHOD(AttributedCloneParseTest)
 		{
 			//Changed grammar and now this test is no longer parsable.
 			//Functionality is tested in WorldSectorEntityTest.cpp, have not had time to come back and rebuild the json file parsed here.

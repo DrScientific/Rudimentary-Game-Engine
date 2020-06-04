@@ -48,7 +48,7 @@ namespace UnitTestLibraryDesktop
 #endif
 		}
 
-		TEST_METHOD(OrderedMapConstructorTest)
+		TEST_METHOD(ConstructorTest)
 		{
 			OrderedMap<Foo, std::string> orderedMap;
 			Assert::IsTrue(orderedMap.Size() == 0);
@@ -57,7 +57,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(orderedMap.VerifySize());
 		}
 
-		TEST_METHOD(OrderedMapInitializerListConstructorTest)
+		TEST_METHOD(InitializerListConstructorTest)
 		{
 			OrderedMap<Foo, std::string> orderedMap
 			{ {0, "0"}, {0, "0"}, {0, "0"}, {1, "1"}, {1, "1"}, {1, "1"}, {2, "2"}, {2, "2"}, {2, "2"},{3, "3"}, {3, "3"}, {3, "3"},
@@ -71,7 +71,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(orderedMap.VerifySize());
 		}
 
-		TEST_METHOD(OrderedMapIteratorIncrementTest)
+		TEST_METHOD(IteratorIncrementTest)
 		{
 			OrderedMap<Foo, std::string> orderedMap;
 			for (int i = 0; i < uniqueTreeElements; i++)
@@ -89,7 +89,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMapFindAndContainsTest)
+		TEST_METHOD(FindAndContainsTest)
 		{
 			OrderedMap<Foo, std::string> orderedMap;
 			Assert::IsTrue(orderedMap.Find(0) == orderedMap.end());
@@ -112,7 +112,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMapLowerBoundTest)
+		TEST_METHOD(LowerBoundTest)
 		{
 			OrderedMap<Foo, std::string> orderedMap;
 			Assert::IsTrue(orderedMap.LowerBound(0) == orderedMap.end());
@@ -136,7 +136,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(allElementsLower == orderedMap.end());
 		}
 
-		TEST_METHOD(OrderedMapUpperBoundTest)
+		TEST_METHOD(UpperBoundTest)
 		{
 			OrderedMap<Foo, std::string> orderedMap;
 			Assert::IsTrue(orderedMap.UpperBound(0) == orderedMap.end());
@@ -157,7 +157,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(allElementsLower == orderedMap.end());
 		}
 
-		TEST_METHOD(OrderedMapCountTest)
+		TEST_METHOD(CountTest)
 		{
 			OrderedMap<Foo, std::string> orderedMap;
 			Assert::IsTrue(orderedMap.Count(0) == 0);
@@ -196,7 +196,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMapInsertTest)
+		TEST_METHOD(InsertTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -227,7 +227,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMapRemoveByValueTest)
+		TEST_METHOD(RemoveByValueTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -265,7 +265,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMapRemoveByIteratorTest)
+		TEST_METHOD(RemoveByIteratorTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -304,7 +304,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMapCopyConstructorAndAssignmentOperatorTest)
+		TEST_METHOD(CopyConstructorAndAssignmentOperatorTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -336,7 +336,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMapMoveConstructorAndMoveAssignmentOperatorTest)
+		TEST_METHOD(MoveConstructorAndMoveAssignmentOperatorTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -365,7 +365,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMapSwapTest)
+		TEST_METHOD(SwapTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -408,7 +408,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMapComparisonOperatorsTest)
+		TEST_METHOD(ComparisonOperatorsTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{

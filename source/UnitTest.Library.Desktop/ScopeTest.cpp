@@ -60,12 +60,12 @@ namespace UnitTestLibraryDesktop
 			return str;
 		}
 
-		TEST_METHOD(TestConstructorsAndDestructor)
+		TEST_METHOD(ConstructorsAndDestructorTest)
 		{
 			Scope b;
 		}
 
-		TEST_METHOD(TestAppend)
+		TEST_METHOD(AppendTest)
 		{
 			Scope rathalos;
 
@@ -99,7 +99,7 @@ namespace UnitTestLibraryDesktop
 			Assert::ExpectException<exception>(emptyKeyException);
 		}
 
-		TEST_METHOD(TestStringOperatorBracket)
+		TEST_METHOD(StringOperatorBracketTest)
 		{
 			Scope rathalos;
 
@@ -133,7 +133,7 @@ namespace UnitTestLibraryDesktop
 			Assert::ExpectException<exception>(outOfBoundsException);
 		}
 
-		TEST_METHOD(TestIndexOperatorBracket)
+		TEST_METHOD(IndexOperatorBracketTest)
 		{
 			Scope rathalos;
 
@@ -160,7 +160,7 @@ namespace UnitTestLibraryDesktop
 			Assert::ExpectException<exception>(emptyKeyException);
 		}
 
-		TEST_METHOD(TestAppendScope)
+		TEST_METHOD(AppendScopeTest)
 		{
 			srand(static_cast<unsigned int>(time(NULL)));
 
@@ -202,7 +202,7 @@ namespace UnitTestLibraryDesktop
 
 
 
-		TEST_METHOD(PaulAppendScope)
+		TEST_METHOD(PaulAppendScopeTest)
 		{
 			Scope scope;
 			string a = "A";
@@ -255,7 +255,7 @@ namespace UnitTestLibraryDesktop
 
 		}
 
-		TEST_METHOD(TestFind)
+		TEST_METHOD(FindTest)
 		{
 			Scope rathalos;
 
@@ -306,7 +306,7 @@ namespace UnitTestLibraryDesktop
 			Assert::ExpectException<exception>(emptyKeyException);
 		}
 
-		TEST_METHOD(TestFindName)
+		TEST_METHOD(FindNameTest)
 		{
 			Scope rathalos;
 
@@ -325,7 +325,7 @@ namespace UnitTestLibraryDesktop
 
 		}
 
-		TEST_METHOD(TestSearch)
+		TEST_METHOD(SearchTest)
 		{
 			Scope rathalos;
 			Scope dummy;
@@ -350,7 +350,7 @@ namespace UnitTestLibraryDesktop
 			Assert::ExpectException<exception>(emptyKeyException);
 		}
 
-		TEST_METHOD(TestAdopt)
+		TEST_METHOD(AdoptTest)
 		{
 			Scope rathalos;
 
@@ -404,7 +404,7 @@ namespace UnitTestLibraryDesktop
 			delete &scopeReference;
 		}
 
-		TEST_METHOD(TestEquivalenceOperator)
+		TEST_METHOD(EquivalenceOperatorTest)
 		{
 			Scope rathalos;
 
@@ -524,7 +524,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(silverRathalos != mysteryMachine);
 		}
 
-		TEST_METHOD(TestAssignmentOperator)
+		TEST_METHOD(AssignmentOperatorTest)
 		{
 			Scope rathalos;
 

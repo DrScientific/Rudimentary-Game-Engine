@@ -368,7 +368,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(sector2A.GetWorld() == &world1);
 		}
 
-		TEST_METHOD(TestUpdate)
+		TEST_METHOD(UpdateTest)
 		{
 			SectorFactory sectorFactory;
 			EntityFactory entityFactory;

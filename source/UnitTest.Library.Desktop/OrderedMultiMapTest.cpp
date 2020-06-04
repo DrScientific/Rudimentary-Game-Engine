@@ -49,7 +49,7 @@ namespace UnitTestLibraryDesktop
 #endif
 		}
 
-		TEST_METHOD(OrderedMultiMapConstructorTest)
+		TEST_METHOD(ConstructorTest)
 		{
 			OrderedMultiMap<Foo, std::string> orderedMultiMap;
 			Assert::IsTrue(orderedMultiMap.Size() == 0);
@@ -58,7 +58,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(orderedMultiMap.VerifySize());
 		}
 
-		TEST_METHOD(OrderedMultiMapInitializerListConstructorTest)
+		TEST_METHOD(InitializerListConstructorTest)
 		{
 			OrderedMultiMap<Foo, std::string> orderedMultiMap
 			{	{0, "0"}, {0, "0"}, {0, "0"}, {1, "1"}, {1, "1"}, {1, "1"}, {2, "2"}, {2, "2"}, {2, "2"},{3, "3"}, {3, "3"}, {3, "3"},
@@ -72,7 +72,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(orderedMultiMap.VerifySize());
 		}
 
-		TEST_METHOD(OrderedMultiMapIteratorIncrementTest)
+		TEST_METHOD(IteratorIncrementTest)
 		{
 			OrderedMultiMap<Foo, std::string> orderedMultiMap;
 			for (int i = 0; i < uniqueTreeElements; i++)
@@ -93,7 +93,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMultiMapFindAndContainsTest)
+		TEST_METHOD(FindAndContainsTest)
 		{
 			OrderedMultiMap<Foo, std::string> orderedMultiMap;
 			Assert::IsTrue(orderedMultiMap.Find(0) == orderedMultiMap.end());
@@ -119,7 +119,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMultiMapLowerBoundTest)
+		TEST_METHOD(LowerBoundTest)
 		{
 			OrderedMultiMap<Foo, std::string> orderedMultiMap;
 			Assert::IsTrue(orderedMultiMap.LowerBound(0) == orderedMultiMap.end());
@@ -147,7 +147,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(allElementsLower == orderedMultiMap.end());
 		}
 
-		TEST_METHOD(OrderedMultiMapUpperBoundTest)
+		TEST_METHOD(UpperBoundTest)
 		{
 			OrderedMultiMap<Foo, std::string> orderedMultiMap;
 			Assert::IsTrue(orderedMultiMap.UpperBound(0) == orderedMultiMap.end());
@@ -173,7 +173,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(allElementsLower == orderedMultiMap.end());
 		}
 
-		TEST_METHOD(OrderedMultiMapCountTest)
+		TEST_METHOD(CountTest)
 		{
 			OrderedMultiMap<Foo, std::string> orderedMultiMap;
 			Assert::IsTrue(orderedMultiMap.Count(0) == 0);
@@ -215,7 +215,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMultiMapInsertTest)
+		TEST_METHOD(InsertTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -246,7 +246,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMultiMapRemoveByValueTest)
+		TEST_METHOD(RemoveByValueTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -284,7 +284,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMultiMapRemoveByIteratorTest)
+		TEST_METHOD(RemoveByIteratorTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -325,7 +325,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMultiMapCopyConstructorAndAssignmentOperatorTest)
+		TEST_METHOD(CopyConstructorAndAssignmentOperatorTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -357,7 +357,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMultiMapMoveConstructorAndMoveAssignmentOperatorTest)
+		TEST_METHOD(MoveConstructorAndMoveAssignmentOperatorTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -386,7 +386,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMultiMapSwapTest)
+		TEST_METHOD(SwapTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
@@ -429,7 +429,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(OrderedMultiMapComparisonOperatorsTest)
+		TEST_METHOD(ComparisonOperatorsTest)
 		{
 			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{

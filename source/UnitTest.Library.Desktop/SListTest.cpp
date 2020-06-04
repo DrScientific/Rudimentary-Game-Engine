@@ -34,13 +34,13 @@ namespace UnitTestLibraryDesktop
 #endif
 		}
 
-		TEST_METHOD(TestDefaultConstructorAndDestructor)
+		TEST_METHOD(DefaultConstructorAndDestructorTest)
 		{
 			SList <int> intList;
 			SList <int*> intPtrList;
 			SList <Foo> fooList;
 		}
-		TEST_METHOD(TestInitializerListConstructor)
+		TEST_METHOD(InitializerListConstructorTest)
 		{
 			int a = 0, b = 1, c = 2;
 			SList <int> intList = { a,b,c };
@@ -68,7 +68,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(fooList.PopFront() == fooList.end());
 			Assert::IsTrue(fooList.IsEmpty());
 		}
-		TEST_METHOD(TestFrontExceptionThrowsAndBackExceptionThrows)
+		TEST_METHOD(FrontExceptionThrowsAndBackExceptionThrowsTest)
 		{
 			SList <int> intList;
 			
@@ -102,7 +102,7 @@ namespace UnitTestLibraryDesktop
 			Assert::ExpectException<std::exception>(backFooListException);
 		}
 
-		TEST_METHOD(TestPushFront)
+		TEST_METHOD(PushFrontTest)
 		{
 			SList <int> intList;
 			int a = 0, b = 1, c = 2;
@@ -154,7 +154,7 @@ namespace UnitTestLibraryDesktop
 			Assert::AreEqual(fooList.Back().Data(), bar.Data());
 			Assert::AreEqual(fooList.Size(), size_t(3));
 		}
-		TEST_METHOD(TestPushBack)
+		TEST_METHOD(PushBackTest)
 		{
 			SList <int> intList;
 			int a = 0, b = 1, c = 2;
@@ -207,7 +207,7 @@ namespace UnitTestLibraryDesktop
 			Assert::AreEqual(fooList.Back().Data(), dar.Data());
 			Assert::AreEqual(fooList.Size(), size_t(3));
 		}
-		TEST_METHOD(TestPopFront)
+		TEST_METHOD(PopFrontTest)
 		{
 			SList <int> intList;
 			int a = 0, b = 1, c = 2;
@@ -255,7 +255,7 @@ namespace UnitTestLibraryDesktop
 			Assert::ExpectException<std::exception>(popFrontFooListException);
 		}
 
-		TEST_METHOD(TestPopBack)
+		TEST_METHOD(PopBackTest)
 		{
 			SList <int> intList;
 			int a = 0, b = 1, c = 2;
@@ -302,7 +302,7 @@ namespace UnitTestLibraryDesktop
 			auto popBackFooListException = [&fooList] { fooList.PopBack(); };
 			Assert::ExpectException<std::exception>(popBackFooListException);
 		}
-		TEST_METHOD(TestClear)
+		TEST_METHOD(ClearTest)
 		{
 			SList <int> intList;
 			int a = 0, b = 1, c = 2;
@@ -334,7 +334,7 @@ namespace UnitTestLibraryDesktop
 
 			Assert::IsTrue(fooList.IsEmpty());
 		}
-		TEST_METHOD(TestEquivalenceOperators)
+		TEST_METHOD(EquivalenceOperatorsTest)
 		{
 			SList <int> intListABC, intListDEF, intListGHI;
 
@@ -360,7 +360,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(intListABC != intListGHI);
 			Assert::IsTrue(intListDEF != intListGHI);
 		}
-		TEST_METHOD(TestCopyConstructorAndMoveAssignmentOperator)
+		TEST_METHOD(CopyConstructorAndMoveAssignmentOperatorTest)
 		{
 			SList <int> intList1;
 			int a = 0, b = 1, c = 2;
@@ -500,7 +500,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(fooList1.Size() == fooList2.Size());
 		}
 
-		TEST_METHOD(TestFind)
+		TEST_METHOD(FindTest)
 		{
 			int a = 0, b = 1, c = 2, d = 3, e = 4, f = 5, g = 6, h = 7;
 			SList <int> intList = { a,b,c,d,e,f,g };
@@ -520,7 +520,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(fooList.Find(iar) == fooList.end());
 		}
 
-		TEST_METHOD(TestRemove)
+		TEST_METHOD(RemoveTest)
 		{
 			int a = 0, b = 1, c = 2, d = 3, e = 4, f = 5, g = 6, h = 7;
 			SList <int> intList = { a,b,c,d,e,f,g };
@@ -572,7 +572,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(fooList.Front() == car);
 		}
 
-		TEST_METHOD(TestInsertAfter)
+		TEST_METHOD(InsertAfterTest)
 		{
 			int a = 0, b = 1, c = 2, d = 3, e = 4, f = 5, g = 6, h = 7;
 			SList <int> intList = { a,b,c,d,e,f,g };
@@ -610,7 +610,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(fooList.Size() == 8);
 			Assert::IsTrue(fooList.Find(iar) == (++(++(++(fooList.begin())))));
 		}
-		TEST_METHOD(TestReverse)
+		TEST_METHOD(ReverseTest)
 		{
 			int a = 0, b = 1, c = 2, d = 3, e = 4, f = 5, g = 6, h = 7;
 			SList <int> empty;

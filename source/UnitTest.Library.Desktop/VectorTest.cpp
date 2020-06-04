@@ -34,7 +34,7 @@ namespace UnitTestLibraryDesktop
 #endif
 		}
 
-		TEST_METHOD(TestDefaultConstructorAndDestructor)
+		TEST_METHOD(DefaultConstructorAndDestructorTest)
 		{
 			Vector <Foo> fooVector;
 			Assert::IsTrue(fooVector.IsEmpty());
@@ -45,7 +45,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(fooVector.Size() == 0);
 		}
 		
-		TEST_METHOD(TestInitializerListConstructor)
+		TEST_METHOD(InitializerListConstructorTest)
 		{
 			
 			Foo bar(0), car(1), dar(2);
@@ -70,7 +70,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(constFooVector[2] == dar);
 		}
 
-		TEST_METHOD(IteratorsExceptions)
+		TEST_METHOD(IteratorsExceptionsTest)
 		{
 			Foo bar(0), car(1), dar(2);
 			Vector<Foo> fooVector = { bar, car, dar };
@@ -109,7 +109,7 @@ namespace UnitTestLibraryDesktop
 			Assert::ExpectException<std::exception>(reserveTooSmallException);
 		}
 		*/
-		TEST_METHOD(IndexOutOfBoundsException)
+		TEST_METHOD(IndexOutOfBoundsExceptionTest)
 		{
 			Foo bar(0), car(1), dar(2);
 			Vector<Foo> fooVector = { bar, car, dar };
@@ -128,7 +128,7 @@ namespace UnitTestLibraryDesktop
 			
 
 		}
-		TEST_METHOD(TestFrontAndBack)
+		TEST_METHOD(FrontAndBackTest)
 		{
 			Vector <Foo> emptyFooVector;
 
@@ -153,7 +153,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(constFooVector.Back() == *(--(constFooVector.cend())));
 		}
 		
-		TEST_METHOD(TestPushBack)
+		TEST_METHOD(PushBackTest)
 		{
 			Vector <Foo> fooVector;
 			Foo bar(0), car(1), dar(2);
@@ -173,7 +173,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(fooVector.Size() == size_t(3));
 		}
 		
-		TEST_METHOD(TestPopBack)
+		TEST_METHOD(PopBackTest)
 		{
 			Vector <Foo> fooVector;
 			Foo bar(0), car(1), dar(2);
@@ -193,7 +193,7 @@ namespace UnitTestLibraryDesktop
 			Assert::ExpectException<std::exception>(popBackFooVectorException);
 		}		
 
-		TEST_METHOD(TestEquivalenceOperators)
+		TEST_METHOD(EquivalenceOperatorsTest)
 		{
 			Vector <Foo> fooVectorABC, fooVectorDEF, fooVectorGHI;
 
@@ -220,7 +220,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(fooVectorDEF != fooVectorGHI);
 		}
 		
-		TEST_METHOD(TestCopyConstructorAndAssignmentOperator)
+		TEST_METHOD(CopyConstructorAndAssignmentOperatorTest)
 		{
 			Vector <Foo> fooVector1;
 			Foo bar(0), car(1), dar(2);
@@ -269,7 +269,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(fooVector1.Size() == fooVector2.Size());
 		}
 		
-		TEST_METHOD(TestFind)
+		TEST_METHOD(FindTest)
 		{
 			Foo bar(0), car(1), dar(2), ear(3), far(4), gar(5), har(6), iar(7);
 			Vector <Foo> fooVector = { bar, car, dar, ear, far, gar, har };
@@ -278,7 +278,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(fooVector.Find(iar) == fooVector.end());
 		}
 
-		TEST_METHOD(TestRemove)
+		TEST_METHOD(RemoveTest)
 		{
 			Foo bar(0), car(1), dar(2), ear(3), far(4), gar(5);
 			Vector <Foo> fooVector = { bar,car,dar,ear,far};
@@ -316,7 +316,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(foo2Vector.Front() == bar);
 			Assert::IsTrue(foo2Vector.Back() == far);
 		}
-		TEST_METHOD(TestSwap)
+		TEST_METHOD(SwapTest)
 		{
 			Foo bar(0), car(1), dar(2), ear(3), far(4), gar(5);
 			Vector <Foo> fooVector = { bar,car,dar,ear,far };
@@ -369,7 +369,7 @@ namespace UnitTestLibraryDesktop
 			auto cannotSwapEndException = [&fooVector] { auto begin = fooVector.begin(); auto end = fooVector.end();  fooVector.Swap(begin, end); };
 			Assert::ExpectException<std::exception>(cannotSwapEndException);
 		}
-		TEST_METHOD(TestReverse)
+		TEST_METHOD(ReverseTest)
 		{
 			Foo a = 0, b = 1, c = 2, d = 3, e = 4, f = 5, g = 6, h = 7;
 			Vector <Foo> fooVectorOdd = { a,b,c,d,e,f,g }, fooVectorOddReversed = { g,f,e,d,c,b,a };

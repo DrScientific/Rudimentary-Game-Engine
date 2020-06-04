@@ -62,7 +62,7 @@ namespace UnitTestLibraryDesktop
 			return str;
 		}
 
-		TEST_METHOD(TestConstructorsAndDestructor)
+		TEST_METHOD(ConstructorsAndDestructorTest)
 		{
 			srand(static_cast<unsigned int>(time(NULL)));
 
@@ -98,7 +98,7 @@ namespace UnitTestLibraryDesktop
 			Datum unknownDatum;
 		}
 
-		TEST_METHOD(TestInitializerListConstructor)
+		TEST_METHOD(InitializerListConstructorTest)
 		{
 			size_t testSize = 16;
 
@@ -160,7 +160,7 @@ namespace UnitTestLibraryDesktop
 
 		}
 
-		TEST_METHOD(TestClear)
+		TEST_METHOD(ClearTest)
 		{
 			size_t testSize = 16;
 
@@ -276,7 +276,7 @@ namespace UnitTestLibraryDesktop
 			delete[] testRTTIArr;
 		}
 
-		TEST_METHOD(TestSetStorage)
+		TEST_METHOD(SetStorageTest)
 		{
 			srand(static_cast<unsigned int>(time(NULL)));
 
@@ -419,7 +419,7 @@ namespace UnitTestLibraryDesktop
 			delete[] testRTTIArr;
 		}
 
-		TEST_METHOD(TestAssignmentOperator)
+		TEST_METHOD(AssignmentOperatorTest)
 		{
 			srand(static_cast<unsigned int>(time(NULL)));
 
@@ -639,7 +639,7 @@ namespace UnitTestLibraryDesktop
 			delete[] testRTTIArr;
 		}
 
-		TEST_METHOD(TestType)
+		TEST_METHOD(TypeTest)
 		{
 
 			int testInt = rand();
@@ -668,7 +668,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(Datum::DatumType::Unknown == unknownDatum.Type());
 		}
 
-		TEST_METHOD(TestSetType)
+		TEST_METHOD(SetTypeTest)
 		{
 			Datum intDatum;
 			Assert::IsTrue(Datum::DatumType::Unknown == intDatum.Type());
@@ -703,7 +703,7 @@ namespace UnitTestLibraryDesktop
 			Assert::ExpectException<std::exception>(typeAlreadySetException);
 		}
 
-		TEST_METHOD(TestEquivalenceOperators)
+		TEST_METHOD(EquivalenceOperatorsTest)
 		{
 			size_t testSize = 16;
 			Vector<int> testInts;
@@ -812,7 +812,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(RTTIDatum != mat4x4(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f));
 		}
 
-		TEST_METHOD(TestGet)
+		TEST_METHOD(GetTest)
 		{
 			size_t testSize = 16;
 			Vector<int> testInts;
@@ -890,7 +890,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(TestSet)
+		TEST_METHOD(SetTest)
 		{
 			size_t testSize = 16;
 			Vector<int> testInts;
@@ -957,7 +957,7 @@ namespace UnitTestLibraryDesktop
 			}
 		}
 
-		TEST_METHOD(TestReserve)
+		TEST_METHOD(ReserveTest)
 		{
 			size_t testSize = 16;
 			size_t resizeSize = testSize * 10;
@@ -1069,7 +1069,7 @@ namespace UnitTestLibraryDesktop
 			delete[] testStringArr;
 		}
 
-		TEST_METHOD(TestShrinkToFit)
+		TEST_METHOD(ShrinkToFitTest)
 		{
 			size_t testSize = 16;
 			size_t resizeSize = testSize * 10;
@@ -1144,7 +1144,7 @@ namespace UnitTestLibraryDesktop
 
 		}
 		
-		TEST_METHOD(TestResize)
+		TEST_METHOD(ResizeTest)
 		{
 			size_t testSize = 16;
 			size_t resizeSize = testSize * 10;
@@ -1381,7 +1381,7 @@ namespace UnitTestLibraryDesktop
 			delete[] testStringArr;
 		}
 
-		TEST_METHOD(TestSetFromString)
+		TEST_METHOD(SetFromStringTest)
 		{
 			size_t testSize = 16;
 			Vector<int> testInts;
@@ -1435,7 +1435,7 @@ namespace UnitTestLibraryDesktop
 			Assert::ExpectException<std::exception>(uninitializedTypeException);
 		}
 
-		TEST_METHOD(TestToString)
+		TEST_METHOD(ToStringTest)
 		{
 			size_t testSize = 16;
 			Vector<int> testInts;
@@ -1483,7 +1483,7 @@ namespace UnitTestLibraryDesktop
 			Assert::ExpectException<std::exception>(uninitializedTypeException);
 		}
 
-		TEST_METHOD(TestPushBack)
+		TEST_METHOD(PushBackTest)
 		{
 			size_t testSize = 16;
 
@@ -1583,7 +1583,7 @@ namespace UnitTestLibraryDesktop
 
 		}
 
-		TEST_METHOD(TestPopBack)
+		TEST_METHOD(PopBackTest)
 		{
 			size_t testSize = 16;
 
@@ -1668,7 +1668,7 @@ namespace UnitTestLibraryDesktop
 
 		}
 
-		TEST_METHOD(TestRemove)
+		TEST_METHOD(RemoveTest)
 		{
 			size_t testSize = 16;
 
@@ -1755,7 +1755,7 @@ namespace UnitTestLibraryDesktop
 			delete[] testIntArr;
 		}
 
-		TEST_METHOD(TestRemoveAt)
+		TEST_METHOD(RemoveAtTest)
 		{
 			size_t testSize = 16;
 
@@ -1841,7 +1841,7 @@ namespace UnitTestLibraryDesktop
 			delete[] testIntArr;
 		}
 
-		/*TEST_METHOD(TestRemoveRange)
+		/*TEST_METHOD(RemoveRangeTest)
 		{
 			size_t testSize = 16;
 
@@ -1922,7 +1922,7 @@ namespace UnitTestLibraryDesktop
 			delete[] testIntArr;
 		}*/
 
-		TEST_METHOD(TestFind)
+		TEST_METHOD(FindTest)
 		{
 			size_t testSize = 16;
 

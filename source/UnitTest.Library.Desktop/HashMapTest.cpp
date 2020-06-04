@@ -41,14 +41,14 @@ namespace UnitTestLibraryDesktop
 #endif
 		}
 
-		TEST_METHOD(TestDefaultConstructorAndDestructor)
+		TEST_METHOD(DefaultConstructorAndDestructorTest)
 		{
 			HashMapCharFoo charFooHashMap;
 			HashMapFooString fooStringHashMap;
 			HashMapString2 stringStringHashMap;
 		}
 
-		TEST_METHOD(TestInitializerListConstructor)
+		TEST_METHOD(InitializerListConstructorTest)
 		{
 			HashMapCharFoo charFooHashMap = { std::pair<char*,Foo>("Up", Foo(1)), std::pair<char*,Foo>("Down", Foo(2)), std::pair<char*,Foo>("Left", Foo(3)), std::pair<char*,Foo>("Left", Foo(3)), std::pair<char*,Foo>("A", Foo(4)), std::pair<char*,Foo>("Start", Foo(5)) };
 			Assert::IsTrue(charFooHashMap.Size() == 5);
@@ -58,7 +58,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(string2HashMap.Size() == 5);
 		}
 
-		TEST_METHOD(TestIteratorExceptions)
+		TEST_METHOD(IteratorExceptionsTest)
 		{
 			HashMapCharFoo charFooHashMap;
 
@@ -141,7 +141,7 @@ namespace UnitTestLibraryDesktop
 						
 		}
 
-		TEST_METHOD(TestIterators)
+		TEST_METHOD(IteratorsTest)
 		{
 			HashMapCharFoo charFooHashMap = { std::pair<char*,Foo>("Up", Foo(1)), std::pair<char*,Foo>("Down", Foo(2)), std::pair<char*,Foo>("Left", Foo(3)), std::pair<char*,Foo>("Left", Foo(3)), std::pair<char*,Foo>("A", Foo(4)), std::pair<char*,Foo>("Start", Foo(5)) };
 			Assert::IsTrue(charFooHashMap.Size() == 5);
@@ -162,7 +162,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(++(string2HashMap.cbegin()) != string2HashMap.cend());
 		}
 		
-		TEST_METHOD(TestInsert)
+		TEST_METHOD(InsertTest)
 		{
 			HashMapCharFoo charFooHashMap;
 			Assert::IsTrue(charFooHashMap.Size() == 0);
@@ -214,7 +214,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(string2HashMap.Size() == 5);
 		}
 
-		TEST_METHOD(TestCopyConstructorAndAssignmentOperator)
+		TEST_METHOD(CopyConstructorAndAssignmentOperatorTest)
 		{
 			HashMapCharFoo charFooHashMap = { std::pair<char*,Foo>("Up", Foo(1)), std::pair<char*,Foo>("Down", Foo(2)), std::pair<char*,Foo>("Left", Foo(3)), std::pair<char*,Foo>("Left", Foo(3)), std::pair<char*,Foo>("A", Foo(4)), std::pair<char*,Foo>("Start", Foo(5)) };
 			HashMapCharFoo charFooHashMap2(charFooHashMap);
@@ -241,7 +241,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(string2HashMap3 != string2HashMap4);
 		}
 
-		TEST_METHOD(TestFind)
+		TEST_METHOD(FindTest)
 		{
 			HashMapCharFoo charFooHashMap = { std::pair<char*,Foo>("Up", Foo(1)), std::pair<char*,Foo>("Down", Foo(2)), std::pair<char*,Foo>("Left", Foo(3)), std::pair<char*,Foo>("Left", Foo(3)), std::pair<char*,Foo>("A", Foo(4)), std::pair<char*,Foo>("Start", Foo(5)) };
 			Assert::IsTrue(*(charFooHashMap.Find("Up")) == std::pair<char* const, Foo>("Up", Foo(1)));
@@ -272,7 +272,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(string2HashMap.Find("C") == string2HashMap.end());
 		}
 
-		TEST_METHOD(TestContainsKey)
+		TEST_METHOD(ContainsKeyTest)
 		{
 			HashMapCharFoo charFooHashMap = { std::pair<char*,Foo>("Up", Foo(1)), std::pair<char*,Foo>("Down", Foo(2)), std::pair<char*,Foo>("Left", Foo(3)), std::pair<char*,Foo>("Left", Foo(3)), std::pair<char*,Foo>("A", Foo(4)), std::pair<char*,Foo>("Start", Foo(5)) };
 			Assert::IsTrue(charFooHashMap.ContainsKey("Up").first);
@@ -302,7 +302,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(!string2HashMap.ContainsKey("B").first);
 			Assert::IsTrue(!string2HashMap.ContainsKey("C").first);
 		}
-		TEST_METHOD(TestRemove)
+		TEST_METHOD(RemoveTest)
 		{
 			HashMapCharFoo charFooHashMap = { std::pair<char*,Foo>("Up", Foo(1)), std::pair<char*,Foo>("Down", Foo(2)), std::pair<char*,Foo>("Left", Foo(3)), std::pair<char*,Foo>("Left", Foo(3)), std::pair<char*,Foo>("A", Foo(4)), std::pair<char*,Foo>("Start", Foo(5)) };
 			Assert::IsTrue(charFooHashMap.Size() == 5);
@@ -356,7 +356,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(string2HashMap.Size() == 0);
 		}
 
-		TEST_METHOD(TestClear)
+		TEST_METHOD(ClearTest)
 		{
 			HashMapCharFoo charFooHashMap = { std::pair<char*,Foo>("Up", Foo(1)), std::pair<char*,Foo>("Down", Foo(2)), std::pair<char*,Foo>("Left", Foo(3)), std::pair<char*,Foo>("Left", Foo(3)), std::pair<char*,Foo>("A", Foo(4)), std::pair<char*,Foo>("Start", Foo(5)) };
 			Assert::IsTrue(charFooHashMap.Size() == 5);
@@ -376,7 +376,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(string2HashMap.begin() == string2HashMap.end());
 			Assert::IsTrue(string2HashMap.Size() == 0);
 		}
-		TEST_METHOD(TestBracketOperator)
+		TEST_METHOD(BracketOperatorTest)
 		{
 			HashMapCharFoo charFooHashMap;
 			Assert::IsTrue(charFooHashMap.Size() == 0);
@@ -442,7 +442,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(string2HashMap.Find("Start")->second == string2HashMap["Start"]);
 			Assert::IsTrue(string2HashMap.Size() == 5);
 		}
-		TEST_METHOD(TestAt)
+		TEST_METHOD(AtTest)
 		{
 			HashMapCharFoo charFooHashMap;
 			auto charFooAtException = [&charFooHashMap] { charFooHashMap.At("Up"); };
