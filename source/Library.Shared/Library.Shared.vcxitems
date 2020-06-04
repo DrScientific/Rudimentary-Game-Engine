@@ -38,6 +38,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)IJsonParseHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JsonParseMaster.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)OrderedMap.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrderedMapTraits.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrderedMultiMap.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrderedMultiSet.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Reaction.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactionAttributed.h" />
@@ -46,7 +49,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Scope.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ScopeJsonParseHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sector.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Set.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrderedSet.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrderedSetTraits.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Stack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TemplateLogic.h" />
@@ -92,8 +96,10 @@
     <None Include="$(MSBuildThisFileDirectory)Factory.inl" />
     <None Include="$(MSBuildThisFileDirectory)HashMap.inl" />
     <None Include="$(MSBuildThisFileDirectory)OrderedMap.inl" />
+    <None Include="$(MSBuildThisFileDirectory)OrderedMultiMap.inl" />
+    <None Include="$(MSBuildThisFileDirectory)OrderedMultiSet.inl" />
     <None Include="$(MSBuildThisFileDirectory)RedBlackTree.inl" />
-    <None Include="$(MSBuildThisFileDirectory)Set.inl" />
+    <None Include="$(MSBuildThisFileDirectory)OrderedSet.inl" />
     <None Include="$(MSBuildThisFileDirectory)SList.inl" />
     <None Include="$(MSBuildThisFileDirectory)Stack.inl" />
     <None Include="$(MSBuildThisFileDirectory)Vector.inl" />

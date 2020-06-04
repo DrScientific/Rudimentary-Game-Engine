@@ -1,18 +1,18 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "TestModuleConstants.h"
+#include "Foo.h"
 #include "OrderedMap.h"
 #include "Vector.h"
-#include <algorithm>
 #include <random>
 #include <chrono>
-#include <set>
-#include <map>
 
 #define _DEBUG_FUNCTIONAL_MACHINERY = 1
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
 using namespace FIEAGameEngine;
+using namespace UnitTests;
 
 
 namespace UnitTestLibraryDesktop
@@ -20,9 +20,6 @@ namespace UnitTestLibraryDesktop
 	TEST_CLASS(OrderedMapTest)
 	{
 	public:
-
-		size_t const treeSize = 256;
-		size_t const testIterations = 1000;
 
 		TEST_METHOD_INITIALIZE(Initialize)
 		{
@@ -53,266 +50,418 @@ namespace UnitTestLibraryDesktop
 
 		TEST_METHOD(OrderedMapConstructorTest)
 		{
-			OrderedMap<int,int> orderedMap;
+			OrderedMap<Foo, std::string> orderedMap;
+			Assert::IsTrue(orderedMap.Size() == 0);
+			Assert::IsTrue(orderedMap.IsEmpty());
+			Assert::IsTrue(orderedMap.VerifyRedBlackTree());
+			Assert::IsTrue(orderedMap.VerifySize());
 		}
 
 		TEST_METHOD(OrderedMapInitializerListConstructorTest)
 		{
-			OrderedMap<int, int> orderedMap { {0,0}, {1,1}, {2,2}, {3,3}, {4,4}, {5,5}, {6,6}, {7,7}, {8,8}, {9,9}, {10,10}, {11,11}, {12,12}, {13,13}, {14,14}, {15,15}};
+			OrderedMap<Foo, std::string> orderedMap
+			{ {0, "0"}, {0, "0"}, {0, "0"}, {1, "1"}, {1, "1"}, {1, "1"}, {2, "2"}, {2, "2"}, {2, "2"},{3, "3"}, {3, "3"}, {3, "3"},
+				{4, "4"}, {4, "4"}, {4, "4"}, {5, "5"}, {5, "5"}, {5, "5"}, {6, "6"}, {6, "6"}, {6, "6"},{7, "7"}, {7, "7"}, {7, "7"},
+				{8, "8"}, {8, "8"}, {8, "8"}, {9, "9"}, {9, "9"}, {9, "9"}, {10, "10"}, {10, "10"}, {10, "10"}, {11, "11"}, {11, "11"}, {11, "11"},
+				{12, "12"}, {12, "12"}, {12, "12"}, {13, "13"}, {13, "13"}, {13, "13"}, {14, "14"}, {14, "14"}, {14, "14"}, {15, "15"}, {15, "15"}, {15, "15"}
+			};
+			Assert::IsTrue(orderedMap.Size() == 16);
+			Assert::IsFalse(orderedMap.IsEmpty());
+			Assert::IsTrue(orderedMap.VerifyRedBlackTree());
+			Assert::IsTrue(orderedMap.VerifySize());
 		}
 
 		TEST_METHOD(OrderedMapIteratorIncrementTest)
 		{
-			OrderedMap<int,int> orderedMap{ {0,0}, {1,1}, {2,2}, {3,3}, {4,4}, {5,5}, {6,6}, {7,7}, {8,8}, {9,9}, {10,10}, {11,11}, {12,12}, {13,13}, {14,14}, {15,15} };
-			int i = 0;
-			for (OrderedMap<int, int>::Iterator it = orderedMap.begin(); it != orderedMap.end(); i++, it++)
+			OrderedMap<Foo, std::string> orderedMap;
+			for (int i = 0; i < uniqueTreeElements; i++)
 			{
-				Assert::IsTrue(std::pair<int const,int>(i,i) == *it);
+				for (size_t j = 0; j < numDuplicatesOfUniqueElement; j++)
+				{
+					orderedMap.Insert(i, std::to_string(i));
+				}
+			}
+			int i = 0;
+			for (OrderedMap<Foo, std::string>::Iterator it = orderedMap.begin(); it != orderedMap.end(); i++)
+			{
+				Assert::IsTrue(std::pair<Foo const, std::string>(i, std::to_string(i)) == *it);
+				it++;
 			}
 		}
 
-		TEST_METHOD(OrderedMapFindTest)
+		TEST_METHOD(OrderedMapFindAndContainsTest)
 		{
-			OrderedMap<int, int> orderedMap{ {0,0}, {1,1}, {2,2}, {3,3}, {4,4}, {5,5}, {6,6}, {7,7}, {8,8}, {9,9}, {10,10}, {11,11}, {12,12}, {13,13}, {14,14}, {15,15} };
-			for (int i = 0; i < 16; i++)
+			OrderedMap<Foo, std::string> orderedMap;
+			Assert::IsTrue(orderedMap.Find(0) == orderedMap.end());
+			Assert::IsFalse(orderedMap.Contains(0));
+			for (int i = 0; i < uniqueTreeElements; i++)
 			{
-				Assert::IsTrue(*(orderedMap.Find(i)) == std::pair<int const, int>(i,i));
+				for (size_t j = 0; j < numDuplicatesOfUniqueElement; j++)
+				{
+					orderedMap.Insert(i, std::to_string(i));
+				}
 			}
-			Assert::IsTrue(orderedMap.Find(-1) == orderedMap.end());
-			Assert::IsTrue(orderedMap.Find(16) == orderedMap.end());
+			for (int i = 0; i < uniqueTreeElements; i++)
+			{
+				Assert::IsTrue(orderedMap.Contains(i));
+				OrderedMap<Foo, std::string>::Iterator foundValue = orderedMap.Find(i);
+				Assert::IsTrue(*foundValue == std::pair<Foo const, std::string>(i, std::to_string(i)));
+				orderedMap.Remove(foundValue);
+				Assert::IsFalse(orderedMap.Contains(i));
+				Assert::IsTrue(orderedMap.Find(i) == orderedMap.end());
+			}
+		}
+
+		TEST_METHOD(OrderedMapLowerBoundTest)
+		{
+			OrderedMap<Foo, std::string> orderedMap;
+			Assert::IsTrue(orderedMap.LowerBound(0) == orderedMap.end());
+			for (int i = 0; i < uniqueTreeElements; i++)
+			{
+				for (size_t j = 0; j < numDuplicatesOfUniqueElement; j++)
+				{
+					orderedMap.Insert(i * 2, std::to_string(i * 2));
+				}
+			}
+
+			for (int i = 0; i < uniqueTreeElements - 1; i++)
+			{
+				
+				OrderedMap<Foo, std::string>::Iterator lowerBound = orderedMap.LowerBound(i * 2 - 1);
+				Assert::IsTrue(*lowerBound == std::pair<Foo const, std::string>(i * 2, std::to_string(i * 2)));
+				orderedMap.Remove(lowerBound);
+			}
+
+			OrderedMap<Foo, std::string>::Iterator allElementsLower = orderedMap.LowerBound(static_cast<int>(treeSize));
+			Assert::IsTrue(allElementsLower == orderedMap.end());
+		}
+
+		TEST_METHOD(OrderedMapUpperBoundTest)
+		{
+			OrderedMap<Foo, std::string> orderedMap;
+			Assert::IsTrue(orderedMap.UpperBound(0) == orderedMap.end());
+			for (int i = 0; i < uniqueTreeElements; i++)
+			{
+				for (size_t j = 0; j < numDuplicatesOfUniqueElement; j++)
+				{
+					orderedMap.Insert(i * 2, std::to_string(i * 2));
+				}
+			}
+			for (int i = 0; i < uniqueTreeElements - 1; i++)
+			{
+				OrderedMap<Foo, std::string>::Iterator upperBound = orderedMap.UpperBound(i * 2);
+				Assert::IsTrue(*upperBound == std::pair<Foo const, std::string>((i + 1) * 2, std::to_string((i + 1) * 2)));
+				orderedMap.Remove(--upperBound);
+			}
+			OrderedMap<Foo, std::string>::Iterator allElementsLower = orderedMap.UpperBound(static_cast<int>(treeSize - 1));
+			Assert::IsTrue(allElementsLower == orderedMap.end());
+		}
+
+		TEST_METHOD(OrderedMapCountTest)
+		{
+			OrderedMap<Foo, std::string> orderedMap;
+			Assert::IsTrue(orderedMap.Count(0) == 0);
+			for (int i = 0; i < uniqueTreeElements; i++)
+			{
+				Assert::IsTrue(orderedMap.Count(i) == 0);
+				for (size_t j = 0; j < numDuplicatesOfUniqueElement; j++)
+				{
+					orderedMap.Insert(i, std::to_string(i));
+					Assert::IsTrue(orderedMap.Count(i) == 1);
+				}
+			}
+
+			for (int i = 0; i < uniqueTreeElements; i++)
+			{
+				Assert::IsTrue(orderedMap.Count(i) == 1);
+				orderedMap.Remove(i);
+				Assert::IsTrue(orderedMap.Count(i) == 0);
+			}
+
+			for (int i = 0; i < uniqueTreeElements; i++)
+			{
+				Assert::IsTrue(orderedMap.Count(i) == 0);
+				for (size_t j = 0; j < numDuplicatesOfUniqueElement; j++)
+				{
+					orderedMap.Insert(i, std::to_string(i));
+					Assert::IsTrue(orderedMap.Count(i) == 1);
+				}
+			}
+
+			for (int i = 0; i < uniqueTreeElements; i++)
+			{
+				Assert::IsTrue(orderedMap.Count(i) == 1);
+				orderedMap.Remove(orderedMap.Find(i));
+				Assert::IsTrue(orderedMap.Count(i) == 0);
+			}
 		}
 
 		TEST_METHOD(OrderedMapInsertTest)
 		{
-			for (int currentIteration = 0; currentIteration < testIterations; currentIteration++)
+			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
-				OrderedMap<int, int> orderedMap;
-				std::vector<int> insertOrder;
-				std::vector<int> removeOrder;
-				int currentSize = 0;
+				OrderedMap<Foo, std::string> orderedMap;
+				Vector<Foo> insertOrder;
 
-				for (int i = 0; i < treeSize; i++)
+				for (int i = 0; i < uniqueTreeElements; i++)
 				{
 					insertOrder.push_back(i);
 				}
 
-				std::shuffle(insertOrder.begin(), insertOrder.end(), default_random_engine(rand()));
+				insertOrder.Shuffle();
 
-				for (int element : insertOrder)
+				size_t currentSize = 0;
+				for (Foo element : insertOrder)
 				{
-					orderedMap.Insert(std::pair<int, int>(element, element));
-					orderedMap.Insert(std::pair<int, int>(element, element));
+					Assert::IsFalse(orderedMap.Contains(element));
 					currentSize++;
-					Assert::IsTrue(currentSize == orderedMap.Size());
-					Assert::IsTrue(orderedMap.VerifyRedBlackTree());
-				}
-
-				int currentElement = 0;
-				for (OrderedMap<int,int>::Iterator it = orderedMap.begin(); it != orderedMap.end(); currentElement++, it++)
-				{
-					Assert::IsTrue(std::pair<int const,int>(currentElement, currentElement) == *it);
+					for (size_t j = 0; j < numDuplicatesOfUniqueElement; j++)
+					{
+						orderedMap.Insert(element, std::to_string(element.Data()));
+						Assert::IsTrue(orderedMap.Contains(element));
+						Assert::IsTrue(currentSize == orderedMap.Size());
+						Assert::IsTrue(orderedMap.VerifyRedBlackTree());
+						Assert::IsTrue(orderedMap.VerifySize());
+					}
 				}
 			}
 		}
 
-		TEST_METHOD(OrderedMapRemoveTest)
+		TEST_METHOD(OrderedMapRemoveByValueTest)
 		{
-			for (int currentIteration = 0; currentIteration < testIterations; currentIteration++)
+			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
-				OrderedMap<int, int> orderedMap;
-				std::vector<int> insertOrder;
-				std::vector<int> removeOrder;
-				size_t currentSize = 0;
+				OrderedMap<Foo, std::string> orderedMap;
+				Vector<Foo> insertOrder;
+				Vector<Foo> removeOrder;
 
-				for (int i = 0; i < treeSize; i++)
+				for (int i = 0; i < uniqueTreeElements; i++)
 				{
 					insertOrder.push_back(i);
 					removeOrder.push_back(i);
 				}
 
-				std::shuffle(insertOrder.begin(), insertOrder.end(), default_random_engine(rand()));
+				insertOrder.Shuffle();
+				removeOrder.Shuffle();
 
-				for (int element : insertOrder)
+				for (Foo element : insertOrder)
 				{
-					orderedMap.Insert(std::pair<int, int>(element, element));
-					orderedMap.Insert(std::pair<int, int>(element, element + 1));
-					currentSize++;
+					for (size_t j = 0; j < numDuplicatesOfUniqueElement; j++)
+					{
+						orderedMap.Insert(element, std::to_string(element.Data()));
+					}
 				}
 
-				std::shuffle(removeOrder.begin(), removeOrder.end(), default_random_engine(rand()));
-
-				currentSize = treeSize;
-				for (int element : removeOrder)
+				size_t currentSize = orderedMap.Size();
+				for (Foo element : removeOrder)
 				{
 					orderedMap.Remove(element);
-					orderedMap.Remove(element);
+					Assert::IsFalse(orderedMap.Contains(element));
 					currentSize--;
 					Assert::IsTrue(currentSize == orderedMap.Size());
 					Assert::IsTrue(orderedMap.VerifyRedBlackTree());
+					Assert::IsTrue(orderedMap.VerifySize());
 				}
 			}
 		}
 
+		TEST_METHOD(OrderedMapRemoveByIteratorTest)
+		{
+			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
+			{
+				OrderedMap<Foo, std::string> orderedMap;
+				Vector<Foo> insertOrder;
+				Vector<Foo> removeOrder;
+
+				for (int i = 0; i < uniqueTreeElements; i++)
+				{
+					insertOrder.push_back(i);
+					removeOrder.push_back(i);
+				}
+
+				insertOrder.Shuffle();
+				removeOrder.Shuffle();
+
+				for (Foo element : insertOrder)
+				{
+					for (size_t j = 0; j < numDuplicatesOfUniqueElement; j++)
+					{
+						orderedMap.Insert(element, std::to_string(element.Data()));
+					}
+				}
+
+				size_t currentSize = orderedMap.Size();
+				for (Foo element : removeOrder)
+				{
+					Assert::IsTrue(orderedMap.Contains(element));
+					orderedMap.Remove(orderedMap.Find(element));
+					Assert::IsFalse(orderedMap.Contains(element));
+					--currentSize;
+					Assert::IsTrue(currentSize == orderedMap.Size());
+					Assert::IsTrue(orderedMap.VerifyRedBlackTree());
+					Assert::IsTrue(orderedMap.VerifySize());					
+				}
+			}
+		}
 
 		TEST_METHOD(OrderedMapCopyConstructorAndAssignmentOperatorTest)
 		{
-			for (int currentIteration = 0; currentIteration < testIterations; currentIteration++)
+			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
-				OrderedMap<int, int> orderedMap;
+				OrderedMap<Foo, std::string> orderedMap;
+				Vector<Foo> insertOrder;
 
-				std::vector<int> insertOrder;
-				size_t currentSize = 0;
-
-				for (int i = 0; i < treeSize; i++)
+				for (int i = 0; i < uniqueTreeElements; i++)
 				{
 					insertOrder.push_back(i);
 				}
 
-				std::shuffle(insertOrder.begin(), insertOrder.end(), default_random_engine(rand()));
+				insertOrder.Shuffle();
 
-				for (int element : insertOrder)
+				for (Foo element : insertOrder)
 				{
-					orderedMap.Insert(std::pair<int, int>(element, element));
-					currentSize++;
+					for (size_t j = 0; j < numDuplicatesOfUniqueElement; j++)
+					{
+						orderedMap.Insert(element, std::to_string(element.Data()));
+					}
 				}
 
-				OrderedMap<int, int> orderedMapCopy(orderedMap);
+				OrderedMap<Foo, std::string> orderedMapCopy(orderedMap);
 
-				Assert::IsTrue(orderedMapCopy.Size() == orderedMap.Size());
+				Assert::IsTrue(orderedMapCopy == orderedMap);
 
-				OrderedMap<int, int>::Iterator orderedMapIterator = orderedMap.begin();
-				OrderedMap<int, int>::Iterator orderedMapCopyIterator = orderedMapCopy.begin();
-				bool bAreEqual = true;
+				orderedMap.Remove(rand() % (uniqueTreeElements - 1));
 
-
-
-				while (orderedMapIterator != orderedMap.end() && bAreEqual)
-				{
-					bAreEqual &= bAreEqual && orderedMapIterator != orderedMapCopyIterator && *orderedMapIterator == *orderedMapCopyIterator && &(*orderedMapIterator) != &(*orderedMapCopyIterator);
-					orderedMapIterator++;
-					orderedMapCopyIterator++;
-				}
-
-				Assert::IsTrue(bAreEqual);
-
-				int removedVal1 = rand() % (treeSize - 1);
-				int removedVal2 = rand() % (treeSize - 1);
-
-
-				while (removedVal1 == removedVal2)
-				{
-					removedVal1 = rand() % (treeSize - 1);
-					removedVal2 = rand() % (treeSize - 1);
-				}
-
-				orderedMap.Remove(removedVal1);
-				orderedMapCopy.Remove(removedVal1);
-
-				Assert::IsTrue(orderedMapCopy.Size() == orderedMap.Size());
-
-				orderedMapIterator = orderedMap.begin();
-				orderedMapCopyIterator = orderedMapCopy.begin();
-
-				while (orderedMapIterator != orderedMap.end() && bAreEqual)
-				{
-					bAreEqual &= bAreEqual && orderedMapIterator != orderedMapCopyIterator && *orderedMapIterator == *orderedMapCopyIterator && &(*orderedMapIterator) != &(*orderedMapCopyIterator);
-					orderedMapIterator++;
-					orderedMapCopyIterator++;
-				}
-
-				Assert::IsTrue(bAreEqual);
-
-				orderedMap.Remove(removedVal2);
-
-				orderedMapIterator = orderedMap.begin();
-				orderedMapCopyIterator = orderedMapCopy.begin();
-
-				Assert::IsTrue(orderedMapCopy.Size() != orderedMap.Size());
-
-				while (orderedMapIterator != orderedMap.end() && bAreEqual)
-				{
-					bAreEqual &= bAreEqual && orderedMapIterator != orderedMapCopyIterator && *orderedMapIterator == *orderedMapCopyIterator && &(*orderedMapIterator) != &(*orderedMapCopyIterator);
-					orderedMapIterator++;
-					orderedMapCopyIterator++;
-				}
-
-				Assert::IsFalse(bAreEqual);
+				Assert::IsFalse(orderedMapCopy == orderedMap);
 			}
 		}
 
 		TEST_METHOD(OrderedMapMoveConstructorAndMoveAssignmentOperatorTest)
 		{
-			for (int currentIteration = 0; currentIteration < testIterations; currentIteration++)
+			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
-				OrderedMap<int, int> movedOrderedMap;
+				OrderedMap<Foo, std::string> movedOrderedMap;
+				Vector<Foo> insertOrder;
 
-				std::vector<int> insertOrder;
-				size_t currentSize = 0;
-
-				for (int i = 0; i < treeSize; i++)
+				for (int i = 0; i < uniqueTreeElements; i++)
 				{
 					insertOrder.push_back(i);
 				}
 
-				std::shuffle(insertOrder.begin(), insertOrder.end(), default_random_engine(rand()));
+				insertOrder.Shuffle();
 
-				for (int element : insertOrder)
+				for (Foo element : insertOrder)
 				{
-					movedOrderedMap.Insert(std::pair<int, int>(element, element));
-					currentSize++;
+					for (size_t j = 0; j < numDuplicatesOfUniqueElement; j++)
+					{
+						movedOrderedMap.Insert(element, std::to_string(element.Data()));
+					}
 				}
 
-				OrderedMap<int, int> orderedMap(std::move(movedOrderedMap));
+				OrderedMap<Foo, std::string> orderedMap(std::move(movedOrderedMap));
 
 				Assert::IsTrue(movedOrderedMap.IsEmpty());
-				Assert::IsTrue(orderedMap.Size() == treeSize);
+				Assert::IsTrue(orderedMap.Size() == uniqueTreeElements);
+			}
+		}
+
+		TEST_METHOD(OrderedMapSwapTest)
+		{
+			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
+			{
+				OrderedMap<Foo, std::string> orderedMap;
+				Vector<Foo> insertOrder;
+
+				for (int i = 0; i < uniqueTreeElements; i++)
+				{
+					insertOrder.push_back(i);
+				}
+
+				insertOrder.Shuffle();
+
+				for (Foo element : insertOrder)
+				{
+					for (size_t j = 0; j < numDuplicatesOfUniqueElement; j++)
+					{
+						orderedMap.Insert(element, std::to_string(element.Data()));
+					}
+				}
+
+				OrderedMap<Foo, std::string> orderedMap2(orderedMap);
+
+				orderedMap2.Remove(rand() % (uniqueTreeElements - 1));
+
+				OrderedMap<Foo, std::string> orderedMapCopy(orderedMap);
+				OrderedMap<Foo, std::string> orderedMap2Copy(orderedMap2);
+
+				Assert::IsTrue(orderedMap == orderedMapCopy);
+				Assert::IsFalse(orderedMap == orderedMap2Copy);
+				Assert::IsTrue(orderedMap2 == orderedMap2Copy);
+				Assert::IsFalse(orderedMap2 == orderedMapCopy);
+
+				orderedMap.Swap(orderedMap2);
+
+				Assert::IsTrue(orderedMap == orderedMap2Copy);
+				Assert::IsFalse(orderedMap == orderedMapCopy);
+				Assert::IsTrue(orderedMap2 == orderedMapCopy);
+				Assert::IsFalse(orderedMap2 == orderedMap2Copy);
 			}
 		}
 
 		TEST_METHOD(OrderedMapComparisonOperatorsTest)
 		{
-			for (int currentIteration = 0; currentIteration < testIterations; currentIteration++)
+			for (size_t currentIteration = 0; currentIteration < testIterations; currentIteration++)
 			{
-				OrderedMap<int, int> orderedMap;
+				OrderedMap<Foo, std::string> orderedMap;
+				Vector<Foo> insertOrder;
 
-				std::vector<int> insertOrder;
-				size_t currentSize = 0;
-
-				for (int i = 0; i < treeSize; i++)
+				for (int i = 0; i < uniqueTreeElements; i++)
 				{
 					insertOrder.push_back(i);
 				}
 
-				std::shuffle(insertOrder.begin(), insertOrder.end(), default_random_engine(rand()));
+				insertOrder.Shuffle();
 
-				for (int element : insertOrder)
+				for (Foo element : insertOrder)
 				{
-					orderedMap.Insert(std::pair<int, int>(element, element));
-					currentSize++;
+					for (size_t j = 0; j < numDuplicatesOfUniqueElement; j++)
+					{
+						orderedMap.Insert(element, std::to_string(element.Data()));
+					}
 				}
 
-				OrderedMap<int, int> orderedMapCopy(orderedMap);
+				OrderedMap<Foo, std::string> orderedMapCopy(orderedMap);
 
 				Assert::IsTrue(orderedMapCopy == orderedMap);
 
-				int removedVal1 = rand() % (treeSize - 1);
-				int removedVal2 = rand() % (treeSize - 1);
+				Vector<Foo> removeOrder;
 
-
-				while (removedVal1 == removedVal2)
+				for (int i = 0; i < uniqueTreeElements; i++)
 				{
-					removedVal1 = rand() % (treeSize - 1);
-					removedVal2 = rand() % (treeSize - 1);
+					removeOrder.push_back(i);
 				}
 
-				orderedMap.Remove(removedVal1);
-				orderedMapCopy.Remove(removedVal1);
+				removeOrder.Shuffle();
 
-				Assert::IsTrue(orderedMapCopy == orderedMap);
+				int removeOrderIndex = 0;
+				while (removeOrderIndex < removeOrder.Size() - 1)
+				{
+					Assert::IsTrue(orderedMapCopy == orderedMap);
 
-				orderedMap.Remove(removedVal2);
+					orderedMap.Remove(removeOrder[removeOrderIndex]);
+					Assert::IsFalse(orderedMapCopy == orderedMap);
 
-				Assert::IsTrue(orderedMapCopy != orderedMap);
+					orderedMapCopy.Remove(removeOrder[removeOrderIndex + 1]);
+					Assert::IsFalse(orderedMapCopy == orderedMap);
+
+					orderedMap.Remove(removeOrder[removeOrderIndex + 1]);
+					Assert::IsFalse(orderedMapCopy == orderedMap);
+
+					orderedMapCopy.Remove(removeOrder[removeOrderIndex]);
+					Assert::IsTrue(orderedMapCopy == orderedMap);
+
+					removeOrderIndex += 2;
+				}
 			}
 		}
 

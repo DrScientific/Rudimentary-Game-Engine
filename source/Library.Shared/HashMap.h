@@ -433,7 +433,7 @@ namespace FIEAGameEngine
 		/// <summary>
 		/// 
 		/// </summary>
-		inline static const std::string attemptToIteratarePastLastElementException = "Attempted to increment an iterator past end of the hash map.\n";
+		inline static const std::string attemptToIteratePastLastElementException = "Attempted to increment an iterator past end of the hash map.\n";
 
 		/// <summary>
 		/// 

@@ -61,7 +61,7 @@ namespace FIEAGameEngine
 		}
 		if (*this == const_cast<HashMap*>(mOwner)->end())
 		{
-			throw std::exception(attemptToIteratarePastLastElementException.c_str());
+			throw std::exception(attemptToIteratePastLastElementException.c_str());
 		}
 		return *mListIterator;
 	}
@@ -75,7 +75,7 @@ namespace FIEAGameEngine
 		}
 		if (*this == const_cast<HashMap*>(mOwner)->end())
 		{
-			throw std::exception(attemptToIteratarePastLastElementException.c_str());
+			throw std::exception(attemptToIteratePastLastElementException.c_str());
 		}
 		return &(*mListIterator);
 	}
@@ -154,7 +154,7 @@ namespace FIEAGameEngine
 		}
 		if (*this == mOwner->end())
 		{
-			throw std::exception(attemptToIteratarePastLastElementException.c_str());
+			throw std::exception(attemptToIteratePastLastElementException.c_str());
 		}
 		return *mListIterator;
 	}
@@ -168,7 +168,7 @@ namespace FIEAGameEngine
 		}
 		if (*this == mOwner->end())
 		{
-			throw std::exception(attemptToIteratarePastLastElementException.c_str());
+			throw std::exception(attemptToIteratePastLastElementException.c_str());
 		}
 		return &(*mListIterator);
 	}

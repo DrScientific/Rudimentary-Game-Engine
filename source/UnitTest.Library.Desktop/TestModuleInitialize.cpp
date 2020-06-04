@@ -24,7 +24,6 @@ using namespace FIEAGameEngine;
 
 namespace UnitTestLibraryDesktop
 {
-
 	TEST_MODULE_INITIALIZE(AddAttributedFooToTypeManager)
 	{
 		REGISTER_TYPE(AttributedFoo);

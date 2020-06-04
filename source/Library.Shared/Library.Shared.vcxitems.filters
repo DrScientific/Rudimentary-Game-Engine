@@ -135,14 +135,26 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)RedBlackTree.h">
       <Filter>Standard Containers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Set.h">
-      <Filter>Standard Containers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TemplateLogic.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DList.h">
       <Filter>Standard Containers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)OrderedMap.h">
+      <Filter>Standard Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrderedMultiMap.h">
+      <Filter>Standard Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrderedMapTraits.h">
+      <Filter>Standard Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrderedMultiSet.h">
+      <Filter>Standard Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Google Drive\Graduate Classes\FIEA Classes\Semester 2\Programming 2\FIEAGameEngine\source\Library.Shared\OrderedSet.h">
+      <Filter>Standard Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Google Drive\Graduate Classes\FIEA Classes\Semester 2\Programming 2\FIEAGameEngine\source\Library.Shared\OrderedSetTraits.h">
       <Filter>Standard Containers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -167,13 +179,19 @@
     <None Include="$(MSBuildThisFileDirectory)RedBlackTree.inl">
       <Filter>Standard Containers</Filter>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)Set.inl">
-      <Filter>Standard Containers</Filter>
-    </None>
     <None Include="$(MSBuildThisFileDirectory)DList.inl">
       <Filter>Standard Containers</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)OrderedMap.inl">
+      <Filter>Standard Containers</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)OrderedMultiMap.inl">
+      <Filter>Standard Containers</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)OrderedMultiSet.inl">
+      <Filter>Standard Containers</Filter>
+    </None>
+    <None Include="D:\Google Drive\Graduate Classes\FIEA Classes\Semester 2\Programming 2\FIEAGameEngine\source\Library.Shared\OrderedSet.inl">
       <Filter>Standard Containers</Filter>
     </None>
   </ItemGroup>

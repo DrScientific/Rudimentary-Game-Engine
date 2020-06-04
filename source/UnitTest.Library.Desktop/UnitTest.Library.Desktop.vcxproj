@@ -183,6 +183,7 @@ xcopy /E/Y "$(ProjectDir)Content" "$(OutDir)Content"</Command>
     <ClInclude Include="IDepthTestParseHelper.h" />
     <ClInclude Include="IIntegerJsonParseHelper.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="TestModuleConstants.h" />
     <ClInclude Include="ToStringTemplates.h" />
   </ItemGroup>
   <ItemGroup>
@@ -204,6 +205,8 @@ xcopy /E/Y "$(ProjectDir)Content" "$(OutDir)Content"</Command>
     <ClCompile Include="IDepthTestParseHelper.cpp" />
     <ClCompile Include="IIntegerJsonParseHelper.cpp" />
     <ClCompile Include="OrderedMapTest.cpp" />
+    <ClCompile Include="OrderedMultiMapTest.cpp" />
+    <ClCompile Include="OrderedMultiSetTest.cpp" />
     <ClCompile Include="ParsingTest.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -222,7 +225,7 @@ xcopy /E/Y "$(ProjectDir)Content" "$(OutDir)Content"</Command>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="ReactionTest.cpp" />
-    <ClCompile Include="SetTest.cpp" />
+    <ClCompile Include="OrderedSetTest.cpp" />
     <ClCompile Include="ScopeTest.cpp" />
     <ClCompile Include="SListTest.cpp" />
     <ClCompile Include="TestModuleInitialize.cpp" />

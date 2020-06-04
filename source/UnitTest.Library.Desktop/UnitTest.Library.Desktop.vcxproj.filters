@@ -27,8 +27,10 @@
     <ClCompile Include="AsyncEventTest.cpp" />
     <ClCompile Include="AsyncSubscriberListTestSubscriber.cpp" />
     <ClCompile Include="AsyncEventQueueTestSubscriber.cpp" />
-    <ClCompile Include="SetTest.cpp" />
     <ClCompile Include="OrderedMapTest.cpp" />
+    <ClCompile Include="OrderedMultiMapTest.cpp" />
+    <ClCompile Include="OrderedMultiSetTest.cpp" />
+    <ClCompile Include="OrderedSetTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -43,5 +45,6 @@
     <ClInclude Include="FooEntity.h" />
     <ClInclude Include="AsyncSubscriberListTestSubscriber.h" />
     <ClInclude Include="AsyncEventQueueTestSubscriber.h" />
+    <ClInclude Include="TestModuleConstants.h" />
   </ItemGroup>
 </Project>
