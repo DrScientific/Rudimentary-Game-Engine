@@ -443,7 +443,7 @@ namespace UnitTestLibraryDesktop
 
 				removeOrder.Shuffle();
 
-				int removeOrderIndex = 0;
+				size_t removeOrderIndex = 0;
 				while (removeOrderIndex < removeOrder.Size() - 1)
 				{
 					Assert::IsTrue(orderedMapCopy == orderedMap);

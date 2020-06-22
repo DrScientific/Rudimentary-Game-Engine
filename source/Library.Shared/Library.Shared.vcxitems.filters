@@ -148,15 +148,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)OrderedMultiSet.h">
       <Filter>Standard Containers</Filter>
     </ClInclude>
-    <ClInclude Include="D:\Google Drive\Graduate Classes\FIEA Classes\Semester 2\Programming 2\FIEAGameEngine\source\Library.Shared\OrderedSet.h">
-      <Filter>Standard Containers</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\Google Drive\Graduate Classes\FIEA Classes\Semester 2\Programming 2\FIEAGameEngine\source\Library.Shared\OrderedSetTraits.h">
-      <Filter>Standard Containers</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\Google Drive\Graduate Classes\FIEA Classes\Semester 2\Programming 2\FIEAGameEngine\source\Library.Shared\UnorderedMap.h">
-      <Filter>Standard Containers</Filter>
-    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UnorderedMap.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrderedSet.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OrderedSetTraits.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Datum.inl" />
@@ -188,12 +182,8 @@
     <None Include="$(MSBuildThisFileDirectory)OrderedMultiSet.inl">
       <Filter>Standard Containers</Filter>
     </None>
-    <None Include="D:\Google Drive\Graduate Classes\FIEA Classes\Semester 2\Programming 2\FIEAGameEngine\source\Library.Shared\OrderedSet.inl">
-      <Filter>Standard Containers</Filter>
-    </None>
-    <None Include="D:\Google Drive\Graduate Classes\FIEA Classes\Semester 2\Programming 2\FIEAGameEngine\source\Library.Shared\UnorderedMap.inl">
-      <Filter>Standard Containers</Filter>
-    </None>
+    <None Include="$(MSBuildThisFileDirectory)UnorderedMap.inl" />
+    <None Include="$(MSBuildThisFileDirectory)OrderedSet.inl" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Standard Containers">
