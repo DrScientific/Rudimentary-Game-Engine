@@ -100,7 +100,8 @@
     </Link>
     <PreBuildEvent>
       <Command>mkdir "$(OutDir)Content"
-xcopy /E/Y "$(ProjectDir)Content" "$(OutDir)Content"</Command>
+xcopy /E/Y "$(ProjectDir)Content" "$(OutDir)Content"
+xcopy /E/Y "$(SolutionDir)external.dependencies\$(PlatformShortName)\$(Configuration)\bin" "$(OutDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -120,8 +121,13 @@ xcopy /E/Y "$(ProjectDir)Content" "$(OutDir)Content"</Command>
     </Link>
     <PreBuildEvent>
       <Command>mkdir "$(OutDir)Content"
-xcopy /E/Y "$(ProjectDir)Content" "$(OutDir)Content"</Command>
+xcopy /E/Y "$(ProjectDir)Content" "$(OutDir)Content"
+xcopy /E/Y "$(SolutionDir)external.dependencies\$(PlatformShortName)\$(Configuration)\bin" "$(OutDir)"</Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -144,8 +150,14 @@ xcopy /E/Y "$(ProjectDir)Content" "$(OutDir)Content"</Command>
     </Link>
     <PreBuildEvent>
       <Command>mkdir "$(OutDir)Content"
-xcopy /E/Y "$(ProjectDir)Content" "$(OutDir)Content"</Command>
+xcopy /E/Y "$(ProjectDir)Content" "$(OutDir)Content"
+xcopy /E/Y "$(SolutionDir)external.dependencies\$(PlatformShortName)\bin" "$(OutDir)"
+</Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -168,8 +180,14 @@ xcopy /E/Y "$(ProjectDir)Content" "$(OutDir)Content"</Command>
     </Link>
     <PreBuildEvent>
       <Command>mkdir "$(OutDir)Content"
-xcopy /E/Y "$(ProjectDir)Content" "$(OutDir)Content"</Command>
+xcopy /E/Y "$(ProjectDir)Content" "$(OutDir)Content"
+xcopy /E/Y "$(SolutionDir)external.dependencies\$(PlatformShortName)\bin" "$(OutDir)"
+</Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AsyncEventQueueTestSubscriber.h" />
