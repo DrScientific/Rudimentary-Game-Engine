@@ -17,12 +17,13 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <SDLCheck>true</SDLCheck>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Library.Shared\;$(ProjectDir)..\Game.Shared\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Library.Shared\;$(ProjectDir)..\Game.Shared\;$(ProjectDir)..\..\external.dependencies\$(PlatformShortName)\include\</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;$(ProjectDir)..\..\external.dependencies\$(PlatformShortName)\lib\gl3w.lib;$(ProjectDir)..\..\external.dependencies\$(PlatformShortName)\lib\glfw3dll.lib;$(ProjectDir)..\..\external.dependencies\$(PlatformShortName)\lib\jsoncpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>
